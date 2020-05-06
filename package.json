@@ -1,14 +1,14 @@
 {
 	"name": "tjc-scheduling-app",
-	"main": "node_modules/expo/AppEntry.js",
+	"main": "node_modules/expo/AppEntry.ts",
 	"scripts": {
 		"start": "expo start",
 		"android": "expo start --android",
 		"ios": "expo start --ios",
 		"web": "expo start --web",
 		"eject": "expo eject",
-		"server": "nodemon --exec babel-node ./server/index.js",
-		"seed": "node script/seed.js"
+		"server": "nodemon --exec babel-node ./server/index.ts",
+		"seed": "node script/seed.ts"
 	},
 	"dependencies": {
 		"@expo/vector-icons": "^10.0.6",

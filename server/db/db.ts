@@ -1,3 +1,4 @@
+export {};
 const Sequelize = require('sequelize');
 const configJson = require('./config');
 

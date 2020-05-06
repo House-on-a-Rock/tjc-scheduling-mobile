@@ -1,3 +1,4 @@
+export {};
 const db = require('../db');
 const Church = require('./church');
 const User = require('./user');
@@ -33,7 +34,7 @@ module.exports = {
     Duty,
 };
 
-const findUser = async () => {
+const findUser = async (req?, res?, next?) => {
     try {
         const oneUser = await User.findOne({
             where: { firstName: 'Ted' },
