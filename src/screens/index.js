@@ -6,5 +6,5 @@ export * from './authentication/RecoverLoginScreen';
 export * from './authentication/SignUpScreen';
 export * from './ProfileScreen';
 export * from './SettingsScreen';
-export * from './ChurchRegisterScreen';
+export * from './ChurchRegisterScreen.tsx';
 export * from './LogOutScreen';
