@@ -25,43 +25,72 @@ const users = [
 		lastName: 'Tung',
 		email: 'shaun.tung@gmail.com',
 		password: 'password',
-		churchId: 1
+		churchId: 1,
+		roleId: 1
 	},
 	{
 		firstName: 'Ted',
 		lastName: 'Chen',
 		email: 'ted.chen@gmail.com',
 		password: 'password1',
-		churchId: 1
+		churchId: 1,
+		roleId: 1
 	},
 	{
 		firstName: 'Jonathan',
 		lastName: 'Lee',
 		email: 'Jonathan.Lee@gmail.com',
 		password: 'password3',
-		churchId: 2
+		churchId: 2,
+		roleId: 3
 	},
 ];
 
 const roles = [
 	{
 		name: 'AV',
+		time: '2020-05-06 10:30:00',
 		churchId: 1
 	},
 	{
 		name: 'Speaker',
-		churchId: 1
+		time: '2020-05-06 10:30:00',
+		churchId: 2
 	},
 	{
 		name: 'Interpreting',
-		churchId: 1
+		time: '2020-05-06 10:30:00',
+		churchId: 3
 	},
 	{
 		name: 'RE',
+		time: '2020-05-06 10:30:00',
 		churchId: 1
 	}
-]
+];
+
+const duties = [
+	{
+		date: '2020-05-06 10:30:00',
+		userId: 1,
+		roleId: 2,
+		churchId: 3
+	},
+	{
+		date: '2020-05-06 10:30:00',
+		userId: 2,
+		roleId: 2,
+		churchId: 1
+	},
+	{
+		date: '2020-05-06 10:30:00',
+		userId: 1,
+		roleId: 3,
+		churchId: 1
+	}
+];
 async function seed() {
+	
 	await db.sync({ force: true });
 	console.log('db synced!');
 
@@ -70,21 +99,27 @@ async function seed() {
 			Church.create(church);
 		}),
 	);
-
+	const seedRoles = await Promise.all(
+		roles.map((role) => {
+			Role.create(role);
+		}),
+	);
 	const seedUsers = await Promise.all(
 		users.map((user) => {
 			User.create(user);
 		}),
 	);
-
-	const seedRoles = await Promise.all(
-		roles.map((role) => {
-			Role.create(role);
+	await new Promise(r => setTimeout(r, 2000));
+	const seedDuties = await Promise.all(
+		duties.map((duty) => {
+			Duty.create(duty);
 		}),
-	)
+	);
 
 	console.log(green(`seeded ${seedChurches.length} churches`));
 	console.log(green(`seeded ${seedUsers.length} users`));
+	console.log(green(`seeded ${seedRoles.length} roles`));
+	console.log(green(`seeded ${seedDuties.length} duties`));
 	console.log(green(`seeded succesfully`));
 }
 
