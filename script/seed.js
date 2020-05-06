@@ -25,8 +25,8 @@ const users = [
 		lastName: 'Tung',
 		email: 'shaun.tung@gmail.com',
 		password: 'password',
-		churchId: 1,
-		roleId: 1
+		churchId: 2,
+		roleId: 2
 	},
 	{
 		firstName: 'Ted',
@@ -99,11 +99,13 @@ async function seed() {
 			Church.create(church);
 		}),
 	);
+	await new Promise(r => setTimeout(r, 2000));
 	const seedRoles = await Promise.all(
 		roles.map((role) => {
 			Role.create(role);
 		}),
 	);
+	await new Promise(r => setTimeout(r, 2000));
 	const seedUsers = await Promise.all(
 		users.map((user) => {
 			User.create(user);
