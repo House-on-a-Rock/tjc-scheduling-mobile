@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login, setProfile, createCalendar, checkCredentials } from '../../store/actions';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import profile from '../../dummyData';
-import Axios from 'axios';
+import axios from 'axios';
 
 export const LoginScreen = (props) => {
     const dispatch = useDispatch();
@@ -28,9 +28,9 @@ export const LoginScreen = (props) => {
         // let URL = 'https://facebook.github.io/react-native/movies.json';
         // Axios.get(URL).then((response) => {
         //     console.log('get response: ', JSON.stringify(response.data));
-        // });
-        Axios.get('http://10.0.0.8:3000/api/churches/getAll').then((response) => {
-            console.log('get response: ', JSON.stringify(response.data));
+        // }); http://10.0.0.8:8080/api/churches/getAll
+        axios.get('http://10.0.0.8:8080/api/churches/getAll').then((response) => {
+            console.log('************** ', response.data);
         });
     });
 
