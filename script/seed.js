@@ -41,6 +41,13 @@ const users = [
         password: 'password3',
         churchId: 2,
     },
+    {
+        firstName: 'Ian',
+        lastName: 'Lin',
+        email: 'Ian.Lin@gmail.com',
+        password: 'password4',
+        churchId: 1,
+    },
 ];
 
 const roles = [
@@ -65,21 +72,21 @@ const roles = [
 const tasks = [
     {
         date: new Date('May 5 2020'),
-        user: 'Shaun Tung',
-        role: 'AM Piano',
-        church: 'Hillsborough',
+        // user: 'Shaun Tung',
+        // role: 'AM Piano',
+        // church: 'Hillsborough',
     },
     {
         date: new Date('May 5 2020'),
-        user: 'Shaun Tung',
-        role: 'PM Piano',
-        church: 'Hillsborough',
+        // user: 'Shaun Tung',
+        // role: 'PM Piano',
+        // church: 'Hillsborough',
     },
     {
         date: new Date('May 5 2020'),
-        user: 'Ted Chen',
-        role: 'AM AV',
-        church: 'Hillsborough',
+        // user: 'Ted Chen',
+        // role: 'AM AV',
+        // church: 'Hillsborough',
     },
 ];
 

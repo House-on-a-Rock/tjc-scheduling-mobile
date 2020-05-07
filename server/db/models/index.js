@@ -13,13 +13,13 @@ User.belongsTo(Church);
 Role.hasMany(User);
 User.belongsTo(Role);
 
-//Tasks
-// User.hasMany(Task);
-// Task.belongsTo(User);
-// Role.hasMany(Task);
-// Task.belongsTo(Role);
-// Church.hasMany(Task);
-// Task.belongsTo(Church);
+//Tasks;
+User.hasMany(Task);
+Task.belongsTo(User);
+Role.hasMany(Task);
+Task.belongsTo(Role);
+Church.hasMany(Task);
+Task.belongsTo(Church);
 
 //ROLES
 Church.hasMany(Role);

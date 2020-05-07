@@ -11,5 +11,3 @@ const styles = StyleSheet.create({
         fontFamily: 'Roboto-Regular',
     },
 });
-
-console.log('hello');

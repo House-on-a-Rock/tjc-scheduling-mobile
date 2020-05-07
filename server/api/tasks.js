@@ -5,7 +5,7 @@ module.exports = router;
 router.get('/getAllUserTasks', async (req, res, next) => {
     try {
         const task = await Task.findAll({
-            // where: { user: req.body.user },
+            where: { user: req.body.user },
         });
         res.status(200).json(task);
     } catch (err) {

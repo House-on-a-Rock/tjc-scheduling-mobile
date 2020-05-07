@@ -25,3 +25,13 @@ router.post('/createChurch', async (req, res, next) => {
         next(err);
     }
 });
+
+router.get('/getMovies', async (req, res, next) => {
+    try {
+        fetch('https://facebook.github.io/react-native/movies.json').then((response) =>
+            console.log(response),
+        );
+    } catch (err) {
+        next(err);
+    }
+});
