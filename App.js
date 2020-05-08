@@ -8,47 +8,47 @@ import { authReducer, profileReducer, calendarReducer } from './src/store/reduce
 import { Provider } from 'react-redux';
 
 const rootReducer = combineReducers({
-	authReducer: authReducer,
-	profileReducer: profileReducer,
-	calendarReducer: calendarReducer,
+    authReducer: authReducer,
+    profileReducer: profileReducer,
+    calendarReducer: calendarReducer,
 });
 
 const store = createStore(rootReducer);
 
 const fetchFonts = () => {
-	return Font.loadAsync({
-		'Roboto-Bold': require('./src/assets/Fonts/Roboto-Bold.ttf'),
-		'Roboto-Italic': require('./src/assets/Fonts/Roboto-Italic.ttf'),
-		'Roboto-Regular': require('./src/assets/Fonts/Roboto-Regular.ttf'),
-	});
+    return Font.loadAsync({
+        'Roboto-Bold': require('./src/assets/Fonts/Roboto-Bold.ttf'),
+        'Roboto-Italic': require('./src/assets/Fonts/Roboto-Italic.ttf'),
+        'Roboto-Regular': require('./src/assets/Fonts/Roboto-Regular.ttf'),
+    });
 };
 
 export default function App() {
-	const [dataLoaded, setDataLoaded] = useState(false);
+    const [dataLoaded, setDataLoaded] = useState(false);
 
-	if (!dataLoaded) {
-		return (
-			<AppLoading
-				startAsync={fetchFonts}
-				onFinish={() => setDataLoaded(true)}
-				onError={(err) => console.log(err)}
-			/>
-		);
-	}
+    if (!dataLoaded) {
+        return (
+            <AppLoading
+                startAsync={fetchFonts}
+                onFinish={() => setDataLoaded(true)}
+                onError={(err) => console.log(err)}
+            />
+        );
+    }
 
-	return (
-		<Provider store={store}>
-			<View style={styles.app}>
-				<AppNavigation />
-			</View>
-		</Provider>
-	);
+    return (
+        <Provider store={store}>
+            <View style={styles.app}>
+                <AppNavigation />
+            </View>
+        </Provider>
+    );
 }
 
 const styles = StyleSheet.create({
-	app: {
-		flex: 1,
-		width: '100%',
-		justifyContent: 'center',
-	},
+    app: {
+        flex: 1,
+        width: '100%',
+        justifyContent: 'center',
+    },
 });

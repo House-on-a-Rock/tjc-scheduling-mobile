@@ -19,9 +19,8 @@
         }
     },
     "lint-staged": {
-        "./src/*.{js,jsx,ts,tsx}": [
-            "npm run prettier:write",
-            "eslint src/*.js --fix-dry-run"
+        "*": [
+            "npm run prettier:base -- --write"
         ]
     },
     "dependencies": {
