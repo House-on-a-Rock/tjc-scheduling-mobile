@@ -13,26 +13,13 @@ import { CustomInput, BodyText } from '../../utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, setProfile, createCalendar, checkCredentials } from '../../store/actions';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import profile from '../../dummyData';
-import axios from 'axios';
 
 export const LoginScreen = (props) => {
     const dispatch = useDispatch();
     const [userEmail, setUserEmail] = useState('email@email.com');
     const [userPassword, setUserPassword] = useState('password');
     const [isValidCredentials, setIsValidCredentials] = useState(true);
-
-    //hook to determine if login attempt was made and failed to display failed login text
-    useEffect(() => {
-        console.log('inside useeffect');
-        // let URL = 'https://facebook.github.io/react-native/movies.json';
-        // Axios.get(URL).then((response) => {
-        //     console.log('get response: ', JSON.stringify(response.data));
-        // }); http://10.0.0.8:8080/api/churches/getAll
-        axios.get('http://10.0.0.8:8080/api/churches/getAll').then((response) => {
-            console.log('************** ', response.data);
-        });
-    });
+    const [isValidInput, setIsValidInput] = useState(false);
 
     function validateEmail() {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -43,7 +30,7 @@ export const LoginScreen = (props) => {
         //check if email/pass belongs to an account
         //after x attempts, prompt login or account lockout
 
-        if (validateEmail() && userPassword.length > 5) {
+        if (validateEmail() && userPassword.length > 0) {
             console.log('email is validated');
             //dispatch check credentials action
             dispatch(checkCredentials({ email: userEmail, password: userPassword }));
@@ -55,7 +42,7 @@ export const LoginScreen = (props) => {
 
         if (true) {
             dispatch(login());
-            dispatch(setProfile(profile));
+            // dispatch(setProfile(profile));
             dispatch(createCalendar());
         }
     };

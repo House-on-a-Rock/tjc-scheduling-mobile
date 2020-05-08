@@ -23,14 +23,15 @@ export const checkCredentials = ({ email, password }) => {
 
     return async (dispatch) => {
         console.log('inside checkCredentials');
-        let dummyId = 3;
-        let profile = {};
-        fetch(secret_ip + '/api/users/getUser', {
-            params: { id: dummyId },
-        }).then((response) => {
-            console.log('response', response.data);
-            profile = response.data;
-        });
+        let dummyId = 1;
+        let profile = null;
+        await axios
+            .get(secret_ip + '/api/authentication/getUser', { params: { id: 1 } })
+            .then((response) => {
+                console.log('response: ', response.data);
+                profile = response.data;
+            })
+            .catch((error) => console.error(error));
 
         dispatch({
             type: SET_PROFILE,

@@ -10,7 +10,7 @@ router.get('/getUser', async (req, res, next) => {
             where: {
                 id: req.query.id,
             },
-            attributes: ['firstName', 'lastName', 'email'],
+            attributes: ['firstName', 'lastName', 'email', 'tasks'],
         });
         res.json(user);
     } catch (err) {

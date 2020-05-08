@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { User } = require('../db/models');
 module.exports = router;
 
+//replace with authentication???
 router.get('/getAllUsers', async (req, res, next) => {
     try {
         const users = await User.findAll({
@@ -15,7 +16,7 @@ router.get('/getAllUsers', async (req, res, next) => {
 
 router.get('/getUser', async (req, res, next) => {
     try {
-        const user = User.findOne({
+        const user = await User.findOne({
             where: {
                 id: req.query.id,
             },
