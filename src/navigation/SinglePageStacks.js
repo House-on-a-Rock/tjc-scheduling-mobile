@@ -8,25 +8,25 @@ const LogOut = createStackNavigator();
 const Settings = createStackNavigator();
 
 export const ProfileStack = () => {
-	return (
-		<Profile.Navigator>
-			<Profile.Screen name="Profile" component={ProfileScreen} />
-		</Profile.Navigator>
-	);
+    return (
+        <Profile.Navigator>
+            <Profile.Screen name="Profile" component={ProfileScreen} />
+        </Profile.Navigator>
+    );
 };
 
 export const LogOutStack = () => {
-	return (
-		<LogOut.Navigator>
-			<LogOut.Screen name="Log Out" component={LogOutScreen} />
-		</LogOut.Navigator>
-	);
+    return (
+        <LogOut.Navigator>
+            <LogOut.Screen name="Log Out" component={LogOutScreen} />
+        </LogOut.Navigator>
+    );
 };
 
 export const SettingsStack = () => {
-	return (
-		<Settings.Navigator>
-			<Settings.Screen name="Settings" component={SettingsScreen} />
-		</Settings.Navigator>
-	);
+    return (
+        <Settings.Navigator>
+            <Settings.Screen name="Settings" component={SettingsScreen} />
+        </Settings.Navigator>
+    );
 };

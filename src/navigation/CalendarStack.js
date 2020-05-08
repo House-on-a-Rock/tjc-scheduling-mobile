@@ -7,28 +7,28 @@ import { colors } from '../assets/colors';
 const calStack = createStackNavigator();
 
 export const CalendarStack = (props) => {
-	return (
-		<calStack.Navigator>
-			<calStack.Screen
-				name="Calendar"
-				component={CalendarScreen}
-				options={{
-					headerStyle: {
-						// backgroundColor: colors.backgroundColor,
-					},
-					headerLeft: () => (
-						<Ionicons
-							name="ios-menu"
-							size={35}
-							onPress={() => {
-								props.navigation.toggleDrawer();
-							}}
-							style={{ paddingLeft: 20 }}
-						/>
-					),
-				}}
-			/>
-			<calStack.Screen name="DateDetails" component={DateDetailScreen} />
-		</calStack.Navigator>
-	);
+    return (
+        <calStack.Navigator>
+            <calStack.Screen
+                name="Calendar"
+                component={CalendarScreen}
+                options={{
+                    headerStyle: {
+                        // backgroundColor: colors.backgroundColor,
+                    },
+                    headerLeft: () => (
+                        <Ionicons
+                            name="ios-menu"
+                            size={35}
+                            onPress={() => {
+                                props.navigation.toggleDrawer();
+                            }}
+                            style={{ paddingLeft: 20 }}
+                        />
+                    ),
+                }}
+            />
+            <calStack.Screen name="DateDetails" component={DateDetailScreen} />
+        </calStack.Navigator>
+    );
 };
