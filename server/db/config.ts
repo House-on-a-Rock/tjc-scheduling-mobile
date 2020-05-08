@@ -8,7 +8,7 @@ module.exports = {
         host: process.env.DB_HOST,
         dialect: 'postgres',
     },
-    // test: {
+    //test: {
     // 	database: secret_database.test.DB_NAME,
     // 	username: secret_database.test.DB_USERNAME,
     // 	password: secret_database.test.DB_PASSWORD,
