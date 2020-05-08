@@ -24,10 +24,8 @@ export const ChurchRegisterScreen = (props) => {
         setChurchName('');
         setChurchAddress('');
         setChurchDetails('');
-        console.log(secret_ip + 'api/churches/getAll');
-
         await axios
-            .get(secret_ip + 'api/churches/getAll')
+            .get(secret_ip + '/api/churches/getAll')
             .then((response) => console.log(response.data))
             .catch((err) => {
                 console.error(err.response.data);
