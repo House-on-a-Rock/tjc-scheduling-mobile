@@ -25,7 +25,8 @@ const users = [
         lastName: 'Tung',
         email: 'shaun.tung@gmail.com',
         password: 'password',
-        churchId: 1,
+        churchId: 2,
+        roleId: 2,
     },
     {
         firstName: 'Ted',
@@ -33,6 +34,7 @@ const users = [
         email: 'ted.chen@gmail.com',
         password: 'password1',
         churchId: 1,
+        roleId: 1,
     },
     {
         firstName: 'Jonathan',
@@ -40,56 +42,53 @@ const users = [
         email: 'Jonathan.Lee@gmail.com',
         password: 'password3',
         churchId: 2,
-    },
-    {
-        firstName: 'Ian',
-        lastName: 'Lin',
-        email: 'Ian.Lin@gmail.com',
-        password: 'password4',
-        churchId: 1,
+        roleId: 3,
     },
 ];
 
 const roles = [
     {
         name: 'AV',
+        time: '2020-05-06 10:30:00',
         churchId: 1,
     },
     {
         name: 'Speaker',
-        churchId: 1,
+        time: '2020-05-06 10:30:00',
+        churchId: 2,
     },
     {
         name: 'Interpreting',
-        churchId: 1,
+        time: '2020-05-06 10:30:00',
+        churchId: 3,
     },
     {
         name: 'RE',
+        time: '2020-05-06 10:30:00',
         churchId: 1,
     },
 ];
 
 const tasks = [
     {
-        date: new Date('May 5 2020'),
-        // user: 'Shaun Tung',
-        // role: 'AM Piano',
-        // church: 'Hillsborough',
+        date: '2020-05-06 10:30:00',
+        userId: 1,
+        roleId: 2,
+        churchId: 3,
     },
     {
-        date: new Date('May 5 2020'),
-        // user: 'Shaun Tung',
-        // role: 'PM Piano',
-        // church: 'Hillsborough',
+        date: '2020-05-06 10:30:00',
+        userId: 2,
+        roleId: 2,
+        churchId: 1,
     },
     {
-        date: new Date('May 5 2020'),
-        // user: 'Ted Chen',
-        // role: 'AM AV',
-        // church: 'Hillsborough',
+        date: '2020-05-06 10:30:00',
+        userId: 1,
+        roleId: 3,
+        churchId: 1,
     },
 ];
-
 async function seed() {
     await db.sync({ force: true });
     console.log('db synced!');
@@ -99,29 +98,29 @@ async function seed() {
             Church.create(church);
         }),
     );
-
+    await new Promise((r) => setTimeout(r, 2000));
+    const seedRoles = await Promise.all(
+        roles.map((role) => {
+            Role.create(role);
+        }),
+    );
+    await new Promise((r) => setTimeout(r, 2000));
     const seedUsers = await Promise.all(
         users.map((user) => {
             User.create(user);
         }),
     );
-
+    await new Promise((r) => setTimeout(r, 2000));
     const seedTasks = await Promise.all(
         tasks.map((task) => {
             Task.create(task);
         }),
     );
 
-    const seedRoles = await Promise.all(
-        roles.map((role) => {
-            Role.create(role);
-        }),
-    );
-
     console.log(green(`seeded ${seedChurches.length} churches`));
     console.log(green(`seeded ${seedUsers.length} users`));
-    console.log(green(`seeded ${seedTasks.length} tasks`));
     console.log(green(`seeded ${seedRoles.length} roles`));
+    console.log(green(`seeded ${seedTasks.length} tasks`));
     console.log(green(`seeded succesfully`));
 }
 
