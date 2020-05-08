@@ -7,8 +7,9 @@
         "ios": "expo start --ios",
         "web": "expo start --web",
         "eject": "expo eject",
-        "server": "nodemon --exec babel-node ./server/index.js",
-        "seed": "node script/seed.js",
+        "server": "nodemon --exec babel-node ./server/index.ts",
+        "seed": "node scripts/seed.js",
+        "set-mac-env": "chmod +x scripts/set_mac_env.sh && scripts/set_mac_env.sh",
         "prettier:base": "prettier",
         "prettier:check": "npm run prettier:base -- --list-different \"**/*\"",
         "prettier:write": "npm run prettier:base -- --write \"**/*\""
