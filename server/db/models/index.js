@@ -32,16 +32,3 @@ module.exports = {
     Role,
     Duty,
 };
-
-const findUser = async () => {
-    try {
-        const oneUser = await User.findOne({
-            where: { firstName: 'Ted' },
-            include: 'church',
-        });
-    } catch (error) {
-        next(error);
-    }
-};
-
-findUser(); //find Ted
