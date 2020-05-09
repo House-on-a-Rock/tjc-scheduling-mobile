@@ -11,7 +11,7 @@ import {
 import { CustomInput, BodyText } from '../utils';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import axios from 'axios';
-import { secret_ip } from '../../secrets/secrets';
+import { secretIp } from '../../secrets/secrets';
 
 export const ChurchRegisterScreen = (props) => {
     const [churchName, setChurchName] = useState('');

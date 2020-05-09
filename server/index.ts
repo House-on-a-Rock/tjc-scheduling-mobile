@@ -1,11 +1,10 @@
-export {};
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const port = process.env.PORT || 8080;
-const app = express();
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import db from './db';
 
-const db = require('./db');
+const port = process.env.PORT || 8080;
+const app: express.Application = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

@@ -1,9 +1,8 @@
-export {};
-const db = require('../db');
-const Church = require('./church');
-const User = require('./user');
-const Role = require('./role');
-const Duty = require('./duty');
+import db from '../db';
+import Church from './church';
+import User from './user';
+import Role from './role';
+import Duty from './duty';
 
 /**
  * associations
@@ -34,15 +33,15 @@ module.exports = {
     Duty,
 };
 
-const findUser = async (req?, res?, next?) => {
-    try {
-        const oneUser = await User.findOne({
-            where: { firstName: 'Ted' },
-            include: 'church',
-        });
-    } catch (error) {
-        next(error);
-    }
-};
+// const findUser = async (req?, res?, next?) => {
+//     try {
+//         const oneUser = await User.findOne({
+//             where: { firstName: 'Ted' },
+//             include: 'church',
+//         });
+//     } catch (error) {
+//         next(error);
+//     }
+// };
 
-findUser(); //find Ted
+// findUser(); //find Ted

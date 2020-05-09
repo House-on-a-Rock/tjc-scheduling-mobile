@@ -1,7 +1,6 @@
-export {};
-const crypto = require('crypto');
-const Sequelize = require('sequelize');
-const db = require('../db');
+import Sequelize from 'sequelize';
+import db from '../db';
+import crypto from 'crypto';
 
 const User = db.define('user', {
     firstName: {
@@ -37,8 +36,7 @@ const User = db.define('user', {
     // 	type: Sequelize.STRING,
     // },
 });
-
-module.exports = User;
+export default User;
 
 /**
  * instanceMethods

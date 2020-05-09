@@ -1,6 +1,5 @@
-export {};
-const Sequelize = require('sequelize');
-const db = require('../db');
+import Sequelize from 'sequelize';
+import db from '../db';
 
 const Church = db.define('church', {
     name: { type: Sequelize.STRING },
@@ -8,4 +7,4 @@ const Church = db.define('church', {
     description: { type: Sequelize.TEXT },
 });
 
-module.exports = Church;
+export default Church;

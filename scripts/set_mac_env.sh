@@ -1,10 +1,9 @@
 #!/bin/bash
-echo "hi"
+
 # Change location of the file location as needed
 FILE=.env
 JSONFILE=./secrets/secret_database.json
 
-echo "$(cat $JSONFILE)"
 
 #Declaration of .env variables
 dbname="$(cat $JSONFILE | grep DB_NAME | cut -d":" -f2 | tr -d '", ')"
