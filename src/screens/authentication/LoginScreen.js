@@ -8,6 +8,8 @@ import {
     KeyboardAvoidingView,
     Platform,
     Keyboard,
+    Dimensions,
+    ScrollView,
 } from 'react-native';
 import { CustomInput, BodyText } from '../../utils';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,6 +22,15 @@ export const LoginScreen = (props) => {
     const [userPassword, setUserPassword] = useState('password');
     const [isValidCredentials, setIsValidCredentials] = useState(true);
     const [isValidInput, setIsValidInput] = useState(false);
+
+    let cardWidth = Dimensions.get('window').width;
+    let cardHeight = Dimensions.get('window').height;
+    // console.log(
+    //     'cardwidth, cardheight: ',
+    //     Platform.OS === 'ios' ? 'ios' : 'android',
+    //     cardWidth,
+    //     cardHeight,
+    // );
 
     function validateEmail() {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -41,6 +52,7 @@ export const LoginScreen = (props) => {
         }
 
         if (true) {
+            //
             dispatch(login());
             // dispatch(setProfile(profile));
             dispatch(createCalendar());
@@ -50,11 +62,13 @@ export const LoginScreen = (props) => {
     return (
         <KeyboardAvoidingView
             style={styles.loginScreen}
-            behavior={Platform.OS === 'ios' ? 'padding' : null}
+            // behavior={Platform.OS === 'ios' ? 'padding' : null}
+            behavior={'padding'}
         >
-            <TouchableWithoutFeedback
-                onPress={Keyboard.dismiss}
-                style={styles.feedbackContainer}
+            <ScrollView
+                keyboardShouldPersistTaps="handled"
+                contentContainerStyle={styles.feedbackContainer}
+                scrollEnabled={false}
             >
                 <View style={styles.imageContainer}>
                     <Image
@@ -88,24 +102,27 @@ export const LoginScreen = (props) => {
                         />
                     </View>
                 </View>
-            </TouchableWithoutFeedback>
-            <View style={styles.buttonContainer}>
-                <View style={styles.buttonStyle}>
-                    <Button title="Login" onPress={verifyLogin} />
+
+                <View style={styles.buttonContainer}>
+                    <View style={styles.buttonStyle}>
+                        <Button title="Login!" onPress={verifyLogin} />
+                    </View>
+                    <View style={styles.buttonStyle}>
+                        <Button
+                            title="Sign Up!"
+                            onPress={() => props.navigation.navigate('SignUpScreen')}
+                        />
+                    </View>
+                    <View style={styles.buttonStyle}>
+                        <Button
+                            title="Recover Password"
+                            onPress={() =>
+                                props.navigation.navigate('RecoverLoginScreen')
+                            }
+                        />
+                    </View>
                 </View>
-                <View style={styles.buttonStyle}>
-                    <Button
-                        title="Sign Up!"
-                        onPress={() => props.navigation.navigate('SignUpScreen')}
-                    />
-                </View>
-                <View style={{ width: '40%' }}>
-                    <Button
-                        title="Forgot Password"
-                        onPress={() => props.navigation.navigate('RecoverLoginScreen')}
-                    />
-                </View>
-            </View>
+            </ScrollView>
         </KeyboardAvoidingView>
     );
 };
@@ -113,6 +130,7 @@ export const LoginScreen = (props) => {
 const styles = StyleSheet.create({
     loginScreen: {
         flex: 1,
+        flexDirection: 'column',
         height: '100%',
         width: '100%',
         backgroundColor: 'white',
@@ -121,37 +139,38 @@ const styles = StyleSheet.create({
     feedbackContainer: {
         backgroundColor: 'white',
         width: '100%',
-        height: '60%',
+        height: '100%',
         justifyContent: 'space-around',
         alignItems: 'center',
-        // flex: 1,
     },
     imageContainer: {
         width: '80%',
         height: '10%',
-        flex: 3,
+        flex: 1,
     },
     loginCardContainer: {
         width: '80%',
         height: '20%',
         alignItems: 'center',
-        flex: 1,
+        justifyContent: 'center',
+        flex: 2,
     },
     loginWarning: {
         color: 'red',
         fontSize: 14,
     },
     buttonContainer: {
-        height: '30%',
+        flex: 2,
         justifyContent: 'flex-start',
         alignItems: 'center',
+        width: '100%',
     },
     inputStyle: {
-        width: '80%',
+        width: '100%',
         paddingVertical: 10,
     },
     inputLabel: {
-        fontSize: 12,
+        fontSize: 15,
         color: 'grey',
     },
     image: {
@@ -159,6 +178,7 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     buttonStyle: {
-        width: '25%',
+        width: '40%',
+        margin: 2,
     },
 });

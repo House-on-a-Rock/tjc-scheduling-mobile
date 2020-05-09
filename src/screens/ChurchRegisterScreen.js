@@ -25,12 +25,16 @@ export const ChurchRegisterScreen = (props) => {
         setChurchAddress('');
         setChurchDetails('');
 
+        // await axios
+        //     .post(secret_ip + '/api/churches/createChurch', {
+        //         name: churchName,
+        //         address: churchAddress,
+        //         description: churchDetails,
+        //     })
+        //     .then((response) => console.log(response.data))
+        //     .catch((error) => console.error('ERRRRORRR', error));
         await axios
-            .post(secret_ip + '/api/churches/createChurch', {
-                name: churchName,
-                address: churchAddress,
-                description: churchDetails,
-            })
+            .get(secret_ip + '/api/churches/getAll')
             .then((response) => console.log(response.data))
             .catch((error) => console.error('ERRRRORRR', error));
     };

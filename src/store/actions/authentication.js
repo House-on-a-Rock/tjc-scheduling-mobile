@@ -22,14 +22,21 @@ export const checkCredentials = ({ email, password }) => {
     //hash password then check
 
     return async (dispatch) => {
-        console.log('inside checkCredentials');
         let dummyId = 1;
         let profile = null;
         await axios
-            .get(secret_ip + '/api/authentication/getUser', { params: { id: 1 } })
+            .get(secret_ip + '/api/authentication/getUser', { params: { id: dummyId } })
             .then((response) => {
-                console.log('response: ', response.data);
                 profile = response.data;
+            })
+            .catch((error) => console.error(error));
+
+        await axios
+            .get(secret_ip + '/api/authentication/getUserTasks', {
+                params: { id: dummyId },
+            })
+            .then((response) => {
+                profile.tasks = response.data;
             })
             .catch((error) => console.error(error));
 

@@ -8,6 +8,10 @@ export const CalendarScreen = (props) => {
     const calCardDatesArray = useSelector((state) => state.calendarReducer.dateArray);
     let cardWidth = Dimensions.get('window').width;
     let profile = useSelector((state) => state.profileReducer.profile);
+    useEffect(() => {
+        console.log('calendar screen profile: ', profile);
+        console.log('church: ', profile ? profile.church.name : 'profile null');
+    });
 
     return (
         <View style={styles.screen}>
@@ -32,6 +36,6 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         width: '100%',
-        height: '80%',
+        height: '90%',
     },
 });

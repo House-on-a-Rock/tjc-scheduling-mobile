@@ -1,10 +1,17 @@
 const router = require('express').Router();
-const { Church } = require('../db/models');
+const { Church, User } = require('../db/models');
 module.exports = router;
 
 router.get('/getAll', async (req, res, next) => {
+    console.log('insdie get all');
     try {
         const church = await Church.findAll({
+            include: [
+                {
+                    model: User,
+                    attributes: ['firstName', 'lastName'],
+                },
+            ],
             attributes: ['name', 'address', 'description'],
         });
         res.status(200).json(church);

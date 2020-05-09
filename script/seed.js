@@ -71,19 +71,31 @@ const roles = [
 
 const tasks = [
     {
-        date: '2020-05-06 10:30:00',
+        date: '2020-05-06',
         userId: 1,
         roleId: 2,
         churchId: 3,
     },
     {
-        date: '2020-05-06 10:30:00',
+        date: '2020-05-06',
         userId: 2,
         roleId: 2,
         churchId: 1,
     },
     {
-        date: '2020-05-06 10:30:00',
+        date: '2020-05-06',
+        userId: 3,
+        roleId: 3,
+        churchId: 1,
+    },
+    {
+        date: '2020-04-06',
+        userId: 1,
+        roleId: 3,
+        churchId: 1,
+    },
+    {
+        date: '2020-03-06',
         userId: 1,
         roleId: 3,
         churchId: 1,
