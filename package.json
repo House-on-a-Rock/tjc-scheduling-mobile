@@ -8,10 +8,12 @@
         "web": "expo start --web",
         "eject": "expo eject",
         "server": "nodemon --exec babel-node ./server/index.js",
-        "seed": "node script/seed.js",
+        "seed": "node scripts/seed.js",
         "prettier:base": "prettier",
         "prettier:check": "npm run prettier:base -- --list-different \"**/*\"",
-        "prettier:write": "npm run prettier:base -- --write \"**/*\""
+        "prettier:write": "npm run prettier:base -- --write \"**/*\"",
+        "set-mac-env": "chmod +x scripts/set_mac_env.sh && scripts/set_mac_env.sh",
+        "set-win-env": "powershell.exe -exec bypass -File set_win_env.ps1"
     },
     "husky": {
         "hooks": {
