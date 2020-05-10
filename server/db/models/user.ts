@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
-import db from '../db';
 import crypto from 'crypto';
+import db from '../db';
 
 const User = db.define('user', {
     firstName: {

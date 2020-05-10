@@ -7,13 +7,13 @@ import Duty from './duty';
 /**
  * associations
  */
-//USER
+// USER
 Church.hasMany(User);
 User.belongsTo(Church);
 Role.hasMany(User);
 User.belongsTo(Role);
 
-//DUTIES
+// DUTIES
 User.hasMany(Duty);
 Duty.belongsTo(User);
 Role.hasMany(Duty);
@@ -21,7 +21,7 @@ Duty.belongsTo(Role);
 Church.hasMany(Duty);
 Duty.belongsTo(Church);
 
-//ROLES
+// ROLES
 Church.hasMany(Role);
 Role.belongsTo(Church);
 

@@ -1,9 +1,8 @@
-export {};
-const Sequelize = require('sequelize');
-const db = require('../db');
+import * as Sequelize from 'sequelize';
+import db from '../db';
 
 const Duty = db.define('duty', {
     date: { type: Sequelize.DATE },
 });
 
-module.exports = Duty;
+export default Duty;

@@ -1,4 +1,4 @@
-import Sequelize from 'sequelize';
+import * as Sequelize from 'sequelize';
 import db from '../db';
 
 const Church = db.define('church', {

@@ -26,4 +26,4 @@ const syncDb = () =>
     });
 syncDb();
 
-export default app;
+// export default app;
