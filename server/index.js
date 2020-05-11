@@ -24,7 +24,6 @@ const syncDb = () =>
             console.log(`Server is running on PORT ${port}`);
         });
     });
-
 syncDb();
 
 export default app;
