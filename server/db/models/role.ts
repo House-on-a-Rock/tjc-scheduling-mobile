@@ -1,9 +1,33 @@
 import * as Sequelize from 'sequelize';
-import db from '../db';
+import { SequelizeAttributes } from 'typings/SequelizeAttributes';
 
-const Role = db.define('role', {
-    name: { type: Sequelize.STRING },
-    time: { type: Sequelize.DATE },
-});
+export interface RoleAttributes {
+    id?: number;
+    name: string;
+    time: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
+    churchId?: number;
+}
 
-export default Role;
+export interface RoleInstance
+    extends Sequelize.Instance<RoleAttributes>,
+        RoleAttributes {}
+
+export const RoleFactory = (
+    sequelize: Sequelize.Sequelize,
+    DataTypes: Sequelize.DataTypes,
+): Sequelize.Model<RoleInstance, RoleAttributes> => {
+    const attributes: SequelizeAttributes<RoleAttributes> = {
+        name: {
+            type: DataTypes.STRING,
+        },
+        time: {
+            type: DataTypes.DATE,
+        },
+    };
+
+    const Role = sequelize.define<RoleInstance, RoleAttributes>('Role', attributes);
+
+    return Role;
+};
