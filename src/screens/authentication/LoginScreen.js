@@ -1,20 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import {
     View,
-<<<<<<< HEAD
-=======
-    Text,
->>>>>>> develop
     StyleSheet,
     Image,
     Button,
     KeyboardAvoidingView,
-<<<<<<< HEAD
     ScrollView,
-=======
-    Platform,
-    Keyboard,
->>>>>>> develop
 } from 'react-native';
 import { CustomInput, BodyText } from '../../utils';
 import { useDispatch, useSelector } from 'react-redux';
