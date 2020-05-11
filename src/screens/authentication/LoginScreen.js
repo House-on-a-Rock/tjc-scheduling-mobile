@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import {
     View,
-    Text,
     StyleSheet,
     Image,
     Button,
     KeyboardAvoidingView,
-    Platform,
-    Keyboard,
-    Dimensions,
     ScrollView,
 } from 'react-native';
 import { CustomInput, BodyText } from '../../utils';
@@ -22,15 +18,6 @@ export const LoginScreen = (props) => {
     const [userPassword, setUserPassword] = useState('password');
     const [isValidCredentials, setIsValidCredentials] = useState(true);
     const [isValidInput, setIsValidInput] = useState(false);
-
-    let cardWidth = Dimensions.get('window').width;
-    let cardHeight = Dimensions.get('window').height;
-    // console.log(
-    //     'cardwidth, cardheight: ',
-    //     Platform.OS === 'ios' ? 'ios' : 'android',
-    //     cardWidth,
-    //     cardHeight,
-    // );
 
     function validateEmail() {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
