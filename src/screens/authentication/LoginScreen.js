@@ -19,7 +19,7 @@ export const LoginScreen = (props) => {
     const [isValidCredentials, setIsValidCredentials] = useState(true);
     const [isValidInput, setIsValidInput] = useState(false);
 
-    function validateEmail() {
+    function isValidEmail() {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(userEmail).toLowerCase());
     }
@@ -28,7 +28,7 @@ export const LoginScreen = (props) => {
         //check if email/pass belongs to an account
         //after x attempts, prompt login or account lockout
 
-        if (validateEmail() && userPassword.length > 0) {
+        if (isValidEmail() && userPassword.length > 0) {
             console.log('email is validated');
             //dispatch check credentials action
             dispatch(checkCredentials({ email: userEmail, password: userPassword }));

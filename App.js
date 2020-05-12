@@ -9,8 +9,6 @@ import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import axios from 'axios';
 
-axios.defaults.withCredentials = true;
-
 const rootReducer = combineReducers({
     authReducer: authReducer,
     profileReducer: profileReducer,
