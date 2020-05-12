@@ -2,7 +2,7 @@ const db = require('../db');
 const Church = require('./church');
 const User = require('./user');
 const Role = require('./role');
-const Duty = require('./duty');
+const Task = require('./task');
 
 /**
  * associations
@@ -13,13 +13,13 @@ User.belongsTo(Church);
 Role.hasMany(User);
 User.belongsTo(Role);
 
-//DUTIES
-User.hasMany(Duty);
-Duty.belongsTo(User);
-Role.hasMany(Duty);
-Duty.belongsTo(Role);
-Church.hasMany(Duty);
-Duty.belongsTo(Church);
+//Tasks;
+User.hasMany(Task);
+Task.belongsTo(User);
+Role.hasMany(Task);
+Task.belongsTo(Role);
+Church.hasMany(Task);
+Task.belongsTo(Church);
 
 //ROLES
 Church.hasMany(Role);
@@ -30,18 +30,5 @@ module.exports = {
     Church,
     User,
     Role,
-    Duty,
+    Task,
 };
-
-const findUser = async () => {
-    try {
-        const oneUser = await User.findOne({
-            where: { firstName: 'Ted' },
-            include: 'church',
-        });
-    } catch (error) {
-        next(error);
-    }
-};
-
-findUser(); //find Ted

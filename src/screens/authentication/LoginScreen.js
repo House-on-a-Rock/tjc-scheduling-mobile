@@ -1,62 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
-    Text,
     StyleSheet,
     Image,
     Button,
     KeyboardAvoidingView,
-    Platform,
-    Keyboard,
+    ScrollView,
 } from 'react-native';
 import { CustomInput, BodyText } from '../../utils';
-import { useDispatch } from 'react-redux';
-import { login, setProfile, createCalendar } from '../../store/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, setProfile, createCalendar, checkCredentials } from '../../store/actions';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import profile from '../../dummyData';
-import axios from 'axios';
 
 export const LoginScreen = (props) => {
     const dispatch = useDispatch();
-    const [userEmail, setUserEmail] = useState('');
-    const [userPassword, setUserPassword] = useState('');
-    //hook to determine if login attempt was made and failed to display failed login text
+    const [userEmail, setUserEmail] = useState('email@email.com');
+    const [userPassword, setUserPassword] = useState('password');
+    const [isValidCredentials, setIsValidCredentials] = useState(true);
+    const [isValidInput, setIsValidInput] = useState(false);
 
-    const verifyLogin = async () => {
-        //check if email input is valid
+    function isValidEmail() {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(userEmail).toLowerCase());
+    }
+
+    const verifyLogin = () => {
         //check if email/pass belongs to an account
         //after x attempts, prompt login or account lockout
+
+        if (isValidEmail() && userPassword.length > 0) {
+            console.log('email is validated');
+            //dispatch check credentials action
+            dispatch(checkCredentials({ email: userEmail, password: userPassword }));
+        } else {
+            setIsValidCredentials(false);
+            console.log('credentials not ok');
+            return;
+        }
+
         if (true) {
+            //
             dispatch(login());
-            dispatch(setProfile(profile));
+            // dispatch(setProfile(profile));
             dispatch(createCalendar());
         }
-        await axios
-            .get('http://10.0.0.49:8080/')
-            .then((response) => console.log(response.data))
-            .catch((err) => {
-                if (err && err.response) {
-                    console.error(err.response.data);
-                    console.error(err.response.status);
-                    console.error(err.response.headers);
-                } else {
-                    console.error(err);
-                }
-            });
-
-        console.log('pressed');
-
-        console.log('finished');
     };
 
     return (
         <KeyboardAvoidingView
             style={styles.loginScreen}
-            behavior={Platform.OS === 'ios' ? 'padding' : null}
+            // behavior={Platform.OS === 'ios' ? 'padding' : null}
+            behavior={'padding'}
         >
-            <TouchableWithoutFeedback
-                onPress={Keyboard.dismiss}
-                style={styles.feedbackContainer}
+            <ScrollView
+                keyboardShouldPersistTaps="handled"
+                contentContainerStyle={styles.feedbackContainer}
+                scrollEnabled={false}
             >
                 <View style={styles.imageContainer}>
                     <Image
@@ -66,6 +65,13 @@ export const LoginScreen = (props) => {
                     />
                 </View>
                 <View style={styles.loginCardContainer}>
+                    {!isValidCredentials ? (
+                        <BodyText style={styles.loginWarning}>
+                            Please enter valid credentials
+                        </BodyText>
+                    ) : (
+                        <View></View>
+                    )}
                     <View style={styles.inputStyle}>
                         <BodyText style={styles.inputLabel}>Email: </BodyText>
                         <CustomInput
@@ -83,24 +89,27 @@ export const LoginScreen = (props) => {
                         />
                     </View>
                 </View>
-            </TouchableWithoutFeedback>
-            <View style={styles.buttonContainer}>
-                <View style={styles.buttonStyle}>
-                    <Button title="Login" onPress={verifyLogin} />
+
+                <View style={styles.buttonContainer}>
+                    <View style={styles.buttonStyle}>
+                        <Button title="Login!" onPress={verifyLogin} />
+                    </View>
+                    <View style={styles.buttonStyle}>
+                        <Button
+                            title="Sign Up!"
+                            onPress={() => props.navigation.navigate('SignUpScreen')}
+                        />
+                    </View>
+                    <View style={styles.buttonStyle}>
+                        <Button
+                            title="Recover Password"
+                            onPress={() =>
+                                props.navigation.navigate('RecoverLoginScreen')
+                            }
+                        />
+                    </View>
                 </View>
-                <View style={styles.buttonStyle}>
-                    <Button
-                        title="Sign Up!"
-                        onPress={() => props.navigation.navigate('SignUpScreen')}
-                    />
-                </View>
-                <View style={{ width: '40%' }}>
-                    <Button
-                        title="Forgot Password"
-                        onPress={() => props.navigation.navigate('RecoverLoginScreen')}
-                    />
-                </View>
-            </View>
+            </ScrollView>
         </KeyboardAvoidingView>
     );
 };
@@ -108,6 +117,7 @@ export const LoginScreen = (props) => {
 const styles = StyleSheet.create({
     loginScreen: {
         flex: 1,
+        flexDirection: 'column',
         height: '100%',
         width: '100%',
         backgroundColor: 'white',
@@ -116,33 +126,38 @@ const styles = StyleSheet.create({
     feedbackContainer: {
         backgroundColor: 'white',
         width: '100%',
-        height: '60%',
+        height: '100%',
         justifyContent: 'space-around',
         alignItems: 'center',
-        // flex: 1,
     },
     imageContainer: {
         width: '80%',
         height: '10%',
-        flex: 3,
+        flex: 1,
     },
     loginCardContainer: {
         width: '80%',
         height: '20%',
         alignItems: 'center',
-        flex: 1,
+        justifyContent: 'center',
+        flex: 2,
+    },
+    loginWarning: {
+        color: 'red',
+        fontSize: 14,
     },
     buttonContainer: {
-        height: '30%',
+        flex: 2,
         justifyContent: 'flex-start',
         alignItems: 'center',
+        width: '100%',
     },
     inputStyle: {
-        width: '80%',
+        width: '100%',
         paddingVertical: 10,
     },
     inputLabel: {
-        fontSize: 12,
+        fontSize: 15,
         color: 'grey',
     },
     image: {
@@ -150,6 +165,7 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     buttonStyle: {
-        width: '25%',
+        width: '40%',
+        margin: 2,
     },
 });

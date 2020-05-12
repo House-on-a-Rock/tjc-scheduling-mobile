@@ -1,17 +1,10 @@
 const router = require('express').Router();
-const { Church, User } = require('../db/models');
+const { Church } = require('../db/models');
 module.exports = router;
 
 router.get('/getAll', async (req, res, next) => {
-    console.log('insdie get all');
     try {
         const church = await Church.findAll({
-            include: [
-                {
-                    model: User,
-                    attributes: ['firstName', 'lastName'],
-                },
-            ],
             attributes: ['name', 'address', 'description'],
         });
         res.status(200).json(church);
@@ -28,6 +21,16 @@ router.post('/createChurch', async (req, res, next) => {
             description: req.body.description,
         });
         res.send(church);
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get('/getMovies', async (req, res, next) => {
+    try {
+        fetch('https://facebook.github.io/react-native/movies.json').then((response) =>
+            console.log(response),
+        );
     } catch (err) {
         next(err);
     }

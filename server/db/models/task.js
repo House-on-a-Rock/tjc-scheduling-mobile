@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
 
-const Duty = db.define('duty', {
+const Task = db.define('task', {
     date: { type: Sequelize.DATE },
 });
 
-module.exports = Duty;
+module.exports = Task;

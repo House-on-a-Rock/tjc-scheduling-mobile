@@ -1,4 +1,4 @@
-import { LOGIN } from '../actions';
+import { LOGIN, LOGOUT } from '../actions';
 
 const initialState = {
     isLoggedIn: false,
@@ -11,6 +11,12 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 isLoggedIn: true,
             };
+        case LOGOUT: {
+            return {
+                ...state,
+                isLoggedIn: false,
+            };
+        }
         default:
             return state;
     }
