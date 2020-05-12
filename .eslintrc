@@ -1,5 +1,6 @@
 {
     "extends": [
+        "plugin:react/recommended",
         "airbnb-typescript",
         "airbnb/hooks",
         "plugin:@typescript-eslint/eslint-recommended",

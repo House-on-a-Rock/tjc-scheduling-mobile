@@ -25,7 +25,8 @@ const users = [
         lastName: 'Tung',
         email: 'shaun.tung@gmail.com',
         password: 'password',
-        churchId: 1,
+        churchId: 2,
+        roleId: 2,
     },
     {
         firstName: 'Ted',
@@ -33,6 +34,7 @@ const users = [
         email: 'ted.chen@gmail.com',
         password: 'password1',
         churchId: 1,
+        roleId: 1,
     },
     {
         firstName: 'Jonathan',
@@ -40,24 +42,62 @@ const users = [
         email: 'Jonathan.Lee@gmail.com',
         password: 'password3',
         churchId: 2,
+        roleId: 3,
     },
 ];
 
 const roles = [
     {
         name: 'AV',
+        time: '2020-05-06 10:30:00',
         churchId: 1,
     },
     {
         name: 'Speaker',
-        churchId: 1,
+        time: '2020-05-06 10:30:00',
+        churchId: 2,
     },
     {
         name: 'Interpreting',
-        churchId: 1,
+        time: '2020-05-06 10:30:00',
+        churchId: 3,
     },
     {
         name: 'RE',
+        time: '2020-05-06 10:30:00',
+        churchId: 1,
+    },
+];
+
+const tasks = [
+    {
+        date: '2020-05-06',
+        userId: 1,
+        roleId: 2,
+        churchId: 3,
+    },
+    {
+        date: '2020-05-06',
+        userId: 2,
+        roleId: 2,
+        churchId: 1,
+    },
+    {
+        date: '2020-05-06',
+        userId: 3,
+        roleId: 3,
+        churchId: 1,
+    },
+    {
+        date: '2020-04-06',
+        userId: 1,
+        roleId: 3,
+        churchId: 1,
+    },
+    {
+        date: '2020-03-06',
+        userId: 1,
+        roleId: 3,
         churchId: 1,
     },
 ];
@@ -70,7 +110,13 @@ async function seed() {
             db.Church.create(church);
         }),
     );
-
+    await new Promise((r) => setTimeout(r, 2000));
+    const seedRoles = await Promise.all(
+        roles.map((role) => {
+            Role.create(role);
+        }),
+    );
+    await new Promise((r) => setTimeout(r, 2000));
     const seedUsers = await Promise.all(
         users.map((user) => {
             db.User.create(user);

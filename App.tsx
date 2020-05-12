@@ -1,11 +1,14 @@
+/* eslint-disable global-require */
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
-import AppNavigation from './src/navigation/AppNavigation';
-import { createStore, combineReducers } from 'redux';
-import { authReducer, profileReducer, calendarReducer } from './src/store/reducers';
+// import axios from 'axios';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import ReduxThunk from 'redux-thunk';
 import { Provider } from 'react-redux';
+import AppNavigation from './src/navigation/AppNavigation';
+import { authReducer, profileReducer, calendarReducer } from './src/store/reducers';
 
 const rootReducer = combineReducers({
     authReducer: authReducer,
@@ -13,7 +16,7 @@ const rootReducer = combineReducers({
     calendarReducer: calendarReducer,
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 const fetchFonts = () => {
     return Font.loadAsync({
