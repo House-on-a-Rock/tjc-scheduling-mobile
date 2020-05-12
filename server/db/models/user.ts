@@ -1,44 +1,34 @@
-// import Sequelize from 'sequelize';
 import * as Sequelize from 'sequelize';
 import { SequelizeAttributes } from 'typings/SequelizeAttributes';
 import crypto from 'crypto';
-// import db from '../db';
 
 export interface UserAttributes {
     id?: number;
     firstName: string;
     lastName: string;
     email: string;
-    password: string;
-    salt: string;
+    password: any;
+    salt: any;
     createdAt?: Date;
     updatedAt?: Date;
 }
 
-export interface UserInstance extends Sequelize.Instance<UserAttributes>, UserAttributes {
-    // prototype: {
-    //     correctPassword: (candidatePwd: string, salt: string) => boolean;
-    // };
-}
-// User.prototype.correctPassword = function (candidatePwd) {
-//     return User.encryptPassword(candidatePwd, this.salt()) === this.password();
-// };
+export interface UserInstance
+    extends Sequelize.Instance<UserAttributes>,
+        UserAttributes {}
 
 export interface UserModel extends Sequelize.Model<UserInstance, UserAttributes> {
-    // prototype: {
-    //     correctPassword: (candidatePwd: string, salt: string) => boolean;
-    // };
-    // encryptPassword: (candidatePwd: string, UserInstance) => string;
-    // generateSalt: () => void;
-    prototype?: {
-        verifyPassword: (password: string) => boolean;
+    prototype: {
+        verifyPassword: (this: UserAttributes, password: string) => boolean;
     };
+    generateSalt: () => string;
+    encryptPassword: (plainText: string, salt) => string;
 }
 
 export const UserFactory = (
     sequelize: Sequelize.Sequelize,
     DataTypes: Sequelize.DataTypes,
-): UserModel => {
+): Sequelize.Model<UserInstance, UserAttributes> => {
     const attributes: SequelizeAttributes<UserAttributes> = {
         id: {
             type: DataTypes.INTEGER,
@@ -85,82 +75,37 @@ export const UserFactory = (
         },
     };
 
-    const options = {
-        prototype: {
-            correctPassword: function (password, salt) {
-                const verify = password !== salt;
-                return verify;
-            },
-        },
-    };
-
-    const User: UserModel = sequelize.define<UserInstance, UserAttributes>(
+    const User = sequelize.define<UserInstance, UserAttributes>(
         'users',
         attributes,
-        // options,
-    );
-    User.prototype.verifyPassword = function (password: string): boolean {
-        // const hash = createHash(config.password.hash)
-        //     .update(password + config.password.salt)
-        //     .digest('hex');
+    ) as UserModel;
 
-        return true;
+    User.generateSalt = function () {
+        return crypto.randomBytes(16).toString('base64');
     };
 
-    // User.encryptPassword = function (plainText, salt) {
-    //     return crypto
-    //         .createHash('RSA-SHA256')
-    //         .update(plainText)
-    //         .update(salt)
-    //         .digest('hex');
-    // };
+    User.encryptPassword = function (plainText, salt) {
+        return crypto
+            .createHash('RSA-SHA256')
+            .update(plainText)
+            .update(salt)
+            .digest('hex');
+    };
 
-    // User.prototype.correctPassword = function (candidatePwd: string): boolean {
-    //     console.log('correctPassword', this);
-    //     return true;
-    //     // return User.encryptPassword(candidatePwd, '123') === '123';
-    // };
+    User.prototype.verifyPassword = function (this, candidatePwd: string): boolean {
+        const salt = this.salt();
+        return User.encryptPassword(candidatePwd, salt) === this.password();
+    };
 
     const setSaltAndPassword = (user) => {
         if (user.changed('password')) {
-            console.log('user');
-            // user.salt = User.generateSalt();
-            // user.password = User.encryptPassword(user.password(), user.salt());
+            user.salt = User.generateSalt();
+            user.password = User.encryptPassword(user.password(), user.salt());
         }
     };
 
     User.beforeCreate(setSaltAndPassword);
+    User.beforeUpdate(setSaltAndPassword);
 
     return User;
 };
-
-// /**
-//  * instanceMethods
-//  */
-// User.prototype.correctPassword = function (candidatePwd) {
-//     return User.encryptPassword(candidatePwd, this.salt()) === this.password();
-// };
-
-/**
- * classMethods
- */
-// const generateSalt = function () {
-//     return crypto.randomBytes(16).toString('base64');
-// };
-
-// User.encryptPassword = function (plainText, salt) {
-//     return crypto.createHash('RSA-SHA256').update(plainText).update(salt).digest('hex');
-// };
-
-/**
- * hooks
- */
-// const setSaltAndPassword = (user) => {
-//     if (user.changed('password')) {
-//         user.salt = User.generateSalt();
-//         user.password = User.encryptPassword(user.password(), user.salt());
-//     }
-// };
-
-// User.beforeCreate(setSaltAndPassword);
-// User.beforeUpdate(setSaltAndPassword);

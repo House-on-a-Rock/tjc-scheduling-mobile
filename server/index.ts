@@ -18,12 +18,12 @@ app.get('/', (req, res) =>
 
 app.use('/api', require('./api'));
 
-const syncDb = () =>
-    db.sync().then(() => {
-        app.listen(port, () => {
-            console.log(`Server is running on PORT ${port}`);
-        });
-    });
-syncDb();
+// const syncDb = () =>
+//     db.sync().then(() => {
+//         app.listen(port, () => {
+//             console.log(`Server is running on PORT ${port}`);
+//         });
+//     });
+// syncDb();
 
 // export default app;

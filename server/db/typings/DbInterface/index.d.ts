@@ -1,12 +1,14 @@
 import * as Sequelize from 'sequelize';
-// import { CommentAttributes, CommentInstance } from 'models/Crhu';
-// import { PostAttributes, PostInstance } from 'models/Post';
-// import { UserAttributes, UserInstance } from 'models/User';
+import { ChurchInstance, ChurchAttributes } from 'models/Church';
+import { UserInstance, UserAttributes } from 'models/User';
+import { TaskInstance, TaskAttributes } from 'models/Task';
+import { RoleInstance, RoleAttributes } from 'models/Role';
 
 export interface DbInterface {
     sequelize: Sequelize.Sequelize;
     Sequelize: Sequelize.SequelizeStatic;
-    //   Comment: Sequelize.Model<CommentInstance, CommentAttributes>;
-    //   Post: Sequelize.Model<PostInstance, PostAttributes>;
-    //   User: Sequelize.Model<UserInstance, UserAttributes>;
+    Church: Sequelize.Model<ChurchInstance, ChurchAttributes>;
+    User: Sequelize.Model<UserInstance, UserAttributes>;
+    Task: Sequelize.Model<TaskInstance, TaskAttributes>;
+    Role: Sequelize.Model<RoleInstance, RoleAttributes>;
 }

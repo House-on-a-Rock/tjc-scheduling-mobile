@@ -29,5 +29,9 @@ export const ChurchFactory = (
         attributes,
     );
 
+    // Church.associate(models) => {
+    //     Church.belongsTo(models.);
+    // }
+
     return Church;
 };

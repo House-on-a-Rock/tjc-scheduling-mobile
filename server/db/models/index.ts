@@ -1,34 +1,39 @@
-// import db from '../db';
-// import Church from './church';
-// import User from './user';
-// import { Role } from './Role';
-// import { Task } from './Task';
+import Sequelize from 'sequelize';
+import { DbInterface } from 'typings/DbInterface';
+import { ChurchFactory } from 'models/Church';
+import { UserFactory } from 'models/User';
+import { TaskFactory } from 'models/Task';
+import { RoleFactory } from 'models/Role';
+import configJson from '../config';
 
-// /**
-//  * associations
-//  */
-// // USER
-// Church.hasMany(User);
-// User.belongsTo(Church);
-// Role.hasMany(User);
-// User.belongsTo(Role);
+const env = process.env.NODE_ENV ? process.env.NODE_ENV : 'development';
+const config = configJson[env];
+config.logging = false;
 
-// // DUTIES
-// User.hasMany(Task);
-// Task.belongsTo(User);
-// Role.hasMany(Task);
-// Task.belongsTo(Role);
-// Church.hasMany(Task);
-// Task.belongsTo(Church);
+const createModels = (): DbInterface => {
+    const sequelize = new Sequelize(
+        config.database,
+        config.username,
+        config.password,
+        config,
+    );
 
-// // ROLES
-// Church.hasMany(Role);
-// Role.belongsTo(Church);
+    const db: DbInterface = {
+        sequelize,
+        Sequelize,
+        Church: ChurchFactory(sequelize, Sequelize),
+        User: UserFactory(sequelize, Sequelize),
+        Task: TaskFactory(sequelize, Sequelize),
+        Role: RoleFactory(sequelize, Sequelize),
+    };
 
-// module.exports = {
-//     db,
-//     Church,
-//     User,
-//     Role,
-//     Task,
-// };
+    Object.keys(db).forEach((modelName) => {
+        if (db[modelName].associate) {
+            db[modelName].associate(db);
+        }
+    });
+
+    return db;
+};
+
+export default createModels;
