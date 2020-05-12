@@ -1,31 +1,9 @@
 import * as Sequelize from 'sequelize';
-import { SequelizeAttributes } from 'typings/SequelizeAttributes';
+import { SequelizeAttributes } from 'shared/SequelizeTypings/typings/SequelizeAttributes';
 import crypto from 'crypto';
+import { UserAttributes, UserInstance, UserModel } from 'shared/SequelizeTypings/models';
 
-export interface UserAttributes {
-    id?: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: any;
-    salt: any;
-    createdAt?: Date;
-    updatedAt?: Date;
-}
-
-export interface UserInstance
-    extends Sequelize.Instance<UserAttributes>,
-        UserAttributes {}
-
-export interface UserModel extends Sequelize.Model<UserInstance, UserAttributes> {
-    prototype: {
-        verifyPassword: (this: UserAttributes, password: string) => boolean;
-    };
-    generateSalt: () => string;
-    encryptPassword: (plainText: string, salt) => string;
-}
-
-export const UserFactory = (
+const UserFactory = (
     sequelize: Sequelize.Sequelize,
     DataTypes: Sequelize.DataTypes,
 ): Sequelize.Model<UserInstance, UserAttributes> => {
@@ -98,6 +76,7 @@ export const UserFactory = (
     };
 
     const setSaltAndPassword = (user) => {
+        console.log('woolaalal', user.password(), user.salt());
         if (user.changed('password')) {
             user.salt = User.generateSalt();
             user.password = User.encryptPassword(user.password(), user.salt());
@@ -115,3 +94,5 @@ export const UserFactory = (
 
     return User;
 };
+
+export default UserFactory;

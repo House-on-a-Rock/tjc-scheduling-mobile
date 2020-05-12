@@ -1,11 +1,13 @@
-export {};
-const router = require('express').Router();
-const { Church } = require('../db/models');
+import express from 'express';
+import db from '../index';
+
+const router = express.Router();
+
 module.exports = router;
 
 router.get('/getAll', async (req, res, next) => {
     try {
-        const church = await Church.findAll({
+        const church = await db.Church.findAll({
             attributes: ['name', 'address', 'description'],
         });
         res.status(200).json(church);
@@ -16,7 +18,7 @@ router.get('/getAll', async (req, res, next) => {
 
 router.post('/createChurch', async (req, res, next) => {
     try {
-        const church = await Church.create({
+        const church = await db.Church.create({
             name: req.body.name,
             address: req.body.address,
             description: req.body.description,

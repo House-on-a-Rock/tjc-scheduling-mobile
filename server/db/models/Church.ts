@@ -1,20 +1,11 @@
 import * as Sequelize from 'sequelize';
-import { SequelizeAttributes } from 'typings/SequelizeAttributes';
+import { SequelizeAttributes } from 'shared/SequelizeTypings/typings/SequelizeAttributes';
+import {
+    ChurchInstance,
+    ChurchAttributes,
+} from 'shared/SequelizeTypings/models/ChurchModel';
 
-export interface ChurchAttributes {
-    id?: number;
-    name: string;
-    address: string;
-    description: string;
-    createdAt?: Date;
-    updatedAt?: Date;
-}
-
-export interface ChurchInstance
-    extends Sequelize.Instance<ChurchAttributes>,
-        ChurchAttributes {}
-
-export const ChurchFactory = (
+const ChurchFactory = (
     sequelize: Sequelize.Sequelize,
     DataTypes: Sequelize.DataTypes,
 ): Sequelize.Model<ChurchInstance, ChurchAttributes> => {
@@ -37,3 +28,5 @@ export const ChurchFactory = (
 
     return Church;
 };
+
+export default ChurchFactory;

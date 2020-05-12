@@ -1,20 +1,8 @@
 import * as Sequelize from 'sequelize';
-import { SequelizeAttributes } from 'typings/SequelizeAttributes';
+import { SequelizeAttributes } from 'shared/SequelizeTypings/typings/SequelizeAttributes';
+import { RoleInstance, RoleAttributes } from 'shared/SequelizeTypings/models';
 
-export interface RoleAttributes {
-    id?: number;
-    name: string;
-    time: Date;
-    createdAt?: Date;
-    updatedAt?: Date;
-    churchId?: number;
-}
-
-export interface RoleInstance
-    extends Sequelize.Instance<RoleAttributes>,
-        RoleAttributes {}
-
-export const RoleFactory = (
+const RoleFactory = (
     sequelize: Sequelize.Sequelize,
     DataTypes: Sequelize.DataTypes,
 ): Sequelize.Model<RoleInstance, RoleAttributes> => {
@@ -36,3 +24,5 @@ export const RoleFactory = (
 
     return Role;
 };
+
+export default RoleFactory;

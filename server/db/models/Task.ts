@@ -1,20 +1,8 @@
 import * as Sequelize from 'sequelize';
-import { SequelizeAttributes } from 'typings/SequelizeAttributes';
+import { SequelizeAttributes } from 'shared/SequelizeTypings/typings/SequelizeAttributes';
+import { TaskInstance, TaskAttributes } from 'shared/SequelizeTypings/models';
 
-export interface TaskAttributes {
-    id?: number;
-    churchId?: number;
-    userId?: number;
-    date: string;
-    createdAt?: Date;
-    updatedAt?: Date;
-}
-
-export interface TaskInstance
-    extends Sequelize.Instance<TaskAttributes>,
-        TaskAttributes {}
-
-export const TaskFactory = (
+const TaskFactory = (
     sequelize: Sequelize.Sequelize,
     DataTypes: Sequelize.DataTypes,
 ): Sequelize.Model<TaskInstance, TaskAttributes> => {
@@ -30,3 +18,5 @@ export const TaskFactory = (
     };
     return Task;
 };
+
+export default TaskFactory;

@@ -1,8 +1,14 @@
 import * as Sequelize from 'sequelize';
-import { ChurchInstance, ChurchAttributes } from 'models/Church';
-import { UserInstance, UserAttributes } from 'models/User';
-import { TaskInstance, TaskAttributes } from 'models/Task';
-import { RoleInstance, RoleAttributes } from 'models/Role';
+import {
+    ChurchInstance,
+    ChurchAttributes,
+    UserInstance,
+    UserAttributes,
+    TaskInstance,
+    TaskAttributes,
+    RoleInstance,
+    RoleAttributes,
+} from 'shared/SequelizeTypings/models';
 
 export interface DbInterface {
     sequelize: Sequelize.Sequelize;

@@ -8,6 +8,7 @@
         "web": "expo start --web",
         "eject": "expo eject",
         "server": "node -r ts-node/register ./server/index.ts",
+        "server:watch": "nodemon -r ts-node/register ./server/index.ts",
         "seed": "node scripts/seed.js",
         "set-mac-env": "chmod +x scripts/set_mac_env.sh && scripts/set_mac_env.sh",
         "prettier:base": "prettier",
@@ -34,7 +35,7 @@
         "watch": [
             "server"
         ],
-        "exec": "npm start",
+        "exec": "npm run server",
         "ext": "ts"
     },
     "dependencies": {
@@ -48,6 +49,7 @@
         "@typescript-eslint/parser": "^2.31.0",
         "axios": "^0.19.2",
         "body-parser": "^1.19.0",
+        "chalk": "^4.0.0",
         "cors": "^2.8.5",
         "crypto": "^1.0.1",
         "dotenv": "^8.2.0",
@@ -82,7 +84,6 @@
         "@typescript-eslint/eslint-plugin": "^2.31.0",
         "babel-loader": "^8.1.0",
         "babel-preset-expo": "~8.0.0",
-        "chalk": "^4.0.0",
         "compression": "^1.7.4",
         "eslint": "^6.8.0",
         "eslint-config-airbnb-typescript": "^7.2.1",
@@ -96,6 +97,7 @@
         "lint-staged": "^10.2.2",
         "metro-react-native-babel-preset": "^0.59.0",
         "morgan": "^1.10.0",
+        "nodemon": "^2.0.3",
         "path": "^0.12.7",
         "prettier": "^2.0.5",
         "pretty-quick": "^2.0.1",

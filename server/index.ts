@@ -16,14 +16,18 @@ app.get('/', (req, res) =>
     }),
 );
 
-app.use('/api', require('./api'));
+app.use('/api', require('./routes'));
 
-// const syncDb = () =>
-//     db.sync().then(() => {
-//         app.listen(port, () => {
-//             console.log(`Server is running on PORT ${port}`);
-//         });
-//     });
-// syncDb();
+const syncDb = () =>
+    db.sequelize
+        .sync({
+            force: true,
+        })
+        .then(() => {
+            app.listen(port, () => {
+                console.log(`Server is running on PORT ${port}`);
+            });
+        });
+syncDb();
 
-// export default app;
+export default db;

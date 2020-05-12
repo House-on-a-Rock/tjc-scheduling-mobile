@@ -61,6 +61,7 @@ const roles = [
         churchId: 1,
     },
 ];
+
 async function seed() {
     await db.sync({ force: true });
     console.log('db synced!');
