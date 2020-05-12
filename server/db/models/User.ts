@@ -109,7 +109,7 @@ export const UserFactory = (
 
     User.associate = (models) => {
         User.belongsTo(models.Church);
-        User.hasMany(models.Role);
+        User.belongsToMany(models.Role, { through: 'RoleGroup', as: 'member' });
         User.hasMany(models.Task);
     };
 

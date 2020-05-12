@@ -31,7 +31,7 @@ export const RoleFactory = (
 
     Role.associate = (models) => {
         Role.belongsTo(models.Church);
-        Role.belongsTo(models.User);
+        Role.belongsToMany(models.User, { through: 'RoleGroup', as: 'duty' });
     };
 
     return Role;
