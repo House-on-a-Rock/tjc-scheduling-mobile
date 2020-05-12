@@ -29,9 +29,11 @@ export const ChurchFactory = (
         attributes,
     );
 
-    // Church.associate(models) => {
-    //     Church.belongsTo(models.);
-    // }
+    Church.associate = (models) => {
+        Church.hasMany(models.User);
+        Church.hasMany(models.Role);
+        Church.hasMany(models.Task);
+    };
 
     return Church;
 };

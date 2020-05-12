@@ -107,5 +107,11 @@ export const UserFactory = (
     User.beforeCreate(setSaltAndPassword);
     User.beforeUpdate(setSaltAndPassword);
 
+    User.associate = (models) => {
+        User.belongsTo(models.Church);
+        User.hasMany(models.Role);
+        User.hasMany(models.Task);
+    };
+
     return User;
 };

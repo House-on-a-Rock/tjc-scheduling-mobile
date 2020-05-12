@@ -29,5 +29,10 @@ export const RoleFactory = (
 
     const Role = sequelize.define<RoleInstance, RoleAttributes>('Role', attributes);
 
+    Role.associate = (models) => {
+        Role.belongsTo(models.Church);
+        Role.belongsTo(models.User);
+    };
+
     return Role;
 };

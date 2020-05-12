@@ -24,5 +24,9 @@ export const TaskFactory = (
 
     const Task = sequelize.define<TaskInstance, TaskAttributes>('Task', attributes);
 
+    Task.associate = (models) => {
+        Task.belongsTo(models.Church);
+        Task.belongsTo(models.User);
+    };
     return Task;
 };
