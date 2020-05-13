@@ -9,6 +9,9 @@ import {
     Alert,
     Button,
     TouchableOpacity,
+    ScrollView,
+    TextInput,
+    KeyboardAvoidingView,
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Entypo } from '@expo/vector-icons';
@@ -19,6 +22,13 @@ export const ProfileScreen = (props) => {
         (state) => state.profileReducer.profile,
     );
     const church = useSelector((state) => state.profileReducer.profile.church.name);
+    const [modalParameter, setModalParameter] = useState({ label: '', data: '' });
+    const [modalInput, setModalInput] = useState('');
+
+    const editIconHandler = (label, data) => {
+        setModalParameter({ label, data });
+        setModalVisible(true);
+    };
 
     const Tile = (props) => {
         return (
@@ -29,14 +39,19 @@ export const ProfileScreen = (props) => {
                 <View style={{ flex: 10, paddingLeft: 10 }}>
                     <Text style={styles.text}>{props.data}</Text>
                 </View>
-                <View style={{ flex: 1 }}>
+                <TouchableOpacity style={{ flex: 1 }}>
                     <Entypo
                         name="edit"
                         size={20}
                         color="black"
-                        onPress={() => setModalVisible(true)}
+                        onPress={() => editIconHandler(props.label, props.data)}
+                        style={{
+                            borderWidth: 1,
+                            padding: 1,
+                            borderColor: 'rgba(150, 150, 150, 0.67)',
+                        }}
                     />
-                </View>
+                </TouchableOpacity>
             </View>
         );
     };
@@ -60,6 +75,16 @@ export const ProfileScreen = (props) => {
         return <Tile label={item.item.label} data={item.item.data} />;
     };
 
+    const onSaveHandler = () => {
+        console.log(modalInput);
+        if (modalInput === '') {
+            //check for valid inputs
+            //action -> api call
+            //
+        }
+        setModalVisible(false);
+    };
+
     return (
         <View style={styles.screen}>
             <Modal
@@ -69,22 +94,47 @@ export const ProfileScreen = (props) => {
                 visible={modalVisible}
                 onRequestClose={() => Alert.alert('modal has been closed')}
             >
-                <TouchableOpacity
-                    style={styles.modalContainer}
-                    onPress={() => {
-                        console.log('modal container pressed');
-                        setModalVisible(false);
-                    }}
-                    activeOpacity={0}
+                <ScrollView
+                    contentContainerStyle={styles.modalContainer}
+                    keyboardShouldPersistTaps="handled"
                 >
-                    <View style={styles.modalCard}>
-                        <Text>Modal Text</Text>
-                        <Button
-                            title={'Close modal'}
-                            onPress={() => setModalVisible(false)}
-                        />
-                    </View>
-                </TouchableOpacity>
+                    <KeyboardAvoidingView
+                        style={{
+                            flex: 1,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            width: '100%',
+                        }}
+                    >
+                        <View style={styles.modalCard} opacity={0.97}>
+                            <Text style={styles.text}>Edit {modalParameter.label}</Text>
+                            <View style={{ flexDirection: 'row', flex: 1 }}>
+                                <TextInput
+                                    placeholder={modalParameter.data}
+                                    style={{
+                                        width: 250,
+                                        borderWidth: 1,
+                                        height: 35,
+                                        fontSize: 20,
+                                    }}
+                                    onChangeText={setModalInput}
+                                />
+                            </View>
+                            <View style={{ width: '65%' }}>
+                                <View style={{ marginBottom: 5 }}>
+                                    <Button
+                                        title={'Save changes'}
+                                        onPress={onSaveHandler}
+                                    />
+                                </View>
+                                <Button
+                                    title={'Exit without saving'}
+                                    onPress={() => setModalVisible(false)}
+                                />
+                            </View>
+                        </View>
+                    </KeyboardAvoidingView>
+                </ScrollView>
             </Modal>
             <View style={styles.imageCard}>
                 <View style={styles.imageContainer}>
@@ -94,19 +144,12 @@ export const ProfileScreen = (props) => {
                         style={styles.image}
                     />
                 </View>
-                <View style={{ paddingTop: 5 }}>
-                    <Entypo
-                        name="edit"
-                        size={16}
-                        color="black"
-                        onPress={() => setModalVisible(true)}
-                    />
-                </View>
             </View>
             <View style={styles.listContainer}>
                 <FlatList
+                    scrollEnabled={false}
                     contentContainerStyle={styles.flatList}
-                    keyExtractor={(item, index) => index}
+                    keyExtractor={(item, index) => index.toString()}
                     data={profileDetailsArray}
                     renderItem={render}
                 />
@@ -134,7 +177,6 @@ const styles = StyleSheet.create({
         width: 250,
         height: 250,
         borderRadius: 100,
-        backgroundColor: 'red',
         overflow: 'hidden',
     },
     image: {
@@ -153,34 +195,35 @@ const styles = StyleSheet.create({
     },
     tile: {
         paddingHorizontal: 10,
+        margin: 5,
         flexDirection: 'row',
         justifyContent: 'flex-start',
-
-        shadowColor: 'black',
-        shadowOffset: {
-            width: 0,
-            height: 3,
-        },
-        shadowOpacity: 0.27,
-        shadowRadius: 4.65,
-        elevation: 10,
-        zIndex: 999,
     },
     tileTextContainer: {
         // justifyContent:
     },
     listContainer: {
-        width: '80%',
+        width: '90%',
     },
     modalContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        shadowColor: 'black',
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
     },
     modalCard: {
-        height: '30%',
+        height: 175,
         width: '70%',
         backgroundColor: 'white',
         elevation: 10,
+        alignItems: 'center',
+        padding: 10,
+        borderRadius: 20,
     },
 });

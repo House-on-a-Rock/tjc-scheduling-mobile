@@ -6,3 +6,5 @@ export const setProfile = (profile) => {
         payload: profile,
     };
 };
+
+export const editProfile = (profile) => {};

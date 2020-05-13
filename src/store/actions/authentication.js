@@ -1,6 +1,8 @@
 import axios from 'axios';
-import { SET_PROFILE } from './profileActions';
+import { setProfile } from './profileActions';
+import { createCalendar } from './calendarActions';
 import { secret_ip } from '../../../secrets/secrets';
+import { changeLoadState, states } from './loadState';
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
@@ -22,6 +24,7 @@ export const checkCredentials = ({ email, password }) => {
     //hash password then check
 
     return async (dispatch) => {
+        dispatch(changeLoadState(states.loading));
         let dummyId = 1;
         let profile = null;
         await axios
@@ -38,11 +41,13 @@ export const checkCredentials = ({ email, password }) => {
             .then((response) => {
                 profile.tasks = response.data;
             })
+            .then(() => {
+                dispatch(changeLoadState(states.loaded));
+            })
             .catch((error) => console.error(error));
 
-        dispatch({
-            type: SET_PROFILE,
-            payload: profile,
-        });
+        dispatch(setProfile(profile));
+
+        dispatch(createCalendar());
     };
 };
