@@ -1,4 +1,4 @@
-const { green, red } = require('chalk');
+const { green, red, blue } = require('chalk');
 const createModels = require('../server/db/models').default;
 
 const configuration = {
@@ -112,41 +112,37 @@ const tasks = [
 
 async function seed() {
     await db.sequelize.sync({ force: true });
-    console.log('db synced!');
+    console.green('db synced!');
 
     const seedChurches = await Promise.all(
         churches.map((church) => {
-            console.log('making churchessssssss');
             db.Church.create(church);
         }),
     );
     await new Promise((r) => setTimeout(r, 2000));
     const seedUsers = await Promise.all(
         users.map((user) => {
-            console.log('making User');
             db.User.create(user);
         }),
     );
     await new Promise((r) => setTimeout(r, 2000));
     const seedRoles = await Promise.all(
         roles.map((role) => {
-            console.log('making Role');
             db.Role.create(role);
         }),
     );
     await new Promise((r) => setTimeout(r, 2000));
     const seedTasks = await Promise.all(
         tasks.map((task) => {
-            console.log('making taskssss');
             db.Task.create(task);
         }),
     );
 
-    console.log(green(`seeded ${seedChurches.length} churches`));
-    console.log(green(`seeded ${seedUsers.length} users`));
-    console.log(green(`seeded ${seedRoles.length} roles`));
-    console.log(green(`seeded ${seedTasks.length} tasks`));
-    console.log(green(`seeded succesfully`));
+    console.log(blue(`seeded ${seedChurches.length} churches`));
+    console.log(blue(`seeded ${seedUsers.length} users`));
+    console.log(blue(`seeded ${seedRoles.length} roles`));
+    console.log(blue(`seeded ${seedTasks.length} tasks`));
+    console.log(blue(`seeded succesfully`));
 }
 
 async function runSeed() {

@@ -61,7 +61,6 @@ const UserFactory = (
     };
 
     const createSaltyPassword = (user: UserInstance) => {
-        console.log('createSaltyPassword', user.changed('password'));
         if (user.changed('password')) {
             const verySalty = User.generateSalt();
             user.salt = verySalty;

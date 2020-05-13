@@ -1,13 +1,14 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import db from '../index';
+import { UserInstance } from 'shared/SequelizeTypings/models';
 
 const router = express.Router();
 
 module.exports = router;
 
-router.get('/getAllUsers', async (req, res, next) => {
+router.get('/getAllUsers', async (req: Request, res: Response, next) => {
     try {
-        const users = await db.User.findAll({
+        const users: UserInstance[] = await db.User.findAll({
             attributes: ['firstName', 'lastName', 'email'],
         });
         res.status(200).json(users);

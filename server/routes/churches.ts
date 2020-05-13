@@ -1,25 +1,25 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import db from '../index';
+import { ChurchInstance } from 'shared/SequelizeTypings/models';
 
 const router = express.Router();
 
 module.exports = router;
 
-router.get('/getAll', async (req, res, next) => {
-    console.log('insdie get all');
-    try {
-        const church = await db.Church.findAll({
-            attributes: ['name', 'address', 'description'],
+router.get('/getAll', async (req: Request, res: Response, next) => {
+    db.Church.findAll({
+        attributes: ['name', 'address', 'description'],
+    })
+        .then((churches: ChurchInstance[]) => res.status(200).json(churches))
+        .catch((err) => {
+            res.status(500);
+            next(err);
         });
-        res.status(200).json(church);
-    } catch (err) {
-        next(err);
-    }
 });
 
-router.post('/createChurch', async (req, res, next) => {
+router.post('/createChurch', async (req: Request, res: Response, next) => {
     try {
-        const church = await db.Church.create({
+        const church: ChurchInstance = await db.Church.create({
             name: req.body.name,
             address: req.body.address,
             description: req.body.description,
