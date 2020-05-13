@@ -1,5 +1,21 @@
 const { green, red } = require('chalk');
-const db = require('../server/db/models');
+const createModels = require('../server/db/models').default;
+
+const configuration = {
+    database: process.env.DB_NAME,
+    username: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    host: process.env.DB_HOST,
+    dialect: 'postgres',
+    logging: false,
+};
+
+const db = createModels(
+    configuration.database,
+    configuration.username,
+    configuration.password,
+    configuration,
+);
 
 const churches = [
     {
@@ -61,32 +77,75 @@ const roles = [
         churchId: 1,
     },
 ];
+const tasks = [
+    {
+        date: '2020-05-06',
+        userId: 1,
+        roleId: 2,
+        churchId: 3,
+    },
+    {
+        date: '2020-05-06',
+        userId: 2,
+        roleId: 2,
+        churchId: 1,
+    },
+    {
+        date: '2020-05-06',
+        userId: 3,
+        roleId: 3,
+        churchId: 1,
+    },
+    {
+        date: '2020-04-06',
+        userId: 1,
+        roleId: 3,
+        churchId: 1,
+    },
+    {
+        date: '2020-03-06',
+        userId: 1,
+        roleId: 3,
+        churchId: 1,
+    },
+];
 
 async function seed() {
-    await db.sync({ force: true });
+    await db.sequelize.sync({ force: true });
     console.log('db synced!');
 
     const seedChurches = await Promise.all(
         churches.map((church) => {
+            console.log('making churchessssssss');
             db.Church.create(church);
         }),
     );
-
+    await new Promise((r) => setTimeout(r, 2000));
     const seedUsers = await Promise.all(
         users.map((user) => {
+            console.log('making User');
             db.User.create(user);
         }),
     );
-
+    await new Promise((r) => setTimeout(r, 2000));
     const seedRoles = await Promise.all(
         roles.map((role) => {
+            console.log('making Role');
             db.Role.create(role);
+        }),
+    );
+    await new Promise((r) => setTimeout(r, 2000));
+    const seedTasks = await Promise.all(
+        tasks.map((task) => {
+            console.log('making taskssss');
+            db.Task.create(task);
         }),
     );
 
     console.log(green(`seeded ${seedChurches.length} churches`));
     console.log(green(`seeded ${seedUsers.length} users`));
     console.log(green(`seeded ${seedRoles.length} roles`));
+    console.log(green(`seeded ${seedTasks.length} tasks`));
     console.log(green(`seeded succesfully`));
 }
 

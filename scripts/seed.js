@@ -107,7 +107,7 @@ async function seed() {
 
     const seedChurches = await Promise.all(
         churches.map((church) => {
-            db.Church.create(church);
+            Church.create(church);
         }),
     );
     await new Promise((r) => setTimeout(r, 2000));
@@ -119,13 +119,13 @@ async function seed() {
     await new Promise((r) => setTimeout(r, 2000));
     const seedUsers = await Promise.all(
         users.map((user) => {
-            db.User.create(user);
+            User.create(user);
         }),
     );
-
-    const seedRoles = await Promise.all(
-        roles.map((role) => {
-            db.Role.create(role);
+    await new Promise((r) => setTimeout(r, 2000));
+    const seedTasks = await Promise.all(
+        tasks.map((task) => {
+            Task.create(task);
         }),
     );
 

@@ -5,10 +5,10 @@ export interface UserAttributes {
     firstName: string;
     lastName: string;
     email: string;
-    password: any;
-    salt: any;
-    createdAt?: Date;
-    updatedAt?: Date;
+    password: string;
+    salt: string;
+    createdAt?: Date | null;
+    updatedAt?: Date | null;
 }
 
 export interface UserInstance
@@ -17,7 +17,7 @@ export interface UserInstance
 
 export interface UserModel extends Sequelize.Model<UserInstance, UserAttributes> {
     prototype: {
-        verifyPassword: (this: UserAttributes, password: string) => boolean;
+        verifyPassword: (candidatePwd: string) => boolean;
     };
     generateSalt: () => string;
     encryptPassword: (plainText: string, salt) => string;

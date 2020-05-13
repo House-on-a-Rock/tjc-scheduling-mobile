@@ -1,4 +1,3 @@
-/* eslint-disable global-require */
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import * as Font from 'expo-font';

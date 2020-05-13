@@ -1,47 +1,33 @@
 import * as Sequelize from 'sequelize';
 import { SequelizeAttributes } from 'shared/SequelizeTypings/typings/SequelizeAttributes';
 import crypto from 'crypto';
+import dotenv from 'dotenv';
 import { UserAttributes, UserInstance, UserModel } from 'shared/SequelizeTypings/models';
+
+dotenv.config();
 
 const UserFactory = (
     sequelize: Sequelize.Sequelize,
     DataTypes: Sequelize.DataTypes,
 ): Sequelize.Model<UserInstance, UserAttributes> => {
     const attributes: SequelizeAttributes<UserAttributes> = {
-        id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
+        firstName: {
+            type: DataTypes.STRING,
+        },
+        lastName: {
+            type: DataTypes.STRING,
         },
         email: {
-            type: DataTypes.STRING(255),
+            type: DataTypes.STRING,
             allowNull: false,
             unique: true,
         },
-        firstName: {
-            type: DataTypes.STRING(255),
-            allowNull: true,
-        },
-        lastName: {
-            type: DataTypes.STRING(255),
-            allowNull: true,
-        },
         password: {
-            type: DataTypes.STRING(255),
+            type: DataTypes.STRING,
             allowNull: false,
-            // Making `.password` act like a func hides it when serializing to JSON.
-            // This is a hack to get around Sequelize's lack of a "private" option.
-            get(this: UserInstance) {
-                return () => this.getDataValue('password');
-            },
         },
         salt: {
-            type: Sequelize.STRING,
-            // Making `.salt` act like a function hides it when serializing to JSON.
-            // This is a hack to get around Sequelize's lack of a "private" option.
-            get(this: UserInstance) {
-                return () => this.getDataValue('salt');
-            },
+            type: DataTypes.STRING,
         },
         createdAt: {
             type: DataTypes.DATE,
@@ -54,9 +40,13 @@ const UserFactory = (
     };
 
     const User = sequelize.define<UserInstance, UserAttributes>(
-        'users',
+        'User',
         attributes,
     ) as UserModel;
+
+    User.prototype.verifyPassword = function (candidatePwd: string): boolean {
+        return User.encryptPassword(candidatePwd, this.salt) === this.password;
+    };
 
     User.generateSalt = function () {
         return crypto.randomBytes(16).toString('base64');
@@ -64,27 +54,23 @@ const UserFactory = (
 
     User.encryptPassword = function (plainText, salt) {
         return crypto
-            .createHash('RSA-SHA256')
+            .createHash(process.env.SECRET_HASH)
             .update(plainText)
             .update(salt)
             .digest('hex');
     };
 
-    User.prototype.verifyPassword = function (this, candidatePwd: string): boolean {
-        const salt = this.salt();
-        return User.encryptPassword(candidatePwd, salt) === this.password();
-    };
-
-    const setSaltAndPassword = (user) => {
-        console.log('woolaalal', user.password(), user.salt());
+    const createSaltyPassword = (user: UserInstance) => {
+        console.log('createSaltyPassword', user.changed('password'));
         if (user.changed('password')) {
-            user.salt = User.generateSalt();
-            user.password = User.encryptPassword(user.password(), user.salt());
+            const verySalty = User.generateSalt();
+            user.salt = verySalty;
+            user.password = User.encryptPassword(user.password, verySalty);
         }
     };
 
-    User.beforeCreate(setSaltAndPassword);
-    User.beforeUpdate(setSaltAndPassword);
+    User.beforeCreate(createSaltyPassword);
+    User.beforeUpdate(createSaltyPassword);
 
     User.associate = (models) => {
         User.belongsTo(models.Church);

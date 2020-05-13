@@ -21,6 +21,7 @@ if test -f "$FILE"; then
         echo "DB_PORT=5432" >> $FILE
 #       echo "DB_NAME=${dbport}" >> $FILE
         echo "DB_HOST=${dbhost}" >> $FILE
+        echo "SECRET_HASH=RSA-SHA256" >> $FILE
         echo "SECRET_IP=http://${secretip}:8080/" >> $FILE
 else
         echo "DB_NAME=${dbname}" >> $FILE
@@ -29,5 +30,6 @@ else
         echo "DB_PORT=5432" >> $FILE
 #       echo "DB_NAME=${dbport}"
         echo "DB_HOST=${dbhost}" >> $FILE
+        echo "SECRET_HASH=RSA-SHA256" >> $FILE
         echo "SECRET_IP=http://${secretip}:8080/" >> $FILE
 fi
