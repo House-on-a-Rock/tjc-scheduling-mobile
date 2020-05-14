@@ -15,6 +15,9 @@ export const CalendarScreen = (props) => {
         AsyncStorage.getItem('@tjc-scheduling-app:loadState').then((loads) => {
             setLoadState(loads);
         });
+        console.log('profile', profile);
+        let d = new Date(profile.tasks[0].date) || 1;
+        console.log(d);
     }); //memory leak from here pbly
 
     return (

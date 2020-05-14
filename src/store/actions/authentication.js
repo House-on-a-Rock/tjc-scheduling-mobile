@@ -43,11 +43,10 @@ export const checkCredentials = ({ email, password }) => {
             })
             .then(() => {
                 dispatch(changeLoadState(states.loaded));
+                dispatch(setProfile(profile));
+                dispatch(createCalendar());
+                dispatch(login());
             })
             .catch((error) => console.error(error));
-
-        dispatch(setProfile(profile));
-
-        dispatch(createCalendar());
     };
 };

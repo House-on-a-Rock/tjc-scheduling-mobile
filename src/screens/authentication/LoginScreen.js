@@ -35,7 +35,7 @@ export const LoginScreen = (props) => {
 
         if (true) {
             //login works
-            dispatch(login());
+            // dispatch(login());
         }
     };
 
