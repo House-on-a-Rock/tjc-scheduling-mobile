@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { MonthYearTitle } from './MonthYearTitle';
 import { DateDisplay } from './DateDisplay';
 import { DayNameRow } from './DayNameRow';
-import { setFirstDay } from '../../utils';
+import { setFirstDay } from '../../utils/helper_functions';
 
 export const CalendarCard = (props) => {
     const { displayedDate } = props;

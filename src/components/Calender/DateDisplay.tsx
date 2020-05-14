@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { DateTile } from './DateTile';
-import { months } from '../../models';
+import { months } from '../../utils/models/calendar';
 
 const renderingMonth = {
     previous: 'previous',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { months } from '../../models';
-import { TitleText } from '../../utils';
+import { TitleText } from '../../utils/components';
+import { months } from '../../utils/models/calendar';
 
 export const MonthYearTitle = (props) => {
     const isLeap = props.year % 4 === 0 ? true : false;

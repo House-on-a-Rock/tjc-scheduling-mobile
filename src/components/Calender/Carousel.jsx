@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { CalendarCard } from './CalendarCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { extendCalendar } from '../../store/actions';
-import { FORWARD, BACKWARD } from '../../models';
+import { FORWARD, BACKWARD } from '../../utils/models/calendar';
 
 export const Carousel = (props) => {
     const { viewWidth } = props;

@@ -22,7 +22,6 @@ router.get('/getUser', async (req: Request, res: Response, next: NextFunction) =
             include: [
                 {
                     model: db.Church,
-                    as: 'ChurchId',
                 },
             ],
         });

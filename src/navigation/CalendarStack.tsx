@@ -1,8 +1,8 @@
 import React from 'react';
-import { CalendarScreen, DateDetailScreen } from '../screens';
+import { CalendarScreen, TasksScreen } from '../screens';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
-import { colors } from '../assets/colors';
+import { colors } from '../utils/themes';
 
 const calStack = createStackNavigator();
 
@@ -28,7 +28,7 @@ export const CalendarStack = (props) => {
                     ),
                 }}
             />
-            <calStack.Screen name="DateDetails" component={DateDetailScreen} />
+            <calStack.Screen name="DateDetails" component={TasksScreen} />
         </calStack.Navigator>
     );
 };

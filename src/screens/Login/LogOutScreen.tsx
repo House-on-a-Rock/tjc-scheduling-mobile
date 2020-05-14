@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native';
-import { logout } from '../store/actions';
+import { logout } from '../../store/actions';
 import { useDispatch } from 'react-redux';
 
 export const LogOutScreen = (props) => {
-    const profile = profile;
+    // const profile = props;
     const dispatch = useDispatch();
 
     return (

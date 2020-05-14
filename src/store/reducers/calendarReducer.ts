@@ -1,5 +1,5 @@
 import { CREATE_CALENDAR, EXTEND_CALENDAR } from '../actions';
-import { createDateArray, extendDateArray } from '../../utils/calendarServices';
+import { createDateArray, extendDateArray } from '../../utils/helper_functions';
 import { useSelector } from 'react-redux';
 
 const initialState = {

@@ -1,4 +1,4 @@
-import { FORWARD, BACKWARD } from '../models';
+import { FORWARD, BACKWARD } from '../models/calendar';
 import { useSelector } from 'react-redux';
 
 export const setFirstDay = (displayedDate) => {

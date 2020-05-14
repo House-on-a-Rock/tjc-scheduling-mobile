@@ -21,7 +21,7 @@ const ChurchFactory = (
     );
 
     Church.associate = (models) => {
-        Church.hasMany(models.User, { foreignKey: 'ChurchId' });
+        Church.hasMany(models.User, { foreignKey: 'ChurchId', as: 'church' });
         Church.hasMany(models.Role, { foreignKey: 'ChurchId' });
         Church.hasMany(models.Task, { foreignKey: 'ChurchId' });
     };

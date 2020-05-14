@@ -12,7 +12,7 @@
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
         "paths": {
-            "typings/*": ["server/db/typings/*"],
+            // "src/utils/*": ["src/utils/*"],
             "shared/*": ["shared/*"],
             "*": ["node_modules/*"]
         }

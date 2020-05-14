@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { BodyText, TitleText } from '../../utils';
+import { BodyText, TitleText } from '../../utils/components';
 
 export const DateTile = (props) => {
     let TextComponent = props.TextComponent || TitleText;

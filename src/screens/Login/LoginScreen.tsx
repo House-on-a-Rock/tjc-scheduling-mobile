@@ -7,7 +7,7 @@ import {
     KeyboardAvoidingView,
     ScrollView,
 } from 'react-native';
-import { CustomInput, BodyText } from '../../utils';
+import { CustomInput, BodyText } from '../../utils/components';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, setProfile, createCalendar, checkCredentials } from '../../store/actions';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';

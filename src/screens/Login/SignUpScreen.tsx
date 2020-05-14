@@ -8,8 +8,8 @@ import {
     Platform,
     Keyboard,
 } from 'react-native';
-import { CustomInput, BodyText } from '../../utils';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { BodyText, CustomInput } from '../../utils/components';
 
 export const SignUpScreen = (props) => {
     const [userEmail, setUserEmail] = useState('');

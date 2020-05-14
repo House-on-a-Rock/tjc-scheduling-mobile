@@ -93,7 +93,7 @@ export const ProfileScreen = (props) => {
             <View style={styles.imageCard}>
                 <View style={styles.imageContainer}>
                     <Image
-                        source={require('../assets/images/JleeProfilePic.jpg')}
+                        source={require('../../assets/images/JleeProfilePic.jpg')}
                         resizeMode="contain"
                         style={styles.image}
                     />

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 
-import { Carousel } from '../components/Calender';
+import { Carousel } from '../../components';
 import { useSelector } from 'react-redux';
 
 export const CalendarScreen = (props) => {

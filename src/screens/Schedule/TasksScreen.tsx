@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-export const SignUpScreen = (props) => {
+export const TasksScreen = (props) => {
     return (
         <View>
-            <Text>This is the signup screen</Text>
+            <Text>This is the date detail screen</Text>
         </View>
     );
 };

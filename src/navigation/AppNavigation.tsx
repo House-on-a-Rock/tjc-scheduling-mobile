@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScheduleScreen, ChurchRegisterScreen } from '../screens';
+import { ScheduleScreen } from '../screens';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -23,7 +23,6 @@ const DrawerNav = () => {
                 <Drawer.Screen name="Home" component={TabNav} />
                 <Drawer.Screen name="Profile" component={ProfileStack} />
                 <Drawer.Screen name="Settings" component={SettingsStack} />
-                <Drawer.Screen name="Register Church" component={ChurchRegisterScreen} />
                 <Drawer.Screen name="Log Out" component={LogOutStack} />
             </Drawer.Navigator>
         </NavigationContainer>
