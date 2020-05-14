@@ -148,7 +148,6 @@ export const ProfileScreen = (props) => {
             <View style={styles.listContainer}>
                 <FlatList
                     scrollEnabled={false}
-                    contentContainerStyle={styles.flatList}
                     keyExtractor={(item, index) => index.toString()}
                     data={profileDetailsArray}
                     renderItem={render}
