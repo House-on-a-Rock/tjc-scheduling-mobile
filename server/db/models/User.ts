@@ -18,12 +18,12 @@ const UserFactory = (
             type: DataTypes.STRING,
         },
         email: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(255),
             allowNull: false,
             unique: true,
         },
         password: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(255),
             allowNull: false,
         },
         salt: {
@@ -72,9 +72,10 @@ const UserFactory = (
     User.beforeUpdate(createSaltyPassword);
 
     User.associate = (models) => {
-        User.belongsTo(models.Church);
-        User.belongsToMany(models.Role, { through: 'RoleGroup', as: 'member' });
-        User.hasMany(models.Task);
+        User.hasMany(models.Task, { foreignKey: 'UserId' });
+        User.belongsTo(models.Church), { as: 'church', foreignKey: 'ChurchId' };
+        User.belongsToMany(models.Role, { through: models.UserRole, as: 'role' });
+        // User.belongsToMany(models.Role, { through: models.Team, as: 'duty' });
     };
 
     return User;

@@ -16,22 +16,14 @@ app.get('/', (req, res) =>
     }),
 );
 
-app.set('query parser', (queryString) => {
-    return new URLSearchParams(queryString);
-});
-
-app.use('/api', require('./api'));
+app.use('/api', require('./routes'));
 
 const syncDb = () =>
-    db.sequelize
-        .sync({
-            force: true,
-        })
-        .then(() => {
-            app.listen(port, () => {
-                console.log(`Server is running on PORT ${port}`);
-            });
+    db.sequelize.sync().then(() => {
+        app.listen(port, () => {
+            console.log(`Server is running on PORT ${port}`);
         });
+    });
 syncDb();
 
 export default db;

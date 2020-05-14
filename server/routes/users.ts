@@ -9,7 +9,7 @@ module.exports = router;
 router.get('/getAllUsers', async (req: Request, res: Response, next) => {
     try {
         const users: UserInstance[] = await db.User.findAll({
-            attributes: ['firstName', 'lastName', 'email'],
+            attributes: ['firstName', 'lastName', 'email', 'churchId'],
         });
         res.status(200).json(users);
     } catch (err) {

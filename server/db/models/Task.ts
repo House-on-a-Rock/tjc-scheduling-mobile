@@ -13,8 +13,9 @@ const TaskFactory = (
     const Task = sequelize.define<TaskInstance, TaskAttributes>('Task', attributes);
 
     Task.associate = (models) => {
-        Task.belongsTo(models.Church);
-        Task.belongsTo(models.User);
+        Task.belongsTo(models.Church, { as: 'church', foreignKey: 'ChurchId' });
+        Task.belongsTo(models.User, { as: 'user', foreignKey: 'UserId' });
+        Task.belongsTo(models.Role, { as: 'role', foreignKey: 'RoleId' });
     };
     return Task;
 };

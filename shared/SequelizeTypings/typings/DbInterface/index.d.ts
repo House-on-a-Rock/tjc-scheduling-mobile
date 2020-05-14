@@ -8,7 +8,10 @@ import {
     TaskAttributes,
     RoleInstance,
     RoleAttributes,
+    UserRoleInstance,
+    UserRoleAttributes,
 } from 'shared/SequelizeTypings/models';
+import { TeamInstance, TeamAttributes } from 'shared/SequelizeTypings/models/TeamModel';
 
 export interface DbInterface {
     sequelize: Sequelize.Sequelize;
@@ -17,4 +20,6 @@ export interface DbInterface {
     User: Sequelize.Model<UserInstance, UserAttributes>;
     Task: Sequelize.Model<TaskInstance, TaskAttributes>;
     Role: Sequelize.Model<RoleInstance, RoleAttributes>;
+    Team: Sequelize.Model<TeamInstance, TeamAttributes>;
+    UserRole: Sequelize.Model<UserRoleInstance, UserRoleAttributes>;
 }

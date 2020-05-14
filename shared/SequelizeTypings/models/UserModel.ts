@@ -1,4 +1,5 @@
 import * as Sequelize from 'sequelize';
+import { RoleAttributes } from './RoleMOdel';
 
 export interface UserAttributes {
     id?: number;
@@ -9,6 +10,7 @@ export interface UserAttributes {
     salt: string;
     createdAt?: Date | null;
     updatedAt?: Date | null;
+    duty?: RoleAttributes[] | RoleAttributes['id'];
 }
 
 export interface UserInstance
