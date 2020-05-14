@@ -4,15 +4,20 @@ import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import AppNavigation from './src/navigation/AppNavigation';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { authReducer, profileReducer, calendarReducer } from './src/store/reducers/';
+import {
+    authReducer,
+    profileReducer,
+    calendarReducer,
+    loadStateReducer,
+} from './src/store/reducers/';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
-import axios from 'axios';
 
 const rootReducer = combineReducers({
     authReducer: authReducer,
     profileReducer: profileReducer,
     calendarReducer: calendarReducer,
+    loadStateReducer: loadStateReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

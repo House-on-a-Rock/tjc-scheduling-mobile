@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScheduleScreen, ChurchRegisterScreen } from '../screens';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Ionicons } from '@expo/vector-icons';
@@ -16,9 +16,17 @@ import {
 const MainTab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
+const MyTheme = {
+    ...DefaultTheme,
+    colors: {
+        ...DefaultTheme.colors,
+        // primary: 'rgb(255, 45, 85)',
+    },
+};
+
 const DrawerNav = () => {
     return (
-        <NavigationContainer>
+        <NavigationContainer theme={MyTheme}>
             <Drawer.Navigator>
                 <Drawer.Screen name="Home" component={TabNav} />
                 <Drawer.Screen name="Profile" component={ProfileStack} />

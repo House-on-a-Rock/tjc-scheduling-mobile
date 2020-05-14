@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 import { CustomInput, BodyText } from '../../utils';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, setProfile, createCalendar, checkCredentials } from '../../store/actions';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { login, checkCredentials } from '../../store/actions';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export const LoginScreen = (props) => {
     const dispatch = useDispatch();
@@ -25,30 +25,23 @@ export const LoginScreen = (props) => {
     }
 
     const verifyLogin = () => {
-        //check if email/pass belongs to an account
         //after x attempts, prompt login or account lockout
-
         if (isValidEmail() && userPassword.length > 0) {
-            console.log('email is validated');
-            //dispatch check credentials action
             dispatch(checkCredentials({ email: userEmail, password: userPassword }));
         } else {
             setIsValidCredentials(false);
-            console.log('credentials not ok');
             return;
         }
 
         if (true) {
-            //
-            dispatch(login());
-            // dispatch(setProfile(profile));
-            dispatch(createCalendar());
+            //login works
+            // dispatch(login());
         }
     };
 
     return (
-        <KeyboardAvoidingView
-            style={styles.loginScreen}
+        <KeyboardAwareScrollView
+            contentContainerStyle={styles.loginScreen}
             // behavior={Platform.OS === 'ios' ? 'padding' : null}
             behavior={'padding'}
         >
@@ -110,18 +103,16 @@ export const LoginScreen = (props) => {
                     </View>
                 </View>
             </ScrollView>
-        </KeyboardAvoidingView>
+        </KeyboardAwareScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     loginScreen: {
-        flex: 1,
-        flexDirection: 'column',
         height: '100%',
         width: '100%',
         backgroundColor: 'white',
-        alignItems: 'stretch',
+        // alignItems: 'stretch',
     },
     feedbackContainer: {
         backgroundColor: 'white',
