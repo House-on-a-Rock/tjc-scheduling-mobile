@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import db from '../index';
 import { ChurchInstance } from 'shared/SequelizeTypings/models';
 
@@ -6,7 +6,7 @@ const router = express.Router();
 
 module.exports = router;
 
-router.get('/getAll', async (req: Request, res: Response, next) => {
+router.get('/getAll', async (req: Request, res: Response, next: NextFunction) => {
     db.Church.findAll({
         attributes: ['name', 'address', 'description'],
     })
@@ -17,7 +17,7 @@ router.get('/getAll', async (req: Request, res: Response, next) => {
         });
 });
 
-router.post('/createChurch', async (req: Request, res: Response, next) => {
+router.post('/createChurch', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const church: ChurchInstance = await db.Church.create({
             name: req.body.name,

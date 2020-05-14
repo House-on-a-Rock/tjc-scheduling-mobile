@@ -1,21 +1,27 @@
-const router = require('express').Router();
-const { User, Task, Role, Church } = require('../db/models');
-const { Op } = require('sequelize');
+import express, { Request, Response, NextFunction } from 'express';
+import db from '../index';
+import Sequelize from 'sequelize';
+
+const router = express.Router();
+const Op = Sequelize.Op;
 module.exports = router;
 
-router.post('/authenticate', async (req, res, next) => {});
+router.post(
+    '/authenticate',
+    async (req: Request, res: Response, next: NextFunction) => {},
+);
 
-router.get('/getUser', async (req, res, next) => {
+router.get('/getUser', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const user = await User.findOne({
+        const parsedId = req.query.id.toString();
+        const user = await db.User.findOne({
             where: {
-                id: req.query.id,
+                id: parseInt(parsedId),
             },
-
             attributes: ['firstName', 'lastName', 'email'],
             include: [
                 {
-                    model: Church,
+                    model: db.Church,
                     attributes: ['name'],
                 },
             ],
@@ -26,11 +32,11 @@ router.get('/getUser', async (req, res, next) => {
     }
 });
 
-router.get('/getUserTasks', async (req, res, next) => {
+router.get('/getUserTasks', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const tasks = await Task.findAll({
+        const tasks = await db.Task.findAll({
             where: {
-                userId: req.query.id,
+                userId: req.query.id.toString(),
                 date: {
                     [Op.between]: [
                         '2020-03-07T00:00:00.000Z',
@@ -42,11 +48,11 @@ router.get('/getUserTasks', async (req, res, next) => {
             attributes: ['date'],
             include: [
                 {
-                    model: Role,
+                    model: db.Role,
                     attributes: ['name'],
                 },
                 {
-                    model: Church,
+                    model: db.Church,
                     attributes: ['name'],
                 },
             ],
@@ -56,18 +62,3 @@ router.get('/getUserTasks', async (req, res, next) => {
         next(err);
     }
 });
-
-// include: [
-//     {
-//         model: Role,
-//         attributes: ['name'],
-//     },
-//     {
-//         model: User,
-//         attributes: ['firstName', 'lastName'],
-//     },
-//     {
-//         model: Church,
-//         attributes: ['name'],
-//     },
-// ],

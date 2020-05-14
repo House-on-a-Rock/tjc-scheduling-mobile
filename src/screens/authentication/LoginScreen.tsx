@@ -39,7 +39,6 @@ export const LoginScreen = (props) => {
         }
 
         if (true) {
-            //
             dispatch(login());
             // dispatch(setProfile(profile));
             dispatch(createCalendar());

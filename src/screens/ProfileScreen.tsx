@@ -18,7 +18,11 @@ export const ProfileScreen = (props) => {
     const { email, firstName, lastName } = useSelector(
         (state) => state.profileReducer.profile,
     );
-    const church = useSelector((state) => state.profileReducer.profile.church.name);
+    const church = useSelector((state) => {
+        if (state.profileReducer.profile && state.profileReducer.profile.church) {
+            return state.profileReducer.profile.church.name;
+        }
+    });
 
     const Tile = (props) => {
         return (

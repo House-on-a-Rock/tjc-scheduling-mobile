@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { SET_PROFILE } from './profileActions';
-import { secret_ip } from '../../../secrets/secrets';
+import { secretIp } from '../../../secrets/secrets';
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
@@ -25,20 +25,21 @@ export const checkCredentials = ({ email, password }) => {
         let dummyId = 1;
         let profile = null;
         await axios
-            .get(secret_ip + '/api/authentication/getUser', { params: { id: dummyId } })
+            .get(secretIp + '/api/authentication/getUser', { params: { id: dummyId } })
             .then((response) => {
-                profile = response.data;
+                if (response.data) profile = response.data;
+                else console.log('ERRORR');
             })
             .catch((error) => console.error(error));
 
-        await axios
-            .get(secret_ip + '/api/authentication/getUserTasks', {
-                params: { id: dummyId },
-            })
-            .then((response) => {
-                profile.tasks = response.data;
-            })
-            .catch((error) => console.error(error));
+        // await axios
+        //     .get(secretIp + '/api/authentication/getUserTasks', {
+        //         params: { id: dummyId },
+        //     })
+        //     .then((response) => {
+        //         profile.tasks = response.data;
+        //     })
+        //     .catch((error) => console.error(error));
 
         dispatch({
             type: SET_PROFILE,

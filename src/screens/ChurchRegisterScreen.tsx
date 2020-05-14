@@ -34,7 +34,7 @@ export const ChurchRegisterScreen = (props) => {
         //     .then((response) => console.log(response.data))
         //     .catch((error) => console.error('ERRRRORRR', error));
         await axios
-            .get(secret_ip + '/api/churches/getAll')
+            .get(secretIp + '/api/churches/getAll')
             .then((response) => console.log(response.data))
             .catch((error) => console.error('ERRRRORRR', error));
     };

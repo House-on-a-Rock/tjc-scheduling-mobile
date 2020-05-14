@@ -16,7 +16,11 @@ app.get('/', (req, res) =>
     }),
 );
 
-app.use('/api', require('./routes'));
+app.set('query parser', (queryString) => {
+    return new URLSearchParams(queryString);
+});
+
+app.use('/api', require('./api'));
 
 const syncDb = () =>
     db.sequelize

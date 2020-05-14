@@ -10,7 +10,10 @@ export const CalendarScreen = (props) => {
     let profile = useSelector((state) => state.profileReducer.profile);
     useEffect(() => {
         console.log('calendar screen profile: ', profile);
-        console.log('church: ', profile ? profile.church.name : 'profile null');
+        console.log(
+            'church: ',
+            profile && profile.church ? profile.church.name : 'profile null',
+        );
     });
 
     return (

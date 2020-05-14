@@ -112,7 +112,7 @@ const tasks = [
 
 async function seed() {
     await db.sequelize.sync({ force: true });
-    console.green('db synced!');
+    console.log(green('db synced!'));
 
     const seedChurches = await Promise.all(
         churches.map((church) => {
