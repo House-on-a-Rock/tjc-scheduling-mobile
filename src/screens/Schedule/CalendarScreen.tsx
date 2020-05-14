@@ -1,31 +1,37 @@
-import React, { useEffect } from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
-
-import { Carousel } from '../../components';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Dimensions, ActivityIndicator } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import { useSelector } from 'react-redux';
+import { states } from '../../store/actions';
+import { LoadingScreen, Carousel } from '../../components';
 
 export const CalendarScreen = (props) => {
     const calCardDatesArray = useSelector((state) => state.calendarReducer.dateArray);
     let cardWidth = Dimensions.get('window').width;
-    let profile = useSelector((state) => state.profileReducer.profile);
+    const profile = useSelector((state) => state.profileReducer.profile);
+    const [loadState, setLoadState] = useState(states.loading);
     useEffect(() => {
-        console.log('calendar screen profile: ', profile);
-        console.log(
-            'church: ',
-            profile && profile.church ? profile.church.name : 'profile null',
-        );
-    });
+        AsyncStorage.getItem('@tjc-scheduling-app:loadState').then((loads) => {
+            setLoadState(loads);
+        });
+
+        let d = new Date(profile.tasks[0].date) || 1;
+    }); //memory leak from here pbly
 
     return (
         <View style={styles.screen}>
-            <View
-                style={styles.scrollContainer}
-                onLayout={(event) => {
-                    cardWidth = event.nativeEvent.layout.width;
-                }}
-            >
-                <Carousel items={calCardDatesArray} viewWidth={cardWidth} />
-            </View>
+            {loadState === states.loading ? (
+                <LoadingScreen />
+            ) : (
+                <View
+                    style={styles.scrollContainer}
+                    onLayout={(event) => {
+                        cardWidth = event.nativeEvent.layout.width;
+                    }}
+                >
+                    <Carousel items={calCardDatesArray} viewWidth={cardWidth} />
+                </View>
+            )}
         </View>
     );
 };

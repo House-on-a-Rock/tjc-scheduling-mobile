@@ -50,7 +50,7 @@ export const Carousel = (props) => {
         <CalendarCard
             displayedDate={item.item.date}
             style={{ width: viewWidth }}
-            onPress={() => navigation.navigate('DateDetails')}
+            onPress={() => navigation.navigate('Tasks')}
         />
     );
 

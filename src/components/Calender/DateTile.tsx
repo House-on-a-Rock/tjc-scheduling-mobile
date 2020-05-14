@@ -5,14 +5,6 @@ import { BodyText, TitleText } from '../../utils/components';
 export const DateTile = (props) => {
     let TextComponent = props.TextComponent || TitleText;
 
-    // useEffect(() => {
-    // 	TextComponent = props.textComponent || BodyText;
-    // 	ViewComponent = props.viewComponent || TouchableOpacity;
-    // });
-
-    // console.log('TextComponent', TextComponent);
-    // console.log('ViewComponent', ViewComponent);
-
     return (
         <TouchableOpacity
             style={{ ...styles.tile, ...props.style }}

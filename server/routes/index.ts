@@ -7,7 +7,6 @@ router.use('/users', require('./users'));
 router.use('/authentication', require('./authentication'));
 
 router.use((req, res, next) => {
-    console.log('hello');
     const error = new Error('Not Found');
     res.status(404);
     next(error);

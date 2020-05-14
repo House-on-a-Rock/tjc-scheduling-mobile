@@ -7,12 +7,18 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import AppNavigation from './src/navigation/AppNavigation';
-import { authReducer, profileReducer, calendarReducer } from './src/store/reducers';
+import {
+    authReducer,
+    profileReducer,
+    calendarReducer,
+    loadStateReducer,
+} from './src/store/reducers';
 
 const rootReducer = combineReducers({
     authReducer: authReducer,
     profileReducer: profileReducer,
     calendarReducer: calendarReducer,
+    loadStateReducer: loadStateReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

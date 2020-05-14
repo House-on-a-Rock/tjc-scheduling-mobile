@@ -20,12 +20,8 @@ router.get(
 
 router.post('/createTask', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        console.log('createTask', req);
         const task = await db.Task.create({
             date: req.body.date,
-            // user: req.body.user,
-            // role: req.body.role,
-            // church: req.body.church,
         });
         res.send(task);
     } catch (err) {

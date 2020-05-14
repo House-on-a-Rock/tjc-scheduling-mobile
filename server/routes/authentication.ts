@@ -35,7 +35,7 @@ router.get('/getUserTasks', async (req: Request, res: Response, next: NextFuncti
     try {
         const tasks = await db.Task.findAll({
             where: {
-                userId: req.query.id.toString(),
+                UserId: req.query.id.toString(),
                 date: {
                     [Op.between]: [
                         '2020-03-07T00:00:00.000Z',
@@ -48,11 +48,11 @@ router.get('/getUserTasks', async (req: Request, res: Response, next: NextFuncti
             include: [
                 {
                     model: db.Role,
-                    attributes: ['name'],
+                    as: 'role',
                 },
                 {
                     model: db.Church,
-                    attributes: ['name'],
+                    as: 'church',
                 },
             ],
         });
