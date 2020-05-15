@@ -1,6 +1,6 @@
-const db = require('../server/db');
-const { Church, User, Role, Task } = require('../server/db/models');
 const { green, red } = require('chalk');
+const db = require('../server/db/models');
+
 const churches = [
     {
         name: 'Hillsborough',
@@ -132,7 +132,6 @@ async function seed() {
     console.log(green(`seeded ${seedChurches.length} churches`));
     console.log(green(`seeded ${seedUsers.length} users`));
     console.log(green(`seeded ${seedRoles.length} roles`));
-    console.log(green(`seeded ${seedTasks.length} tasks`));
     console.log(green(`seeded succesfully`));
 }
 
@@ -150,4 +149,4 @@ async function runSeed() {
 }
 
 runSeed();
-module.exports = seed;
+// module.exports = seed;

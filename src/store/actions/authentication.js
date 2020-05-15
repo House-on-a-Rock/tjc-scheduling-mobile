@@ -1,16 +1,15 @@
 import axios from 'axios';
 import { setProfile } from './profileActions';
-import { createCalendar } from './calendarActions';
-import { secret_ip } from '../../../secrets/secrets';
+import { secretIp } from '../../../secrets/secrets';
 import { changeLoadState, states } from './loadState';
+import { createCalendar } from './calendarActions';
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 
-export const login = (profile) => {
+export const login = () => {
     return {
         type: LOGIN,
-        payload: profile,
     };
 };
 
@@ -28,14 +27,14 @@ export const checkCredentials = ({ email, password }) => {
         let dummyId = 1;
         let profile = null;
         await axios
-            .get(secret_ip + '/api/authentication/getUser', { params: { id: dummyId } })
+            .get(secretIp + '/api/authentication/getUser', { params: { id: dummyId } })
             .then((response) => {
                 profile = response.data;
             })
             .catch((error) => console.error(error));
 
         await axios
-            .get(secret_ip + '/api/authentication/getUserTasks', {
+            .get(secretIp + '/api/authentication/getUserTasks', {
                 params: { id: dummyId },
             })
             .then((response) => {

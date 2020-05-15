@@ -27,7 +27,8 @@ if (![System.IO.File]::Exists($ENVFILE)) {
     echo "DB_PASS=$dbpw" >> $ENVFILE
     echo "DB_PORT=5432" >> $ENVFILE
     #echo "DB_NAME=$dbport" >> $ENVFILE
-    echo "DB_HOST=$dbname" >> $ENVFILE
+    echo "DB_PORT=5432" >> $ENVFILE
+    echo "SECRET_HASH=RSA-SHA256" >> $ENVFILE
     echo "SECRET_IP=http`://$HostIP`:8080/" >> $ENVFILE
 } else {
     echo "DB_NAME=$dbname" > $ENVFILE
@@ -36,5 +37,6 @@ if (![System.IO.File]::Exists($ENVFILE)) {
     echo "DB_PORT=5432" >> $ENVFILE
     #echo "DB_NAME=$dbport" >> $ENVFILE
     echo "DB_HOST=$dbname" >> $ENVFILE
+    echo "SECRET_HASH=RSA-SHA256" >> $ENVFILE
     echo "SECRET_IP=http`://$HostIP`:8080/" >> $ENVFILE
 }
