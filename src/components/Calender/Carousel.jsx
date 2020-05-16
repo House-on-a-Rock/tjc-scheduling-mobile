@@ -11,6 +11,7 @@ export const Carousel = (props) => {
     const dispatch = useDispatch();
     const items = useSelector((state) => state.calendarReducer.dateArray);
 
+    //<dummy wrapper>
     // const [viewedIndices, setViewedIndices] = useState({
     // 	currentIndex: 2,
     // 	previousIndex: 2,
@@ -43,6 +44,7 @@ export const Carousel = (props) => {
     // 		});
     // 	}
     // };
+    //</dummy wrapper>
 
     const navigation = useNavigation();
 
@@ -71,21 +73,14 @@ export const Carousel = (props) => {
                 horizontal={true}
                 pagingEnabled
                 showsHorizontalScrollIndicator={false}
-                initialScrollIndex={calculateInitialScrollIndex()}
+                initialScrollIndex={3}
                 initialNumToRender={7}
                 getItemLayout={(data, index) => ({
                     length: viewWidth,
                     index,
                     offset: viewWidth * index,
                 })}
-                windowSize={7}
-                // onViewableItemsChanged={onViewRef.current}
-                // viewabilityConfig={viewConfigRef.current}
-                // onScroll={onScrollHandler}
-                // scrollEventThrottle={700}
-                // maintainVisibleContentPosition={{
-                // 	minIndexForVisible: 1,
-                // }}
+                windowSize={7}                
             />
         </View>
     );

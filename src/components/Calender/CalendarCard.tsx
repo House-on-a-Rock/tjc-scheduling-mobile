@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { DateDisplay } from './DateDisplay';
 import { DayNameRow } from './DayNameRow';
-import { setFirstDay } from '../../utils/helper_functions';
+import { setFirstDay } from './utils/calendarServices';
 import { TitleText } from '../../utils/components';
 import { months } from '../../utils/models/calendar';
 
@@ -28,8 +28,7 @@ export const CalendarCard = (props) => {
                     <DayNameRow />
                     <DateDisplay
                         firstDay={setFirstDay(displayedDate)}
-                        month={displayedDate.getMonth()}
-                        year={displayedDate.getFullYear()}
+                        displayedDate={displayedDate}
                         today={displayedDate.getDate()}
                         onPress={props.onPress}
                     />

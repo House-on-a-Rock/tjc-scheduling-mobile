@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { DateTile } from './DateTile';
 import { months } from '../../utils/models/calendar';
+import { useSelector } from 'react-redux';
 
 const renderingMonth = {
     previous: 'previous',
@@ -10,10 +11,12 @@ const renderingMonth = {
 };
 
 export const DateDisplay = (props) => {
+    const month = props.displayedDate.getMonth();
+    const year = props.displayedDate.getFullYear();
     const dateArray = new Array(6);
-    const isLeap = props.year % 4 === 0 ? true : false;
-    const daysInMonth = months(isLeap)[props.month].days;
-    const previousMonth = props.month - 1 >= 0 ? props.month - 1 : 11;
+    const isLeap = year % 4 === 0 ? true : false;
+    const daysInMonth = months(isLeap)[month].days;
+    const previousMonth = props.month - 1 >= 0 ? month - 1 : 11;
 
     let startDisplayDate =
         props.firstDay !== 0
@@ -50,6 +53,7 @@ export const DateDisplay = (props) => {
         for (let k = 0; k < dateArray[j].length; k++) {
             dateArray[j][k] = (
                 <DateTile
+                    displayedDate={props.displayedDate}
                     key={j + j * k + k}
                     title={determineDate()}
                     style={styles.dateTileStyle}
