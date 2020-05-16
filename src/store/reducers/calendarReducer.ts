@@ -1,8 +1,4 @@
-import {
-    CREATE_CALENDAR,
-    EXTEND_CALENDAR,
-    UPDATE_CURRENTLY_RENDERING_DATE,
-} from '../actions';
+import { CREATE_CALENDAR, EXTEND_CALENDAR } from '../actions';
 import {
     createDateArray,
     extendDateArray,
@@ -32,15 +28,6 @@ export const calendarReducer = (state = initialState, action) => {
                 //extends datearray as well as make api call to populate data
                 ...state,
                 dateArray: extendDateArray(action.payload, state.dateArray),
-            };
-        case UPDATE_CURRENTLY_RENDERING_DATE:
-            const nextMonth = state.currentlyRenderingMonthYear;
-            nextMonth.setMonth(nextMonth.getMonth() + 1);
-            console.log('today', state.currentlyRenderingMonthYear);
-            console.log('tomorrow', nextMonth);
-            return {
-                ...state,
-                currentlyRenderingDate: nextMonth,
             };
         default:
             return state;

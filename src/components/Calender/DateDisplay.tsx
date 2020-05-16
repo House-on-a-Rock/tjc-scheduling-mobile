@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { DateTile } from './DateTile';
 import { months } from '../../utils/models/calendar';
+import { compareDates } from './utils/calendarServices';
 import { useSelector } from 'react-redux';
 
 const renderingMonth = {
@@ -48,12 +49,24 @@ export const DateDisplay = (props) => {
         }
     };
 
+    const populateTasks = (date) => {
+        const tasks = useSelector((state) => state.profileReducer.profile.tasks);
+        const filteredTasks = tasks.filter((task) => {
+            const tasksDate = new Date(task.date);
+            return compareDates(tasksDate, date);
+        });
+        return filteredTasks;
+    };
+
     for (let j = 0; j < dateArray.length; j++) {
         dateArray[j] = new Array(7); //creates 2d array, 6 rows of 7
         for (let k = 0; k < dateArray[j].length; k++) {
+            const dateConstruct = new Date(year, month, determineDate());
+            let data = populateTasks(dateConstruct);
             dateArray[j][k] = (
                 <DateTile
-                    renderedDate={new Date(year, month, determineDate())}
+                    data={data}
+                    renderedDate={dateConstruct}
                     key={j + j * (k + 1) + k}
                     style={styles.dateTileStyle}
                     textStyle={

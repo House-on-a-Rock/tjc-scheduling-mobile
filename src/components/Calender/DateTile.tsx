@@ -3,53 +3,48 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { TitleText } from '../../utils/components';
 import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import { Entypo } from '@expo/vector-icons';
+import { compareDates } from './utils/calendarServices';
 
 export const DateTile = (props) => {
     const navigation = useNavigation();
-    let TextComponent = props.TextComponent || TitleText;
+    let TextComponent = props.TextComponent || TitleText; //TODO redo font system
     let month = props.renderedDate.getMonth();
     let year = props.renderedDate.getFullYear();
     let date = props.renderedDate.getDate();
     const currentDate = useSelector((state) => state.calendarReducer.today);
-
-    if (
-        currentDate.getMonth() === month &&
-        currentDate.getDate() === date &&
-        currentDate.getFullYear() === year
-    ) {
-        //highlights current date
-        return (
-            <TouchableOpacity
-                style={{ ...styles.todayTile, ...props.style }}
-                onPress={props.onPress}
-            >
-                <View>
-                    <TextComponent style={{ ...styles.text, ...props.textStyle }}>
-                        {date}
-                    </TextComponent>
-                </View>
-            </TouchableOpacity>
-        );
-    } else {
-        return (
-            <TouchableOpacity
-                style={{ ...styles.tile, ...props.style }}
-                onPress={() => navigation.navigate('Tasks')}
-            >
-                <View>
-                    <TextComponent style={{ ...styles.text, ...props.textStyle }}>
-                        {date}
-                    </TextComponent>
-                </View>
-            </TouchableOpacity>
-        );
+    let isToday = false;
+    if (compareDates(currentDate, props.renderedDate)) {
+        isToday = true;
     }
+
+    return (
+        <TouchableOpacity
+            style={
+                isToday
+                    ? { ...styles.todayTile, ...props.style }
+                    : { ...styles.tile, ...props.style }
+            }
+            onPress={() => navigation.navigate('Tasks')}
+        >
+            <View>
+                <TextComponent style={{ ...styles.text, ...props.textStyle }}>
+                    {date}
+                </TextComponent>
+                {props.data.length > 0 ? (
+                    <Entypo name="dot-single" size={20} color="black" />
+                ) : (
+                    <View></View>
+                )}
+            </View>
+        </TouchableOpacity>
+    );
 };
 
 const styles = StyleSheet.create({
     tile: {
         width: 40,
-        height: 40,
+        height: 50,
         alignItems: 'center',
         justifyContent: 'center',
     },

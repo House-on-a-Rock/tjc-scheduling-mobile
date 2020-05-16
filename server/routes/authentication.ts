@@ -22,6 +22,7 @@ router.get('/getUser', async (req: Request, res: Response, next: NextFunction) =
             include: [
                 {
                     model: db.Church,
+                    attributes: ['name'],
                 },
             ],
         });
@@ -39,20 +40,21 @@ router.get('/getUserTasks', async (req: Request, res: Response, next: NextFuncti
                 date: {
                     [Op.between]: [
                         '2020-03-07T00:00:00.000Z',
-                        '2020-04-30T00:00:00.000Z',
+                        '2020-07-30T00:00:00.000Z',
                     ],
                 },
             },
-
             attributes: ['date'],
             include: [
                 {
                     model: db.Role,
                     as: 'role',
+                    attributes: ['name'],
                 },
                 {
                     model: db.Church,
                     as: 'church',
+                    attributes: ['name'],
                 },
             ],
         });
