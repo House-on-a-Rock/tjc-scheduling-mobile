@@ -1,14 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import { View, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { CalendarCard } from './CalendarCard';
-import { useDispatch, useSelector } from 'react-redux';
-import { extendCalendar } from '../../store/actions';
-import { FORWARD, BACKWARD } from '../../utils/models/calendar';
+import { useSelector } from 'react-redux';
+
 
 export const Carousel = (props) => {
-    const { viewWidth } = props;
-    const dispatch = useDispatch();
+    const { viewWidth } = props;    
     const items = useSelector((state) => state.calendarReducer.dateArray);
 
     //<dummy wrapper>
@@ -51,9 +49,7 @@ export const Carousel = (props) => {
     const renderMonths = (item) => (
         <CalendarCard
             displayedDate={item.item.date}
-            style={{ width: viewWidth }}
-            onPress={() => navigation.navigate('Tasks')}
-        />
+            style={{ width: viewWidth }}/>
     );
 
     const calculateInitialScrollIndex = () => {

@@ -16,7 +16,7 @@ export const DateDisplay = (props) => {
     const dateArray = new Array(6);
     const isLeap = year % 4 === 0 ? true : false;
     const daysInMonth = months(isLeap)[month].days;
-    const previousMonth = props.month - 1 >= 0 ? month - 1 : 11;
+    const previousMonth = month - 1 >= 0 ? month - 1 : 11;
 
     let startDisplayDate =
         props.firstDay !== 0
@@ -53,16 +53,14 @@ export const DateDisplay = (props) => {
         for (let k = 0; k < dateArray[j].length; k++) {
             dateArray[j][k] = (
                 <DateTile
-                    displayedDate={props.displayedDate}
-                    key={j + j * k + k}
-                    title={determineDate()}
+                    renderedDate={new Date(year, month, determineDate())}
+                    key={j + j * (k + 1) + k}
                     style={styles.dateTileStyle}
                     textStyle={
                         currentlyRendering === renderingMonth.current
                             ? styles.currentMonthDatesText
                             : styles.notCurrentMonthDatesText
                     }
-                    onPress={props.onPress}
                 />
             );
         }

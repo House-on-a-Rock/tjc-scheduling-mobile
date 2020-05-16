@@ -2,16 +2,22 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { TitleText } from '../../utils/components';
 import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 export const DateTile = (props) => {
+    const navigation = useNavigation();
     let TextComponent = props.TextComponent || TitleText;
-    let month = props.displayedDate.getMonth();
-    let year = props.displayedDate.getFullYear();
-    let date = new Date(year, month, props.title);
+    let month = props.renderedDate.getMonth();
+    let year = props.renderedDate.getFullYear();
+    let date = props.renderedDate.getDate();
     const currentDate = useSelector((state) => state.calendarReducer.today);
 
-    if (currentDate.getMonth() === month && currentDate.getDate() === props.title) {
-        //add square around
+    if (
+        currentDate.getMonth() === month &&
+        currentDate.getDate() === date &&
+        currentDate.getFullYear() === year
+    ) {
+        //highlights current date
         return (
             <TouchableOpacity
                 style={{ ...styles.todayTile, ...props.style }}
@@ -19,7 +25,7 @@ export const DateTile = (props) => {
             >
                 <View>
                     <TextComponent style={{ ...styles.text, ...props.textStyle }}>
-                        {props.title}
+                        {date}
                     </TextComponent>
                 </View>
             </TouchableOpacity>
@@ -28,11 +34,11 @@ export const DateTile = (props) => {
         return (
             <TouchableOpacity
                 style={{ ...styles.tile, ...props.style }}
-                onPress={props.onPress}
+                onPress={() => navigation.navigate('Tasks')}
             >
                 <View>
                     <TextComponent style={{ ...styles.text, ...props.textStyle }}>
-                        {props.title}
+                        {date}
                     </TextComponent>
                 </View>
             </TouchableOpacity>
@@ -53,10 +59,10 @@ const styles = StyleSheet.create({
         padding: 1,
         width: 40,
         height: 40,
-        // borderWidth: 1,
-        // borderColor: 'black',
-        backgroundColor: 'rgba(220, 44, 44, 0.36)',
-        borderRadius: 10,
+
+        backgroundColor: 'rgba(246, 84, 84, 0.36)',
+        borderRadius: 100,
+        overflow: 'hidden',
     },
     text: {
         fontSize: 20,

@@ -30,7 +30,6 @@ export const CalendarCard = (props) => {
                         firstDay={setFirstDay(displayedDate)}
                         displayedDate={displayedDate}
                         today={displayedDate.getDate()}
-                        onPress={props.onPress}
                     />
                 </View>
             </View>
