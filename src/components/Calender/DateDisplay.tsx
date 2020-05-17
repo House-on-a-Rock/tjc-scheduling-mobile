@@ -55,18 +55,22 @@ export const DateDisplay = (props) => {
             const tasksDate = new Date(task.date);
             return compareDates(tasksDate, date);
         });
+
         return filteredTasks;
     };
 
     for (let j = 0; j < dateArray.length; j++) {
         dateArray[j] = new Array(7); //creates 2d array, 6 rows of 7
         for (let k = 0; k < dateArray[j].length; k++) {
-            const dateConstruct = new Date(year, month, determineDate());
-            let data = populateTasks(dateConstruct);
+            let day1 = determineDate();
+            let day2 = day1 - 1;
+            const dateConstruct1 = new Date(year, month, day1);
+            const dateConstruct2 = new Date(year, month, day2);
+            let data = populateTasks(dateConstruct2);
             dateArray[j][k] = (
                 <DateTile
                     data={data}
-                    renderedDate={dateConstruct}
+                    renderedDate={dateConstruct1}
                     key={j + j * (k + 1) + k}
                     style={styles.dateTileStyle}
                     textStyle={

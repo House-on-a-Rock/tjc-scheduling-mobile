@@ -25,7 +25,12 @@ export const DateTile = (props) => {
                     ? { ...styles.todayTile, ...props.style }
                     : { ...styles.tile, ...props.style }
             }
-            onPress={() => navigation.navigate('Tasks')}
+            onPress={() =>
+                navigation.navigate('Tasks', {
+                    name: `${month}/${date}/${year}`,
+                    taskDetails: props.data,
+                })
+            }
         >
             <View>
                 <TextComponent style={{ ...styles.text, ...props.textStyle }}>

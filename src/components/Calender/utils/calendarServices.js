@@ -106,6 +106,7 @@ export const compareDates = (date1, date2) => {
         date1.getFullYear() === date2.getFullYear() &&
         date1.getDate() === date2.getDate()
     ) {
+        // console.log(`${date1} is equal to ${date2}`);
         return true;
     }
     return false;

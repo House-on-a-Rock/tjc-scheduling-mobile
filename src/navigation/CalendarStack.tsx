@@ -31,7 +31,8 @@ export const CalendarStack = (props) => {
             <calStack.Screen
                 name="Tasks"
                 component={TasksScreen}
-                options={stackOptions}
+                // options={stackOptions}
+                options={({ route }) => ({ title: route.params.name })}
             />
         </calStack.Navigator>
     );
