@@ -4,10 +4,8 @@ import { View, Text, StyleSheet, FlatList } from 'react-native';
 export const TasksScreen = ({ route }) => {
     const { taskDetails } = route.params;
     const render = ({ item }) => {
-        console.log('item', item);
         return (
-            <View>
-                <Text>{item.date}</Text>
+            <View style={{ flexDirection: 'row', flex: 1, borderWidth: 1 }}>
                 <Text>{item.church.name}</Text>
                 <Text>{item.role.name}</Text>
             </View>
@@ -15,8 +13,8 @@ export const TasksScreen = ({ route }) => {
     };
 
     return (
-        <View>
-            <Text>This is the date detail screen</Text>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Text>Your tasks for {route.params.name}</Text>
             <FlatList
                 data={taskDetails}
                 renderItem={render}

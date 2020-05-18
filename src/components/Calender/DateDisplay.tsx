@@ -66,7 +66,7 @@ export const DateDisplay = (props) => {
             let day2 = day1 - 1;
             const dateConstruct1 = new Date(year, month, day1);
             const dateConstruct2 = new Date(year, month, day2);
-            let data = populateTasks(dateConstruct2);
+            let data = populateTasks(dateConstruct2); //IT JUST WORKS OK
             dateArray[j][k] = (
                 <DateTile
                     data={data}

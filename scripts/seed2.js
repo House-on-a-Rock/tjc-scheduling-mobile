@@ -158,6 +158,24 @@ const tasks = [
         ChurchId: 1,
     },
     {
+        date: '2020-05-16',
+        UserId: 1,
+        RoleId: 2,
+        ChurchId: 1,
+    },
+    {
+        date: '2020-05-16',
+        UserId: 1,
+        RoleId: 3,
+        ChurchId: 1,
+    },
+    {
+        date: '2020-05-16',
+        UserId: 1,
+        RoleId: 1,
+        ChurchId: 2,
+    },
+    {
         date: '2020-06-01',
         UserId: 1,
         RoleId: 3,

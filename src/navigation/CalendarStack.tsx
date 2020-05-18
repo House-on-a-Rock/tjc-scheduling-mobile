@@ -31,7 +31,7 @@ export const CalendarStack = (props) => {
             <calStack.Screen
                 name="Tasks"
                 component={TasksScreen}
-                // options={stackOptions}
+                // options={stackOptions} drawer button on header right
                 options={({ route }) => ({ title: route.params.name })}
             />
         </calStack.Navigator>
