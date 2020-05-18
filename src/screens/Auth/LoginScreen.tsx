@@ -1,23 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import {
-    View,
-    StyleSheet,
-    Image,
-    Button,
-    KeyboardAvoidingView,
-    ScrollView,
-} from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, Image, Button, ScrollView } from 'react-native';
 import { CustomInput, BodyText } from '../../utils/components';
-import { useDispatch, useSelector } from 'react-redux';
-import { login, checkCredentials } from '../../store/actions';
+import { useDispatch } from 'react-redux';
+import { checkCredentials } from '../../store/actions';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {
+    NavigationParams,
+    NavigationScreenProp,
+    NavigationState,
+} from 'react-navigation';
 
-export const LoginScreen = (props) => {
+interface LoginScreenProps {
+    navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+}
+
+export const LoginScreen: React.FC<LoginScreenProps> = (props) => {
     const dispatch = useDispatch();
-    const [userEmail, setUserEmail] = useState('email@email.com');
-    const [userPassword, setUserPassword] = useState('password');
-    const [isValidCredentials, setIsValidCredentials] = useState(true);
-    const [isValidInput, setIsValidInput] = useState(false);
+    const [userEmail, setUserEmail] = useState<string>('email@email.com');
+    const [userPassword, setUserPassword] = useState<string>('password');
+    const [isValidCredentials, setIsValidCredentials] = useState<boolean>(true);
+    const [isValidInput, setIsValidInput] = useState<boolean>(false);
 
     function isValidEmail() {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -40,11 +42,7 @@ export const LoginScreen = (props) => {
     };
 
     return (
-        <KeyboardAwareScrollView
-            contentContainerStyle={styles.loginScreen}
-            // behavior={Platform.OS === 'ios' ? 'padding' : null}
-            behavior={'padding'}
-        >
+        <KeyboardAwareScrollView contentContainerStyle={styles.loginScreen}>
             <ScrollView
                 keyboardShouldPersistTaps="handled"
                 contentContainerStyle={styles.feedbackContainer}
@@ -90,15 +88,13 @@ export const LoginScreen = (props) => {
                     <View style={styles.buttonStyle}>
                         <Button
                             title="Sign Up!"
-                            onPress={() => props.navigation.navigate('SignUpScreen')}
+                            onPress={() => props.navigation.navigate('SignUp')}
                         />
                     </View>
                     <View style={styles.buttonStyle}>
                         <Button
                             title="Recover Password"
-                            onPress={() =>
-                                props.navigation.navigate('RecoverLoginScreen')
-                            }
+                            onPress={() => props.navigation.navigate('RecoverLogin')}
                         />
                     </View>
                 </View>
@@ -112,7 +108,6 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         backgroundColor: 'white',
-        // alignItems: 'stretch',
     },
     feedbackContainer: {
         backgroundColor: 'white',

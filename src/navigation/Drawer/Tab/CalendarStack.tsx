@@ -1,13 +1,18 @@
 import React from 'react';
-import { CalendarScreen, TasksScreen } from '../screens';
+import { CalendarScreen, TasksScreen } from '../../../screens';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
-import { colors } from '../utils/themes';
 import { Platform } from 'react-native';
 
-const calStack = createStackNavigator();
+type CalStackParamList = {
+    Calendar: undefined;
+    Tasks: undefined;
+};
+
+const CalStack = createStackNavigator<CalStackParamList>();
 
 export const CalendarStack = (props) => {
+    console.log(props);
     const stackOptions = {
         headerLeft: () => (
             <Ionicons
@@ -22,17 +27,17 @@ export const CalendarStack = (props) => {
     };
 
     return (
-        <calStack.Navigator>
-            <calStack.Screen
+        <CalStack.Navigator>
+            <CalStack.Screen
                 name="Calendar"
                 component={CalendarScreen}
                 options={stackOptions}
             />
-            <calStack.Screen
+            <CalStack.Screen
                 name="Tasks"
                 component={TasksScreen}
                 options={stackOptions}
             />
-        </calStack.Navigator>
+        </CalStack.Navigator>
     );
 };

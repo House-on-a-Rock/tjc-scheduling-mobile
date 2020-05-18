@@ -8,12 +8,23 @@ import {
     Platform,
     Keyboard,
 } from 'react-native';
+import {
+    NavigationParams,
+    NavigationScreenProp,
+    NavigationState,
+} from 'react-navigation';
+
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { BodyText, CustomInput } from '../../utils/components';
 
-export const SignUpScreen = (props) => {
-    const [userEmail, setUserEmail] = useState('');
-    const [userPassword, setUserPassword] = useState('');
+interface SignUpScreenProps {
+    navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+}
+
+export const SignUpScreen: React.FC<SignUpScreenProps> = (props) => {
+    console.log(props);
+    const [userEmail, setUserEmail] = useState<string>('');
+    const [userPassword, setUserPassword] = useState<string>('');
 
     const onSignUpHandler = () => {
         //make api call

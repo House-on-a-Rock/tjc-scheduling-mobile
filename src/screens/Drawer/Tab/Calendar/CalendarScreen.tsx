@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Dimensions, ActivityIndicator } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import { useSelector } from 'react-redux';
-import { states } from '../../store/actions';
-import { LoadingScreen, Carousel } from '../../components';
+import { states } from '../../../../store/actions';
+import { LoadingScreen, Carousel } from '../../../../components';
 
 export const CalendarScreen = (props) => {
     const calCardDatesArray = useSelector((state) => state.calendarReducer.dateArray);
@@ -21,7 +21,7 @@ export const CalendarScreen = (props) => {
     return (
         <View style={styles.screen}>
             {loadState === states.loading ? (
-                <LoadingScreen />
+                <LoadingScreen opacity={0.97} />
             ) : (
                 <View
                     style={styles.scrollContainer}

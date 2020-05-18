@@ -107,7 +107,10 @@ export const ProfileScreen = (props) => {
                             width: '100%',
                         }}
                     >
-                        <View style={styles.modalCard} opacity={0.97}>
+                        <View
+                            style={styles.modalCard}
+                            // opacity={0.97}
+                        >
                             <Text style={styles.text}>Edit {modalParameter.label}</Text>
                             <View style={{ flexDirection: 'row', flex: 1 }}>
                                 <TextInput
@@ -225,5 +228,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 10,
         borderRadius: 20,
+        opacity: 0.97,
     },
 });
