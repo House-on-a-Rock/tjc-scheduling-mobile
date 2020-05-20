@@ -1,26 +1,18 @@
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import {
+    LogoutStackParamList,
+    DrawerStackParamList,
+    ProfileStackParamList,
+    SettingsStackParamList,
+    CalendarStackParamList,
+    HomeStackTabParamList,
+    ScheduleStackParamList,
+    AuthStackParamList,
+} from '../navigation';
 
-// ParamList
-export type DrawerStackParamList = {
-    HomeStack: undefined;
-    ProfileStack: undefined;
-    SettingsStack: undefined;
-    LogoutStack: undefined;
-};
-
-export type LogoutStackParamList = {
-    Logout: undefined;
-};
-
-export type ProfileStackParamList = {
-    Profile: undefined;
-};
-
-export type SettingsStackParamList = {
-    Settings: undefined;
-};
+/* Drawer */
 
 // LogoutScreen
 
@@ -64,21 +56,7 @@ export type SettingsScreenProps = {
     navigation: SettingsStackNavigationProp;
 };
 
-// HomeStack / Tab
-
-export type HomeStackTabParamList = {
-    CalendarStack: undefined;
-    ScheduleStack: undefined;
-};
-
-export type CalendarStackParamList = {
-    Calendar: undefined;
-    Tasks: undefined;
-};
-
-export type ScheduleStackParamList = {
-    Schedule: undefined;
-};
+/* Drawer/HomeStack-Tab */
 
 // ScheduleScreen
 
@@ -100,13 +78,6 @@ export type ScheduleScreenProps = {
 // CalendarScreen
 export type CalendarRouteProp = RouteProp<CalendarStackParamList, 'Calendar'>;
 
-// export type CalendarStackRouteProp = RouteProp<HomeStackTabParamList, 'CalendarStack'>; // unused
-
-// export type CalendarStackNavigationProp = CompositeNavigationProp<
-//     BottomTabNavigationProp<HomeStackTabParamList, 'CalendarStack'>,
-//     StackNavigationProp<DrawerStackParamList> // unused
-// >;
-
 export type CalendarScreenNavigationProp = CompositeNavigationProp<
     StackNavigationProp<CalendarStackParamList, 'Calendar'>,
     CompositeNavigationProp<
@@ -120,7 +91,7 @@ export type CalendarScreenProps = {
     navigation: CalendarScreenNavigationProp;
 };
 
-// Tasks
+// TasksScreen
 export type TasksRouteProp = RouteProp<CalendarStackParamList, 'Tasks'>;
 
 export type TasksScreenNavigationProp = CompositeNavigationProp<
@@ -132,11 +103,39 @@ export type TasksScreenNavigationProp = CompositeNavigationProp<
 >;
 
 export type TasksScreenProps = {
-    route: CalendarRouteProp;
+    route: TasksRouteProp;
     navigation: TasksScreenNavigationProp;
 };
 
-// export type CalendarScreenProps = {
-//     route: CalendarRouteProp;
-//     navigation: CalendarNavigationProp;
-// };
+// LoginScreen
+export type LoginRouteProp = RouteProp<AuthStackParamList, 'Login'>;
+
+export type LoginScreenNavigationProp = StackNavigationProp<AuthStackParamList, 'Login'>;
+
+export type LoginScreenProps = {
+    route: LoginRouteProp;
+    navigation: LoginScreenNavigationProp;
+};
+
+// RecoverLoginScreen
+export type RecoverLoginRouteProp = RouteProp<AuthStackParamList, 'RecoverLogin'>;
+
+export type RecoverLoginNavigationProp = StackNavigationProp<
+    AuthStackParamList,
+    'RecoverLogin'
+>;
+
+export type RecoverLoginScreenProps = {
+    route: RecoverLoginRouteProp;
+    navigation: RecoverLoginNavigationProp;
+};
+
+// SignUpScreen
+export type SignUpRouteProp = RouteProp<AuthStackParamList, 'SignUp'>;
+
+export type SignUpNavigationProp = StackNavigationProp<AuthStackParamList, 'SignUp'>;
+
+export type SignUpScreenProps = {
+    route: SignUpRouteProp;
+    navigation: SignUpNavigationProp;
+};

@@ -4,12 +4,12 @@ import { useNavigation } from '@react-navigation/native';
 import { CalendarCard } from './CalendarCard';
 import { useSelector } from 'react-redux';
 
-
+interface CarouselProps {}
 
 export const Carousel = (props) => {
-    console.log('Carousel', props)
+    console.log('Carousel', props);
     const { viewWidth } = props;
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const items = useSelector((state) => state.calendarReducer.dateArray);
 
     //<dummy wrapper>
@@ -50,9 +50,7 @@ export const Carousel = (props) => {
     const navigation = useNavigation();
 
     const renderMonths = (item) => (
-        <CalendarCard
-            displayedDate={item.item.date}
-            style={{ width: viewWidth }}/>
+        <CalendarCard displayedDate={item.item.date} style={{ width: viewWidth }} />
     );
 
     const calculateInitialScrollIndex = () => {
@@ -79,7 +77,7 @@ export const Carousel = (props) => {
                     index,
                     offset: viewWidth * index,
                 })}
-                windowSize={7}                
+                windowSize={7}
             />
         </View>
     );

@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { TasksScreenProps } from '../../../../navigation/models';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { TasksScreenProps } from '../../../../shared/models/screens';
 
 export const TasksScreen = (props: TasksScreenProps) => {
     const route = props.route;
+    console.log(route);
     const { taskDetails } = route.params;
     const render = ({ item }) => {
         return (

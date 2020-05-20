@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { CalendarStack } from './CalendarStack';
 import { ScheduleStack } from './ScheduleStack';
-import { HomeStackTabParamList } from '../../models';
+import { HomeStackTabParamList } from '../../../shared/models/navigation';
 
 const HomeTab = createBottomTabNavigator<HomeStackTabParamList>();
 

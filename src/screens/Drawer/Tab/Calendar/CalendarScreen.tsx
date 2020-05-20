@@ -4,7 +4,7 @@ import { AsyncStorage } from 'react-native';
 import { useSelector } from 'react-redux';
 import { states } from '../../../../store/actions';
 import { LoadingScreen, Carousel } from '../../../../components';
-import { CalendarScreenProps } from '../../../../navigation/models';
+import { CalendarScreenProps } from '../../../../shared/models/screens';
 
 export const CalendarScreen = (props: CalendarScreenProps) => {
     const calCardDatesArray = useSelector((state) => state.calendarReducer.dateArray);

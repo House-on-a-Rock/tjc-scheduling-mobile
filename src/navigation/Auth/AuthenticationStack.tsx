@@ -2,12 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LoginScreen, RecoverLoginScreen, SignUpScreen } from '../../screens';
-
-type AuthStackParamList = {
-    Login: undefined;
-    RecoverLogin: undefined;
-    SignUp: undefined;
-};
+import { AuthStackParamList } from '../../shared/models/navigation';
 
 const AuthStack = createStackNavigator<AuthStackParamList>();
 

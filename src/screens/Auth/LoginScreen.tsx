@@ -1,20 +1,12 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Image, Button, ScrollView } from 'react-native';
-import { CustomInput, BodyText } from '../../utils/components';
+import { CustomInput, BodyText } from '../../shared/components';
 import { useDispatch } from 'react-redux';
 import { checkCredentials } from '../../store/actions';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import {
-    NavigationParams,
-    NavigationScreenProp,
-    NavigationState,
-} from 'react-navigation';
+import { LoginScreenProps } from '../../shared/models/screens';
 
-interface LoginScreenProps {
-    navigation: NavigationScreenProp<NavigationState, NavigationParams>;
-}
-
-export const LoginScreen: React.FC<LoginScreenProps> = (props) => {
+export const LoginScreen = (props: LoginScreenProps) => {
     const dispatch = useDispatch();
     const [userEmail, setUserEmail] = useState<string>('email@email.com');
     const [userPassword, setUserPassword] = useState<string>('password');

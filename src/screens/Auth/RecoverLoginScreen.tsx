@@ -1,15 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import {
-    NavigationParams,
-    NavigationScreenProp,
-    NavigationState,
-} from 'react-navigation';
-interface RecoverLoginScreenProps {
-    navigation: NavigationScreenProp<NavigationState, NavigationParams>;
-}
+import { RecoverLoginScreenProps } from '../../shared/models/screens';
 
-export const RecoverLoginScreen: React.FC<RecoverLoginScreenProps> = (props) => {
+export const RecoverLoginScreen = (props: RecoverLoginScreenProps) => {
     return (
         <View>
             <Text>This is the recover login screen</Text>

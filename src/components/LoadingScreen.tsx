@@ -4,7 +4,6 @@ import React from 'react';
 export const LoadingScreen = (props) => {
     return (
         <View
-            // opacity={props.opacity}
             style={{
                 ...{
                     flex: 1,

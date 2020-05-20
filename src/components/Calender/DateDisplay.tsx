@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { DateTile } from './DateTile';
-import { months } from '../../utils/models/calendar';
-import { compareDates } from './utils/calendarServices';
+import { months } from '../../shared/models/components/calendar';
+import { compareDates } from './utils/calendar_services';
 import { useSelector } from 'react-redux';
 
 const renderingMonth = {
@@ -28,7 +28,7 @@ export const DateDisplay = (props) => {
         props.firstDay !== 0 ? renderingMonth.previous : renderingMonth.current;
     let dayCounter = 1;
 
-    const determineDate = () => {
+    const determineDate = (): number => {
         if (currentlyRendering === renderingMonth.previous) {
             if (startDisplayDate <= previousMonthFinalDate) {
                 return startDisplayDate++;
@@ -49,7 +49,7 @@ export const DateDisplay = (props) => {
         }
     };
 
-    const populateTasks = (date) => {
+    const populateTasks = (date: Date): Date[] => {
         const tasks = useSelector((state) => state.profileReducer.profile.tasks);
         const filteredTasks = tasks.filter((task) => {
             const tasksDate = new Date(task.date);

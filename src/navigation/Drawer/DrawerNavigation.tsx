@@ -6,7 +6,7 @@ import { HomeStack } from './Tab/HomeStack';
 import { ProfileStack } from './ProfileStack';
 import { SettingsStack } from './SettingsStack';
 import { LogoutStack } from './LogoutStack';
-import { DrawerStackParamList } from '../models';
+import { DrawerStackParamList } from '../../shared/models/navigation';
 
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 

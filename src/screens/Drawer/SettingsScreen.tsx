@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { SettingsScreenProps } from '../../navigation/models';
+import { SettingsScreenProps } from '../../shared/models/navigation';
 
 export const SettingsScreen = (props: SettingsScreenProps) => {
     return (
