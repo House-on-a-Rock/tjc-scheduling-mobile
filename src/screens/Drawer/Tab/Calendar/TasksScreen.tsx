@@ -4,7 +4,6 @@ import { TasksScreenProps } from '../../../../shared/models/screens';
 
 export const TasksScreen = (props: TasksScreenProps) => {
     const route = props.route;
-    console.log(route);
     const { taskDetails } = route.params;
     const render = ({ item }) => {
         return (

@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 interface CarouselProps {}
 
 export const Carousel = (props) => {
-    console.log('Carousel', props);
+    // console.log('Carousel', props);
     const { viewWidth } = props;
     // const dispatch = useDispatch();
     const items = useSelector((state) => state.calendarReducer.dateArray);
