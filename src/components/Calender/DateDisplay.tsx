@@ -2,6 +2,8 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { DateTile } from './DateTile';
 import { months } from '../../utils/models/calendar';
+import { compareDates } from './utils/calendarServices';
+import { useSelector } from 'react-redux';
 
 const renderingMonth = {
     previous: 'previous',
@@ -10,10 +12,12 @@ const renderingMonth = {
 };
 
 export const DateDisplay = (props) => {
+    const month = props.displayedDate.getMonth();
+    const year = props.displayedDate.getFullYear();
     const dateArray = new Array(6);
-    const isLeap = props.year % 4 === 0 ? true : false;
-    const daysInMonth = months(isLeap)[props.month].days;
-    const previousMonth = props.month - 1 >= 0 ? props.month - 1 : 11;
+    const isLeap = year % 4 === 0 ? true : false;
+    const daysInMonth = months(isLeap)[month].days;
+    const previousMonth = month - 1 >= 0 ? month - 1 : 11;
 
     let startDisplayDate =
         props.firstDay !== 0
@@ -45,20 +49,35 @@ export const DateDisplay = (props) => {
         }
     };
 
+    const populateTasks = (date) => {
+        const tasks = useSelector((state) => state.profileReducer.profile.tasks);
+        const filteredTasks = tasks.filter((task) => {
+            const tasksDate = new Date(task.date);
+            return compareDates(tasksDate, date);
+        });
+
+        return filteredTasks;
+    };
+
     for (let j = 0; j < dateArray.length; j++) {
         dateArray[j] = new Array(7); //creates 2d array, 6 rows of 7
         for (let k = 0; k < dateArray[j].length; k++) {
+            let day1 = determineDate();
+            let day2 = day1 - 1;
+            const dateConstruct1 = new Date(year, month, day1);
+            const dateConstruct2 = new Date(year, month, day2);
+            let data = populateTasks(dateConstruct2); //IT JUST WORKS OK
             dateArray[j][k] = (
                 <DateTile
-                    key={j + j * k + k}
-                    title={determineDate()}
+                    data={data}
+                    renderedDate={dateConstruct1}
+                    key={j + j * (k + 1) + k}
                     style={styles.dateTileStyle}
                     textStyle={
                         currentlyRendering === renderingMonth.current
                             ? styles.currentMonthDatesText
                             : styles.notCurrentMonthDatesText
                     }
-                    onPress={props.onPress}
                 />
             );
         }

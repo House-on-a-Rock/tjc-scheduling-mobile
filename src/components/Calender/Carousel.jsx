@@ -1,10 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import { View, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { CalendarCard } from './CalendarCard';
-import { useDispatch, useSelector } from 'react-redux';
-import { extendCalendar } from '../../store/actions';
-import { FORWARD, BACKWARD } from '../../utils/models/calendar';
+import { useSelector } from 'react-redux';
+
 
 
 export const Carousel = (props) => {
@@ -13,6 +12,7 @@ export const Carousel = (props) => {
     const dispatch = useDispatch();
     const items = useSelector((state) => state.calendarReducer.dateArray);
 
+    //<dummy wrapper>
     // const [viewedIndices, setViewedIndices] = useState({
     // 	currentIndex: 2,
     // 	previousIndex: 2,
@@ -45,15 +45,14 @@ export const Carousel = (props) => {
     // 		});
     // 	}
     // };
+    //</dummy wrapper>
 
     const navigation = useNavigation();
 
     const renderMonths = (item) => (
         <CalendarCard
             displayedDate={item.item.date}
-            style={{ width: viewWidth }}
-            onPress={() => navigation.navigate('Tasks')}
-        />
+            style={{ width: viewWidth }}/>
     );
 
     const calculateInitialScrollIndex = () => {
@@ -73,21 +72,14 @@ export const Carousel = (props) => {
                 horizontal={true}
                 pagingEnabled
                 showsHorizontalScrollIndicator={false}
-                initialScrollIndex={calculateInitialScrollIndex()}
+                initialScrollIndex={3}
                 initialNumToRender={7}
                 getItemLayout={(data, index) => ({
                     length: viewWidth,
                     index,
                     offset: viewWidth * index,
                 })}
-                windowSize={7}
-                // onViewableItemsChanged={onViewRef.current}
-                // viewabilityConfig={viewConfigRef.current}
-                // onScroll={onScrollHandler}
-                // scrollEventThrottle={700}
-                // maintainVisibleContentPosition={{
-                // 	minIndexForVisible: 1,
-                // }}
+                windowSize={7}                
             />
         </View>
     );

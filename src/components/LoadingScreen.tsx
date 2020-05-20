@@ -1,9 +1,10 @@
-import { View, ActivityIndicator, ViewProps } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import React from 'react';
 
 export const LoadingScreen = (props) => {
     return (
         <View
+            // opacity={props.opacity}
             style={{
                 ...{
                     flex: 1,
@@ -11,6 +12,7 @@ export const LoadingScreen = (props) => {
                     alignItems: 'center',
                     opacity: props.opacity,
                 },
+                ...props.style,
             }}
         >
             <ActivityIndicator size="large" color="blue" />

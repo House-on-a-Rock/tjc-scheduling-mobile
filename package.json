@@ -15,7 +15,7 @@
         "prettier:base": "prettier",
         "prettier:check": "npm run prettier:base -- --list-different \"**/*\"",
         "prettier:write": "npm run prettier:base -- --write \"**/*\"",
-        "set-win-env": "powershell.exe -exec bypass -File set_win_env.ps1"
+        "set-win-env": "powershell.exe -exec bypass -File D:/Code Projects/tjc-scheduling-app/scripts/set_win_env.ps1"
     },
     "husky": {
         "hooks": {

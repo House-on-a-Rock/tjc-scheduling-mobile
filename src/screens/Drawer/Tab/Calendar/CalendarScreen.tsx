@@ -10,9 +10,10 @@ export const CalendarScreen = (props: CalendarScreenProps) => {
     const calCardDatesArray = useSelector((state) => state.calendarReducer.dateArray);
     let cardWidth = Dimensions.get('window').width;
     const profile = useSelector((state) => state.profileReducer.profile);
-    const [loadState, setLoadState] = useState(states.loading);
+    const [loadState, setLoadState] = useState(states.loading); //sets initial state to loading
     useEffect(() => {
         AsyncStorage.getItem('@tjc-scheduling-app:loadState').then((loads) => {
+            //grabs loadstate from localstorage, and stores it in hook
             setLoadState(loads);
         });
 

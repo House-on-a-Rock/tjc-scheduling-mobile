@@ -3,9 +3,24 @@ import { View, Text, StyleSheet } from 'react-native';
 import { TasksScreenProps } from '../../../../navigation/models';
 
 export const TasksScreen = (props: TasksScreenProps) => {
+    const route = props.route;
+    const { taskDetails } = route.params;
+    const render = ({ item }) => {
+        return (
+            <View style={{ flexDirection: 'row', flex: 1, borderWidth: 1 }}>
+                <Text>{item.church.name}</Text>
+                <Text>{item.role.name}</Text>
+            </View>
+        );
+    };
     return (
-        <View>
-            <Text>This is the tasks detail screen</Text>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Text>Your tasks for {route.params.name}</Text>
+            <FlatList
+                data={taskDetails}
+                renderItem={render}
+                keyExtractor={(item, index) => index.toString()}
+            />
         </View>
     );
 };

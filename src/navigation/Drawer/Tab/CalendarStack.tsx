@@ -6,7 +6,7 @@ import { CalendarStackParamList } from '../../models';
 
 const CalStack = createStackNavigator<CalendarStackParamList>();
 
-export const CalendarStack = () => {
+export const CalendarStack = (props) => {
     return (
         <CalStack.Navigator>
             <CalStack.Screen
@@ -17,8 +17,15 @@ export const CalendarStack = () => {
             <CalStack.Screen
                 name="Tasks"
                 component={TasksScreen}
-                options={stackOptions}
+                options={({ route }) => ({ title: route.params.name })}
             />
         </CalStack.Navigator>
     );
 };
+
+/* <calStack.Screen
+name="Tasks"
+component={TasksScreen}
+// options={stackOptions} drawer button on header right
+options={({ route }) => ({ title: route.params.name })}
+/> */
