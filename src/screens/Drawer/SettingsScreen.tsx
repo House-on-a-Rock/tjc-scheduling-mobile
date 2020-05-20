@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { SettingsScreenProps } from '../../shared/models/navigation';
 
-export const RecoverLoginScreen = (props) => {
+export const SettingsScreen = (props: SettingsScreenProps) => {
     return (
         <View>
-            <Text>This is the recover login screen</Text>
+            <Text>This is the settings screen</Text>
         </View>
     );
 };

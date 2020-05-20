@@ -4,9 +4,13 @@ import React from 'react';
 export const LoadingScreen = (props) => {
     return (
         <View
-            opacity={props.opacity}
             style={{
-                ...{ flex: 1, justifyContent: 'center', alignItems: 'center' },
+                ...{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    opacity: props.opacity,
+                },
                 ...props.style,
             }}
         >

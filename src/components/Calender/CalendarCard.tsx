@@ -2,11 +2,17 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { DateDisplay } from './DateDisplay';
 import { DayNameRow } from './DayNameRow';
-import { setFirstDay } from './utils/calendarServices';
-import { TitleText } from '../../utils/components';
-import { months } from '../../utils/models/calendar';
+import { setFirstDay } from './utils/calendar_services';
+import { TitleText } from '../../shared/components';
+import { months } from '../../shared/models/components/calendar';
 
-export const CalendarCard = (props) => {
+export interface Props {
+    displayedDate: Date;
+    // onPress: () => void;
+    style: { width: number };
+}
+
+export const CalendarCard = (props: Props) => {
     const { displayedDate } = props;
     const isLeap = displayedDate.getFullYear() % 4 === 0 ? true : false;
     const year = displayedDate.getFullYear();

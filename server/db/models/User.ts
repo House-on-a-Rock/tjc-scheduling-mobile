@@ -75,7 +75,6 @@ const UserFactory = (
         User.hasMany(models.Task, { foreignKey: 'UserId' });
         User.belongsTo(models.Church), { as: 'church', foreignKey: 'ChurchId' };
         User.belongsToMany(models.Role, { through: models.UserRole, as: 'role' });
-        // User.belongsToMany(models.Role, { through: models.Team, as: 'duty' });
     };
 
     return User;

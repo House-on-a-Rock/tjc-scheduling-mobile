@@ -9,11 +9,12 @@ import {
     Keyboard,
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { BodyText, CustomInput } from '../../utils/components';
+import { BodyText, CustomInput } from '../../shared/components';
+import { SignUpScreenProps } from '../../shared/models/screens';
 
-export const SignUpScreen = (props) => {
-    const [userEmail, setUserEmail] = useState('');
-    const [userPassword, setUserPassword] = useState('');
+export const SignUpScreen = (props: SignUpScreenProps) => {
+    const [userEmail, setUserEmail] = useState<string>('');
+    const [userPassword, setUserPassword] = useState<string>('');
 
     const onSignUpHandler = () => {
         //make api call

@@ -15,8 +15,9 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Entypo } from '@expo/vector-icons';
+import { ProfileScreenProps } from '../../shared/models/navigation';
 
-export const ProfileScreen = (props) => {
+export const ProfileScreen = (props: ProfileScreenProps) => {
     const [modalVisible, setModalVisible] = useState(false);
     const { email, firstName, lastName } = useSelector(
         (state) => state.profileReducer.profile,
@@ -107,7 +108,10 @@ export const ProfileScreen = (props) => {
                             width: '100%',
                         }}
                     >
-                        <View style={styles.modalCard} opacity={0.97}>
+                        <View
+                            style={styles.modalCard}
+                            // opacity={0.97}
+                        >
                             <Text style={styles.text}>Edit {modalParameter.label}</Text>
                             <View style={{ flexDirection: 'row', flex: 1 }}>
                                 <TextInput
@@ -225,5 +229,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 10,
         borderRadius: 20,
+        opacity: 0.97,
     },
 });

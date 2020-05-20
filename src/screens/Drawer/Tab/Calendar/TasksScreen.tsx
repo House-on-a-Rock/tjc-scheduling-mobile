@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { TasksScreenProps } from '../../../../shared/models/screens';
 
-export const TasksScreen = ({ route }) => {
+export const TasksScreen = (props: TasksScreenProps) => {
+    const route = props.route;
     const { taskDetails } = route.params;
     const render = ({ item }) => {
         return (
@@ -11,7 +13,6 @@ export const TasksScreen = ({ route }) => {
             </View>
         );
     };
-
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text>Your tasks for {route.params.name}</Text>

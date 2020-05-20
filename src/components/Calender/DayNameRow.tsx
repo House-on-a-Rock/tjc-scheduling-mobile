@@ -1,8 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { DateTile } from './DateTile';
-import { TitleText } from '../../utils/components';
-import { days } from '../../utils/models/calendar';
+import { days } from '../../shared/models/components/calendar';
 
 export const DayNameRow = () => {
     const dayNameArray = new Array(7);

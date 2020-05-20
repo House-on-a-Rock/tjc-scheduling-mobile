@@ -1,15 +1,11 @@
-import { FORWARD, BACKWARD } from '../../../utils/models/calendar';
+import { FORWARD, BACKWARD } from '../../../shared/models/components/calendar';
 import { useSelector } from 'react-redux';
 
 export const setFirstDay = (displayedDate) => {
     const tempDisplayedDay = displayedDate.getDay();
     const tempDisplayedDate = displayedDate.getDate();
     const a = tempDisplayedDay + 1 - (tempDisplayedDate % 7);
-    if (a >= 0) {
-        return a;
-    } else {
-        return a + 7;
-    }
+    return a >= 0 ? a : a + 7;
 };
 
 export const getUpdatedMonth = (direction, displayedDate) => {
@@ -18,15 +14,11 @@ export const getUpdatedMonth = (direction, displayedDate) => {
 
     if (direction === FORWARD) {
         nextMonth = displayedDate.getMonth() + 1 > 11 ? 0 : displayedDate.getMonth() + 1;
-        if (nextMonth === 0) {
-            year = displayedDate.getFullYear() + 1;
-        }
+        if (nextMonth === 0) year = displayedDate.getFullYear() + 1;
         return new Date(year, nextMonth, 1);
     } else {
         nextMonth = displayedDate.getMonth() - 1 < 0 ? 11 : displayedDate.getMonth() - 1;
-        if (nextMonth === 11) {
-            year = displayedDate.getFullYear() - 1;
-        }
+        if (nextMonth === 11) year = displayedDate.getFullYear() - 1;
         return new Date(year, nextMonth, 1);
     }
 };
