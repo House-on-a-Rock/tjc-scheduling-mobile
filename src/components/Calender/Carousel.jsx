@@ -6,7 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { extendCalendar } from '../../store/actions';
 import { FORWARD, BACKWARD } from '../../utils/models/calendar';
 
+
 export const Carousel = (props) => {
+    console.log('Carousel', props)
     const { viewWidth } = props;
     const dispatch = useDispatch();
     const items = useSelector((state) => state.calendarReducer.dateArray);

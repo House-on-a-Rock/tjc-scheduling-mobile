@@ -3,8 +3,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { CalendarStack } from './CalendarStack';
 import { ScheduleStack } from './ScheduleStack';
+import { HomeStackTabParamList } from '../../models';
 
-const MainTab = createBottomTabNavigator();
+const HomeTab = createBottomTabNavigator<HomeStackTabParamList>();
 
 const tabNavigatorScreenOptions = ({ route }) => ({
     tabBarIcon: ({ focused, color, size }) => {
@@ -20,17 +21,17 @@ const tabNavigatorScreenOptions = ({ route }) => ({
 
 export const HomeStack = () => {
     return (
-        <MainTab.Navigator screenOptions={tabNavigatorScreenOptions}>
-            <MainTab.Screen
+        <HomeTab.Navigator screenOptions={tabNavigatorScreenOptions}>
+            <HomeTab.Screen
                 name="CalendarStack"
                 component={CalendarStack}
                 options={{ title: 'Calendar' }}
             />
-            <MainTab.Screen
+            <HomeTab.Screen
                 name="ScheduleStack"
                 component={ScheduleStack}
                 options={{ title: 'Schedule' }}
             />
-        </MainTab.Navigator>
+        </HomeTab.Navigator>
     );
 };

@@ -1,10 +1,10 @@
 import React from 'react';
 import { ScheduleScreen } from '../../../screens';
 import { createStackNavigator } from '@react-navigation/stack';
-import { ScheStackParamList } from '../../models';
+import { ScheduleStackParamList } from '../../models';
 import { stackOptions } from '../../shared';
 
-const ScheStack = createStackNavigator<ScheStackParamList>();
+const ScheStack = createStackNavigator<ScheduleStackParamList>();
 
 export const ScheduleStack = (props) => {
     return (

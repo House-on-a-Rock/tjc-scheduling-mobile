@@ -6,7 +6,13 @@ import { setFirstDay } from '../../utils/helper_functions';
 import { TitleText } from '../../utils/components';
 import { months } from '../../utils/models/calendar';
 
-export const CalendarCard = (props) => {
+export interface Props {
+    displayedDate: Date;
+    onPress: () => void;
+    style: { width: number };
+}
+
+export const CalendarCard = (props: Props) => {
     const { displayedDate } = props;
     const isLeap = displayedDate.getFullYear() % 4 === 0 ? true : false;
     const year = displayedDate.getFullYear();

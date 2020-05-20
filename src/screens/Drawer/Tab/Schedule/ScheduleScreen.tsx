@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { ScheduleScreenProps } from '../../../../navigation/models';
 
-export const ScheduleScreen = (props) => {
+export const ScheduleScreen = (props: ScheduleScreenProps) => {
     return (
         <View style={styles.screen}>
             <Text>This is the schedule screen</Text>

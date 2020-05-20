@@ -15,8 +15,9 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Entypo } from '@expo/vector-icons';
+import { ProfileScreenProps } from '../../navigation/models';
 
-export const ProfileScreen = (props) => {
+export const ProfileScreen = (props: ProfileScreenProps) => {
     const [modalVisible, setModalVisible] = useState(false);
     const { email, firstName, lastName } = useSelector(
         (state) => state.profileReducer.profile,

@@ -1,30 +1,12 @@
 import React from 'react';
 import { CalendarScreen, TasksScreen } from '../../../screens';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Ionicons } from '@expo/vector-icons';
-import { Platform } from 'react-native';
+import { stackOptions } from '../../shared';
+import { CalendarStackParamList } from '../../models';
 
-type CalStackParamList = {
-    Calendar: undefined;
-    Tasks: undefined;
-};
+const CalStack = createStackNavigator<CalendarStackParamList>();
 
-const CalStack = createStackNavigator<CalStackParamList>();
-
-export const CalendarStack = (props) => {
-    const stackOptions = {
-        headerLeft: () => (
-            <Ionicons
-                name="ios-menu"
-                size={35}
-                onPress={() => {
-                    props.navigation.toggleDrawer();
-                }}
-                style={{ paddingLeft: 20, paddingBottom: Platform.OS === 'ios' ? 20 : 0 }}
-            />
-        ),
-    };
-
+export const CalendarStack = () => {
     return (
         <CalStack.Navigator>
             <CalStack.Screen
