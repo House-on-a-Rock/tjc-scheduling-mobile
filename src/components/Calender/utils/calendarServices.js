@@ -1,4 +1,4 @@
-import { FORWARD, BACKWARD } from '../models/calendar';
+import { FORWARD, BACKWARD } from '../../../utils/models/calendar';
 import { useSelector } from 'react-redux';
 
 export const setFirstDay = (displayedDate) => {
@@ -31,7 +31,7 @@ export const getUpdatedMonth = (direction, displayedDate) => {
     }
 };
 
-const getXMonths = (dateFrom, number) => {
+export const getXMonths = (dateFrom, number) => {
     let newArray = [];
     let forwardBool = true;
     if (number < 0) {
@@ -53,30 +53,26 @@ const getXMonths = (dateFrom, number) => {
     }
 };
 
-export const createDateArray = (tasks = []) => {
-    // const today = new Date();
-    // const dateArray = getXMonths(today, -2).concat([today].concat(getXMonths(today, 2)));
-    // const dateObjectArray = dateArray.map((date, index) => {
-    // 	return {
-    // 		id: index,
-    // 		date: date,
-    // 	};
-    // });
-    // return dateObjectArray;
-
-    //map tasks over dateArray
-
+export const createDateArray = (startMonth, endMonth) => {
     const dateArray = [];
-    for (let i = 2000; i < 2022; i++) {
-        for (let j = 0; j < 12; j++) {
-            dateArray.push({
-                id: dateArray.length,
-                date: new Date(i, j, 1),
-                //array of task indices
-            });
-        }
+
+    dateArray.push({ id: dateArray.length, date: startMonth });
+    while (dateArray[dateArray.length - 1].date.getMonth() !== endMonth.getMonth()) {
+        const nextMonth = getUpdatedMonth(FORWARD, dateArray[dateArray.length - 1].date);
+        dateArray.push({ id: dateArray.length, date: nextMonth });
     }
+
     return dateArray;
+
+    // for (let i = 2000; i < 2022; i++) {
+    //     for (let j = 0; j < 12; j++) {
+    //         dateArray.push({
+    //             id: dateArray.length,
+    //             date: new Date(i, j, 1),
+    //             //array of task indices
+    //         });
+    //     }
+    // }
 };
 
 export const extendDateArray = (direction, dateArray) => {
@@ -103,3 +99,8 @@ export const extendDateArray = (direction, dateArray) => {
         return extensionArray.concat(dateArray);
     }
 };
+
+export const compareDates = (date1, date2) =>
+    date1.getMonth() === date2.getMonth() &&
+    date1.getFullYear() === date2.getFullYear() &&
+    date1.getDate() === date2.getDate();
