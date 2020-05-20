@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { AuthenticationStack } from './index';
-import { DrawerNav } from './Drawer/DrawerNavigation';
+import { AuthenticationStack, DrawerNav } from './index';
 
 const AppNavigation = () => {
     let isLoggedIn = useSelector((state) => state.authReducer.isLoggedIn);

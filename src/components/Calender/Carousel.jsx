@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { View, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { CalendarCard } from './CalendarCard';
-import { useDispatch, useSelector } from '../../screens/Drawer/Tab/Calendar/node_modules/react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { extendCalendar } from '../../store/actions';
 import { FORWARD, BACKWARD } from '../../utils/models/calendar';
 

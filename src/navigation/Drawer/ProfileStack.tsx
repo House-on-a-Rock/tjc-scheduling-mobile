@@ -1,11 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ProfileScreen } from '../../screens';
-import { stackOptions } from './DrawerNavigation';
-
-type ProfStackParamList = {
-    Profile: undefined;
-};
+import { stackOptions } from '../shared';
+import { ProfStackParamList } from '../models';
 
 const ProfStack = createStackNavigator<ProfStackParamList>();
 

@@ -1,26 +1,9 @@
 import React from 'react';
-import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
-// import { LogOutScreen } from '../..';
+import { createStackNavigator } from '@react-navigation/stack';
 import { LogoutScreen } from '../../screens/Drawer/LogoutScreen';
-import { stackOptions, DrawerStackParamList } from '..';
-import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 
-type LogoutParamList = {
-    Logout: undefined;
-};
-
-// navigation prop for l.o stack
-export type LogoutStackNavigationProp = CompositeNavigationProp<
-    StackNavigationProp<LogoutParamList, 'Logout'>,
-    StackNavigationProp<DrawerStackParamList>
->;
-
-// type LogoutScreenRouteProp = RouteProp<LogoutParamList, 'Logout'>;
-
-// type Props = {
-//     route: LogoutScreenRouteProp;
-//     navigation: LogoutNavigationProp;
-// };
+import { DrawerStackParamList, LogoutParamList } from '../models';
+import { stackOptions } from '../shared';
 
 const LogOutStack = createStackNavigator<LogoutParamList>();
 

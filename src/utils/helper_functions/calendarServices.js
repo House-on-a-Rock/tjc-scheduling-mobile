@@ -1,5 +1,5 @@
 import { FORWARD, BACKWARD } from '../models/calendar';
-import { useSelector } from '../../screens/Drawer/Tab/Calendar/node_modules/react-redux';
+import { useSelector } from 'react-redux';
 
 export const setFirstDay = (displayedDate) => {
     const tempDisplayedDay = displayedDate.getDay();

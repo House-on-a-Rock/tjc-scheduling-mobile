@@ -1,13 +1,8 @@
 import React from 'react';
-import { ScheduleScreen } from '../../../screens';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { CalendarStack } from '../..';
-
-export type MainStackParamList = {
-    Calendar: undefined;
-    Schedule: undefined;
-};
+import { CalendarStack } from './CalendarStack';
+import { ScheduleStack } from './ScheduleStack';
 
 const MainTab = createBottomTabNavigator();
 
@@ -32,8 +27,8 @@ export const HomeStack = () => {
                 options={{ title: 'Calendar' }}
             />
             <MainTab.Screen
-                name="ScheduleScreen"
-                component={ScheduleScreen}
+                name="ScheduleStack"
+                component={ScheduleStack}
                 options={{ title: 'Schedule' }}
             />
         </MainTab.Navigator>

@@ -1,11 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SettingsScreen } from '../../screens';
-import { stackOptions } from '..';
-
-type SettingsParamList = {
-    Settings: undefined;
-};
+import { stackOptions } from '../shared';
+import { SettingsParamList } from '../models';
 
 const SetStack = createStackNavigator<SettingsParamList>();
 

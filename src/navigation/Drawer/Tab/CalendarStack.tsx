@@ -12,7 +12,6 @@ type CalStackParamList = {
 const CalStack = createStackNavigator<CalStackParamList>();
 
 export const CalendarStack = (props) => {
-    console.log(props);
     const stackOptions = {
         headerLeft: () => (
             <Ionicons
