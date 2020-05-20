@@ -8,7 +8,7 @@ import { months } from '../../shared/models/components/calendar';
 
 export interface Props {
     displayedDate: Date;
-    onPress: () => void;
+    // onPress: () => void;
     style: { width: number };
 }
 
