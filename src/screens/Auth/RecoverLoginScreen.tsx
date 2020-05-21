@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { RecoverLoginScreenProps } from 'shared/models';
+import { RecoverLoginScreenProps } from '../../shared/models';
 
 export const RecoverLoginScreen = (props: RecoverLoginScreenProps) => {
     return (

@@ -1,5 +1,5 @@
+import { DbInterface } from '@shared/SequelizeTypings/typings/DbInterface';
 import Sequelize from 'sequelize';
-import { DbInterface } from 'shared/SequelizeTypings/typings/DbInterface';
 import ChurchFactory from './Church';
 import UserFactory from './User';
 import TaskFactory from './Task';

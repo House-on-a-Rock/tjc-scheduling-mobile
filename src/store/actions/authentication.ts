@@ -2,7 +2,7 @@ import axios from 'axios';
 import { setProfile } from './profileActions';
 import { changeLoadState, states } from './loadState';
 import { createCalendar } from './calendarActions';
-import { secretIp } from 'secrets/secrets';
+import { secretIp } from '../../../secrets';
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';

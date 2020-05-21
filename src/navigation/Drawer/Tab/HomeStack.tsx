@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { CalendarStack } from './CalendarStack';
 import { ScheduleStack } from './ScheduleStack';
-import { HomeStackTabParamList } from 'shared/models';
+import { HomeStackTabParamList } from '../../../shared/models';
 
 const HomeTab = createBottomTabNavigator<HomeStackTabParamList>();
 

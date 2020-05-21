@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { View, Text, StyleSheet, Button } from 'react-native';
-import { LogoutScreenProps } from 'shared/models';
-import { logout } from 'store/actions';
+import { LogoutScreenProps } from '../../shared/models';
+import { logout } from '../../store/actions';
 
 export const LogoutScreen = (props: LogoutScreenProps) => {
     const dispatch = useDispatch();

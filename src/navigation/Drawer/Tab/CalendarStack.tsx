@@ -1,8 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { CalendarScreen, TasksScreen } from 'screens/index';
-import { stackOptions } from 'shared/components';
-import { CalendarStackParamList } from 'shared/models';
+import { CalendarScreen, TasksScreen } from '../../../screens';
+import { stackOptions } from '../../../shared/components';
+import { CalendarStackParamList } from '../../../shared/models';
 
 const CalStack = createStackNavigator<CalendarStackParamList>();
 
@@ -22,10 +22,3 @@ export const CalendarStack = (props) => {
         </CalStack.Navigator>
     );
 };
-
-/* <calStack.Screen
-name="Tasks"
-component={TasksScreen}
-// options={stackOptions} drawer button on header right
-options={({ route }) => ({ title: route.params.name })}
-/> */

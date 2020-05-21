@@ -1,8 +1,8 @@
 import * as Sequelize from 'sequelize';
-import { SequelizeAttributes } from 'shared/SequelizeTypings/typings/SequelizeAttributes';
 import crypto from 'crypto';
 import dotenv from 'dotenv';
-import { UserAttributes, UserInstance, UserModel } from 'shared/SequelizeTypings/models';
+import { UserAttributes, UserInstance, UserModel } from '@shared/SequelizeTypings/models';
+import { SequelizeAttributes } from '@shared/SequelizeTypings/typings/SequelizeAttributes';
 
 dotenv.config();
 

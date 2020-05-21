@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Image, Button, ScrollView } from 'react-native';
-import { CustomInput, BodyText } from 'shared/components';
 import { useDispatch } from 'react-redux';
-
+import { View, StyleSheet, Image, Button, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { LoginScreenProps } from 'shared/models';
-import { checkCredentials } from 'store/actions';
+
+import { CustomInput, BodyText } from '../../shared/components';
+import { LoginScreenProps } from '../../shared/models';
+import { checkCredentials } from '../../store/actions';
 
 export const LoginScreen = (props: LoginScreenProps) => {
     const dispatch = useDispatch();

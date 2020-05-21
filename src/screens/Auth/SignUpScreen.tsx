@@ -9,8 +9,8 @@ import {
     Keyboard,
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { BodyText, CustomInput } from 'shared/components';
-import { SignUpScreenProps } from 'shared/models';
+import { BodyText, CustomInput } from '../../shared/components';
+import { SignUpScreenProps } from '../../shared/models';
 
 export const SignUpScreen = (props: SignUpScreenProps) => {
     const [userEmail, setUserEmail] = useState<string>('');

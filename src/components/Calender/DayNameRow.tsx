@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { AbbrevDays } from 'services/Calendar/models';
+import { AbbrevDays } from '../../services/Calendar/models';
 
 export const DayNameRow = () => {
     const dayNameArray = new Array(7);
