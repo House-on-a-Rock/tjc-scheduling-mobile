@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { DateTile } from './DateTile';
-import { months } from '../../shared/models/components/calendar';
-import { compareDates } from './utils/calendar_services';
 import { useSelector } from 'react-redux';
+import { View, StyleSheet } from 'react-native';
+import { months } from 'services/Calendar/models';
+import { compareDates } from 'services/Calendar/helper_functions';
+import { DateTile } from './DateTile';
 
 const renderingMonth = {
     previous: 'previous',

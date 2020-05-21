@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import { useSelector } from 'react-redux';
-import { states } from '../../../../store/actions';
-import { LoadingScreen, Carousel } from '../../../../components';
-import { CalendarScreenProps } from '../../../../shared/models/screens';
+import { CalendarScreenProps } from 'shared/models';
+import { states } from 'store/actions';
+import { Carousel } from 'components/Calender';
+import { LoadingPage } from 'components/LoadingPage';
 
 export const CalendarScreen = (props: CalendarScreenProps) => {
     const calCardDatesArray = useSelector((state) => state.calendarReducer.dateArray);
@@ -23,7 +24,7 @@ export const CalendarScreen = (props: CalendarScreenProps) => {
     return (
         <View style={styles.screen}>
             {loadState === states.loading ? (
-                <LoadingScreen opacity={0.97} />
+                <LoadingPage opacity={0.97} />
             ) : (
                 <View
                     style={styles.scrollContainer}

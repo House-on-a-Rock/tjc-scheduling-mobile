@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Entypo } from '@expo/vector-icons';
-import { ProfileScreenProps } from '../../shared/models/navigation';
+import { ProfileScreenProps } from 'shared/models';
 
 export const ProfileScreen = (props: ProfileScreenProps) => {
     const [modalVisible, setModalVisible] = useState(false);

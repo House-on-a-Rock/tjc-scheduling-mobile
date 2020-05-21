@@ -1,5 +1,4 @@
-import { FORWARD, BACKWARD } from '../../../shared/models/components/calendar';
-import { useSelector } from 'react-redux';
+import { CarousalDirection } from '../models';
 
 export const setFirstDay = (displayedDate) => {
     const tempDisplayedDay = displayedDate.getDay();
@@ -8,11 +7,11 @@ export const setFirstDay = (displayedDate) => {
     return a >= 0 ? a : a + 7;
 };
 
-export const getUpdatedMonth = (direction, displayedDate) => {
+export const getUpdatedMonth = (carousalDirection, displayedDate) => {
     let year = displayedDate.getFullYear();
     let nextMonth = displayedDate.getMonth();
 
-    if (direction === FORWARD) {
+    if (carousalDirection === CarousalDirection.FORWARD) {
         nextMonth = displayedDate.getMonth() + 1 > 11 ? 0 : displayedDate.getMonth() + 1;
         if (nextMonth === 0) year = displayedDate.getFullYear() + 1;
         return new Date(year, nextMonth, 1);
@@ -31,15 +30,15 @@ export const getXMonths = (dateFrom, number) => {
         forwardBool = false;
     }
     if (forwardBool) {
-        newArray.push(getUpdatedMonth(FORWARD, dateFrom));
+        newArray.push(getUpdatedMonth(CarousalDirection.FORWARD, dateFrom));
         for (let i = 1; i < number; i++) {
-            newArray.push(getUpdatedMonth(FORWARD, newArray[i - 1]));
+            newArray.push(getUpdatedMonth(CarousalDirection.FORWARD, newArray[i - 1]));
         }
         return newArray;
     } else {
-        newArray.push(getUpdatedMonth(BACKWARD, dateFrom));
+        newArray.push(getUpdatedMonth(CarousalDirection.BACKWARD, dateFrom));
         for (let i = 1; i < number; i++) {
-            newArray.push(getUpdatedMonth(BACKWARD, newArray[i - 1]));
+            newArray.push(getUpdatedMonth(CarousalDirection.BACKWARD, newArray[i - 1]));
         }
         return newArray.reverse();
     }
@@ -50,7 +49,10 @@ export const createDateArray = (startMonth, endMonth) => {
 
     dateArray.push({ id: dateArray.length, date: startMonth });
     while (dateArray[dateArray.length - 1].date.getMonth() !== endMonth.getMonth()) {
-        const nextMonth = getUpdatedMonth(FORWARD, dateArray[dateArray.length - 1].date);
+        const nextMonth = getUpdatedMonth(
+            CarousalDirection.FORWARD,
+            dateArray[dateArray.length - 1].date,
+        );
         dateArray.push({ id: dateArray.length, date: nextMonth });
     }
 
@@ -68,7 +70,7 @@ export const createDateArray = (startMonth, endMonth) => {
 };
 
 export const extendDateArray = (direction, dateArray) => {
-    if (direction === FORWARD) {
+    if (direction === CarousalDirection.FORWARD) {
         const lastMonth = dateArray[dateArray.length - 1].date;
         const newMonthsArray = getXMonths(lastMonth, 3);
         const extensionArray = newMonthsArray.map((date, index) => {

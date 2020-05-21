@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { ScheduleScreenProps } from '../../../../shared/models/screens';
+import { ScheduleScreenProps } from 'shared/models';
 
 export const ScheduleScreen = (props: ScheduleScreenProps) => {
     return (
