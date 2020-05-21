@@ -53,7 +53,6 @@
         "axios": "^0.19.2",
         "body-parser": "^1.19.0",
         "chalk": "^4.0.0",
-        "cors": "^2.8.5",
         "crypto": "^1.0.1",
         "dotenv": "^8.2.0",
         "expo": "~36.0.0",
@@ -74,8 +73,7 @@
         "react-navigation": "^4.3.9",
         "react-redux": "^7.2.0",
         "redux": "^4.0.5",
-        "redux-thunk": "^2.3.0",
-        "sequelize": "^4.44.4"
+        "redux-thunk": "^2.3.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.8.4",
