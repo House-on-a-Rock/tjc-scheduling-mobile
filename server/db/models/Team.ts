@@ -1,6 +1,6 @@
 import * as Sequelize from 'sequelize';
-import { SequelizeAttributes } from 'shared/SequelizeTypings/typings/SequelizeAttributes';
-import { TeamInstance, TeamAttributes } from 'shared/SequelizeTypings/models/TeamModel';
+import { SequelizeAttributes } from '@shared/SequelizeTypings/typings/SequelizeAttributes';
+import { TeamInstance, TeamAttributes } from '@shared/SequelizeTypings/models/TeamModel';
 
 const TeamFactory = (
     sequelize: Sequelize.Sequelize,

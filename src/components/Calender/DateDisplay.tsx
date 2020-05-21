@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
-import { months } from 'services/Calendar/models';
-import { compareDates } from 'services/Calendar/helper_functions';
+import { months } from '../../services/Calendar/models';
+import { compareDates } from '../../services/Calendar/helper_functions';
 import { DateTile } from './DateTile';
 
 const renderingMonth = {

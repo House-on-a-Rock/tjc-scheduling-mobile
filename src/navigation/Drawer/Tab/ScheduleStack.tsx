@@ -1,8 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { ScheduleScreen } from 'screens/index';
-import { stackOptions } from 'shared/components';
-import { ScheduleStackParamList } from 'shared/models';
+import { ScheduleScreen } from '../../../screens';
+import { stackOptions } from '../../../shared/components';
+import { ScheduleStackParamList } from '../../../shared/models';
 
 const SchedStack = createStackNavigator<ScheduleStackParamList>();
 

@@ -1,12 +1,12 @@
 import React from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { DrawerStackParamList } from '../../shared/models';
 
 import { HomeStack } from './Tab/HomeStack';
 import { ProfileStack } from './ProfileStack';
 import { SettingsStack } from './SettingsStack';
 import { LogoutStack } from './LogoutStack';
-import { DrawerStackParamList } from 'shared/models';
 
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 

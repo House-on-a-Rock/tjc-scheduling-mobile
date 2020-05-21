@@ -2,8 +2,8 @@ import { CREATE_CALENDAR, EXTEND_CALENDAR } from '../actions';
 import {
     createDateArray,
     extendDateArray,
+    getXMonths,
 } from '../../services/Calendar/helper_functions/calendar_services';
-import { getXMonths } from '../../services/Calendar/helper_functions/calendar_services';
 
 const initialState = {
     dateArray: [],

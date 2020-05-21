@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
-import { TasksScreenProps } from 'shared/models';
+import { TasksScreenProps } from '../../../../shared/models';
 
 export const TasksScreen = (props: TasksScreenProps) => {
     const route = props.route;

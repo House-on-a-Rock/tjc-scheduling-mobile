@@ -1,9 +1,9 @@
 import * as Sequelize from 'sequelize';
-import { SequelizeAttributes } from 'shared/SequelizeTypings/typings/SequelizeAttributes';
+import { SequelizeAttributes } from '@shared/SequelizeTypings/typings/SequelizeAttributes';
 import {
     ChurchInstance,
     ChurchAttributes,
-} from 'shared/SequelizeTypings/models/ChurchModel';
+} from '@shared/SequelizeTypings/models/ChurchModel';
 
 const ChurchFactory = (
     sequelize: Sequelize.Sequelize,

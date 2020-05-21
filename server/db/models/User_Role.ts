@@ -1,9 +1,9 @@
 import * as Sequelize from 'sequelize';
-import { SequelizeAttributes } from 'shared/SequelizeTypings/typings/SequelizeAttributes';
+import { SequelizeAttributes } from '@shared/SequelizeTypings/typings/SequelizeAttributes';
 import {
     UserRoleInstance,
     UserRoleAttributes,
-} from 'shared/SequelizeTypings/models/UserRoleModel';
+} from '@shared/SequelizeTypings/models/UserRoleModel';
 
 const UserRoleFactory = (
     sequelize: Sequelize.Sequelize,

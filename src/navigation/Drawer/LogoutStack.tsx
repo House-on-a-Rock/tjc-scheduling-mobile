@@ -1,8 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { LogoutScreen } from 'screens/index';
-import { stackOptions } from 'shared/components';
-import { LogoutStackParamList } from 'shared/models';
+import { LogoutScreen } from '../../screens';
+import { stackOptions } from '../../shared/components';
+import { LogoutStackParamList } from '../../shared/models';
 
 const LogOutStack = createStackNavigator<LogoutStackParamList>();
 
