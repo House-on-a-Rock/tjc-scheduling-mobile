@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LoginScreen, RecoverLoginScreen, SignUpScreen } from '../../screens';
-import { AuthStackParamList } from '../../shared/models/navigation';
+import { AuthStackParamList } from 'shared/models';
 
 const AuthStack = createStackNavigator<AuthStackParamList>();
 

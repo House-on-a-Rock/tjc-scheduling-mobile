@@ -1,8 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { SettingsScreen } from '../../screens';
-import { stackOptions } from '../../shared/components';
-import { SettingsStackParamList } from '../../shared/models/navigation';
+import { SettingsScreen } from 'screens/index';
+import { stackOptions } from 'shared/components';
+import { SettingsStackParamList } from 'shared/models';
 
 const SetStack = createStackNavigator<SettingsStackParamList>();
 

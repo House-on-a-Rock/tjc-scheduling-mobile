@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { setProfile } from './profileActions';
-import { secretIp } from '../../../secrets/secrets';
 import { changeLoadState, states } from './loadState';
 import { createCalendar } from './calendarActions';
+import { secretIp } from 'secrets/secrets';
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';

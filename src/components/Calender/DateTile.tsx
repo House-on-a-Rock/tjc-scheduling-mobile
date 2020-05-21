@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { TitleText } from '../../shared/components';
 import { useSelector } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
 import { Entypo } from '@expo/vector-icons';
-import { compareDates } from './utils/calendar_services';
+import { useNavigation } from '@react-navigation/native';
+
+import { TitleText } from 'shared/components';
+import { compareDates } from 'services/Calendar/helper_functions';
 
 export const DateTile = (props) => {
     const navigation = useNavigation();

@@ -12,9 +12,13 @@
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
         "paths": {
-            // "src/utils/*": ["src/utils/*"],
             "shared/*": ["shared/*"],
-            "*": ["node_modules/*"]
+            "*": ["node_modules/*"],
+            "store/*": ["src/store/*"],
+            "secrets/*": ["secrets/*"],
+            "components/*": ["src/components/*"],
+            "services/*": ["src/services/*"],
+            "screens/*": ["src/screens/*"]
         }
     },
     "exclude": ["node_modules", ".vscode", ".expo"]

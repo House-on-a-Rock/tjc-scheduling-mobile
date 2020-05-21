@@ -2,9 +2,9 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { DateDisplay } from './DateDisplay';
 import { DayNameRow } from './DayNameRow';
-import { setFirstDay } from './utils/calendar_services';
-import { TitleText } from '../../shared/components';
-import { months } from '../../shared/models/components/calendar';
+import { setFirstDay } from 'services/Calendar/helper_functions';
+import { months } from 'services/Calendar/models';
+import { TitleText } from 'shared/components';
 
 export interface Props {
     displayedDate: Date;

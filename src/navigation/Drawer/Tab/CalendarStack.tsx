@@ -1,8 +1,8 @@
 import React from 'react';
-import { CalendarScreen, TasksScreen } from '../../../screens';
 import { createStackNavigator } from '@react-navigation/stack';
-import { stackOptions } from '../../../shared/components';
-import { CalendarStackParamList } from '../../../shared/models/navigation';
+import { CalendarScreen, TasksScreen } from 'screens/index';
+import { stackOptions } from 'shared/components';
+import { CalendarStackParamList } from 'shared/models';
 
 const CalStack = createStackNavigator<CalendarStackParamList>();
 

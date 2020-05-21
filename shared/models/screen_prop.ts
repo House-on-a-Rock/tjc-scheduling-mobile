@@ -10,7 +10,7 @@ import {
     HomeStackTabParamList,
     ScheduleStackParamList,
     AuthStackParamList,
-} from '../navigation';
+} from './stack_param';
 
 /* Drawer */
 
