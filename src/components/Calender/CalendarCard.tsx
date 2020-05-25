@@ -7,48 +7,42 @@ import { TitleText } from '../../utils/components';
 import { months } from '../../utils/models/calendar';
 
 export const CalendarCard = (props) => {
-    const { displayedDate } = props;
+    const { displayedDate, height } = props;
     const isLeap = displayedDate.getFullYear() % 4 === 0 ? true : false;
     const year = displayedDate.getFullYear();
     const month = displayedDate.getMonth();
     return (
-        <View style={{ ...styles.cardContainer, ...props.style }}>
-            <View style={styles.insideContainer}>
-                <View style={styles.container}>
-                    <TouchableOpacity>
-                        <TitleText style={styles.yearText}>{year}</TitleText>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <TitleText style={styles.monthText}>
-                            {months(isLeap)[month].name}
-                        </TitleText>
-                    </TouchableOpacity>
-                </View>
-                <View>
-                    <DayNameRow />
-                    <DateDisplay
-                        firstDay={setFirstDay(displayedDate)}
-                        displayedDate={displayedDate}
-                        today={displayedDate.getDate()}
-                    />
-                </View>
+        <View
+            style={{
+                width: '100%',
+                height: 380,
+                marginBottom: 20,
+            }}
+        >
+            <View style={styles.container}>
+                <TouchableOpacity>
+                    <TitleText style={styles.monthText}>
+                        {months(isLeap)[month].name} {year}
+                    </TitleText>
+                </TouchableOpacity>
+            </View>
+            <View>
+                <DayNameRow />
+                <DateDisplay
+                    firstDay={setFirstDay(displayedDate)}
+                    displayedDate={displayedDate}
+                    today={displayedDate.getDate()}
+                />
             </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    cardContainer: {
-        width: '100%',
-    },
-    insideContainer: {
-        margin: 10,
-    },
     container: {
         width: '100%',
-        height: '20%',
-        // borderColor: "black",
-        // borderWidth: 2,
+        height: '15%',
+        // backgroundColor: 'blue',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -57,15 +51,10 @@ const styles = StyleSheet.create({
         fontSize: 40,
         color: '#3E48DA',
         letterSpacing: 1,
-        // shadowColor: 'black',
-        // shadowOffset: {
-        // 	width: 10,
-        // 	height: 5,
-        // },
-        // shadowOpacity: 0.3,
     },
     monthText: {
         alignSelf: 'center',
         fontSize: 30,
+        color: '#3E48DA',
     },
 });

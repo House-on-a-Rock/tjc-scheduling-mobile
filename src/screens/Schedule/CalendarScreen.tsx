@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Dimensions, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Dimensions, Text } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import { useSelector } from 'react-redux';
 import { states } from '../../store/actions';
@@ -7,32 +7,22 @@ import { LoadingScreen, Carousel } from '../../components';
 
 export const CalendarScreen = (props) => {
     const calCardDatesArray = useSelector((state) => state.calendarReducer.dateArray);
-    let cardWidth = Dimensions.get('window').width;
-    const profile = useSelector((state) => state.profileReducer.profile);
     const [loadState, setLoadState] = useState(states.loading); //sets initial state to loading
     useEffect(() => {
         AsyncStorage.getItem('@tjc-scheduling-app:loadState').then((loads) => {
+            //if useEffect runs faster than API calls than this will skip the loading screen
             //grabs loadstate from localstorage, and stores it in hook
             setLoadState(loads);
         });
+    }); //memory leak from here
 
-        let d = new Date(profile.tasks[0].date) || 1;
-    }); //memory leak from here pbly
+    if (loadState === states.loading) return <LoadingScreen />;
 
     return (
         <View style={styles.screen}>
-            {loadState === states.loading ? (
-                <LoadingScreen />
-            ) : (
-                <View
-                    style={styles.scrollContainer}
-                    onLayout={(event) => {
-                        cardWidth = event.nativeEvent.layout.width;
-                    }}
-                >
-                    <Carousel items={calCardDatesArray} viewWidth={cardWidth} />
-                </View>
-            )}
+            <View style={styles.scrollContainer}>
+                <Carousel items={calCardDatesArray} />
+            </View>
         </View>
     );
 };
@@ -46,6 +36,5 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         width: '100%',
-        height: '90%',
     },
 });

@@ -1,7 +1,5 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { DateTile } from './DateTile';
-import { TitleText } from '../../utils/components';
 import { days } from '../../utils/models/calendar';
 
 export const DayNameRow = () => {
@@ -20,13 +18,14 @@ const styles = StyleSheet.create({
     dayNamesContainer: {
         flexDirection: 'row',
         width: '100%',
-        paddingVertical: 20,
     },
     dayTilesStyle: {
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white',
         flex: 1,
+        borderBottomWidth: 1,
+        paddingBottom: 10,
     },
     dayText: {
         fontFamily: 'Roboto-Bold',

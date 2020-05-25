@@ -32,7 +32,14 @@ export const DateTile = (props) => {
                 })
             }
         >
-            <View>
+            <View
+                style={{
+                    flex: 1,
+                    width: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                }}
+            >
                 <TextComponent style={{ ...styles.text, ...props.textStyle }}>
                     {date}
                 </TextComponent>
@@ -52,16 +59,18 @@ const styles = StyleSheet.create({
         height: 50,
         alignItems: 'center',
         justifyContent: 'center',
+        borderBottomWidth: 1,
     },
     todayTile: {
         alignItems: 'center',
         justifyContent: 'center',
         padding: 1,
         width: 40,
-        height: 40,
+        height: 50,
+        borderBottomWidth: 1,
 
         backgroundColor: 'rgba(246, 84, 84, 0.36)',
-        borderRadius: 100,
+        // borderRadius: 100,
         overflow: 'hidden',
     },
     text: {
