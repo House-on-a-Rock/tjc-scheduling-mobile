@@ -7,7 +7,7 @@ import { TitleText } from '../../utils/components';
 import { months } from '../../utils/models/calendar';
 
 export const CalendarCard = (props) => {
-    const { displayedDate, height } = props;
+    const { displayedDate } = props;
     const isLeap = displayedDate.getFullYear() % 4 === 0 ? true : false;
     const year = displayedDate.getFullYear();
     const month = displayedDate.getMonth();
@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: '15%',
-        // backgroundColor: 'blue',
         alignItems: 'center',
         justifyContent: 'center',
     },

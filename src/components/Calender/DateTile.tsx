@@ -19,37 +19,41 @@ export const DateTile = (props) => {
     }
 
     return (
-        <TouchableOpacity
+        <View
             style={
                 isToday
                     ? { ...styles.todayTile, ...props.style }
                     : { ...styles.tile, ...props.style }
             }
-            onPress={() =>
-                navigation.navigate('Tasks', {
-                    name: `${month}/${date}/${year}`,
-                    taskDetails: props.data,
-                })
-            }
         >
-            <View
-                style={{
-                    flex: 1,
-                    width: '100%',
-                    alignItems: 'center',
-                    justifyContent: 'flex-start',
-                }}
+            <TouchableOpacity
+                style={{ flex: 1, width: '100%' }}
+                onPress={() =>
+                    navigation.navigate('Tasks', {
+                        name: `${month}/${date}/${year}`,
+                        taskDetails: props.data,
+                    })
+                }
             >
-                <TextComponent style={{ ...styles.text, ...props.textStyle }}>
-                    {date}
-                </TextComponent>
-                {props.data.length > 0 ? (
-                    <Entypo name="dot-single" size={20} color="black" />
-                ) : (
-                    <View></View>
-                )}
-            </View>
-        </TouchableOpacity>
+                <View
+                    style={{
+                        flex: 1,
+                        width: '100%',
+                        alignItems: 'center',
+                        justifyContent: 'flex-start',
+                    }}
+                >
+                    <TextComponent style={{ ...styles.text, ...props.textStyle }}>
+                        {date}
+                    </TextComponent>
+                    {props.data.length > 0 ? (
+                        <Entypo name="dot-single" size={20} color="black" />
+                    ) : (
+                        <View></View>
+                    )}
+                </View>
+            </TouchableOpacity>
+        </View>
     );
 };
 

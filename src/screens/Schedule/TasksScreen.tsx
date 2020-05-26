@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 
 export const TasksScreen = ({ route }) => {
@@ -7,6 +7,10 @@ export const TasksScreen = ({ route }) => {
 
     const onSwapPressHandler = () => {
         console.log('swap was pressed');
+        Alert.alert('', 'Are you sure you want to switch with someone?', [
+            { text: 'Cancel' },
+            { text: 'Ok', onPress: () => console.log('pressed ok') }, //make api call, display loading screen until call response is ok
+        ]);
     };
 
     const render = ({ item }) => {

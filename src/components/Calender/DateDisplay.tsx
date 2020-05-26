@@ -60,13 +60,12 @@ export const DateDisplay = (props) => {
     };
 
     for (let j = 0; j < dateArray.length; j++) {
-        dateArray[j] = new Array(7); //creates 2d array, 6 rows of 7
+        dateArray[j] = new Array(7);
         for (let k = 0; k < dateArray[j].length; k++) {
-            let day1 = determineDate();
-            let day2 = day1 - 1;
-            const dateConstruct1 = new Date(year, month, day1);
-            const dateConstruct2 = new Date(year, month, day2);
-            let data = populateTasks(dateConstruct2); //IT JUST WORKS OK
+            let day = determineDate();
+            const dateConstruct1 = new Date(year, month, day);
+            const dateConstruct2 = new Date(year, month, day - 1);
+            let data = populateTasks(dateConstruct2); //IT JUST WORKS OK gotta figure this out better
             dateArray[j][k] = (
                 <DateTile
                     data={data}
