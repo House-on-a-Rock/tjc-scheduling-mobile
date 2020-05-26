@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { DateTile } from './DateTile';
-import { months } from '../../utils/models/calendar';
-import { compareDates } from './utils/calendarServices';
 import { useSelector } from 'react-redux';
+import { View, StyleSheet } from 'react-native';
+import { months } from '../../services/Calendar/models';
+import { compareDates } from '../../services/Calendar/helper_functions';
+import { DateTile } from './DateTile';
 
 const renderingMonth = {
     previous: 'previous',
@@ -26,9 +26,9 @@ export const DateDisplay = (props) => {
     let previousMonthFinalDate = months(isLeap)[previousMonth].days;
     let currentlyRendering =
         props.firstDay !== 0 ? renderingMonth.previous : renderingMonth.current;
-    let dayCounter = 1;
 
-    const determineDate = () => {
+    let dayCounter = 1;
+    const determineCurrentDay = (): number => {
         if (currentlyRendering === renderingMonth.previous) {
             if (startDisplayDate <= previousMonthFinalDate) {
                 return startDisplayDate++;
@@ -49,8 +49,8 @@ export const DateDisplay = (props) => {
         }
     };
 
-    const populateTasks = (date) => {
-        const tasks = useSelector((state) => state.profileReducer.profile.tasks);
+    const populateTasks = (date: Date): Date[] => {
+        const tasks = useSelector(({ profileReducer }) => profileReducer.profile.tasks);
         const filteredTasks = tasks.filter((task) => {
             const tasksDate = new Date(task.date);
             return compareDates(tasksDate, date);
@@ -62,10 +62,11 @@ export const DateDisplay = (props) => {
     for (let j = 0; j < dateArray.length; j++) {
         dateArray[j] = new Array(7);
         for (let k = 0; k < dateArray[j].length; k++) {
-            let day = determineDate();
-            const dateConstruct1 = new Date(year, month, day);
-            const dateConstruct2 = new Date(year, month, day - 1);
-            let data = populateTasks(dateConstruct2); //IT JUST WORKS OK gotta figure this out better
+            const day1: number = determineCurrentDay();
+            const day2: number = day1 - 1;
+            const dateConstruct1 = new Date(year, month, day1);
+            const dateConstruct2 = new Date(year, month, day2);
+            const data: Date[] = populateTasks(dateConstruct2); //IT JUST WORKS OK
             dateArray[j][k] = (
                 <DateTile
                     data={data}

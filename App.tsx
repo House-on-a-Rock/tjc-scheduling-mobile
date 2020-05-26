@@ -31,7 +31,7 @@ const fetchFonts = () => {
     });
 };
 
-export default function App() {
+const App: React.FC = () => {
     const [dataLoaded, setDataLoaded] = useState(false);
 
     if (!dataLoaded) {
@@ -51,7 +51,7 @@ export default function App() {
             </View>
         </Provider>
     );
-}
+};
 
 const styles = StyleSheet.create({
     app: {
@@ -60,3 +60,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
+
+export default App;

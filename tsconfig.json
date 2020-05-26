@@ -2,19 +2,24 @@
     "compilerOptions": {
         "target": "es6",
         "module": "commonjs",
-        "lib": ["es6"],
+        "lib": ["es6", "dom", "DOM.Iterable", "esnext"],
         "allowJs": true,
         "isolatedModules": true,
-        "jsx": "react",
+        "jsx": "react-native",
         "noEmit": true,
         "moduleResolution": "node",
-        "baseUrl": "./",
+        "baseUrl": ".",
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
+        "skipLibCheck": true,
         "paths": {
-            // "src/utils/*": ["src/utils/*"],
-            "shared/*": ["shared/*"],
-            "*": ["node_modules/*"]
+            "*": ["node_modules/*"],
+            "@shared/*": ["./shared/*"]
+            // "@store/*": ["./src/store/*"],
+            // "@secrets": ["./secrets/index.ts"],
+            // "@components/*": ["./src/components/*"],
+            // "@services/*": ["./src/services/*"],
+            // "@screens/*": ["./src/screens/*"]
         }
     },
     "exclude": ["node_modules", ".vscode", ".expo"]

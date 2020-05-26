@@ -7,14 +7,10 @@
         "ios": "expo start --ios",
         "web": "expo start --web",
         "eject": "expo eject",
-        "server": "node -r ts-node/register ./server/index.ts",
-        "server:watch": "nodemon -r ts-node/register ./server/index.ts",
-        "seed": "ts-node scripts/seed.js",
-        "seed2": "ts-node scripts/seed2.js",
-        "set-mac-env": "chmod +x scripts/set_mac_env.sh && scripts/set_mac_env.sh",
         "prettier:base": "prettier",
         "prettier:check": "npm run prettier:base -- --list-different \"**/*\"",
         "prettier:write": "npm run prettier:base -- --write \"**/*\"",
+        "set-mac-env": "chmod +x scripts/set_mac_env.sh && scripts/set_mac_env.sh",
         "set-win-env": "powershell.exe -exec bypass -File D:/Code Projects/tjc-scheduling-app/scripts/set_win_env.ps1"
     },
     "husky": {
@@ -27,19 +23,6 @@
             "npm run prettier:base -- --write"
         ]
     },
-    "nodemonConfig": {
-        "ignore": [
-            "**/*.test.ts",
-            "**/*.spec.ts",
-            ".git",
-            "node_modules"
-        ],
-        "watch": [
-            "server"
-        ],
-        "exec": "npm run server",
-        "ext": "ts"
-    },
     "dependencies": {
         "@babel/node": "^7.8.7",
         "@expo/vector-icons": "^10.0.6",
@@ -51,11 +34,6 @@
         "@react-navigation/stack": "^5.2.9",
         "@typescript-eslint/parser": "^2.31.0",
         "axios": "^0.19.2",
-        "body-parser": "^1.19.0",
-        "chalk": "^4.0.0",
-        "cors": "^2.8.5",
-        "crypto": "^1.0.1",
-        "dotenv": "^8.2.0",
         "expo": "~36.0.0",
         "expo-font": "~8.0.0",
         "expo-linear-gradient": "~8.0.0",
@@ -74,10 +52,10 @@
         "react-native-safe-area-context": "0.6.0",
         "react-native-screens": "2.0.0-alpha.12",
         "react-native-web": "~0.11.7",
+        "react-navigation": "^4.3.9",
         "react-redux": "^7.2.0",
         "redux": "^4.0.5",
-        "redux-thunk": "^2.3.0",
-        "sequelize": "^4.44.4"
+        "redux-thunk": "^2.3.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.8.4",
@@ -86,20 +64,20 @@
         "@babel/preset-env": "^7.9.5",
         "@babel/register": "^7.9.0",
         "@babel/runtime": "^7.9.2",
-        "@types/express": "^4.17.6",
         "@types/jest": "^25.2.1",
         "@types/node": "^13.13.5",
         "@types/react": "^16.9.35",
+        "@types/react-dom": "^16.9.8",
         "@types/react-native": "^0.62.7",
         "@types/react-test-renderer": "^16.9.2",
-        "@types/sequelize": "^4.28.8",
         "@types/validator": "^13.0.0",
         "@typescript-eslint/eslint-plugin": "^2.31.0",
         "babel-loader": "^8.1.0",
+        "babel-plugin-module-resolver": "^4.0.0",
         "babel-preset-expo": "~8.0.0",
-        "compression": "^1.7.4",
         "eslint": "^6.8.0",
         "eslint-config-airbnb-typescript": "^7.2.1",
+        "eslint-config-airbnb-typescript-prettier": "^2.1.1",
         "eslint-config-prettier": "^6.11.0",
         "eslint-plugin-import": "^2.20.2",
         "eslint-plugin-jsx-a11y": "^6.2.3",
@@ -109,13 +87,10 @@
         "husky": "^4.2.5",
         "lint-staged": "^10.2.2",
         "metro-react-native-babel-preset": "^0.59.0",
-        "morgan": "^1.10.0",
-        "nodemon": "^2.0.3",
         "path": "^0.12.7",
         "prettier": "^2.0.5",
         "prettier-eslint": "^9.0.1",
         "pretty-quick": "^2.0.1",
-        "ts-node": "^8.10.1",
         "typescript": "^3.8.3"
     },
     "private": true
