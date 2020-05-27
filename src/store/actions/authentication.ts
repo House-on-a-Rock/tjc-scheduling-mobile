@@ -2,7 +2,17 @@ import axios from 'axios';
 import { setProfile } from './profileActions';
 import { changeLoadState, states } from './loadState';
 import { createCalendar } from './calendarActions';
-import { secretIp } from '../../../secrets';
+import { secretIp, secret_database } from '../../../secrets/secrets';
+
+axios.interceptors.request.use((request) => {
+    console.log('Starting Request', request);
+    return request;
+});
+
+axios.interceptors.response.use((response) => {
+    console.log('Response: ', response);
+    return response;
+});
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
@@ -26,6 +36,22 @@ export const checkCredentials = ({ email, password }) => {
         dispatch(changeLoadState(states.loading));
         let dummyId = 1;
         let profile = null;
+
+        await axios
+            .post(`${secret_database.dev.ISSUER_BASE_URL}/oauth/token`, {
+                grant_type: 'password',
+                username: email,
+                password: password,
+                client_id: secret_database.dev.CLIENT_ID,
+                client_secret: secret_database.dev.CLIENT_SECRET,
+                audience: secret_database.dev.AUDIENCE,
+                scope: 'openid profile email read:AllUsers',
+            })
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => console.log(error));
+
         await axios
             .get(secretIp + '/api/authentication/getUser', { params: { id: dummyId } })
             .then((response) => {
