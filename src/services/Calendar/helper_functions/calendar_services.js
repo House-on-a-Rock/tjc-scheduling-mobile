@@ -48,7 +48,7 @@ export const createDateArray = (startMonth, endMonth) => {
     const dateArray = [];
 
     dateArray.push({ id: dateArray.length, date: startMonth });
-    while (dateArray[dateArray.length - 1].date.getMonth() !== endMonth.getMonth()) {
+    while (!compareDates(dateArray[dateArray.length - 1].date, endMonth)) {
         const nextMonth = getUpdatedMonth(
             CarousalDirection.FORWARD,
             dateArray[dateArray.length - 1].date,
@@ -57,16 +57,6 @@ export const createDateArray = (startMonth, endMonth) => {
     }
 
     return dateArray;
-
-    // for (let i = 2000; i < 2022; i++) {
-    //     for (let j = 0; j < 12; j++) {
-    //         dateArray.push({
-    //             id: dateArray.length,
-    //             date: new Date(i, j, 1),
-    //             //array of task indices
-    //         });
-    //     }
-    // }
 };
 
 export const extendDateArray = (direction, dateArray) => {

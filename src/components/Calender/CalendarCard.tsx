@@ -6,10 +6,9 @@ import { setFirstDay } from '../../services/Calendar/helper_functions';
 import { months } from '../../services/Calendar/models';
 import { TitleText } from '../../shared/components';
 
-export interface Props {
+interface Props {
     displayedDate: Date;
     // onPress: () => void;
-    style: { width: number };
 }
 
 export const CalendarCard = (props: Props) => {

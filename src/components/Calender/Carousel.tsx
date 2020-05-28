@@ -6,24 +6,17 @@ import { useSelector } from 'react-redux';
 interface CarouselProps {}
 
 export const Carousel = (props) => {
-    // console.log('Carousel', props);
-    const { viewHeight } = props;
-    // const dispatch = useDispatch();
-    const items = useSelector((state) => state.calendarReducer.dateArray);
-
-    const renderMonths = (item) => (
-        <CalendarCard displayedDate={item.item.date} style={{ height: viewHeight }} />
-    );
+    const renderMonths = (item) => <CalendarCard displayedDate={item.item.date} />;
 
     return (
         <View>
             <FlatList
-                data={items}
+                data={props.items}
                 keyExtractor={(item, index) => item.id.toString()}
                 renderItem={renderMonths}
                 pagingEnabled
                 showsHorizontalScrollIndicator={false}
-                initialScrollIndex={3}
+                initialScrollIndex={12}
                 initialNumToRender={7}
                 snapToAlignment={'start'}
                 snapToInterval={400} //400 is height of calendar card
