@@ -60,7 +60,7 @@ export const DateDisplay = (props) => {
     };
 
     for (let j = 0; j < dateArray.length; j++) {
-        dateArray[j] = new Array(7); //creates 2d array, 6 rows of 7
+        dateArray[j] = new Array(7);
         for (let k = 0; k < dateArray[j].length; k++) {
             const day1: number = determineCurrentDay();
             const day2: number = day1 - 1;

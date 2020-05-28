@@ -20,30 +20,41 @@ export const DateTile = (props) => {
     }
 
     return (
-        <TouchableOpacity
+        <View
             style={
                 isToday
                     ? { ...styles.todayTile, ...props.style }
                     : { ...styles.tile, ...props.style }
             }
-            onPress={() =>
-                navigation.navigate('Tasks', {
-                    name: `${month}/${date}/${year}`,
-                    taskDetails: props.data,
-                })
-            }
         >
-            <View>
-                <TextComponent style={{ ...styles.text, ...props.textStyle }}>
-                    {date}
-                </TextComponent>
-                {props.data.length > 0 ? (
-                    <Entypo name="dot-single" size={20} color="black" />
-                ) : (
-                    <View></View>
-                )}
-            </View>
-        </TouchableOpacity>
+            <TouchableOpacity
+                style={{ flex: 1, width: '100%' }}
+                onPress={() =>
+                    navigation.navigate('Tasks', {
+                        name: `${month}/${date}/${year}`,
+                        taskDetails: props.data,
+                    })
+                }
+            >
+                <View
+                    style={{
+                        flex: 1,
+                        width: '100%',
+                        alignItems: 'center',
+                        justifyContent: 'flex-start',
+                    }}
+                >
+                    <TextComponent style={{ ...styles.text, ...props.textStyle }}>
+                        {date}
+                    </TextComponent>
+                    {props.data.length > 0 ? (
+                        <Entypo name="dot-single" size={20} color="black" />
+                    ) : (
+                        <View></View>
+                    )}
+                </View>
+            </TouchableOpacity>
+        </View>
     );
 };
 
@@ -53,16 +64,18 @@ const styles = StyleSheet.create({
         height: 50,
         alignItems: 'center',
         justifyContent: 'center',
+        borderBottomWidth: 1,
     },
     todayTile: {
         alignItems: 'center',
         justifyContent: 'center',
         padding: 1,
         width: 40,
-        height: 40,
+        height: 50,
+        borderBottomWidth: 1,
 
         backgroundColor: 'rgba(246, 84, 84, 0.36)',
-        borderRadius: 100,
+        // borderRadius: 100,
         overflow: 'hidden',
     },
     text: {
