@@ -49,7 +49,7 @@ export const CalendarScreen = (props: CalendarScreenProps) => {
                 <TaskPreview />
             ) : (
                 <LinearGradient
-                    colors={['rgba(0,0,0,0.38)', 'transparent']}
+                    colors={['rgba(0,0,0,0.2)', 'transparent']}
                     start={[0, 1]}
                     end={[0, 0]}
                     style={{
@@ -57,9 +57,10 @@ export const CalendarScreen = (props: CalendarScreenProps) => {
                         left: 0,
                         right: 0,
                         bottom: 0,
-                        height: viewHeight - 550 || 0,
+                        height: viewHeight - 400 || 0,
                     }}
                 />
+                // <View></View>
             )}
         </View>
     );
