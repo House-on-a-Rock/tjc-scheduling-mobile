@@ -62,22 +62,22 @@ export const DateDisplay = (props) => {
     for (let j = 0; j < dateArray.length; j++) {
         dateArray[j] = new Array(7);
         for (let k = 0; k < dateArray[j].length; k++) {
-            const day1: number = determineCurrentDay();
-            const day2: number = day1 - 1;
-            const dateConstruct1 = new Date(year, month, day1);
-            const dateConstruct2 = new Date(year, month, day2);
-            const data: Date[] = populateTasks(dateConstruct2); //IT JUST WORKS OK
+            const day: number = determineCurrentDay();
+            const dateConstruct = new Date(year, month, day);
+            const data: Object[] = populateTasks(new Date(year, month, day + 1)); //IT JUST WORKS OK, the comparison is off by one otherwise
             dateArray[j][k] = (
                 <DateTile
                     data={data}
-                    renderedDate={dateConstruct1}
+                    renderedDate={dateConstruct}
                     key={j + j * (k + 1) + k}
                     style={styles.dateTileStyle}
                     textStyle={
+                        //TODO move text coloring into dateTile after we determine font, etc
                         currentlyRendering === renderingMonth.current
                             ? styles.currentMonthDatesText
                             : styles.notCurrentMonthDatesText
                     }
+                    isCurrentMonth={currentlyRendering === renderingMonth.current}
                 />
             );
         }

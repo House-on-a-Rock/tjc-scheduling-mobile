@@ -10,7 +10,7 @@ import { compareDates } from '../../services/Calendar/helper_functions';
 export const DateTile = (props) => {
     const navigation = useNavigation();
     let TextComponent = props.TextComponent || TitleText; //TODO redo font system
-    let month = props.renderedDate.getMonth();
+    let month = props.renderedDate.getMonth() + 1; //getMonth() returns in base 0
     let year = props.renderedDate.getFullYear();
     let date = props.renderedDate.getDate();
     const currentDate = useSelector((state) => state.calendarReducer.today);
@@ -22,7 +22,7 @@ export const DateTile = (props) => {
     return (
         <View
             style={
-                isToday
+                isToday && props.isCurrentMonth
                     ? { ...styles.todayTile, ...props.style }
                     : { ...styles.tile, ...props.style }
             }
