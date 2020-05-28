@@ -20,8 +20,8 @@ export const CalendarCard = (props: Props) => {
         <View
             style={{
                 width: '100%',
-                height: 380,
-                marginBottom: 20,
+                height: 380, //TODO extract these constants
+                marginBottom: 20, //TODO extract these constants
             }}
         >
             <View style={styles.container}>

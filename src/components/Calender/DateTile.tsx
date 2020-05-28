@@ -8,31 +8,31 @@ import { TitleText } from '../../shared/components';
 import { compareDates } from '../../services/Calendar/helper_functions';
 
 export const DateTile = (props) => {
+    const { isToday, renderedDate, isCurrentMonth, data } = props;
     const navigation = useNavigation();
     let TextComponent = props.TextComponent || TitleText; //TODO redo font system
-    let month = props.renderedDate.getMonth() + 1; //getMonth() returns in base 0
-    let year = props.renderedDate.getFullYear();
-    let date = props.renderedDate.getDate();
-    const currentDate = useSelector((state) => state.calendarReducer.today);
-    let isToday = false;
-    if (compareDates(currentDate, props.renderedDate)) {
-        isToday = true;
-    }
+    let month = renderedDate.getMonth() + 1; //getMonth() returns in base 0
+    let year = renderedDate.getFullYear();
+    let date = renderedDate.getDate();
 
     return (
-        <View
-            style={
-                isToday && props.isCurrentMonth
-                    ? { ...styles.todayTile, ...props.style }
-                    : { ...styles.tile, ...props.style }
-            }
-        >
+        <View style={styles.tile}>
             <TouchableOpacity
-                style={{ flex: 1, width: '100%' }}
+                style={
+                    isToday
+                        ? {
+                              ...styles.touchable,
+                              backgroundColor: 'rgba(246, 84, 84, 0.36)',
+                              margin: 3,
+                              borderRadius: 15,
+                              overflow: 'hidden',
+                          }
+                        : styles.touchable
+                }
                 onPress={() =>
                     navigation.navigate('Tasks', {
                         name: `${month}/${date}/${year}`,
-                        taskDetails: props.data,
+                        taskDetails: data,
                     })
                 }
             >
@@ -47,7 +47,7 @@ export const DateTile = (props) => {
                     <TextComponent style={{ ...styles.text, ...props.textStyle }}>
                         {date}
                     </TextComponent>
-                    {props.data.length > 0 ? (
+                    {data.length > 0 ? (
                         <Entypo name="dot-single" size={20} color="black" />
                     ) : (
                         <View></View>
@@ -60,23 +60,15 @@ export const DateTile = (props) => {
 
 const styles = StyleSheet.create({
     tile: {
-        width: 40,
-        height: 50,
-        alignItems: 'center',
+        width: '14.2857%',
+        height: 50, //TODO extract these constants
         justifyContent: 'center',
+        alignItems: 'center',
         borderBottomWidth: 1,
     },
-    todayTile: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 1,
-        width: 40,
-        height: 50,
-        borderBottomWidth: 1,
-
-        backgroundColor: 'rgba(246, 84, 84, 0.36)',
-        // borderRadius: 100,
-        overflow: 'hidden',
+    touchable: {
+        flex: 1,
+        width: '100%',
     },
     text: {
         fontSize: 20,

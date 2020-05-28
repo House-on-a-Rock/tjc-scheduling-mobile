@@ -28,24 +28,25 @@ export const DateDisplay = (props) => {
         props.firstDay !== 0 ? renderingMonth.previous : renderingMonth.current;
 
     let dayCounter = 1;
-    const determineCurrentDay = (): number => {
+
+    const determineCurrentDay = (): Date => {
         if (currentlyRendering === renderingMonth.previous) {
             if (startDisplayDate <= previousMonthFinalDate) {
-                return startDisplayDate++;
+                return new Date(year, month - 1, startDisplayDate++);
             } else {
                 currentlyRendering = renderingMonth.current;
             }
         }
         if (currentlyRendering === renderingMonth.current) {
             if (dayCounter <= daysInMonth) {
-                return dayCounter++;
+                return new Date(year, month, dayCounter++);
             } else {
                 dayCounter = 1;
                 currentlyRendering = renderingMonth.next;
             }
         }
         if (currentlyRendering === renderingMonth.next) {
-            return dayCounter++;
+            return new Date(year, month + 1, dayCounter++);
         }
     };
 
@@ -59,25 +60,30 @@ export const DateDisplay = (props) => {
         return filteredTasks;
     };
 
+    const currentDate = useSelector((state) => state.calendarReducer.today);
+
     for (let j = 0; j < dateArray.length; j++) {
         dateArray[j] = new Array(7);
         for (let k = 0; k < dateArray[j].length; k++) {
-            const day: number = determineCurrentDay();
-            const dateConstruct = new Date(year, month, day);
-            const data: Object[] = populateTasks(new Date(year, month, day + 1)); //IT JUST WORKS OK, the comparison is off by one otherwise
+            const day: Date = determineCurrentDay();
+            const isToday = compareDates(day, currentDate);
+            const day1 = day;
+            day1.setDate(day.getDate() + 1);
+            const data: Object[] = populateTasks(day1); //IT JUST WORKS OK, the comparison is off by one otherwise
             dateArray[j][k] = (
                 <DateTile
                     data={data}
-                    renderedDate={dateConstruct}
+                    renderedDate={day}
                     key={j + j * (k + 1) + k}
                     style={styles.dateTileStyle}
                     textStyle={
-                        //TODO move text coloring into dateTile after we determine font, etc
+                        //TODO move text styling into dateTile after we determine font, etc
                         currentlyRendering === renderingMonth.current
                             ? styles.currentMonthDatesText
                             : styles.notCurrentMonthDatesText
                     }
                     isCurrentMonth={currentlyRendering === renderingMonth.current}
+                    isToday={isToday}
                 />
             );
         }
