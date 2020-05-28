@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { AsyncStorage } from 'react-native';
 import { setProfile } from './profileActions';
 import { changeLoadState, states } from './loadState';
 import { createCalendar } from './calendarActions';
@@ -49,6 +50,13 @@ export const checkCredentials = ({ email, password }) => {
             })
             .then((response) => {
                 console.log(response);
+                const _storeData = async () => {
+                    try {
+                        await AsyncStorage.setItem('access_token', response.data);
+                    } catch (error) {
+                        console.log(error);
+                    }
+                };
             })
             .catch((error) => console.log(error));
 
