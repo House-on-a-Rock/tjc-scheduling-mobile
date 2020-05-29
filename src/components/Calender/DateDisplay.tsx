@@ -50,7 +50,7 @@ export const DateDisplay = (props) => {
     };
 
     const populateTasks = (date: Date): Date[] => {
-        const tasks = useSelector(({ profileReducer }) => profileReducer.profile.tasks);
+        const tasks = useSelector(({ profileReducer }) => profileReducer.data.tasks);
         const filteredTasks = tasks.filter((task) => {
             const tasksDate = new Date(task.date);
             return compareDates(tasksDate, date);

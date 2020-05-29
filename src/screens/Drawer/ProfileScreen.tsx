@@ -16,15 +16,23 @@ import {
 import { useSelector } from 'react-redux';
 import { Entypo } from '@expo/vector-icons';
 import { ProfileScreenProps } from '../../shared/models';
+import { LoadingPage } from '../../components/LoadingPage';
 
 export const ProfileScreen = (props: ProfileScreenProps) => {
+    let loadState;
+    useSelector((state) => {
+        console.log(state.profileReducer);
+        loadState = state.profileReducer.loaded;
+    });
+    if (loadState) return <LoadingPage />;
     const [modalVisible, setModalVisible] = useState(false);
     const { email, firstName, lastName } = useSelector(
-        (state) => state.profileReducer.profile,
+        (state) => state.profileReducer.data,
     );
     const church = useSelector((state) => {
-        return state.profileReducer.profile.Church.name;
+        return state.profileReducer.data.Church.name;
     });
+
     const [modalParameter, setModalParameter] = useState({ label: '', data: '' });
     const [modalInput, setModalInput] = useState('');
 
