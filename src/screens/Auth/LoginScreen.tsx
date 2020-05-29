@@ -25,7 +25,6 @@ export const LoginScreen = (props: LoginScreenProps) => {
             dispatch(checkCredentials({ email: userEmail, password: userPassword })); //api to check if credentials can be used to login
         } else {
             setIsValidCredentials(false); //displays text to retry credentials
-            return;
         }
 
         // if (true) {

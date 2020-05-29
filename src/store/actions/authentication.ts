@@ -26,6 +26,15 @@ export const checkCredentials = ({ email, password }) => {
         dispatch(changeLoadState(states.loading));
         let dummyId = 1;
         let profile = null;
+        let jwt;
+        //check credentials api call
+        await axios
+            .get(secretIp + '/api/authentication/login', {
+                params: { email: email, password: password },
+            })
+            .then((response) => (jwt = response.data))
+            .catch((error) => console.log(error));
+
         await axios
             .get(secretIp + '/api/authentication/getUser', { params: { id: dummyId } })
             .then((response) => {
@@ -49,3 +58,5 @@ export const checkCredentials = ({ email, password }) => {
             .catch((error) => console.error(error));
     };
 };
+
+const getProfileData = ({ user }) => {};
