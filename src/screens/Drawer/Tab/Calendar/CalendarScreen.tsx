@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Dimensions, AsyncStorage } from 'react-native';
+import { View, StyleSheet, Text, AsyncStorage } from 'react-native';
 import { useSelector } from 'react-redux';
 import { CalendarScreenProps } from '../../../../shared/models';
 import { states } from '../../../../store/actions';
-import { Carousel } from '../../../../components/Calender';
+import { Carousel, TaskPreview } from '../../../../components/Calender';
 import { LoadingPage } from '../../../../components/LoadingPage';
 
 const styles = StyleSheet.create({
@@ -15,40 +15,43 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         width: '100%',
-        height: '90%',
+        height: '100%',
     },
 });
 
 export const CalendarScreen = (props: CalendarScreenProps) => {
     const calCardDatesArray = useSelector((state) => state.calendarReducer.dateArray);
-    let cardWidth = Dimensions.get('window').width;
-    const profile = useSelector((state) => state.profileReducer.profile);
-    const [loadState, setLoadState] = useState(states.loading); // sets initial state to loading
+    const tasks = useSelector(({ profileReducer }) => profileReducer.data.tasks);
+    const [viewHeight, setViewHeight] = useState<number | undefined>();
+    const [loadState, setLoadState] = useState(states.loading); //sets initial state to loading
+    const [isDateSelected, setIsDateSelected] = useState(false);
     useEffect(() => {
         AsyncStorage.getItem('@tjc-scheduling-app:loadState').then((loads) => {
-            // grabs loadstate from localstorage, and stores it in hook
+            //if useEffect runs faster than API calls than this will skip the loading screen
+            //grabs loadstate from localstorage, and stores it in hook
             setLoadState(loads);
         });
+    }); //memory leak from here
 
-        let d = new Date(profile.tasks[0].date) || 1;
-    }); //memory leak from here pbly
+    if (loadState === states.loading) return <LoadingPage />;
 
     return (
-        <View style={styles.screen}>
-            {loadState === states.loading ? (
-                <LoadingPage opacity={0.97} />
-            ) : (
-                <View
-                    style={styles.scrollContainer}
-                    onLayout={(event) => {
-                        cardWidth = event.nativeEvent.layout.width;
-                    }}
-                >
-                    <Carousel items={calCardDatesArray} viewWidth={cardWidth} />
+        <View
+            style={styles.screen}
+            onLayout={(event) => {
+                setViewHeight(event.nativeEvent.layout.height);
+            }}
+        >
+            <View style={styles.scrollContainer}>
+                <Carousel items={calCardDatesArray} />
+            </View>
+            {isDateSelected ? (
+                <View>
+                    <TaskPreview />
                 </View>
+            ) : (
+                <View></View>
             )}
         </View>
     );
 };
-
-// export default CalendarScreen;

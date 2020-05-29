@@ -1,17 +1,31 @@
-import { SET_PROFILE } from '../actions';
+import { ProfileActionTypes } from '../actions';
+import {
+    FormStateModel,
+    createDefaultFormState,
+    withLoadState,
+} from '../helper/loadableState';
+import { ProfileData } from '../../shared/models';
 
-const initialState = {
-    profile: null,
-};
-
-export const profileReducer = (state = initialState, action) => {
+const baseReducer = (
+    state: FormStateModel<ProfileData> = createDefaultFormState(),
+    action,
+) => {
     switch (action.type) {
-        case SET_PROFILE:
+        case ProfileActionTypes.LOADED:
             return {
                 ...state,
-                profile: action.payload,
+                data: action.payload,
             };
         default:
             return state;
     }
 };
+
+export const profileReducer = withLoadState(baseReducer, {
+    loadingActionType: ProfileActionTypes.LOADING,
+    loadedActionType: ProfileActionTypes.LOADED,
+    loadErrorActionType: ProfileActionTypes.LOAD_ERROR,
+    savingActionType: ProfileActionTypes.SAVING,
+    savedActionType: ProfileActionTypes.SAVED,
+    saveErrorActionType: ProfileActionTypes.SAVE_ERROR,
+});

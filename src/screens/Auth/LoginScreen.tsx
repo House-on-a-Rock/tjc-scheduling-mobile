@@ -22,15 +22,9 @@ export const LoginScreen = (props: LoginScreenProps) => {
     const verifyLogin = () => {
         //after x attempts, prompt login or account lockout
         if (isValidEmail() && userPassword.length > 0) {
-            dispatch(checkCredentials({ email: userEmail, password: userPassword }));
+            dispatch(checkCredentials({ email: userEmail, password: userPassword })); //api to check if credentials can be used to login
         } else {
-            setIsValidCredentials(false);
-            return;
-        }
-
-        if (true) {
-            //login works
-            // dispatch(login());
+            setIsValidCredentials(false); //displays text to retry credentials
         }
     };
 

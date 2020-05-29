@@ -18,13 +18,14 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         width: '100%',
-        paddingVertical: 20,
     },
     tiles: {
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white',
         flex: 1,
+        borderBottomWidth: 1,
+        paddingBottom: 10,
     },
     text: {
         fontFamily: 'Roboto-Bold',

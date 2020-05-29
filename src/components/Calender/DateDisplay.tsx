@@ -28,29 +28,30 @@ export const DateDisplay = (props) => {
         props.firstDay !== 0 ? renderingMonth.previous : renderingMonth.current;
 
     let dayCounter = 1;
-    const determineCurrentDay = (): number => {
+
+    const determineCurrentDay = (): Date => {
         if (currentlyRendering === renderingMonth.previous) {
             if (startDisplayDate <= previousMonthFinalDate) {
-                return startDisplayDate++;
+                return new Date(year, month - 1, startDisplayDate++);
             } else {
                 currentlyRendering = renderingMonth.current;
             }
         }
         if (currentlyRendering === renderingMonth.current) {
             if (dayCounter <= daysInMonth) {
-                return dayCounter++;
+                return new Date(year, month, dayCounter++);
             } else {
                 dayCounter = 1;
                 currentlyRendering = renderingMonth.next;
             }
         }
         if (currentlyRendering === renderingMonth.next) {
-            return dayCounter++;
+            return new Date(year, month + 1, dayCounter++);
         }
     };
 
     const populateTasks = (date: Date): Date[] => {
-        const tasks = useSelector(({ profileReducer }) => profileReducer.profile.tasks);
+        const tasks = useSelector(({ profileReducer }) => profileReducer.data.tasks);
         const filteredTasks = tasks.filter((task) => {
             const tasksDate = new Date(task.date);
             return compareDates(tasksDate, date);
@@ -59,25 +60,30 @@ export const DateDisplay = (props) => {
         return filteredTasks;
     };
 
+    const currentDate = useSelector((state) => state.calendarReducer.today);
+
     for (let j = 0; j < dateArray.length; j++) {
-        dateArray[j] = new Array(7); //creates 2d array, 6 rows of 7
+        dateArray[j] = new Array(7);
         for (let k = 0; k < dateArray[j].length; k++) {
-            const day1: number = determineCurrentDay();
-            const day2: number = day1 - 1;
-            const dateConstruct1 = new Date(year, month, day1);
-            const dateConstruct2 = new Date(year, month, day2);
-            const data: Date[] = populateTasks(dateConstruct2); //IT JUST WORKS OK
+            const day: Date = determineCurrentDay();
+            const isToday = compareDates(day, currentDate);
+            const day1 = day;
+            day1.setDate(day.getDate() + 1);
+            const data: Object[] = populateTasks(day1); //IT JUST WORKS OK, the comparison is off by one otherwise
             dateArray[j][k] = (
                 <DateTile
                     data={data}
-                    renderedDate={dateConstruct1}
+                    renderedDate={day}
                     key={j + j * (k + 1) + k}
                     style={styles.dateTileStyle}
                     textStyle={
+                        //TODO move text styling into dateTile after we determine font, etc
                         currentlyRendering === renderingMonth.current
                             ? styles.currentMonthDatesText
                             : styles.notCurrentMonthDatesText
                     }
+                    isCurrentMonth={currentlyRendering === renderingMonth.current}
+                    isToday={isToday}
                 />
             );
         }

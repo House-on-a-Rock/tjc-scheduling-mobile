@@ -44,31 +44,6 @@ export const getXMonths = (dateFrom, number) => {
     }
 };
 
-export const createDateArray = (startMonth, endMonth) => {
-    const dateArray = [];
-
-    dateArray.push({ id: dateArray.length, date: startMonth });
-    while (dateArray[dateArray.length - 1].date.getMonth() !== endMonth.getMonth()) {
-        const nextMonth = getUpdatedMonth(
-            CarousalDirection.FORWARD,
-            dateArray[dateArray.length - 1].date,
-        );
-        dateArray.push({ id: dateArray.length, date: nextMonth });
-    }
-
-    return dateArray;
-
-    // for (let i = 2000; i < 2022; i++) {
-    //     for (let j = 0; j < 12; j++) {
-    //         dateArray.push({
-    //             id: dateArray.length,
-    //             date: new Date(i, j, 1),
-    //             //array of task indices
-    //         });
-    //     }
-    // }
-};
-
 export const extendDateArray = (direction, dateArray) => {
     if (direction === CarousalDirection.FORWARD) {
         const lastMonth = dateArray[dateArray.length - 1].date;
@@ -92,6 +67,21 @@ export const extendDateArray = (direction, dateArray) => {
 
         return extensionArray.concat(dateArray);
     }
+};
+
+export const createDateArray = (startMonth, endMonth) => {
+    const dateArray = [];
+
+    dateArray.push({ id: dateArray.length, date: startMonth });
+    while (!compareDates(dateArray[dateArray.length - 1].date, endMonth)) {
+        const nextMonth = getUpdatedMonth(
+            CarousalDirection.FORWARD,
+            dateArray[dateArray.length - 1].date,
+        );
+        dateArray.push({ id: dateArray.length, date: nextMonth });
+    }
+
+    return dateArray;
 };
 
 export const compareDates = (date1, date2) =>

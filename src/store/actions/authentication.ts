@@ -3,6 +3,7 @@ import { AsyncStorage } from 'react-native';
 import { setProfile } from './profileActions';
 import { changeLoadState, states } from './loadState';
 import { createCalendar } from './calendarActions';
+
 import { secretIp, secret_database } from '../../../secrets/secrets';
 
 // axios.interceptors.request.use((request) => {
@@ -15,6 +16,7 @@ import { secretIp, secret_database } from '../../../secrets/secrets';
 //     console.log('Response: ', response);
 //     return response;
 // });
+
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
@@ -38,6 +40,15 @@ export const checkCredentials = ({ email, password }) => {
         dispatch(changeLoadState(states.loading));
         let dummyId = 1;
         let profile = null;
+        let jwt;
+        //check credentials api call
+        await axios
+            .get(secretIp + '/api/authentication/login', {
+                params: { email: email, password: password },
+            })
+            .then((response) => (jwt = response.data))
+            .catch((error) => console.log(error));
+
         await axios
             .post(`${secret_database.dev.ISSUER_BASE_URL}/oauth/token`, {
                 grant_type: 'password',
@@ -89,3 +100,5 @@ export const checkCredentials = ({ email, password }) => {
         await AsyncStorage.clear();
     };
 };
+
+const getProfileData = ({ user }) => {};

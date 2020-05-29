@@ -1,0 +1,23 @@
+{
+    "events": [
+        {
+            "morning prayer": {
+                "time": "number",
+                "roles": ["caretakers"]
+            }
+        },
+        {
+            "hymnal": {
+                "time": "number",
+                "roles": ["caretakers"]
+            }
+        },
+        {
+            "sermon": {
+                "time": "number",
+                "roles": ["caretakers"]
+            }
+        }
+    ],
+    "church": "hills"
+}
