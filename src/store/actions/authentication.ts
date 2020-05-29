@@ -5,15 +5,16 @@ import { changeLoadState, states } from './loadState';
 import { createCalendar } from './calendarActions';
 import { secretIp, secret_database } from '../../../secrets/secrets';
 
-axios.interceptors.request.use((request) => {
-    console.log('Starting Request', request);
-    return request;
-});
+// axios.interceptors.request.use((request) => {
+//     console.log('Starting Request', request);
 
-axios.interceptors.response.use((response) => {
-    console.log('Response: ', response);
-    return response;
-});
+//     return request;
+// });
+
+// axios.interceptors.response.use((response) => {
+//     console.log('Response: ', response);
+//     return response;
+// });
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
@@ -37,7 +38,6 @@ export const checkCredentials = ({ email, password }) => {
         dispatch(changeLoadState(states.loading));
         let dummyId = 1;
         let profile = null;
-
         await axios
             .post(`${secret_database.dev.ISSUER_BASE_URL}/oauth/token`, {
                 grant_type: 'password',
@@ -49,19 +49,20 @@ export const checkCredentials = ({ email, password }) => {
                 scope: 'openid profile email read:AllUsers',
             })
             .then((response) => {
-                console.log(response);
-                const _storeData = async () => {
-                    try {
-                        await AsyncStorage.setItem('access_token', response.data);
-                    } catch (error) {
-                        console.log(error);
-                    }
-                };
+                AsyncStorage.setItem('access_token', response.data.access_token);
             })
             .catch((error) => console.log(error));
 
+        let accesskey = await AsyncStorage.getItem('access_token');
+        console.log(accesskey);
+
         await axios
-            .get(secretIp + '/api/authentication/getUser', { params: { id: dummyId } })
+            .get(secretIp + '/api/authentication/getUser', {
+                params: { id: dummyId },
+                headers: {
+                    authorization: `Bearer ${accesskey}`,
+                },
+            })
             .then((response) => {
                 profile = response.data;
             })
@@ -70,6 +71,9 @@ export const checkCredentials = ({ email, password }) => {
         await axios
             .get(secretIp + '/api/authentication/getUserTasks', {
                 params: { id: dummyId },
+                headers: {
+                    authorization: `Bearer ${accesskey}`,
+                },
             })
             .then((response) => {
                 profile.tasks = response.data;
@@ -81,5 +85,7 @@ export const checkCredentials = ({ email, password }) => {
                 dispatch(login());
             })
             .catch((error) => console.error(error));
+
+        await AsyncStorage.clear();
     };
 };
