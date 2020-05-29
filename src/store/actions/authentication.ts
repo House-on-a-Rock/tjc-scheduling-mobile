@@ -26,36 +26,43 @@ export const checkCredentials = ({ email, password }) => {
         dispatch(changeLoadState(states.loading));
         let dummyId = 1;
         let profile = null;
-        let jwt;
-        //check credentials api call
         await axios
-            .get(secretIp + '/api/authentication/login', {
+            .get(secretIp + '/api/authentication/authenticate', {
                 params: { email: email, password: password },
             })
-            .then((response) => (jwt = response.data))
-            .catch((error) => console.log(error));
-
-        await axios
-            .get(secretIp + '/api/authentication/getUser', { params: { id: dummyId } })
             .then((response) => {
-                profile = response.data;
-            })
-            .catch((error) => console.error(error));
+                // jwt token a
+            });
+        // let jwt;
+        //check credentials api call
+        // await axios
+        //     .get(secretIp + '/api/authentication/login', {
+        //         params: { email: email, password: password },
+        //     })
+        //     .then((response) => (jwt = response.data))
+        //     .catch((error) => console.log(error));
 
-        await axios
-            .get(secretIp + '/api/authentication/getUserTasks', {
-                params: { id: dummyId },
-            })
-            .then((response) => {
-                profile.tasks = response.data;
-            })
-            .then(() => {
-                dispatch(changeLoadState(states.loaded));
-                dispatch(setProfile(profile));
-                dispatch(createCalendar());
-                dispatch(login());
-            })
-            .catch((error) => console.error(error));
+        // await axios
+        //     .get(secretIp + '/api/authentication/getUser', { params: { id: dummyId } })
+        //     .then((response) => {
+        //         profile = response.data;
+        //     })
+        //     .catch((error) => console.error(error));
+
+        // await axios
+        //     .get(secretIp + '/api/authentication/getUserTasks', {
+        //         params: { id: dummyId },
+        //     })
+        //     // .then((response) => {
+        //     //     profile.tasks = response.data;
+        //     // })
+        //     .then(() => {
+        //         dispatch(changeLoadState(states.loaded));
+        //         // dispatch(setProfile(profile));
+        //         // dispatch(createCalendar());
+        //         dispatch(login());
+        //     })
+        //     .catch((error) => console.error(error));
     };
 };
 

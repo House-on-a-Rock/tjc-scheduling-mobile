@@ -12,6 +12,7 @@ interface Props {
 }
 
 export const CalendarCard = (props: Props) => {
+    // console.log(props);
     const { displayedDate } = props;
     const isLeap = displayedDate.getFullYear() % 4 === 0 ? true : false;
     const year = displayedDate.getFullYear();

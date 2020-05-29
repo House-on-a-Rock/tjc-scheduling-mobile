@@ -31,9 +31,10 @@ export const CalendarScreen = (props: CalendarScreenProps) => {
             //grabs loadstate from localstorage, and stores it in hook
             setLoadState(loads);
         });
-    }); //memory leak from here
+    }); // memory leak from here
 
     if (loadState === states.loading) return <LoadingPage />;
+    console.log('calCardDatesArray ASDFASDF', calCardDatesArray);
 
     return (
         <View
