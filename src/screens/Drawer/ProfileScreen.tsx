@@ -21,7 +21,6 @@ import { LoadingPage } from '../../components/LoadingPage';
 export const ProfileScreen = (props: ProfileScreenProps) => {
     let loadState;
     useSelector((state) => {
-        console.log(state.profileReducer);
         loadState = state.profileReducer.loaded;
     });
     if (loadState) return <LoadingPage />;
