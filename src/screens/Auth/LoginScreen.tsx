@@ -26,11 +26,6 @@ export const LoginScreen = (props: LoginScreenProps) => {
         } else {
             setIsValidCredentials(false); //displays text to retry credentials
         }
-
-        // if (true) {
-        //     login works
-        //     dispatch(login());
-        // }
     };
 
     return (

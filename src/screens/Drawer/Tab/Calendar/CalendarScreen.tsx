@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
 
 export const CalendarScreen = (props: CalendarScreenProps) => {
     const calCardDatesArray = useSelector((state) => state.calendarReducer.dateArray);
-    const tasks = useSelector(({ profileReducer }) => profileReducer.profile.tasks);
+    const tasks = useSelector(({ profileReducer }) => profileReducer.data.tasks);
     const [viewHeight, setViewHeight] = useState<number | undefined>();
     const [loadState, setLoadState] = useState(states.loading); //sets initial state to loading
     const [isDateSelected, setIsDateSelected] = useState(false);
