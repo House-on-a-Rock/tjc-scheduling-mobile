@@ -1,4 +1,5 @@
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 import { AsyncStorage } from 'react-native';
 import { setProfile } from './profileActions';
 import { changeLoadState, states } from './loadState';
@@ -16,7 +17,6 @@ import { secretIp, secret_database } from '../../../secrets/secrets';
 //     console.log('Response: ', response);
 //     return response;
 // });
-
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
@@ -66,7 +66,11 @@ export const checkCredentials = ({ email, password }) => {
 
         let accesskey = await AsyncStorage.getItem('access_token');
         console.log(accesskey);
-
+        let decoded = jwtDecode(accesskey);
+        console.log(decoded);
+        let id_string = decoded.sub.split('|')[1];
+        dummyId = parseInt(id_string);
+        console.log(id_string, dummyId);
         await axios
             .get(secretIp + '/api/authentication/getUser', {
                 params: { id: dummyId },
