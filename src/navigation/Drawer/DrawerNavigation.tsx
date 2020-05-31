@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DrawerStackParamList } from '../../shared/models';
@@ -9,14 +9,16 @@ import { ProfileStack } from './ProfileStack';
 import { SettingsStack } from './SettingsStack';
 import { LogoutStack } from './LogoutStack';
 import { createCalendar } from '../../store/actions/calendarActions';
-import { fetchProfile } from '../../store/actions/profileActions';
 
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 
 export const DrawerNav = () => {
+    const tasks = useSelector(({ taskReducer }) => taskReducer.loaded);
+    const profile = useSelector(({ profileReducer }) => profileReducer.loaded);
     const dispatch = useDispatch();
-    dispatch(createCalendar());
-    dispatch(fetchProfile());
+
+    // if (tasks && profile)
+    // dispatch(createCalendar());
     return (
         <NavigationContainer theme={MyTheme}>
             <Drawer.Navigator>

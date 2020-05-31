@@ -5,14 +5,6 @@ export interface LoadableDataModel<T> {
     data: T;
 }
 
-export enum LoadingActionTypes {
-    LOADING = 'LOADING',
-    LOADED = 'LOADED',
-    SAVING = 'SAVING',
-    SAVED = 'SAVED',
-    LOAD_ERROR = 'ERROR',
-    SAVE_ERROR = 'SAVE_ERROR',
-}
 export interface FormStateModel<T> extends LoadableDataModel<T> {
     saving: boolean;
     saved: boolean;
@@ -31,16 +23,6 @@ export function createDefaultFormState(): FormStateModel<any> {
         error: null,
     };
 }
-
-// interface FormActionTypesInterfaceModel {
-//     loadingActionType?: string | string[];
-//     loadedActionType?: string;
-//     loadingErrorActionType?: string;
-//     savingActionType?: string;
-//     savedActionType?: string;
-//     loadErrorActionType?: string;
-//     saveErrorActionType?: string;
-// }
 
 function onLoad(fromState) {
     return {
@@ -97,32 +79,22 @@ function onSaveError(fromState, error) {
     };
 }
 
-export const withLoadState = (baseReducer, actionType) => {
-    return (state, action) => {
-        switch (action.type) {
-            case actionType.loadingActionType:
-                state = onLoad(state);
+export const noopReducer = (state) => state;
 
-            case actionType.loadedActionType:
-                state = onLoaded(state);
-                break;
+export const withLoadState = (actionType) => {
+    const actionReducerMap = {
+        [actionType.loadingActionType]: onLoad,
+        [actionType.loadedActionType]: onLoaded,
+        [actionType.loadErrorActionType]: onLoadError,
+        [actionType.savingActionType]: onSave,
+        [actionType.savedActionType]: onSaveSuccess,
+        [actionType.saveErrorActionType]: onSaveError,
+    };
 
-            case actionType.loadErrorActionType:
-                state = onLoadError(state, action.payload.error);
-                break;
+    return (baseReducer) => (state, action) => {
+        const reducerFunction = actionReducerMap[action.type] || noopReducer;
 
-            case actionType.savingActionType:
-                state = onSave(state);
-                break;
-
-            case actionType.savedActionType:
-                state = onSaveSuccess(state);
-                break;
-
-            case actionType.saveErrorActionType:
-                state = onSaveError(state, action.payload.error);
-                break;
-        }
-        return baseReducer(state, action);
+        const newState = reducerFunction(state, action);
+        return baseReducer(newState, action);
     };
 };

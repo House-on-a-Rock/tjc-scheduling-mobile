@@ -12,17 +12,18 @@ interface Props {
 }
 
 export const CalendarCard = (props: Props) => {
-    // console.log(props);
     const { displayedDate } = props;
     const isLeap = displayedDate.getFullYear() % 4 === 0 ? true : false;
     const year = displayedDate.getFullYear();
     const month = displayedDate.getMonth();
+
+    console.log('CalendarCard', props);
     return (
         <View
             style={{
                 width: '100%',
-                height: 380, //TODO extract these constants
-                marginBottom: 20, //TODO extract these constants
+                height: 380, // TODO extract these constants
+                marginBottom: 20, // TODO extract these constants
             }}
         >
             <View style={styles.container}>

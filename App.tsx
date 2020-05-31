@@ -11,17 +11,17 @@ import {
     authReducer,
     profileReducer,
     calendarReducer,
-    loadStateReducer,
+    taskReducer,
 } from './src/store/reducers';
 
 const rootReducer = combineReducers({
     authReducer: authReducer,
     profileReducer: profileReducer,
     calendarReducer: calendarReducer,
-    loadStateReducer: loadStateReducer,
+    taskReducer: taskReducer,
 });
 
-const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
+export const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 const fetchFonts = () => {
     return Font.loadAsync({
