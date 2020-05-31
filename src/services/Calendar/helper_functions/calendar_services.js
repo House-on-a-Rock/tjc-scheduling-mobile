@@ -67,6 +67,9 @@ export const extendDateArray = (direction, dateArray) => {
 
         return extensionArray.concat(dateArray);
     }
+    if (direction === CarousalDirection.UP) {
+        console.log('extendDateArray!!!!!!!', dateArray);
+    }
 };
 
 export const createDateArray = (startMonth, endMonth) => {

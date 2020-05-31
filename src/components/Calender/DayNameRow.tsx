@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { AbbrevDays } from '../../services/Calendar/models';
 
+// change name to CalendarDayTitleRow
 export const DayNameRow = () => {
     const dayNameArray = new Array(7);
     for (let i = 0; i < dayNameArray.length; i++) {

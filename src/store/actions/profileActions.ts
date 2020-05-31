@@ -1,15 +1,18 @@
-import { LoadingActionTypes } from '../helper/loadableState';
+import axios from 'axios';
 import { ProfileData } from '../../shared/models';
+import { secretIp } from '../../../secrets';
+import { fetchTasksOnLogin } from './taskActions';
 
-export const fetchProfile = () => {
+export const loadingProfile = () => {
     return {
-        type: LoadingActionTypes.LOADING,
+        type: ProfileActionTypes.LOADING,
     };
 };
 
-export const setProfile = (profile: ProfileData) => {
+export const loadProfileSuccess = (profile: ProfileData) => {
+    console.log('loadProfileSuccess', profile);
     return {
-        type: LoadingActionTypes.LOADED,
+        type: ProfileActionTypes.LOADED,
         payload: profile,
     };
 };
@@ -17,5 +20,30 @@ export const setProfile = (profile: ProfileData) => {
 export const editProfile = (profile: ProfileData) => {};
 
 export const ProfileActionTypes = {
-    ...LoadingActionTypes,
+    LOADING: 'Profile Loading',
+    LOADED: 'Profile Loaded',
+    SAVING: 'Profile Saving',
+    SAVED: 'Profile Saved',
+    LOAD_ERROR: 'Profile Load Error',
+    SAVE_ERROR: 'Profiel Save Error',
+};
+
+// Thunky thunk
+
+export const fetchProfileAndTasksOnLogin = () => {
+    return async (dispatch) => {
+        console.log('dispatched fetch profile');
+        dispatch(loadingProfile());
+        await axios
+            .get(secretIp + '/api/users/getUser')
+            .then((response) => {
+                let userProfile = response.data;
+                dispatch(loadProfileSuccess(userProfile));
+                dispatch(fetchTasksOnLogin(userProfile.id));
+            })
+            .catch((error) => {
+                // dispatch(authError())
+                console.log(error);
+            });
+    };
 };
