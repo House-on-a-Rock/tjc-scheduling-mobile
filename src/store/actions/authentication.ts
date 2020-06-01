@@ -39,7 +39,7 @@ export const prepHomePage = (dispatch) => {
 
 export const checkCredentials = ({ email, password }) => {
     return async (dispatch) => {
-        let dummyId = 1;
+        // let dummyId = 1;
         let profile = null;
 
         //check credentials api call
@@ -65,11 +65,10 @@ export const checkCredentials = ({ email, password }) => {
 
         let accesskey = await AsyncStorage.getItem('access_token');
         console.log(accesskey);
-        let decoded = jwtDecode(accesskey);
-        console.log(decoded);
-        let id_string = decoded.sub.split('|')[1];
-        dummyId = parseInt(id_string);
-        console.log(id_string, dummyId);
+        let decodedAccessKey = jwtDecode(accesskey);
+        console.log(decodedAccessKey);
+        const dummyId = parseInt(decodedAccessKey.sub.split('|')[1]);
+
         await axios
             .get(secretIp + '/api/authentication/getUser', {
                 params: { id: dummyId },
