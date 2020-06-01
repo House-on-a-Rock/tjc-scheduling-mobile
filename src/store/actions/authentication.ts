@@ -33,22 +33,21 @@ export const logout = () => {
 };
 
 export const prepHomePage = (dispatch) => {
-    console.log('prepping Home Page');
     dispatch(fetchProfileAndTasksOnLogin());
 };
 
 export const checkCredentials = ({ email, password }) => {
-    //hash password then check
-
     return async (dispatch) => {
-        let dummyId = 1;
-        let profile = null;
+        // let dummyId = 1;
+        // let profile = null;
+
+        //check credentials api call
 
         await axios
             .post(`${secret_database.dev.ISSUER_BASE_URL}/oauth/token`, {
+                username: email,
+                password: password,
                 grant_type: 'password',
-                username: 'shaun.tung@gmail.com',
-                password: 'password',
                 client_id: secret_database.dev.CLIENT_ID,
                 client_secret: secret_database.dev.CLIENT_SECRET,
                 audience: secret_database.dev.AUDIENCE,
@@ -60,7 +59,7 @@ export const checkCredentials = ({ email, password }) => {
             .then(() => prepHomePage(dispatch))
             .catch((error) => {
                 // dispatch(authError())
-                console.log(error);
+                console.log('authentication error: ', error);
             });
 
         await AsyncStorage.clear();

@@ -25,16 +25,9 @@ export const CalendarScreen = (props: CalendarScreenProps) => {
     const [isDateSelected, setIsDateSelected] = useState(false);
 
     const calCardDatesArray: CalendarData[] = useSelector((state) => {
-        console.log('CalendarScreen first time', state, viewHeight, isDateSelected);
         if (!state.calendarReducer.data) dispatch(createCalendar());
         else return state.calendarReducer.data.dateArray;
     });
-    console.log(
-        'CalendarScreen calCardDatesArray',
-        calCardDatesArray,
-        viewHeight,
-        isDateSelected,
-    );
 
     if (!calCardDatesArray) {
         return <LoadingPage />;

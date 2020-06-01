@@ -2,7 +2,6 @@ import { View, ActivityIndicator } from 'react-native';
 import React from 'react';
 
 export const LoadingPage = (props) => {
-    console.log('im in loading page');
     return (
         <View
             style={{

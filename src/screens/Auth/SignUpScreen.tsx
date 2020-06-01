@@ -18,7 +18,6 @@ export const SignUpScreen = (props: SignUpScreenProps) => {
 
     const onSignUpHandler = () => {
         //make api call
-        console.log('signup pressed');
     };
 
     return (

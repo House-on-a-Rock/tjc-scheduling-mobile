@@ -6,14 +6,12 @@ export const CREATE_CALENDAR = 'CREATE_CALENDAR';
 export const EXTEND_CALENDAR = 'EXTEND_CALENDAR';
 
 export const loadingCalendar = () => {
-    console.log('creatingCalendar');
     return {
         type: CalendarActionTypes.LOADING,
     };
 };
 
 export const loadedCalendarSuccess = (data) => {
-    console.log('loadedCalendarSuccess', data);
     return {
         type: CalendarActionTypes.LOADED,
         payload: data,
