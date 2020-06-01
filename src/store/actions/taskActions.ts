@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { secretIp } from '../../../secrets';
+import { secretIp } from '../../../secrets/secrets';
 import { TaskData } from '../../shared/models';
 import { login } from './authentication';
 
@@ -10,7 +10,6 @@ export const loadingTasks = () => {
 };
 
 export const loadTasksSuccess = (tasks: TaskData[]) => {
-    console.log('loadTasksSuccess', tasks);
     return {
         type: 'Task Loaded',
         payload: tasks,

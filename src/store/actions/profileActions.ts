@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { ProfileData } from '../../shared/models';
-import { secretIp } from '../../../secrets';
+import { secretIp } from '../../../secrets/secrets';
 import { fetchTasksOnLogin } from './taskActions';
 
 export const loadingProfile = () => {
@@ -10,7 +10,6 @@ export const loadingProfile = () => {
 };
 
 export const loadProfileSuccess = (profile: ProfileData) => {
-    console.log('loadProfileSuccess', profile);
     return {
         type: ProfileActionTypes.LOADED,
         payload: profile,
@@ -25,14 +24,13 @@ export const ProfileActionTypes = {
     SAVING: 'Profile Saving',
     SAVED: 'Profile Saved',
     LOAD_ERROR: 'Profile Load Error',
-    SAVE_ERROR: 'Profiel Save Error',
+    SAVE_ERROR: 'Profile Save Error',
 };
 
 // Thunky thunk
 
 export const fetchProfileAndTasksOnLogin = () => {
     return async (dispatch) => {
-        console.log('dispatched fetch profile');
         dispatch(loadingProfile());
         await axios
             .get(secretIp + '/api/users/getUser')

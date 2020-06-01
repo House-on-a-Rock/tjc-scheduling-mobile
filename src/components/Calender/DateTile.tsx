@@ -13,6 +13,10 @@ export const DateTile = (props) => {
     let year = renderedDate.getFullYear();
     let date = renderedDate.getDate();
 
+    if (!isCurrentMonth) {
+        return <View style={styles.blank}></View>;
+    }
+
     return (
         <View style={styles.tile}>
             <TouchableOpacity
@@ -71,5 +75,10 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 20,
         fontFamily: 'Roboto-Regular',
+    },
+    blank: {
+        width: '14.2857%',
+        height: 50,
+        borderBottomWidth: 1,
     },
 });
