@@ -9,8 +9,8 @@ import { checkCredentials } from '../../store/actions';
 
 export const LoginScreen = (props: LoginScreenProps) => {
     const dispatch = useDispatch();
-    const [userEmail, setUserEmail] = useState<string>('email@email.com');
-    const [userPassword, setUserPassword] = useState<string>('password');
+    const [userEmail, setUserEmail] = useState<string>('Geoff.Chu@gmail.com');
+    const [userPassword, setUserPassword] = useState<string>('password3');
     const [isValidCredentials, setIsValidCredentials] = useState<boolean>(true);
     const [isValidInput, setIsValidInput] = useState<boolean>(false);
 

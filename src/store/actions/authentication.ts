@@ -17,7 +17,6 @@ import { secretIp, secret_database } from '../../../secrets/secrets';
 //     return response;
 // });
 
-
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 
@@ -34,26 +33,18 @@ export const logout = () => {
 };
 
 export const checkCredentials = ({ email, password }) => {
-    //hash password then check
-
     return async (dispatch) => {
         dispatch(changeLoadState(states.loading));
         let dummyId = 1;
         let profile = null;
-        let jwt;
+
         //check credentials api call
-        await axios
-            .get(secretIp + '/api/authentication/login', {
-                params: { email: email, password: password },
-            })
-            .then((response) => (jwt = response.data))
-            .catch((error) => console.log(error));
 
         await axios
             .post(`${secret_database.dev.ISSUER_BASE_URL}/oauth/token`, {
-                grant_type: 'password',
                 username: email,
                 password: password,
+                grant_type: 'password',
                 client_id: secret_database.dev.CLIENT_ID,
                 client_secret: secret_database.dev.CLIENT_SECRET,
                 audience: secret_database.dev.AUDIENCE,
@@ -62,11 +53,11 @@ export const checkCredentials = ({ email, password }) => {
             .then((response) => {
                 AsyncStorage.setItem('access_token', response.data.access_token);
             })
-            .catch((error) => console.log(error));
+            .catch((error) => console.log('****************** login error', error));
 
         let accesskey = await AsyncStorage.getItem('access_token');
         console.log(accesskey);
-
+        //  decrypt access key to retrieve payload
         await axios
             .get(secretIp + '/api/authentication/getUser', {
                 params: { id: dummyId },
