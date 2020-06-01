@@ -10,7 +10,6 @@ export const loadingTasks = () => {
 };
 
 export const loadTasksSuccess = (tasks: TaskData[]) => {
-    console.log('loadTasksSuccess', tasks);
     return {
         type: 'Task Loaded',
         payload: tasks,

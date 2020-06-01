@@ -33,7 +33,6 @@ export const logout = () => {
 };
 
 export const prepHomePage = (dispatch) => {
-    console.log('prepping Home Page');
     dispatch(fetchProfileAndTasksOnLogin());
 };
 
@@ -60,7 +59,7 @@ export const checkCredentials = ({ email, password }) => {
             .then(() => prepHomePage(dispatch))
             .catch((error) => {
                 // dispatch(authError())
-                console.log(error);
+                console.log('authentication error: ', error);
             });
 
         await AsyncStorage.clear();

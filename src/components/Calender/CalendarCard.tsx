@@ -17,7 +17,6 @@ export const CalendarCard = (props: Props) => {
     const year = displayedDate.getFullYear();
     const month = displayedDate.getMonth();
 
-    console.log('CalendarCard', props);
     return (
         <View
             style={{

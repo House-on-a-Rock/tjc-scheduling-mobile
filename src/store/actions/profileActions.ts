@@ -10,7 +10,6 @@ export const loadingProfile = () => {
 };
 
 export const loadProfileSuccess = (profile: ProfileData) => {
-    console.log('loadProfileSuccess', profile);
     return {
         type: ProfileActionTypes.LOADED,
         payload: profile,
@@ -32,7 +31,6 @@ export const ProfileActionTypes = {
 
 export const fetchProfileAndTasksOnLogin = () => {
     return async (dispatch) => {
-        console.log('dispatched fetch profile');
         dispatch(loadingProfile());
         await axios
             .get(secretIp + '/api/users/getUser')

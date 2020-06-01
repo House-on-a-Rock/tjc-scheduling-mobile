@@ -27,12 +27,13 @@ export const DateDisplay = (props) => {
 
     const determineDate = determineRenderDateClosure(initialDate);
 
-    const populateTasks = (date: Date): Date[] => {
+    const populateTasks = (date: Date): Object[] => {
         const tasks = useSelector((state) => {
-            // console.log('populateTasks taskReducer', state);
             return state.taskReducer.data;
         });
+        // console.log("populating tasks on this date: ",date)
 
+        date.setDate(date.getDate() - 1); //necessary to load the correct tasks into the correct tile
         const filteredTasks = tasks.filter((task) => {
             const tasksDate = new Date(task.date);
             return compareDates(tasksDate, date);
@@ -44,7 +45,6 @@ export const DateDisplay = (props) => {
     // create a function that does the math to find out with index on the array it needs to update
 
     const currentDate = useSelector(({ calendarReducer }) => {
-        // console.log('currentDate', calendarReducer.data);
         return calendarReducer.data.today;
     });
 
@@ -53,7 +53,7 @@ export const DateDisplay = (props) => {
         for (let k = 0; k < dateArray[j].length; k++) {
             const day: Date = determineDate();
             const isToday = compareDates(day, currentDate);
-            const data: Object[] = populateTasks(day);
+            const data: Object[] = populateTasks(new Date(day));
             const isCurrentMonth = day.getMonth() === month;
 
             dateArray[j][k] = (
