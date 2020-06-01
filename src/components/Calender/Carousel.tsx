@@ -11,9 +11,14 @@ export const Carousel = (props) => {
     const renderMonths = (item) => {
         return <CalendarCard displayedDate={item.item.date} />;
     };
-    // const calCardDatesArray = useSelector(({ calendarReducer }) => {
-    //     calendarReducer.dspata.dataArray;
-    // });
+    const loadMoreOnBottom = () => {
+        // console.log('loading more');
+        // dispatch api to load more data
+    };
+
+    const dispatch = useDispatch();
+
+    const [refresh, setRefresh] = useState(false); // will use reducer logic
 
     return (
         <View>
@@ -24,6 +29,24 @@ export const Carousel = (props) => {
                     return item.id.toString();
                 }}
                 renderItem={renderMonths}
+                // onScroll={(e) => {
+                //     console.log(
+                //         e.nativeEvent.contentOffset.y,
+                //         e.nativeEvent.contentSize.height,
+                //     );
+                //     // this.pageOffsetY = e.nativeEvent.contentOffset.y;
+                //     // this.contentHeight = e.nativeEvent.contentSize.height;
+                //     return null;
+                // }}
+                onRefresh={() => {
+                    // console.log('pulled down');
+                    // dispatch action for more data
+                    dispatch(extendCalendar(CarousalDirection.UP));
+                    setRefresh(false);
+                }}
+                refreshing={refresh}
+                onEndReachedThreshold={3}
+                onEndReached={loadMoreOnBottom}
                 pagingEnabled
                 showsHorizontalScrollIndicator={false}
                 initialScrollIndex={12}
@@ -43,28 +66,3 @@ export const Carousel = (props) => {
         </View>
     );
 };
-
-// const loadMoreOnBottom = () => {
-//     // console.log('loading more');
-//     // dispatch api to load more data
-// };
-
-// const dispatch = useDispatch();
-
-// const [refresh, setRefresh] = useState(false); // will use reducer logic
-
-// onScroll={(e) => {
-//     console.log(e.nativeEvent.contentOffset.y, e.nativeEvent.contentSize.height)
-//     // this.pageOffsetY = e.nativeEvent.contentOffset.y;
-//     // this.contentHeight = e.nativeEvent.contentSize.height;
-//     return null;
-// }}
-// onRefresh={() => {
-//     // console.log('pulled down');
-//     // dispatch action for more data
-//     dispatch(extendCalendar(CarousalDirection.UP));
-//     setRefresh(false);
-// }}
-// refreshing={refresh}
-// onEndReachedThreshold={3}
-// onEndReached={loadMoreOnBottom}
