@@ -71,7 +71,7 @@ export type ScheduleScreenNavigationProp = CompositeNavigationProp<
 >;
 
 export type ScheduleScreenProps = {
-    route: CalendarRouteProp;
+    route: ScheduleRouteProp;
     navigation: ScheduleScreenNavigationProp;
 };
 

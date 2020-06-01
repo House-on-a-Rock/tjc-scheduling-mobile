@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
-import { setProfile } from './profileActions';
-import { changeLoadState, states } from './loadState';
+import { fetchProfileAndTasksOnLogin } from './profileActions';
 import { createCalendar } from './calendarActions';
+import { store } from '../../../App';
 
 import { secretIp, secret_database } from '../../../secrets/secrets';
 
@@ -32,11 +32,15 @@ export const logout = () => {
     };
 };
 
+export const prepHomePage = (dispatch) => {
+    console.log('prepping Home Page');
+    dispatch(fetchProfileAndTasksOnLogin());
+};
+
 export const checkCredentials = ({ email, password }) => {
     return async (dispatch) => {
-        dispatch(changeLoadState(states.loading));
-        let dummyId = 1;
-        let profile = null;
+        // let dummyId = 1;
+        // let profile = null;
 
         //check credentials api call
 
@@ -53,40 +57,11 @@ export const checkCredentials = ({ email, password }) => {
             .then((response) => {
                 AsyncStorage.setItem('access_token', response.data.access_token);
             })
-            .catch((error) => console.log('****************** login error', error));
-
-        let accesskey = await AsyncStorage.getItem('access_token');
-        console.log(accesskey);
-        //  decrypt access key to retrieve payload
-        await axios
-            .get(secretIp + '/api/authentication/getUser', {
-                params: { id: dummyId },
-                headers: {
-                    authorization: `Bearer ${accesskey}`,
-                },
-            })
-            .then((response) => {
-                profile = response.data;
-            })
-            .catch((error) => console.error(error));
-
-        await axios
-            .get(secretIp + '/api/authentication/getUserTasks', {
-                params: { id: dummyId },
-                headers: {
-                    authorization: `Bearer ${accesskey}`,
-                },
-            })
-            .then((response) => {
-                profile.tasks = response.data;
-            })
-            .then(() => {
-                dispatch(changeLoadState(states.loaded));
-                dispatch(setProfile(profile));
-                dispatch(createCalendar());
-                dispatch(login());
-            })
-            .catch((error) => console.error(error));
+            .then(() => prepHomePage(dispatch))
+            .catch((error) => {
+                // dispatch(authError())
+                console.log(error);
+            });
 
         await AsyncStorage.clear();
     };

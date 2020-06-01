@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 import { compareDates } from '../../services/Calendar/helper_functions';
 import { DateTile } from './DateTile';
+import { taskReducer } from '../../store/reducers';
 
 export const DateDisplay = (props) => {
     const month = props.displayedDate.getMonth();
@@ -27,7 +28,11 @@ export const DateDisplay = (props) => {
     const determineDate = determineRenderDateClosure(initialDate);
 
     const populateTasks = (date: Date): Date[] => {
-        const tasks = useSelector(({ profileReducer }) => profileReducer.data.tasks);
+        const tasks = useSelector((state) => {
+            // console.log('populateTasks taskReducer', state);
+            return state.taskReducer.data;
+        });
+
         const filteredTasks = tasks.filter((task) => {
             const tasksDate = new Date(task.date);
             return compareDates(tasksDate, date);
@@ -36,7 +41,12 @@ export const DateDisplay = (props) => {
         return filteredTasks;
     };
 
-    const currentDate = useSelector((state) => state.calendarReducer.today);
+    // create a function that does the math to find out with index on the array it needs to update
+
+    const currentDate = useSelector(({ calendarReducer }) => {
+        // console.log('currentDate', calendarReducer.data);
+        return calendarReducer.data.today;
+    });
 
     for (let j = 0; j < dateArray.length; j++) {
         dateArray[j] = new Array(7);
