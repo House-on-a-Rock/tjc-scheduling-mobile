@@ -3,7 +3,7 @@ import {
     FormStateModel,
     createDefaultFormState,
     withLoadState,
-} from '../helper/loadableState';
+} from '../helper/withLoadState';
 import { ProfileData } from '../../shared/models';
 
 const baseReducer = (
@@ -21,11 +21,11 @@ const baseReducer = (
     }
 };
 
-export const profileReducer = withLoadState(baseReducer, {
+export const profileReducer = withLoadState({
     loadingActionType: ProfileActionTypes.LOADING,
     loadedActionType: ProfileActionTypes.LOADED,
     loadErrorActionType: ProfileActionTypes.LOAD_ERROR,
     savingActionType: ProfileActionTypes.SAVING,
     savedActionType: ProfileActionTypes.SAVED,
     saveErrorActionType: ProfileActionTypes.SAVE_ERROR,
-});
+})(baseReducer);

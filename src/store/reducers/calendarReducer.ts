@@ -1,37 +1,38 @@
-import { CREATE_CALENDAR, EXTEND_CALENDAR } from '../actions';
+import { EXTEND_CALENDAR, CalendarActionTypes } from '../actions';
 import {
-    createDateArray,
-    extendDateArray,
-    getXMonths,
-} from '../../services/Calendar/helper_functions/calendar_services';
+    withLoadState,
+    FormStateModel,
+    createDefaultFormState,
+} from '../helper/withLoadState';
+import { CalendarData } from '../../shared/models';
 
-const today: Date = new Date();
-const rangeStart = new Date(today.getFullYear(), today.getMonth() - 12, 1);
-const rangeEnd = new Date(today.getFullYear(), today.getMonth() + 12, 1);
-
-const initialState = {
-    dateArray: [],
-    today: today,
-    renderedMonthRange: [rangeStart, rangeEnd],
-};
-
-export const calendarReducer = (state = initialState, action) => {
+const baseReducer = (
+    state: FormStateModel<CalendarData> = createDefaultFormState(),
+    action,
+) => {
     switch (action.type) {
-        case CREATE_CALENDAR:
+        case CalendarActionTypes.LOADED:
             return {
                 ...state,
-                dateArray: createDateArray(
-                    state.renderedMonthRange[0],
-                    state.renderedMonthRange[1],
-                ),
+                data: action.payload,
             };
         case EXTEND_CALENDAR:
             return {
                 //extends datearray as well as make api call to populate data
                 ...state,
-                dateArray: extendDateArray(action.payload, state.dateArray),
+                // renderedMonthRange needs to update as well
+                // dateArray: extendDateArray(action.payload, state.data.dateArray),
             };
         default:
             return state;
     }
 };
+
+export const calendarReducer = withLoadState({
+    loadingActionType: CalendarActionTypes.LOADING,
+    loadedActionType: CalendarActionTypes.LOADED,
+    loadErrorActionType: CalendarActionTypes.LOAD_ERROR,
+    savingActionType: CalendarActionTypes.SAVING,
+    savedActionType: CalendarActionTypes.SAVED,
+    saveErrorActionType: CalendarActionTypes.SAVE_ERROR,
+})(baseReducer);

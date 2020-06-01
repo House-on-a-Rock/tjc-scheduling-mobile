@@ -1,11 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { useSelector } from 'react-redux';
 import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 import { TitleText } from '../../shared/components';
-import { compareDates } from '../../services/Calendar/helper_functions';
 
 export const DateTile = (props) => {
     const { isToday, renderedDate, isCurrentMonth, data } = props;
@@ -14,6 +12,10 @@ export const DateTile = (props) => {
     let month = renderedDate.getMonth() + 1; //getMonth() returns in base 0
     let year = renderedDate.getFullYear();
     let date = renderedDate.getDate();
+
+    if (!isCurrentMonth) {
+        return <View style={styles.blank}></View>;
+    }
 
     return (
         <View style={styles.tile}>
@@ -73,5 +75,10 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 20,
         fontFamily: 'Roboto-Regular',
+    },
+    blank: {
+        width: '14.2857%',
+        height: 50,
+        borderBottomWidth: 1,
     },
 });

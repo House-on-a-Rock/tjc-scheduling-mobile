@@ -4,6 +4,7 @@ import { AuthenticationStack, DrawerNav } from './index';
 
 const AppNavigation = () => {
     let isLoggedIn = useSelector((state) => state.authReducer.isLoggedIn);
+
     return isLoggedIn ? <DrawerNav /> : <AuthenticationStack />;
 };
 
