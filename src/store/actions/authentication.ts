@@ -45,16 +45,12 @@ export const checkCredentials = ({ email, password }) => {
         //check credentials api call
 
         await axios
-            .post(`${secret_database.dev.ISSUER_BASE_URL}/oauth/token`, {
-                username: email,
+            .post(secretIp + `/api/authentication/login`, {
+                email: email,
                 password: password,
-                grant_type: 'password',
-                client_id: secret_database.dev.CLIENT_ID,
-                client_secret: secret_database.dev.CLIENT_SECRET,
-                audience: secret_database.dev.AUDIENCE,
-                scope: 'openid profile email read:AllUsers',
             })
             .then((response) => {
+                console.log(response.data);
                 AsyncStorage.setItem('access_token', response.data.access_token);
             })
             .then(() => prepHomePage(dispatch))
@@ -73,10 +69,11 @@ export const checkCredentials = ({ email, password }) => {
             .get(secretIp + '/api/authentication/getUser', {
                 params: { id: dummyId },
                 headers: {
-                    authorization: `Bearer ${accesskey}`,
+                    authorization: accesskey,
                 },
             })
             .then((response) => {
+                console.log(response.data);
                 profile = response.data;
             })
             .catch((error) => console.error(error));
