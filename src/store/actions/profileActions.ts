@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { AsyncStorage } from 'react-native';
 import { ProfileData } from '../../shared/models';
 import { secretIp } from '../../../secrets/secrets';
 import { fetchTasksOnLogin } from './taskActions';
@@ -31,9 +32,15 @@ export const ProfileActionTypes = {
 
 export const fetchProfileAndTasksOnLogin = () => {
     return async (dispatch) => {
+        let accesskey = await AsyncStorage.getItem('access_token');
+        console.log(typeof accesskey, accesskey);
         dispatch(loadingProfile());
         await axios
-            .get(secretIp + '/api/users/getUser')
+            .get(secretIp + '/api/users/getUser', {
+                headers: {
+                    authorization: accesskey,
+                },
+            })
             .then((response) => {
                 let userProfile = response.data;
                 dispatch(loadProfileSuccess(userProfile));
@@ -43,5 +50,7 @@ export const fetchProfileAndTasksOnLogin = () => {
                 // dispatch(authError())
                 console.log(error);
             });
+
+        await AsyncStorage.clear();
     };
 };

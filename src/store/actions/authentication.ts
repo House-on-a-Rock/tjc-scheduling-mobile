@@ -59,26 +59,24 @@ export const checkCredentials = ({ email, password }) => {
                 console.log('authentication error: ', error);
             });
 
-        let accesskey = await AsyncStorage.getItem('access_token');
-        console.log(accesskey);
-        let decodedAccessKey = jwtDecode(accesskey);
-        console.log(decodedAccessKey);
-        const dummyId = parseInt(decodedAccessKey.sub.split('|')[1]);
+        // let accesskey = await AsyncStorage.getItem('access_token');
+        // console.log(accesskey);
+        // let decodedAccessKey = jwtDecode(accesskey);
+        // console.log(decodedAccessKey);
+        // const dummyId = parseInt(decodedAccessKey.sub.split('|')[1]);
 
-        await axios
-            .get(secretIp + '/api/authentication/getUser', {
-                params: { id: dummyId },
-                headers: {
-                    authorization: accesskey,
-                },
-            })
-            .then((response) => {
-                console.log(response.data);
-                profile = response.data;
-            })
-            .catch((error) => console.error(error));
-
-        await AsyncStorage.clear();
+        // await axios
+        //     .get(secretIp + '/api/authentication/getUser', {
+        //         params: { id: dummyId },
+        //         headers: {
+        //             authorization: accesskey,
+        //         },
+        //     })
+        //     .then((response) => {
+        //         console.log(response.data);
+        //         profile = response.data;
+        //     })
+        //     .catch((error) => console.error(error));
     };
 };
 
