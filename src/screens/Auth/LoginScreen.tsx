@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { View, StyleSheet, Image, Button, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -9,10 +9,15 @@ import { checkCredentials } from '../../store/actions';
 
 export const LoginScreen = (props: LoginScreenProps) => {
     const dispatch = useDispatch();
-    const [userEmail, setUserEmail] = useState<string>('shaun.tung@gmail.com');
-    const [userPassword, setUserPassword] = useState<string>('password');
+    const [userEmail, setUserEmail] = useState<string>('Jonathan.Lee@gmail.com');
+    const [userPassword, setUserPassword] = useState<string>('password3');
     const [isValidCredentials, setIsValidCredentials] = useState<boolean>(true);
-    const [isValidInput, setIsValidInput] = useState<boolean>(false);
+    // const [isValidLogin, setIsValidLogin] = useState<boolean>(
+    //     useSelector((state) => state.authReducer.isValidLogin),
+    // );
+    let isValidLogin = useSelector((state) => state.authReducer.isValidLogin);
+    // let loginSuccess = useSelector((state) => state.authReducer.isValidLogin);
+    console.log('**********isValidLogin: ', isValidLogin);
 
     function isValidEmail() {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -21,10 +26,14 @@ export const LoginScreen = (props: LoginScreenProps) => {
 
     const verifyLogin = () => {
         //after x attempts, prompt login or account lockout
+
         if (isValidEmail() && userPassword.length > 0) {
             dispatch(checkCredentials({ email: userEmail, password: userPassword })); //api to check if credentials can be used to login
+            // setIsValidLogin(loginSuccess);
+            setIsValidCredentials(true);
         } else {
             setIsValidCredentials(false); //displays text to retry credentials
+            // isValidLogin = true;
         }
     };
 
@@ -46,6 +55,13 @@ export const LoginScreen = (props: LoginScreenProps) => {
                     {!isValidCredentials ? (
                         <BodyText style={styles.loginWarning}>
                             Please enter valid credentials
+                        </BodyText>
+                    ) : (
+                        <View></View>
+                    )}
+                    {!isValidLogin ? (
+                        <BodyText style={styles.loginWarning}>
+                            Invalid Email and Password Combination
                         </BodyText>
                     ) : (
                         <View></View>

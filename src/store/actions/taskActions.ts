@@ -3,6 +3,7 @@ import { AsyncStorage } from 'react-native';
 import { secretIp } from '../../../secrets/secrets';
 import { TaskData } from '../../shared/models';
 import { login } from './authentication';
+import jwtDecode from 'jwt-decode';
 
 export const loadingTasks = () => {
     return {
@@ -28,8 +29,10 @@ export const TaskActionTypes = {
 
 export const fetchTasksOnLogin = (userId) => {
     return async (dispatch) => {
+        let accesskey = await AsyncStorage.getItem('access_token');
+        let decodedAccessKey = jwtDecode(accesskey);
+        const userId = parseInt(decodedAccessKey.sub.split('|')[1]);
         dispatch(loadingTasks());
-        const accesskey = await AsyncStorage.getItem('access_token');
         await axios
             .get(secretIp + '/api/tasks/getAllUserTasks', {
                 params: { id: userId },

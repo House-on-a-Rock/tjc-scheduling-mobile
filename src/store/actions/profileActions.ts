@@ -3,6 +3,7 @@ import { AsyncStorage } from 'react-native';
 import { ProfileData } from '../../shared/models';
 import { secretIp } from '../../../secrets/secrets';
 import { fetchTasksOnLogin } from './taskActions';
+import jwtDecode from 'jwt-decode';
 
 export const loadingProfile = () => {
     return {
@@ -33,10 +34,12 @@ export const ProfileActionTypes = {
 export const fetchProfileAndTasksOnLogin = () => {
     return async (dispatch) => {
         let accesskey = await AsyncStorage.getItem('access_token');
-        console.log(typeof accesskey, accesskey);
+        let decodedAccessKey = jwtDecode(accesskey);
+        const userId = parseInt(decodedAccessKey.sub.split('|')[1]);
         dispatch(loadingProfile());
         await axios
             .get(secretIp + '/api/users/getUser', {
+                params: { id: userId },
                 headers: {
                     authorization: accesskey,
                 },
