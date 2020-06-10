@@ -36,7 +36,7 @@ export const checkCredentials = ({ email, password }) => {
             .then(() => dispatch(AuthStateActions.Loaded()))
             .then(() => dispatch(login()))
             .catch((error) => {
-                dispatch(AuthStateActions.Error());
+                dispatch(AuthStateActions.Error(error));
                 console.log('authentication error: ', error);
             });
     };

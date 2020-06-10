@@ -8,7 +8,7 @@ const initialState = {
         [reducerDomains.TASKS]: loadStateActionTypes.LOADED,
         [reducerDomains.CALENDAR]: loadStateActionTypes.LOADED,
     },
-    // loadErrorStatus: {},
+    loadErrorStatus: {},
 };
 
 export const loadStateReducer = (state = initialState, action) => {
@@ -44,7 +44,11 @@ export const loadStateReducer = (state = initialState, action) => {
                     loadStatus: {
                         ...state.loadStatus,
                         [domain]: loadStateActionTypes.ERROR,
-                        //[domain]: action.error
+                    },
+                    //
+                    loadErrorStatus: {
+                        ...state.loadErrorStatus,
+                        [domain]: action.error,
                     },
                 };
             default:

@@ -25,7 +25,7 @@ function mapLoadStateActions(domain) {
             Error: (error) => ({
                 domain: domain,
                 type: loadStateActionTypes.ERROR,
-                // payload: error,
+                payload: error,
             }),
             ErrorHandled: () => ({ domain: domain, type: loadStateActionTypes.LOADED }),
         };

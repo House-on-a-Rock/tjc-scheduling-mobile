@@ -33,7 +33,7 @@ export const fetchProfileAndTasksOnLogin = () => {
                 dispatch(fetchTasksOnLogin());
             })
             .catch((error) => {
-                dispatch(ProfileStateActions.Error());
+                dispatch(ProfileStateActions.Error(error));
                 console.log('error fetching profile', error);
             });
 

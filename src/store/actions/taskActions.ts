@@ -31,7 +31,7 @@ export const fetchTasksOnLogin = () => {
                 dispatch(TaskStateActions.Loaded());
             })
             .catch((error) => {
-                dispatch(TaskStateActions.Error);
+                dispatch(TaskStateActions.Error(error));
                 console.log('error fetching tasks', error);
             });
     };
