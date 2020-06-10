@@ -6,7 +6,6 @@ const initialState = {
 };
 
 export const authReducer = (state = initialState, action) => {
-    // console.log('reducer', action);
     switch (action.type) {
         case LOGIN:
             return {
@@ -17,13 +16,6 @@ export const authReducer = (state = initialState, action) => {
         case LOGOUT: {
             return {
                 initialState,
-            };
-        }
-        case AUTH_ERROR: {
-            console.log('auth error reducer running');
-            return {
-                ...state,
-                isValidLogin: false,
             };
         }
         default:

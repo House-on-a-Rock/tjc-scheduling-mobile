@@ -12,6 +12,7 @@ import {
     profileReducer,
     calendarReducer,
     taskReducer,
+    loadStateReducer,
 } from './src/store/reducers';
 
 const rootReducer = combineReducers({
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
     profileReducer: profileReducer,
     calendarReducer: calendarReducer,
     taskReducer: taskReducer,
+    loadStateReducer: loadStateReducer,
 });
 
 export const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

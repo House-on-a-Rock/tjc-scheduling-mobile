@@ -25,3 +25,8 @@ export interface CalendarData {
     today: Date;
     renderedMonthRange: Date[];
 }
+
+export interface AuthData {
+    isLoggedIn: boolean;
+    isValidLogin: boolean;
+}

@@ -13,12 +13,6 @@ import { createCalendar } from '../../store/actions/calendarActions';
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 
 export const DrawerNav = () => {
-    const tasks = useSelector(({ taskReducer }) => taskReducer.loaded);
-    const profile = useSelector(({ profileReducer }) => profileReducer.loaded);
-    const dispatch = useDispatch();
-
-    // if (tasks && profile)
-    // dispatch(createCalendar());
     return (
         <NavigationContainer theme={MyTheme}>
             <Drawer.Navigator>

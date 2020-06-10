@@ -1,18 +1,9 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
+import { secretIp } from '../../../secrets/secrets';
 import { fetchProfileAndTasksOnLogin } from './profileActions';
-import { secretIp, secret_database } from '../../../secrets/secrets';
-
-// axios.interceptors.request.use((request) => {
-//     console.log('Starting Request', request);
-
-//     return request;
-// });
-
-// axios.interceptors.response.use((response) => {
-//     console.log('Response: ', response);
-//     return response;
-// });
+import { AuthStateActions } from './loadStateActions';
+import { createCalendar } from './calendarActions';
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
@@ -30,12 +21,6 @@ export const logout = () => {
     };
 };
 
-export const authError = () => {
-    return {
-        type: AUTH_ERROR,
-    };
-};
-
 export const checkCredentials = ({ email, password }) => {
     return async (dispatch) => {
         await axios
@@ -45,10 +30,13 @@ export const checkCredentials = ({ email, password }) => {
             })
             .then((response) => {
                 AsyncStorage.setItem('access_token', response.data.access_token);
+                dispatch(createCalendar());
             })
             .then(() => dispatch(fetchProfileAndTasksOnLogin()))
+            .then(() => dispatch(AuthStateActions.Loaded()))
+            .then(() => dispatch(login()))
             .catch((error) => {
-                dispatch(authError());
+                dispatch(AuthStateActions.Error());
                 console.log('authentication error: ', error);
             });
     };

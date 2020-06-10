@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { CalendarScreenProps, CalendarData } from '../../../../shared/models';
 import { Carousel, TaskPreview } from '../../../../components/Calender';
 import { LoadingPage } from '../../../../components/LoadingPage';
-import { createCalendar } from '../../../../store/actions';
+import { loadStateActionTypes } from '../../../../store/actions';
 
 const styles = StyleSheet.create({
     screen: {
@@ -20,16 +20,15 @@ const styles = StyleSheet.create({
 });
 
 export const CalendarScreen = (props: CalendarScreenProps) => {
-    const dispatch = useDispatch();
-    const [viewHeight, setViewHeight] = useState<number | undefined>(622);
+    // const dispatch = useDispatch();
+    // const [viewHeight, setViewHeight] = useState<number | undefined>(622);
     const [isDateSelected, setIsDateSelected] = useState(false);
+    const isCalendarLoaded = useSelector((state) => state.loadStateReducer.loadState);
+    const calCardDatesArray: CalendarData[] = useSelector(
+        (state) => state.calendarReducer.dateArray,
+    );
 
-    const calCardDatesArray: CalendarData[] = useSelector((state) => {
-        if (!state.calendarReducer.data) dispatch(createCalendar());
-        else return state.calendarReducer.data.dateArray;
-    });
-
-    if (!calCardDatesArray) {
+    if (isCalendarLoaded === loadStateActionTypes.LOADING) {
         return <LoadingPage />;
     } else {
         return (

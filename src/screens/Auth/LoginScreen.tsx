@@ -2,22 +2,22 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { View, StyleSheet, Image, Button, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
 import { CustomInput, BodyText } from '../../shared/components';
 import { LoginScreenProps } from '../../shared/models';
-import { checkCredentials } from '../../store/actions';
+import {
+    checkCredentials,
+    AuthStateActions,
+    loadStateActionTypes,
+} from '../../store/actions';
+import { LoadingPage } from '../../components/LoadingPage';
 
 export const LoginScreen = (props: LoginScreenProps) => {
     const dispatch = useDispatch();
     const [userEmail, setUserEmail] = useState<string>('Jonathan.Lee@gmail.com');
     const [userPassword, setUserPassword] = useState<string>('password3');
     const [isValidCredentials, setIsValidCredentials] = useState<boolean>(true);
-    // const [isValidLogin, setIsValidLogin] = useState<boolean>(
-    //     useSelector((state) => state.authReducer.isValidLogin),
-    // );
-    let isValidLogin = useSelector((state) => state.authReducer.isValidLogin);
-    // let loginSuccess = useSelector((state) => state.authReducer.isValidLogin);
-    console.log('**********isValidLogin: ', isValidLogin);
+    let isValidLogin = true;
+    let loginState = useSelector((state) => state.loadStateReducer.loadState);
 
     function isValidEmail() {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -25,17 +25,19 @@ export const LoginScreen = (props: LoginScreenProps) => {
     }
 
     const verifyLogin = () => {
-        //after x attempts, prompt login or account lockout
-
+        //after x attempts, prompt login or account lockout?
         if (isValidEmail() && userPassword.length > 0) {
-            dispatch(checkCredentials({ email: userEmail, password: userPassword })); //api to check if credentials can be used to login
-            // setIsValidLogin(loginSuccess);
+            dispatch(AuthStateActions.Loading());
+            dispatch(checkCredentials({ email: userEmail, password: userPassword }));
             setIsValidCredentials(true);
         } else {
             setIsValidCredentials(false); //displays text to retry credentials
-            // isValidLogin = true;
         }
     };
+
+    if (loginState === loadStateActionTypes.LOADING) {
+        return <LoadingPage />;
+    }
 
     return (
         <KeyboardAwareScrollView contentContainerStyle={styles.loginScreen}>
@@ -59,7 +61,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
                     ) : (
                         <View></View>
                     )}
-                    {!isValidLogin ? (
+                    {loginState === loadStateActionTypes.ERROR ? (
                         <BodyText style={styles.loginWarning}>
                             Invalid Email and Password Combination
                         </BodyText>
