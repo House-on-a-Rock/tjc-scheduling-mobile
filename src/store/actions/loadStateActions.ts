@@ -22,7 +22,11 @@ function mapLoadStateActions(domain) {
         return {
             Loaded: () => ({ domain: domain, type: loadStateActionTypes.LOADED }),
             Loading: () => ({ domain: domain, type: loadStateActionTypes.LOADING }),
-            Error: () => ({ domain: domain, type: loadStateActionTypes.ERROR }),
+            Error: (error) => ({
+                domain: domain,
+                type: loadStateActionTypes.ERROR,
+                // payload: error,
+            }),
             ErrorHandled: () => ({ domain: domain, type: loadStateActionTypes.LOADED }),
         };
     };

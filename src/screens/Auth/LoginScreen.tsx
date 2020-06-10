@@ -53,19 +53,15 @@ export const LoginScreen = (props: LoginScreenProps) => {
                     />
                 </View>
                 <View style={styles.loginCardContainer}>
-                    {!isValidCredentials ? (
-                        <BodyText style={styles.loginWarning}>
+                    {!isValidCredentials && (
+                        <BodyText style={styles.loginError}>
                             Please enter valid credentials
                         </BodyText>
-                    ) : (
-                        <View></View>
                     )}
-                    {loginState === loadStateActionTypes.ERROR ? (
-                        <BodyText style={styles.loginWarning}>
+                    {loginState === loadStateActionTypes.ERROR && (
+                        <BodyText style={styles.loginError}>
                             Invalid Email and Password Combination
                         </BodyText>
-                    ) : (
-                        <View></View>
                     )}
                     <View style={styles.inputStyle}>
                         <BodyText style={styles.inputLabel}>Email: </BodyText>
@@ -132,7 +128,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flex: 2,
     },
-    loginWarning: {
+    loginError: {
         color: 'red',
         fontSize: 14,
     },
