@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { AsyncStorage } from 'react-native';
 import { secretIp } from '../../../secrets/secrets';
 import { TaskData } from '../../shared/models';
 import { login } from './authentication';
@@ -28,9 +29,14 @@ export const TaskActionTypes = {
 export const fetchTasksOnLogin = (userId) => {
     return async (dispatch) => {
         dispatch(loadingTasks());
-
+        const accesskey = await AsyncStorage.getItem('access_token');
         await axios
-            .get(secretIp + '/api/tasks/getAllUserTasks', { params: { id: userId } })
+            .get(secretIp + '/api/tasks/getAllUserTasks', {
+                params: { id: userId },
+                headers: {
+                    authorization: accesskey,
+                },
+            })
             .then((response) => {
                 let tasks = response.data;
                 dispatch(loadTasksSuccess(tasks));
