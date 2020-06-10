@@ -35,12 +35,3 @@ export const calendarReducer = (state = initialState, action) => {
             return state;
     }
 };
-
-// export const calendarReducer = withLoadState({
-//     loadingActionType: CalendarActionTypes.LOADING,
-//     loadedActionType: CalendarActionTypes.LOADED,
-//     loadErrorActionType: CalendarActionTypes.LOAD_ERROR,
-//     savingActionType: CalendarActionTypes.SAVING,
-//     savedActionType: CalendarActionTypes.SAVED,
-//     saveErrorActionType: CalendarActionTypes.SAVE_ERROR,
-// })(baseReducer);

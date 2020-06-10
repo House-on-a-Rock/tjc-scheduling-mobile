@@ -16,8 +16,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
     const [userEmail, setUserEmail] = useState<string>('Jonathan.Lee@gmail.com');
     const [userPassword, setUserPassword] = useState<string>('password3');
     const [isValidCredentials, setIsValidCredentials] = useState<boolean>(true);
-    let isValidLogin = true;
-    let loginState = useSelector((state) => state.loadStateReducer.loadState);
+    const loginState = useSelector((state) => state.loadStateReducer.loadState);
 
     function isValidEmail() {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

@@ -1,3 +1,4 @@
+//currently all are unused, TODO typescriptify the new load reducer
 export interface ProfileData {
     Church: {
         name: string;

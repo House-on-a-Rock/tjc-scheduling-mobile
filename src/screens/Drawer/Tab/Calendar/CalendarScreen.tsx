@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, AsyncStorage } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
 import { CalendarScreenProps, CalendarData } from '../../../../shared/models';
 import { Carousel, TaskPreview } from '../../../../components/Calender';
 import { LoadingPage } from '../../../../components/LoadingPage';

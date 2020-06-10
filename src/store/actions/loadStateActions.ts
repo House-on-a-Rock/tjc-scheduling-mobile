@@ -16,6 +16,7 @@ export const ProfileStateActions = mapLoadStateActions(reducerDomains.PROFILE)()
 export const TaskStateActions = mapLoadStateActions(reducerDomains.TASKS)();
 export const CalendarStateActions = mapLoadStateActions(reducerDomains.CALENDAR)();
 
+//this may be moved to a more appropriate location?
 function mapLoadStateActions(domain) {
     return () => {
         return {

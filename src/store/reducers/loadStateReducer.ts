@@ -53,10 +53,10 @@ export const loadStateReducer = (state = initialState, action) => {
     //distills entire loadstate down to one property that the front end will handle accordingly
     function determineLoadState(updatedState) {
         const values = Object.values(updatedState.loadStatus);
-        if (values.indexOf(loadStateActionTypes.ERROR) >= 0) {
+        if (values.indexOf(loadStateActionTypes.ERROR) >= 0)
             return loadStateActionTypes.ERROR;
-        } else if (values.indexOf(loadStateActionTypes.LOADING) >= 0) {
+        else if (values.indexOf(loadStateActionTypes.LOADING) >= 0)
             return loadStateActionTypes.LOADING;
-        } else return loadStateActionTypes.LOADED;
+        else return loadStateActionTypes.LOADED;
     }
 };
