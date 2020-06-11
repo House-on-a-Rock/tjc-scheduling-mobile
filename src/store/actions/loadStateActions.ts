@@ -9,6 +9,7 @@ export enum loadStateActionTypes {
     LOADED,
     LOADING,
     ERROR,
+    ERRORHANDLED,
 }
 
 export const AuthStateActions = mapLoadStateActions(reducerDomains.AUTH)();
