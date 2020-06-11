@@ -5,6 +5,7 @@ import { CalendarScreenProps, CalendarData } from '../../../../shared/models';
 import { Carousel, TaskPreview } from '../../../../components/Calender';
 import { LoadingPage } from '../../../../components/LoadingPage';
 import { loadStateActionTypes } from '../../../../store/actions';
+import { determineLoadState } from '../../../../store/helper';
 
 const styles = StyleSheet.create({
     screen: {
@@ -23,33 +24,34 @@ export const CalendarScreen = (props: CalendarScreenProps) => {
     // const dispatch = useDispatch();
     // const [viewHeight, setViewHeight] = useState<number | undefined>(622);
     const [isDateSelected, setIsDateSelected] = useState(false);
-    const isCalendarLoaded = useSelector((state) => state.loadStateReducer.loadState);
+    const loadState = useSelector((state) => state.loadStateReducer.loadStatus);
+    const isCalendarLoaded = determineLoadState(loadState);
     const calCardDatesArray: CalendarData[] = useSelector(
         (state) => state.calendarReducer.dateArray,
     );
 
     if (isCalendarLoaded === loadStateActionTypes.LOADING) {
         return <LoadingPage />;
-    } else {
-        return (
-            <View
-                style={styles.screen}
-                // onLayout={(event) => {
-                //     setViewHeight(event.nativeEvent.layout.height);
-                // }}
-            >
-                <View style={styles.scrollContainer}>
-                    <Carousel items={calCardDatesArray} />
-                </View>
-
-                {isDateSelected ? (
-                    <View>
-                        <TaskPreview />
-                    </View>
-                ) : (
-                    <View></View>
-                )}
-            </View>
-        );
     }
+
+    return (
+        <View
+            style={styles.screen}
+            // onLayout={(event) => {
+            //     setViewHeight(event.nativeEvent.layout.height);
+            // }}
+        >
+            <View style={styles.scrollContainer}>
+                <Carousel items={calCardDatesArray} />
+            </View>
+
+            {isDateSelected ? (
+                <View>
+                    <TaskPreview />
+                </View>
+            ) : (
+                <View></View>
+            )}
+        </View>
+    );
 };

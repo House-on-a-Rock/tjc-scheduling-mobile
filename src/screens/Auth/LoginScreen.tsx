@@ -10,13 +10,16 @@ import {
     loadStateActionTypes,
 } from '../../store/actions';
 import { LoadingPage } from '../../components/LoadingPage';
+import { determineLoadState } from '../../store/helper';
 
 export const LoginScreen = (props: LoginScreenProps) => {
     const dispatch = useDispatch();
-    const [userEmail, setUserEmail] = useState<string>('Jonathan.Lee@gmail.com');
-    const [userPassword, setUserPassword] = useState<string>('password3');
+    const [userEmail, setUserEmail] = useState<string>('shaun.tung@gmail.com');
+    const [userPassword, setUserPassword] = useState<string>('password');
     const [isValidCredentials, setIsValidCredentials] = useState<boolean>(true);
-    const loginState = useSelector((state) => state.loadStateReducer.loadState);
+    const loadState = useSelector((state) => state.loadStateReducer.loadStatus);
+
+    const loginState = determineLoadState(loadState);
 
     function isValidEmail() {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

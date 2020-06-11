@@ -1,7 +1,7 @@
 import { reducerDomains, loadStateActionTypes } from '../actions';
 
 const initialState = {
-    loadState: loadStateActionTypes.LOADED,
+    // loadState: loadStateActionTypes.LOADED,
     loadStatus: {
         [reducerDomains.AUTH]: loadStateActionTypes.LOADED,
         [reducerDomains.PROFILE]: loadStateActionTypes.LOADED,
@@ -13,13 +13,12 @@ const initialState = {
 
 export const loadStateReducer = (state = initialState, action) => {
     const updatedState = mapActionToDomain(action.domain);
-    const newLoadState = determineLoadState(updatedState);
-
-    updatedState.loadState = newLoadState;
+    // const newLoadState = determineLoadState(updatedState);
+    // updatedState.loadState = newLoadState;
 
     return updatedState;
 
-    //use of domains (such as AUTH or TASKS) cuts down on repetitive code
+    //use of domains (such as AUTH or TASKS) cuts down on repetition of switch cases
     function mapActionToDomain(domain) {
         switch (action.type) {
             case loadStateActionTypes.LOADED:
@@ -57,12 +56,13 @@ export const loadStateReducer = (state = initialState, action) => {
     }
 
     //distills entire loadstate down to one property that the front end will handle accordingly
-    function determineLoadState(updatedState) {
-        const values = Object.values(updatedState.loadStatus);
-        if (values.indexOf(loadStateActionTypes.ERROR) >= 0)
-            return loadStateActionTypes.ERROR;
-        else if (values.indexOf(loadStateActionTypes.LOADING) >= 0)
-            return loadStateActionTypes.LOADING;
-        else return loadStateActionTypes.LOADED;
-    }
+    //moved to helper functions
+    // function determineLoadState(updatedState) {
+    //     const values = Object.values(updatedState.loadStatus);
+    //     if (values.indexOf(loadStateActionTypes.ERROR) >= 0)
+    //         return loadStateActionTypes.ERROR;
+    //     else if (values.indexOf(loadStateActionTypes.LOADING) >= 0)
+    //         return loadStateActionTypes.LOADING;
+    //     else return loadStateActionTypes.LOADED;
+    // }
 };

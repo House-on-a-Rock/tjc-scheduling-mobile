@@ -1,2 +1,2 @@
-export * from './helperFunction';
+export * from './helperFunctions';
 export * from './withLoadState';
