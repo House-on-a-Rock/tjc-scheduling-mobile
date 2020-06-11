@@ -44,44 +44,26 @@ export const getXMonths = (dateFrom, number) => {
     }
 };
 
-export const extendDateArray = (direction, dateArray) => {
-    if (direction === CarousalDirection.FORWARD) {
-        const lastMonth = dateArray[dateArray.length - 1].date;
-        const newMonthsArray = getXMonths(lastMonth, 3);
-        const extensionArray = newMonthsArray.map((date, index) => {
-            return {
-                id: index,
-                date: date,
-            };
-        });
-        return dateArray.concat(extensionArray);
-    } else {
-        const firstMonth = dateArray[0].date;
-        const newMonthsArray = getXMonths(firstMonth, -3);
-        const extensionArray = newMonthsArray.map((date, index) => {
-            return {
-                id: index,
-                date: date,
-            };
-        });
-
-        return extensionArray.concat(dateArray);
-    }
+export const extendDateArray = ({ direction, range }, { dateArray }) => {
     if (direction === CarousalDirection.UP) {
-        console.log('extendDateArray!!!!!!!', dateArray);
+        while (range > 0) {
+            range--;
+            let start = dateArray[0];
+            let previous = getUpdatedMonth('no_direction', start);
+            dateArray.unshift(previous);
+        }
+        return dateArray;
     }
 };
-
-export const createDateArray = (startMonth, endMonth) => {
+export const createDateArray = (start, end) => {
     const dateArray = [];
-
-    dateArray.push({ id: dateArray.length, date: startMonth });
-    while (!compareDates(dateArray[dateArray.length - 1].date, endMonth)) {
+    dateArray.push(start);
+    while (!compareDates(dateArray[dateArray.length - 1], end)) {
         const nextMonth = getUpdatedMonth(
             CarousalDirection.FORWARD,
-            dateArray[dateArray.length - 1].date,
+            dateArray[dateArray.length - 1],
         );
-        dateArray.push({ id: dateArray.length, date: nextMonth });
+        dateArray.push(nextMonth);
     }
 
     return dateArray;

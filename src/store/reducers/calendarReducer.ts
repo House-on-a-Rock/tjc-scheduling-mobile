@@ -1,10 +1,11 @@
-import { EXTEND_CALENDAR, CalendarActionTypes } from '../actions';
+import { EXTEND_CALENDAR, CalendarActionTypes, REFRESHING, REFRESHED } from '../actions';
 import {
     withLoadState,
     FormStateModel,
     createDefaultFormState,
 } from '../helper/withLoadState';
 import { CalendarData } from '../../shared/models';
+import { extendDateArray } from '../../services/Calendar/helper_functions';
 
 const baseReducer = (
     state: FormStateModel<CalendarData> = createDefaultFormState(),
@@ -17,11 +18,19 @@ const baseReducer = (
                 data: action.payload,
             };
         case EXTEND_CALENDAR:
+            const extendedDateArray = extendDateArray(action.payload, state.data);
             return {
-                //extends datearray as well as make api call to populate data
                 ...state,
-                // renderedMonthRange needs to update as well
-                // dateArray: extendDateArray(action.payload, state.data.dateArray),
+                data: {
+                    ...state.data,
+                    dateArray: extendedDateArray,
+                    isRefreshing: false,
+                },
+            };
+        case REFRESHING:
+            return {
+                ...state,
+                data: { ...state.data, isRefreshing: true },
             };
         default:
             return state;

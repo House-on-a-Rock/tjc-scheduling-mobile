@@ -8,42 +8,22 @@ import { CarousalDirection } from '../../services/Calendar/models';
 interface CarouselProps {}
 
 export const Carousel = (props) => {
-    const renderMonths = (item) => {
-        return <CalendarCard displayedDate={item.item.date} />;
-    };
-    const loadMoreOnBottom = () => {
-        // console.log('loading more');
-        // dispatch api to load more data
-    };
+    const renderMonths = ({ item }) => <CalendarCard displayedDate={item} />;
+    const loadMoreOnBottom = () => dispatch(extendCalendar(CarousalDirection.DOWN));
+    const loadMoreOnTop = () => dispatch(extendCalendar(CarousalDirection.UP));
 
     const dispatch = useDispatch();
-
-    const [refresh, setRefresh] = useState(false); // will use reducer logic
+    const refresh: boolean = useSelector(
+        ({ calendarReducer }) => calendarReducer.data.isRefreshing,
+    );
 
     return (
         <View>
             <FlatList
-                data={props.items}
-                keyExtractor={(item, index) => {
-                    // console.log('keyExtractor', item, index);
-                    return item.id.toString();
-                }}
+                data={props.data}
+                keyExtractor={(item, index) => index.toString()}
                 renderItem={renderMonths}
-                // onScroll={(e) => {
-                //     console.log(
-                //         e.nativeEvent.contentOffset.y,
-                //         e.nativeEvent.contentSize.height,
-                //     );
-                //     // this.pageOffsetY = e.nativeEvent.contentOffset.y;
-                //     // this.contentHeight = e.nativeEvent.contentSize.height;
-                //     return null;
-                // }}
-                onRefresh={() => {
-                    // console.log('pulled down');
-                    // dispatch action for more data
-                    dispatch(extendCalendar(CarousalDirection.UP));
-                    setRefresh(false);
-                }}
+                onRefresh={loadMoreOnTop}
                 refreshing={refresh}
                 onEndReachedThreshold={3}
                 onEndReached={loadMoreOnBottom}

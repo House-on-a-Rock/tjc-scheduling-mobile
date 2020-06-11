@@ -39,9 +39,6 @@ export const prepHomePage = (dispatch) => {
 
 export const checkCredentials = ({ email, password }) => {
     return async (dispatch) => {
-        // let dummyId = 1;
-        let profile = null;
-
         //check credentials api call
 
         await axios
@@ -58,26 +55,7 @@ export const checkCredentials = ({ email, password }) => {
                 // dispatch(authError())
                 console.log('authentication error: ', error);
             });
-
-        // let accesskey = await AsyncStorage.getItem('access_token');
-        // console.log(accesskey);
-        // let decodedAccessKey = jwtDecode(accesskey);
-        // console.log(decodedAccessKey);
-        // const dummyId = parseInt(decodedAccessKey.sub.split('|')[1]);
-
-        // await axios
-        //     .get(secretIp + '/api/authentication/getUser', {
-        //         params: { id: dummyId },
-        //         headers: {
-        //             authorization: accesskey,
-        //         },
-        //     })
-        //     .then((response) => {
-        //         console.log(response.data);
-        //         profile = response.data;
-        //     })
-        //     .catch((error) => console.error(error));
     };
 };
 
-const getProfileData = ({ user }) => {};
+export const clearData = () => {};

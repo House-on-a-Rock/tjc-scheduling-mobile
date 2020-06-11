@@ -33,7 +33,6 @@ export const ProfileActionTypes = {
 export const fetchProfileAndTasksOnLogin = () => {
     return async (dispatch) => {
         let accesskey = await AsyncStorage.getItem('access_token');
-        console.log(typeof accesskey, accesskey);
         dispatch(loadingProfile());
         await axios
             .get(secretIp + '/api/users/getUser', {
