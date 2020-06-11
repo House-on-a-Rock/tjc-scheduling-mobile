@@ -7,9 +7,7 @@ export const TasksScreen = (props: TasksScreenProps) => {
     const route = props.route;
     const { taskDetails } = route.params;
 
-    console.log('task details: ', taskDetails);
     const onSwapPressHandler = () => {
-        console.log('swap was pressed');
         Alert.alert('', 'Are you sure you want to switch with someone?', [
             { text: 'Cancel' },
             { text: 'Ok', onPress: () => console.log('pressed ok') }, //make api call, display loading screen until call response is ok

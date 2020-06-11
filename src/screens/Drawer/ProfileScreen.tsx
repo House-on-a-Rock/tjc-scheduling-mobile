@@ -26,10 +26,10 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
     if (loadState) return <LoadingPage />;
     const [modalVisible, setModalVisible] = useState(false);
     const { email, firstName, lastName } = useSelector(
-        (state) => state.profileReducer.data,
+        (state) => state.profileReducer.profile,
     );
     const church = useSelector((state) => {
-        return state.profileReducer.data.Church.name;
+        return state.profileReducer.profile.Church.name;
     });
 
     const [modalParameter, setModalParameter] = useState({ label: '', data: '' });

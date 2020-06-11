@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { View, StyleSheet, Image, Button, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
 import { CustomInput, BodyText } from '../../shared/components';
 import { LoginScreenProps } from '../../shared/models';
-import { checkCredentials } from '../../store/actions';
+import {
+    checkCredentials,
+    AuthStateActions,
+    loadStateActionTypes,
+} from '../../store/actions';
+import { LoadingPage } from '../../components/LoadingPage';
+import { determineLoadState } from '../../store/helper';
 
 export const LoginScreen = (props: LoginScreenProps) => {
     const dispatch = useDispatch();
     const [userEmail, setUserEmail] = useState<string>('shaun.tung@gmail.com');
     const [userPassword, setUserPassword] = useState<string>('password');
     const [isValidCredentials, setIsValidCredentials] = useState<boolean>(true);
-    const [isValidInput, setIsValidInput] = useState<boolean>(false);
+    const loadState = useSelector((state) => state.loadStateReducer.loadStatus);
+
+    const loginState = determineLoadState(loadState);
 
     function isValidEmail() {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -20,13 +27,19 @@ export const LoginScreen = (props: LoginScreenProps) => {
     }
 
     const verifyLogin = () => {
-        //after x attempts, prompt login or account lockout
+        //after x attempts, prompt login or account lockout?
         if (isValidEmail() && userPassword.length > 0) {
-            dispatch(checkCredentials({ email: userEmail, password: userPassword })); //api to check if credentials can be used to login
+            dispatch(AuthStateActions.Loading());
+            dispatch(checkCredentials({ email: userEmail, password: userPassword }));
+            setIsValidCredentials(true);
         } else {
             setIsValidCredentials(false); //displays text to retry credentials
         }
     };
+
+    if (loginState === loadStateActionTypes.LOADING) {
+        return <LoadingPage />;
+    }
 
     return (
         <KeyboardAwareScrollView contentContainerStyle={styles.loginScreen}>
@@ -43,12 +56,15 @@ export const LoginScreen = (props: LoginScreenProps) => {
                     />
                 </View>
                 <View style={styles.loginCardContainer}>
-                    {!isValidCredentials ? (
-                        <BodyText style={styles.loginWarning}>
+                    {!isValidCredentials && (
+                        <BodyText style={styles.loginError}>
                             Please enter valid credentials
                         </BodyText>
-                    ) : (
-                        <View></View>
+                    )}
+                    {loginState === loadStateActionTypes.ERROR && (
+                        <BodyText style={styles.loginError}>
+                            Invalid Email and Password Combination
+                        </BodyText>
                     )}
                     <View style={styles.inputStyle}>
                         <BodyText style={styles.inputLabel}>Email: </BodyText>
@@ -115,7 +131,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flex: 2,
     },
-    loginWarning: {
+    loginError: {
         color: 'red',
         fontSize: 14,
     },

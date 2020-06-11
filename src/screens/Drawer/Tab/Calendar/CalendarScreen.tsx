@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, AsyncStorage } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
 import { CalendarScreenProps, CalendarData } from '../../../../shared/models';
 import { Carousel, TaskPreview } from '../../../../components/Calender';
 import { LoadingPage } from '../../../../components/LoadingPage';
-import { createCalendar } from '../../../../store/actions';
+import { loadStateActionTypes } from '../../../../store/actions';
+import { determineLoadState } from '../../../../store/helper';
 
 const styles = StyleSheet.create({
     screen: {
@@ -20,37 +21,37 @@ const styles = StyleSheet.create({
 });
 
 export const CalendarScreen = (props: CalendarScreenProps) => {
-    const dispatch = useDispatch();
-    const [viewHeight, setViewHeight] = useState<number | undefined>(622);
+    // const dispatch = useDispatch();
+    // const [viewHeight, setViewHeight] = useState<number | undefined>(622);
     const [isDateSelected, setIsDateSelected] = useState(false);
+    const loadState = useSelector((state) => state.loadStateReducer.loadStatus);
+    const isCalendarLoaded = determineLoadState(loadState);
+    const calCardDatesArray: CalendarData[] = useSelector(
+        (state) => state.calendarReducer.dateArray,
+    );
 
-    const calCardDatesArray: CalendarData[] = useSelector((state) => {
-        if (!state.calendarReducer.data) dispatch(createCalendar());
-        else return state.calendarReducer.data.dateArray;
-    });
-
-    if (!calCardDatesArray) {
+    if (isCalendarLoaded === loadStateActionTypes.LOADING) {
         return <LoadingPage />;
-    } else {
-        return (
-            <View
-                style={styles.screen}
-                // onLayout={(event) => {
-                //     setViewHeight(event.nativeEvent.layout.height);
-                // }}
-            >
-                <View style={styles.scrollContainer}>
-                    <Carousel items={calCardDatesArray} />
-                </View>
-
-                {isDateSelected ? (
-                    <View>
-                        <TaskPreview />
-                    </View>
-                ) : (
-                    <View></View>
-                )}
-            </View>
-        );
     }
+
+    return (
+        <View
+            style={styles.screen}
+            // onLayout={(event) => {
+            //     setViewHeight(event.nativeEvent.layout.height);
+            // }}
+        >
+            <View style={styles.scrollContainer}>
+                <Carousel items={calCardDatesArray} />
+            </View>
+
+            {isDateSelected ? (
+                <View>
+                    <TaskPreview />
+                </View>
+            ) : (
+                <View></View>
+            )}
+        </View>
+    );
 };

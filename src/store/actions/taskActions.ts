@@ -1,35 +1,23 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 import { secretIp } from '../../../secrets/secrets';
-import { TaskData } from '../../shared/models';
-import { login } from './authentication';
+import { extractId } from '../helper';
+import { TaskStateActions } from '../actions/loadStateActions';
 
-export const loadingTasks = () => {
-    return {
-        type: 'Task Loading',
-    };
-};
+export const SET_TASKS = 'SET_TASKS';
 
-export const loadTasksSuccess = (tasks: TaskData[]) => {
+export const setTasks = (tasks) => {
     return {
-        type: 'Task Loaded',
+        type: SET_TASKS,
         payload: tasks,
     };
 };
 
-export const TaskActionTypes = {
-    LOADING: 'Task Loading',
-    LOADED: 'Task Loaded',
-    SAVING: 'Task Saving',
-    SAVED: 'Task Saved',
-    LOAD_ERROR: 'Task Load Error',
-    SAVE_ERROR: 'Task Save Error',
-};
-
-export const fetchTasksOnLogin = (userId) => {
+export const fetchTasksOnLogin = () => {
     return async (dispatch) => {
-        dispatch(loadingTasks());
-        const accesskey = await AsyncStorage.getItem('access_token');
+        let accesskey = await AsyncStorage.getItem('access_token');
+        const userId = extractId(accesskey);
+        dispatch(TaskStateActions.Loading());
         await axios
             .get(secretIp + '/api/tasks/getAllUserTasks', {
                 params: { id: userId },
@@ -39,12 +27,12 @@ export const fetchTasksOnLogin = (userId) => {
             })
             .then((response) => {
                 let tasks = response.data;
-                dispatch(loadTasksSuccess(tasks));
-                dispatch(login());
+                dispatch(setTasks(tasks));
+                dispatch(TaskStateActions.Loaded());
             })
             .catch((error) => {
-                // dispatch(authError())
-                console.log(error);
+                dispatch(TaskStateActions.Error(error));
+                console.log('error fetching tasks', error);
             });
     };
 };
