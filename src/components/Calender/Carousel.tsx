@@ -5,9 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { extendCalendar } from '../../store/actions/calendarActions';
 import { CarousalDirection } from '../../services/Calendar/models';
 
-interface CarouselProps {}
+interface CarouselProps {
+    data: Date;
+}
 
 export const Carousel = (props) => {
+    console.log('Carousel', props);
     const renderMonths = ({ item }) => <CalendarCard displayedDate={item} />;
     const loadMoreOnBottom = () => dispatch(extendCalendar(CarousalDirection.DOWN));
     const loadMoreOnTop = () => dispatch(extendCalendar(CarousalDirection.UP));
@@ -25,7 +28,7 @@ export const Carousel = (props) => {
                 renderItem={renderMonths}
                 onRefresh={loadMoreOnTop}
                 refreshing={refresh}
-                onEndReachedThreshold={3}
+                onEndReachedThreshold={0.8}
                 onEndReached={loadMoreOnBottom}
                 pagingEnabled
                 showsHorizontalScrollIndicator={false}

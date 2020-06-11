@@ -11,46 +11,54 @@ export const getUpdatedMonth = (carousalDirection, displayedDate) => {
     let year = displayedDate.getFullYear();
     let nextMonth = displayedDate.getMonth();
 
-    if (carousalDirection === CarousalDirection.FORWARD) {
+    if (carousalDirection === CarousalDirection.DOWN) {
         nextMonth = displayedDate.getMonth() + 1 > 11 ? 0 : displayedDate.getMonth() + 1;
         if (nextMonth === 0) year = displayedDate.getFullYear() + 1;
         return new Date(year, nextMonth, 1);
-    } else {
+    } else if (carousalDirection === CarousalDirection.UP) {
         nextMonth = displayedDate.getMonth() - 1 < 0 ? 11 : displayedDate.getMonth() - 1;
         if (nextMonth === 11) year = displayedDate.getFullYear() - 1;
         return new Date(year, nextMonth, 1);
     }
 };
 
-export const getXMonths = (dateFrom, number) => {
-    let newArray = [];
-    let forwardBool = true;
-    if (number < 0) {
-        number = Math.abs(number);
-        forwardBool = false;
-    }
-    if (forwardBool) {
-        newArray.push(getUpdatedMonth(CarousalDirection.FORWARD, dateFrom));
-        for (let i = 1; i < number; i++) {
-            newArray.push(getUpdatedMonth(CarousalDirection.FORWARD, newArray[i - 1]));
-        }
-        return newArray;
-    } else {
-        newArray.push(getUpdatedMonth(CarousalDirection.BACKWARD, dateFrom));
-        for (let i = 1; i < number; i++) {
-            newArray.push(getUpdatedMonth(CarousalDirection.BACKWARD, newArray[i - 1]));
-        }
-        return newArray.reverse();
-    }
-};
+// export const getXMonths = (dateFrom, number) => {
+//     let newArray = [];
+//     let forwardBool = true;
+//     if (number < 0) {
+//         number = Math.abs(number);
+//         forwardBool = false;
+//     }
+//     if (forwardBool) {
+//         newArray.push(getUpdatedMonth(CarousalDirection.FORWARD, dateFrom));
+//         for (let i = 1; i < number; i++) {
+//             newArray.push(getUpdatedMonth(CarousalDirection.FORWARD, newArray[i - 1]));
+//         }
+//         return newArray;
+//     } else {
+//         newArray.push(getUpdatedMonth(CarousalDirection.BACKWARD, dateFrom));
+//         for (let i = 1; i < number; i++) {
+//             newArray.push(getUpdatedMonth(CarousalDirection.BACKWARD, newArray[i - 1]));
+//         }
+//         return newArray.reverse();
+//     }
+// };
 
 export const extendDateArray = ({ direction, range }, { dateArray }) => {
     if (direction === CarousalDirection.UP) {
         while (range > 0) {
             range--;
             let start = dateArray[0];
-            let previous = getUpdatedMonth('no_direction', start);
+            let previous = getUpdatedMonth(CarousalDirection.UP, start);
             dateArray.unshift(previous);
+        }
+        return dateArray;
+    } else if (direction === CarousalDirection.DOWN) {
+        while (range > 0) {
+            range--;
+            let last = dateArray[dateArray.length - 1];
+            let next = getUpdatedMonth(CarousalDirection.DOWN, last);
+            dateArray.push(next);
         }
         return dateArray;
     }
@@ -60,7 +68,7 @@ export const createDateArray = (start, end) => {
     dateArray.push(start);
     while (!compareDates(dateArray[dateArray.length - 1], end)) {
         const nextMonth = getUpdatedMonth(
-            CarousalDirection.FORWARD,
+            CarousalDirection.DOWN,
             dateArray[dateArray.length - 1],
         );
         dateArray.push(nextMonth);
