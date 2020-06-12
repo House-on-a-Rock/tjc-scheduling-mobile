@@ -5,9 +5,16 @@ import { fetchProfileAndTasksOnLogin } from './profileActions';
 import { AuthStateActions } from './loadStateActions';
 import { createCalendar } from './calendarActions';
 
+export const prepHomePage = (dispatch) => {
+    dispatch(fetchProfileAndTasksOnLogin());
+    dispatch(createCalendar());
+};
+
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const AUTH_ERROR = 'AUTH_ERROR';
+
+/* Action */
 
 export const login = () => {
     return {
@@ -21,8 +28,11 @@ export const logout = () => {
     };
 };
 
+/* Thunk */
+
 export const checkCredentials = ({ email, password }) => {
     return async (dispatch) => {
+        dispatch(AuthStateActions.Loading());
         await axios
             .post(secretIp + `/api/authentication/login`, {
                 email: email,
@@ -30,11 +40,12 @@ export const checkCredentials = ({ email, password }) => {
             })
             .then((response) => {
                 AsyncStorage.setItem('access_token', response.data.access_token);
-                dispatch(createCalendar());
             })
-            .then(() => dispatch(fetchProfileAndTasksOnLogin()))
-            .then(() => dispatch(AuthStateActions.Loaded()))
-            .then(() => dispatch(login()))
+            .then(() => {
+                dispatch(login());
+                prepHomePage(dispatch);
+                dispatch(AuthStateActions.Loaded());
+            })
             .catch((error) => {
                 dispatch(AuthStateActions.Error(error));
                 console.log('authentication error: ', error);

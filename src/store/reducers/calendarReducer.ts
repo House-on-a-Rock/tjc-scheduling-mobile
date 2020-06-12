@@ -1,35 +1,28 @@
-import { CREATE_CALENDAR, EXTEND_CALENDAR } from '../actions';
-import {
-    createDateArray,
-    extendDateArray,
-} from '../../services/Calendar/helper_functions/calendar_services';
-
-//may need to be cleaned up
-const today: Date = new Date();
-const rangeStart = new Date(today.getFullYear(), today.getMonth() - 12, 1);
-const rangeEnd = new Date(today.getFullYear(), today.getMonth() + 12, 1);
+import { CREATE_CALENDAR, EXTEND_CALENDAR, REFRESHING, REFRESHED } from '../actions';
+import { extendDateArray } from '../../services/Calendar/helper_functions/calendar_services';
 
 const initialState = {
     dateArray: [],
-    today: today,
-    renderedMonthRange: [rangeStart, rangeEnd],
+    today: null,
+    isRefreshing: false,
 };
 
 export const calendarReducer = (state = initialState, action) => {
     switch (action.type) {
         case CREATE_CALENDAR:
-            return {
-                ...state,
-                dateArray: createDateArray(
-                    state.renderedMonthRange[0],
-                    state.renderedMonthRange[1],
-                ),
-            };
+            return action.payload;
+
         case EXTEND_CALENDAR:
+            const extendedDateArray = extendDateArray(action.payload, state);
             return {
-                //extends datearray as well as make api call to populate data
                 ...state,
-                dateArray: extendDateArray(action.payload, state.dateArray),
+                dateArray: extendedDateArray,
+                isRefreshing: false,
+            };
+        case REFRESHING:
+            return {
+                ...state,
+                isRefreshing: true,
             };
         default:
             return state;

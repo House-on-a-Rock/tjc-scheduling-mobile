@@ -4,42 +4,27 @@ import { View, StyleSheet, Image, Button, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { CustomInput, BodyText } from '../../shared/components';
 import { LoginScreenProps } from '../../shared/models';
-import {
-    checkCredentials,
-    AuthStateActions,
-    loadStateActionTypes,
-} from '../../store/actions';
-import { LoadingPage } from '../../components/LoadingPage';
-import { determineLoadState } from '../../store/helper';
+import { checkCredentials, loadStateActionTypes } from '../../store/actions';
 
 export const LoginScreen = (props: LoginScreenProps) => {
     const dispatch = useDispatch();
-    const [userEmail, setUserEmail] = useState<string>('shaun.tung@gmail.com');
-    const [userPassword, setUserPassword] = useState<string>('password');
+    const [email, setEmail] = useState<string>('shaun.tung@gmail.com');
+    const [password, setPassword] = useState<string>('password');
     const [isValidCredentials, setIsValidCredentials] = useState<boolean>(true);
-    const loadState = useSelector((state) => state.loadStateReducer.loadStatus);
-
-    const loginState = determineLoadState(loadState);
+    const loginState = useSelector((state) => state.loadStateReducer.loadStatus.AUTH);
 
     function isValidEmail() {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(String(userEmail).toLowerCase());
+        return re.test(String(email).toLowerCase());
     }
 
     const verifyLogin = () => {
-        //after x attempts, prompt login or account lockout?
-        if (isValidEmail() && userPassword.length > 0) {
-            dispatch(AuthStateActions.Loading());
-            dispatch(checkCredentials({ email: userEmail, password: userPassword }));
-            setIsValidCredentials(true);
+        if (isValidEmail() && password.length > 0) {
+            dispatch(checkCredentials({ email: email, password: password }));
         } else {
-            setIsValidCredentials(false); //displays text to retry credentials
+            setIsValidCredentials(false);
         }
     };
-
-    if (loginState === loadStateActionTypes.LOADING) {
-        return <LoadingPage />;
-    }
 
     return (
         <KeyboardAwareScrollView contentContainerStyle={styles.loginScreen}>
@@ -69,16 +54,16 @@ export const LoginScreen = (props: LoginScreenProps) => {
                     <View style={styles.inputStyle}>
                         <BodyText style={styles.inputLabel}>Email: </BodyText>
                         <CustomInput
-                            value={userEmail}
+                            value={email}
                             keyboardType={'email-address'}
-                            onChangeText={setUserEmail}
+                            onChangeText={setEmail}
                         />
                     </View>
                     <View style={styles.inputStyle}>
                         <BodyText style={styles.inputLabel}>Password: </BodyText>
                         <CustomInput
-                            value={userPassword}
-                            onChangeText={setUserPassword}
+                            value={password}
+                            onChangeText={setPassword}
                             secureTextEntry={true}
                         />
                     </View>

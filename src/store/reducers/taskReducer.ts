@@ -1,7 +1,7 @@
 import { TaskStateActions, SET_TASKS } from '../actions';
 
 const initialState = {
-    tasks: {},
+    tasks: [],
 };
 
 export const taskReducer = (state = initialState, action) => {

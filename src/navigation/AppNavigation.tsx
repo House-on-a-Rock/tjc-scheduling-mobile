@@ -1,11 +1,18 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { AuthenticationStack, DrawerNav } from './index';
+import { LoadingPage } from '../components/LoadingPage';
 
 const AppNavigation = () => {
-    let isLoggedIn = useSelector((state) => state.authReducer.isLoggedIn);
+    const areTasksLoaded: string = useSelector(
+        ({ loadStateReducer }) => loadStateReducer.loadStatus.TASKS,
+    );
+    const isLoggedIn = useSelector((state) => state.authReducer.isLoggedIn);
 
-    return isLoggedIn ? <DrawerNav /> : <AuthenticationStack />;
+    if (!isLoggedIn) return <AuthenticationStack />;
+
+    // DrawerNav (should be renamed to MainNav) can only be loaded if all necessary data has been loaded
+    return areTasksLoaded === 'LOADED' ? <DrawerNav /> : <LoadingPage />;
 };
 
 export default AppNavigation;

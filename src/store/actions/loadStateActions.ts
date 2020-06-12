@@ -1,21 +1,19 @@
 export enum reducerDomains {
-    AUTH,
-    PROFILE,
-    TASKS,
-    CALENDAR,
+    AUTH = 'AUTH',
+    PROFILE = 'PROFILE',
+    TASKS = 'TASKS',
 }
 
 export enum loadStateActionTypes {
-    LOADED,
-    LOADING,
-    ERROR,
-    ERRORHANDLED,
+    LOADED = 'LOADED',
+    LOADING = 'LOADING',
+    ERROR = 'ERROR',
+    ERROR_HANDLED = 'ERROR_HANDLED',
 }
 
 export const AuthStateActions = mapLoadStateActions(reducerDomains.AUTH)();
 export const ProfileStateActions = mapLoadStateActions(reducerDomains.PROFILE)();
 export const TaskStateActions = mapLoadStateActions(reducerDomains.TASKS)();
-export const CalendarStateActions = mapLoadStateActions(reducerDomains.CALENDAR)();
 
 //this may be moved to a more appropriate location?
 function mapLoadStateActions(domain) {

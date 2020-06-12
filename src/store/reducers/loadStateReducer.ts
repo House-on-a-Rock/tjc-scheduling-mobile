@@ -1,24 +1,17 @@
 import { reducerDomains, loadStateActionTypes } from '../actions';
 
 const initialState = {
-    // loadState: loadStateActionTypes.LOADED,
     loadStatus: {
-        [reducerDomains.AUTH]: loadStateActionTypes.LOADED,
-        [reducerDomains.PROFILE]: loadStateActionTypes.LOADED,
-        [reducerDomains.TASKS]: loadStateActionTypes.LOADED,
-        [reducerDomains.CALENDAR]: loadStateActionTypes.LOADED,
+        [reducerDomains.AUTH]: null,
+        [reducerDomains.PROFILE]: null,
+        [reducerDomains.TASKS]: null,
     },
     loadErrorStatus: {},
 };
 
 export const loadStateReducer = (state = initialState, action) => {
-    const updatedState = mapActionToDomain(action.domain);
-    // const newLoadState = determineLoadState(updatedState);
-    // updatedState.loadState = newLoadState;
+    return mapActionToDomain(action.domain);
 
-    return updatedState;
-
-    //use of domains (such as AUTH or TASKS) cuts down on repetition of switch cases
     function mapActionToDomain(domain) {
         switch (action.type) {
             case loadStateActionTypes.LOADED:
@@ -44,7 +37,6 @@ export const loadStateReducer = (state = initialState, action) => {
                         ...state.loadStatus,
                         [domain]: loadStateActionTypes.ERROR,
                     },
-                    //
                     loadErrorStatus: {
                         ...state.loadErrorStatus,
                         [domain]: action.error,
@@ -54,15 +46,4 @@ export const loadStateReducer = (state = initialState, action) => {
                 return state;
         }
     }
-
-    //distills entire loadstate down to one property that the front end will handle accordingly
-    //moved to helper functions
-    // function determineLoadState(updatedState) {
-    //     const values = Object.values(updatedState.loadStatus);
-    //     if (values.indexOf(loadStateActionTypes.ERROR) >= 0)
-    //         return loadStateActionTypes.ERROR;
-    //     else if (values.indexOf(loadStateActionTypes.LOADING) >= 0)
-    //         return loadStateActionTypes.LOADING;
-    //     else return loadStateActionTypes.LOADED;
-    // }
 };
