@@ -1,15 +1,15 @@
 export enum reducerDomains {
-    AUTH,
-    PROFILE,
-    TASKS,
-    CALENDAR,
+    AUTH = 'AUTH',
+    PROFILE = 'PROFILE',
+    TASKS = 'TASKS',
+    CALENDAR = 'CALENDAR',
 }
 
 export enum loadStateActionTypes {
-    LOADED,
-    LOADING,
-    ERROR,
-    ERRORHANDLED,
+    LOADED = 'LOADED',
+    LOADING = 'LOADING',
+    ERROR = 'ERROR',
+    ERROR_HANDLED = 'ERROR_HANDLED',
 }
 
 export const AuthStateActions = mapLoadStateActions(reducerDomains.AUTH)();

@@ -3,19 +3,24 @@ import { reducerDomains, loadStateActionTypes } from '../actions';
 const initialState = {
     // loadState: loadStateActionTypes.LOADED,
     loadStatus: {
-        [reducerDomains.AUTH]: loadStateActionTypes.LOADED,
-        [reducerDomains.PROFILE]: loadStateActionTypes.LOADED,
-        [reducerDomains.TASKS]: loadStateActionTypes.LOADED,
-        [reducerDomains.CALENDAR]: loadStateActionTypes.LOADED,
+        [reducerDomains.AUTH]: null,
+        [reducerDomains.PROFILE]: null,
+        [reducerDomains.TASKS]: null,
+        [reducerDomains.CALENDAR]: null,
     },
-    loadErrorStatus: {},
+    loadErrorStatus: {
+        [reducerDomains.AUTH]: null,
+        [reducerDomains.PROFILE]: null,
+        [reducerDomains.TASKS]: null,
+        [reducerDomains.CALENDAR]: null,
+    },
 };
 
 export const loadStateReducer = (state = initialState, action) => {
     const updatedState = mapActionToDomain(action.domain);
     // const newLoadState = determineLoadState(updatedState);
     // updatedState.loadState = newLoadState;
-
+    console.log('action', action);
     return updatedState;
 
     //use of domains (such as AUTH or TASKS) cuts down on repetition of switch cases
@@ -48,6 +53,19 @@ export const loadStateReducer = (state = initialState, action) => {
                     loadErrorStatus: {
                         ...state.loadErrorStatus,
                         [domain]: action.error,
+                    },
+                };
+            case loadStateActionTypes.ERROR_HANDLED:
+                return {
+                    ...state,
+                    loadStatus: {
+                        ...state.loadStatus,
+                        [domain]: loadStateActionTypes.ERROR,
+                    },
+                    //
+                    loadErrorStatus: {
+                        ...state.loadErrorStatus,
+                        [domain]: null,
                     },
                 };
             default:

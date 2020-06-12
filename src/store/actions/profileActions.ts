@@ -33,8 +33,8 @@ export const fetchProfileAndTasksOnLogin = () => {
                 dispatch(fetchTasksOnLogin());
             })
             .catch((error) => {
-                dispatch(ProfileStateActions.Error(error));
                 console.log('error fetching profile', error);
+                return dispatch(ProfileStateActions.Error(error));
             });
 
         await AsyncStorage.clear();
