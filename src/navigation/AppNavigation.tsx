@@ -10,6 +10,8 @@ const AppNavigation = () => {
     const isLoggedIn = useSelector((state) => state.authReducer.isLoggedIn);
 
     if (!isLoggedIn) return <AuthenticationStack />;
+
+    // DrawerNav (should be renamed to MainNav) can only be loaded if all necessary data has been loaded
     return areTasksLoaded === 'LOADED' ? <DrawerNav /> : <LoadingPage />;
 };
 

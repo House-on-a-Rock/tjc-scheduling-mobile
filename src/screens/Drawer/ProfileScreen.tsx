@@ -16,19 +16,12 @@ import {
 import { useSelector } from 'react-redux';
 import { Entypo } from '@expo/vector-icons';
 import { ProfileScreenProps } from '../../shared/models';
-import { LoadingPage } from '../../components/LoadingPage';
 
 export const ProfileScreen = (props: ProfileScreenProps) => {
-    // let loadState = useSelector((state) => state.profileReducer.loaded);
-    // if (loadState) return <LoadingPage />;
-    const [modalVisible, setModalVisible] = useState(false);
-    const { email, firstName, lastName } = useSelector(
-        (state) => state.profileReducer.profile,
+    const { email, firstName, lastName, church } = useSelector(
+        ({ profileReducer }) => profileReducer.profile,
     );
-    const church = useSelector((state) => {
-        return state.profileReducer.profile.Church.name;
-    });
-
+    const [modalVisible, setModalVisible] = useState(false);
     const [modalParameter, setModalParameter] = useState({ label: '', data: '' });
     const [modalInput, setModalInput] = useState('');
 
@@ -74,7 +67,7 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
         },
         {
             label: 'Church',
-            data: church,
+            data: church.name,
         },
     ];
 
@@ -94,7 +87,6 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
             <Modal
                 animationType="fade"
                 transparent={true}
-                // statusBarTranslucent={true}
                 visible={modalVisible}
                 onRequestClose={() => Alert.alert('modal has been closed')}
             >
@@ -110,10 +102,7 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
                             width: '100%',
                         }}
                     >
-                        <View
-                            style={styles.modalCard}
-                            // opacity={0.97}
-                        >
+                        <View style={styles.modalCard}>
                             <Text style={styles.text}>Edit {modalParameter.label}</Text>
                             <View style={{ flexDirection: 'row', flex: 1 }}>
                                 <TextInput
@@ -173,7 +162,6 @@ const styles = StyleSheet.create({
     },
     imageCard: {
         width: '100%',
-        // height: '60%',
         justifyContent: 'center',
         alignItems: 'center',
         margin: 20,

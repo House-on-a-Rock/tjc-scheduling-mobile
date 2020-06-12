@@ -17,7 +17,6 @@ export const setProfile = (profile) => {
 export const fetchProfileAndTasksOnLogin = () => {
     return async (dispatch) => {
         let accesskey = await AsyncStorage.getItem('access_token');
-        // dispatch(loadingProfile());
         const userId = extractId(accesskey);
         dispatch(ProfileStateActions.Loading());
         await axios
