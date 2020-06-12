@@ -1,17 +1,17 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AuthenticationStack, DrawerNav } from './index';
-import { createCalendar } from '../store/actions';
 import { LoadingPage } from '../components/LoadingPage';
 
 const AppNavigation = () => {
-    const dispatch = useDispatch();
-    const areTasksLoaded: boolean = useSelector(({ taskReducer }) => taskReducer.loaded);
+    const areTasksLoaded: string = useSelector(
+        ({ loadStateReducer }) => loadStateReducer.loadStatus.TASKS,
+    );
     const isLoggedIn = useSelector((state) => state.authReducer.isLoggedIn);
+    console.log(areTasksLoaded, isLoggedIn);
     if (!isLoggedIn) return <AuthenticationStack />;
 
-    dispatch(createCalendar());
-    return areTasksLoaded ? <DrawerNav /> : <LoadingPage />;
+    return areTasksLoaded === 'LOADED' ? <DrawerNav /> : <LoadingPage />;
 };
 
 export default AppNavigation;

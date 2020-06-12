@@ -6,19 +6,20 @@ import { extendCalendar } from '../../store/actions/calendarActions';
 import { CarousalDirection } from '../../services/Calendar/models';
 
 interface CarouselProps {
-    data: Date;
+    data: Date[];
 }
 
-export const Carousel = (props) => {
-    console.log('Carousel', props);
+export const Carousel = (props: CarouselProps) => {
+    console.log(props);
+    const dispatch = useDispatch();
+    const isRefreshing: boolean = useSelector(
+        ({ calendarReducer }) => calendarReducer.isRefreshing,
+    );
+
     const renderMonths = ({ item }) => <CalendarCard displayedDate={item} />;
+
     const loadMoreOnBottom = () => dispatch(extendCalendar(CarousalDirection.DOWN));
     const loadMoreOnTop = () => dispatch(extendCalendar(CarousalDirection.UP));
-
-    const dispatch = useDispatch();
-    const refresh: boolean = useSelector(
-        ({ calendarReducer }) => calendarReducer.data.isRefreshing,
-    );
 
     return (
         <View>
@@ -27,16 +28,14 @@ export const Carousel = (props) => {
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={renderMonths}
                 onRefresh={loadMoreOnTop}
-                refreshing={refresh}
-                onEndReachedThreshold={0.8}
+                refreshing={isRefreshing}
+                onEndReachedThreshold={0.1}
                 onEndReached={loadMoreOnBottom}
-                pagingEnabled
-                showsHorizontalScrollIndicator={false}
                 initialScrollIndex={12}
                 initialNumToRender={7}
                 snapToAlignment={'start'}
-                snapToInterval={400} //400 is height of calendar card
                 decelerationRate={'fast'}
+                snapToInterval={400}
                 windowSize={7}
                 getItemLayout={(data, index) => {
                     return {

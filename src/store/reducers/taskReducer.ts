@@ -1,31 +1,17 @@
-import { TaskActionTypes } from '../actions';
-import {
-    FormStateModel,
-    createDefaultFormState,
-    withLoadState,
-} from '../helper/withLoadState';
-import { TaskData } from '../../shared/models';
+import { TaskStateActions, SET_TASKS } from '../actions';
 
-const baseReducer = (
-    state: FormStateModel<TaskData> = createDefaultFormState(),
-    action,
-) => {
+const initialState = {
+    tasks: [],
+};
+
+export const taskReducer = (state = initialState, action) => {
     switch (action.type) {
-        case TaskActionTypes.LOADED:
+        case SET_TASKS:
             return {
                 ...state,
-                data: action.payload,
+                tasks: action.payload,
             };
         default:
             return state;
     }
 };
-
-export const taskReducer = withLoadState({
-    loadingActionType: TaskActionTypes.LOADING,
-    loadedActionType: TaskActionTypes.LOADED,
-    loadErrorActionType: TaskActionTypes.LOAD_ERROR,
-    savingActionType: TaskActionTypes.SAVING,
-    savedActionType: TaskActionTypes.SAVED,
-    saveErrorActionType: TaskActionTypes.SAVE_ERROR,
-})(baseReducer);

@@ -1,53 +1,42 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
-import { ProfileData } from '../../shared/models';
 import { secretIp } from '../../../secrets/secrets';
+import { extractId } from '../helper';
 import { fetchTasksOnLogin } from './taskActions';
+import { ProfileStateActions } from './loadStateActions';
 
-export const loadingProfile = () => {
-    return {
-        type: ProfileActionTypes.LOADING,
-    };
-};
+export const SET_PROFILE = 'SET_PROFILE';
 
-export const loadProfileSuccess = (profile: ProfileData) => {
+export const setProfile = (profile) => {
     return {
-        type: ProfileActionTypes.LOADED,
+        type: SET_PROFILE,
         payload: profile,
     };
 };
 
-export const editProfile = (profile: ProfileData) => {};
-
-export const ProfileActionTypes = {
-    LOADING: 'Profile Loading',
-    LOADED: 'Profile Loaded',
-    SAVING: 'Profile Saving',
-    SAVED: 'Profile Saved',
-    LOAD_ERROR: 'Profile Load Error',
-    SAVE_ERROR: 'Profile Save Error',
-};
-
-// Thunky thunk
-
 export const fetchProfileAndTasksOnLogin = () => {
     return async (dispatch) => {
         let accesskey = await AsyncStorage.getItem('access_token');
-        dispatch(loadingProfile());
+        // dispatch(loadingProfile());
+        const userId = extractId(accesskey);
+        dispatch(ProfileStateActions.Loading());
         await axios
             .get(secretIp + '/api/users/getUser', {
+                params: { id: userId },
                 headers: {
                     authorization: accesskey,
                 },
             })
             .then((response) => {
+                console.log('fetchProfileAndTasksOnLogin response', response);
                 let userProfile = response.data;
-                dispatch(loadProfileSuccess(userProfile));
-                dispatch(fetchTasksOnLogin(userProfile.id));
+                dispatch(setProfile(userProfile));
+                dispatch(ProfileStateActions.Loaded());
+                dispatch(fetchTasksOnLogin());
             })
             .catch((error) => {
-                // dispatch(authError())
-                console.log(error);
+                dispatch(ProfileStateActions.Error(error));
+                console.log('error fetching profile', error);
             });
 
         await AsyncStorage.clear();

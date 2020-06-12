@@ -19,17 +19,14 @@ import { ProfileScreenProps } from '../../shared/models';
 import { LoadingPage } from '../../components/LoadingPage';
 
 export const ProfileScreen = (props: ProfileScreenProps) => {
-    let loadState;
-    useSelector((state) => {
-        loadState = state.profileReducer.loaded;
-    });
-    if (loadState) return <LoadingPage />;
+    // let loadState = useSelector((state) => state.profileReducer.loaded);
+    // if (loadState) return <LoadingPage />;
     const [modalVisible, setModalVisible] = useState(false);
     const { email, firstName, lastName } = useSelector(
-        (state) => state.profileReducer.data,
+        (state) => state.profileReducer.profile,
     );
     const church = useSelector((state) => {
-        return state.profileReducer.data.Church.name;
+        return state.profileReducer.profile.Church.name;
     });
 
     const [modalParameter, setModalParameter] = useState({ label: '', data: '' });
@@ -41,6 +38,7 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
     };
 
     const Tile = (props) => {
+        console.log('Tile', props);
         return (
             <View style={styles.tile}>
                 <View style={{ width: 70 }}>
@@ -82,6 +80,7 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
     ];
 
     const render = (item) => {
+        console.log('render', item);
         return <Tile label={item.item.label} data={item.item.data} />;
     };
 

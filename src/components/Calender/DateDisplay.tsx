@@ -29,7 +29,7 @@ export const DateDisplay = (props) => {
 
     const populateTasks = (date: Date): Object[] => {
         const tasks = useSelector((state) => {
-            return state.taskReducer.data;
+            return state.taskReducer.tasks;
         });
         // console.log("populating tasks on this date: ",date)
 
@@ -44,8 +44,8 @@ export const DateDisplay = (props) => {
 
     // create a function that does the math to find out with index on the array it needs to update
 
-    const currentDate = useSelector(({ calendarReducer }) => {
-        return calendarReducer.data.today;
+    const currentDate = useSelector((state) => {
+        return state.calendarReducer.today;
     });
 
     for (let j = 0; j < dateArray.length; j++) {

@@ -1,30 +1,28 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { View, StyleSheet, Image, Button, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
 import { CustomInput, BodyText } from '../../shared/components';
 import { LoginScreenProps } from '../../shared/models';
-import { checkCredentials } from '../../store/actions';
+import { checkCredentials, loadStateActionTypes } from '../../store/actions';
 
 export const LoginScreen = (props: LoginScreenProps) => {
     const dispatch = useDispatch();
-    const [userEmail, setUserEmail] = useState<string>('shaun.tung@gmail.com');
-    const [userPassword, setUserPassword] = useState<string>('password');
+    const [email, setEmail] = useState<string>('shaun.tung@gmail.com');
+    const [password, setPassword] = useState<string>('password');
     const [isValidCredentials, setIsValidCredentials] = useState<boolean>(true);
-    const [isValidInput, setIsValidInput] = useState<boolean>(false);
+    const loginState = useSelector((state) => state.loadStateReducer.loadStatus.AUTH);
 
     function isValidEmail() {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(String(userEmail).toLowerCase());
+        return re.test(String(email).toLowerCase());
     }
 
     const verifyLogin = () => {
-        //after x attempts, prompt login or account lockout
-        if (isValidEmail() && userPassword.length > 0) {
-            dispatch(checkCredentials({ email: userEmail, password: userPassword })); //api to check if credentials can be used to login
+        if (isValidEmail() && password.length > 0) {
+            dispatch(checkCredentials({ email: email, password: password }));
         } else {
-            setIsValidCredentials(false); //displays text to retry credentials
+            setIsValidCredentials(false);
         }
     };
 
@@ -43,26 +41,29 @@ export const LoginScreen = (props: LoginScreenProps) => {
                     />
                 </View>
                 <View style={styles.loginCardContainer}>
-                    {!isValidCredentials ? (
-                        <BodyText style={styles.loginWarning}>
+                    {!isValidCredentials && (
+                        <BodyText style={styles.loginError}>
                             Please enter valid credentials
                         </BodyText>
-                    ) : (
-                        <View></View>
+                    )}
+                    {loginState === loadStateActionTypes.ERROR && (
+                        <BodyText style={styles.loginError}>
+                            Invalid Email and Password Combination
+                        </BodyText>
                     )}
                     <View style={styles.inputStyle}>
                         <BodyText style={styles.inputLabel}>Email: </BodyText>
                         <CustomInput
-                            value={userEmail}
+                            value={email}
                             keyboardType={'email-address'}
-                            onChangeText={setUserEmail}
+                            onChangeText={setEmail}
                         />
                     </View>
                     <View style={styles.inputStyle}>
                         <BodyText style={styles.inputLabel}>Password: </BodyText>
                         <CustomInput
-                            value={userPassword}
-                            onChangeText={setUserPassword}
+                            value={password}
+                            onChangeText={setPassword}
                             secureTextEntry={true}
                         />
                     </View>
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flex: 2,
     },
-    loginWarning: {
+    loginError: {
         color: 'red',
         fontSize: 14,
     },

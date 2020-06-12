@@ -1,3 +1,4 @@
+//currently all are unused, TODO typescriptify the new load reducer
 export interface ProfileData {
     Church: {
         name: string;
@@ -20,4 +21,9 @@ export interface CalendarData {
     dateArray: Date[];
     today: Date;
     isRefreshing: boolean;
+}
+
+export interface AuthData {
+    isLoggedIn: boolean;
+    isValidLogin: boolean;
 }
