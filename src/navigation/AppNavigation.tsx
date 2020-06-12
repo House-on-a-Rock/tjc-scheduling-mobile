@@ -8,9 +8,8 @@ const AppNavigation = () => {
         ({ loadStateReducer }) => loadStateReducer.loadStatus.TASKS,
     );
     const isLoggedIn = useSelector((state) => state.authReducer.isLoggedIn);
-    console.log(areTasksLoaded, isLoggedIn);
-    if (!isLoggedIn) return <AuthenticationStack />;
 
+    if (!isLoggedIn) return <AuthenticationStack />;
     return areTasksLoaded === 'LOADED' ? <DrawerNav /> : <LoadingPage />;
 };
 

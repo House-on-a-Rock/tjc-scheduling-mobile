@@ -31,7 +31,6 @@ export const DateDisplay = (props) => {
         const tasks = useSelector((state) => {
             return state.taskReducer.tasks;
         });
-        // console.log("populating tasks on this date: ",date)
 
         date.setDate(date.getDate() - 1); //necessary to load the correct tasks into the correct tile
         const filteredTasks = tasks.filter((task) => {

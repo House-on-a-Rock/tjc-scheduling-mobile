@@ -18,11 +18,10 @@ const styles = StyleSheet.create({
 });
 
 export const CalendarScreen = (props: CalendarScreenProps) => {
-    const [showPreview, setShowPreview] = useState(false);
+    const [showPreview, setShowPreview] = useState<boolean>(false);
     const calCardDatesArray: Date[] = useSelector(
         ({ calendarReducer }) => calendarReducer.dateArray,
     );
-    console.log(calCardDatesArray);
 
     return (
         <View style={styles.screen}>

@@ -28,7 +28,6 @@ export const fetchProfileAndTasksOnLogin = () => {
                 },
             })
             .then((response) => {
-                console.log('fetchProfileAndTasksOnLogin response', response);
                 let userProfile = response.data;
                 dispatch(setProfile(userProfile));
                 dispatch(ProfileStateActions.Loaded());

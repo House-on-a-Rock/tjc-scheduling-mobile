@@ -38,7 +38,6 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
     };
 
     const Tile = (props) => {
-        console.log('Tile', props);
         return (
             <View style={styles.tile}>
                 <View style={{ width: 70 }}>
@@ -79,10 +78,7 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
         },
     ];
 
-    const render = (item) => {
-        console.log('render', item);
-        return <Tile label={item.item.label} data={item.item.data} />;
-    };
+    const render = (item) => <Tile label={item.item.label} data={item.item.data} />;
 
     const onSaveHandler = () => {
         if (modalInput === '') {

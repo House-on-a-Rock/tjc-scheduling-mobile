@@ -10,7 +10,6 @@ interface CarouselProps {
 }
 
 export const Carousel = (props: CarouselProps) => {
-    console.log(props);
     const dispatch = useDispatch();
     const isRefreshing: boolean = useSelector(
         ({ calendarReducer }) => calendarReducer.isRefreshing,
@@ -18,6 +17,7 @@ export const Carousel = (props: CarouselProps) => {
 
     const renderMonths = ({ item }) => <CalendarCard displayedDate={item} />;
 
+    // functions
     const loadMoreOnBottom = () => dispatch(extendCalendar(CarousalDirection.DOWN));
     const loadMoreOnTop = () => dispatch(extendCalendar(CarousalDirection.UP));
 
