@@ -8,7 +8,6 @@ import { TitleText } from '../../shared/components';
 
 interface Props {
     displayedDate: Date;
-    // onPress: () => void;
 }
 
 export const CalendarCard = (props: Props) => {

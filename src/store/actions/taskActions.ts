@@ -2,7 +2,8 @@ import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 import { secretIp } from '../../../secrets/secrets';
 import { extractId } from '../helper';
-import { TaskStateActions } from '../actions/loadStateActions';
+import { TaskStateActions, AuthStateActions } from '../actions/loadStateActions';
+import { login } from './authActions';
 
 export const SET_TASKS = 'SET_TASKS';
 

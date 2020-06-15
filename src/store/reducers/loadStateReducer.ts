@@ -1,29 +1,26 @@
-import { reducerDomains, loadStateActionTypes } from '../actions';
+import { reducerDomains, loadStateActionTypes, LOGOUT } from '../actions';
 
 const initialState = {
-    // loadState: loadStateActionTypes.LOADED,
     loadStatus: {
         [reducerDomains.AUTH]: null,
         [reducerDomains.PROFILE]: null,
         [reducerDomains.TASKS]: null,
-        [reducerDomains.CALENDAR]: null,
     },
     loadErrorStatus: {
         [reducerDomains.AUTH]: null,
         [reducerDomains.PROFILE]: null,
         [reducerDomains.TASKS]: null,
-        [reducerDomains.CALENDAR]: null,
     },
 };
 
 export const loadStateReducer = (state = initialState, action) => {
-    const updatedState = mapActionToDomain(action.domain);
-    // const newLoadState = determineLoadState(updatedState);
-    // updatedState.loadState = newLoadState;
     console.log('action', action);
-    return updatedState;
 
-    //use of domains (such as AUTH or TASKS) cuts down on repetition of switch cases
+    //resets to initial state on logout
+    if (action.type === LOGOUT) return initialState;
+
+    return mapActionToDomain(action.domain);
+
     function mapActionToDomain(domain) {
         switch (action.type) {
             case loadStateActionTypes.LOADED:
@@ -49,10 +46,9 @@ export const loadStateReducer = (state = initialState, action) => {
                         ...state.loadStatus,
                         [domain]: loadStateActionTypes.ERROR,
                     },
-                    //
                     loadErrorStatus: {
                         ...state.loadErrorStatus,
-                        [domain]: action.error,
+                        [domain]: action.payload,
                     },
                 };
             case loadStateActionTypes.ERROR_HANDLED:
@@ -60,9 +56,8 @@ export const loadStateReducer = (state = initialState, action) => {
                     ...state,
                     loadStatus: {
                         ...state.loadStatus,
-                        [domain]: loadStateActionTypes.ERROR,
+                        [domain]: null,
                     },
-                    //
                     loadErrorStatus: {
                         ...state.loadErrorStatus,
                         [domain]: null,
@@ -72,15 +67,4 @@ export const loadStateReducer = (state = initialState, action) => {
                 return state;
         }
     }
-
-    //distills entire loadstate down to one property that the front end will handle accordingly
-    //moved to helper functions
-    // function determineLoadState(updatedState) {
-    //     const values = Object.values(updatedState.loadStatus);
-    //     if (values.indexOf(loadStateActionTypes.ERROR) >= 0)
-    //         return loadStateActionTypes.ERROR;
-    //     else if (values.indexOf(loadStateActionTypes.LOADING) >= 0)
-    //         return loadStateActionTypes.LOADING;
-    //     else return loadStateActionTypes.LOADED;
-    // }
 };

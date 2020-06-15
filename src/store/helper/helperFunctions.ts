@@ -1,4 +1,3 @@
-import { AsyncStorage } from 'react-native';
 import jwtDecode from 'jwt-decode';
 import { loadStateActionTypes } from '../actions';
 
@@ -13,5 +12,6 @@ export function determineLoadState(updatedState) {
         return loadStateActionTypes.ERROR;
     else if (values.indexOf(loadStateActionTypes.LOADING) >= 0)
         return loadStateActionTypes.LOADING;
+    else if (values.indexOf(null) >= 0) return null;
     else return loadStateActionTypes.LOADED;
 }

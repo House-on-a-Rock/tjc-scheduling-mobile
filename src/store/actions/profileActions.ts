@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native';
 import { secretIp } from '../../../secrets/secrets';
 import { extractId } from '../helper';
 import { fetchTasksOnLogin } from './taskActions';
-import { ProfileStateActions } from './loadStateActions';
+import { ProfileStateActions, AuthStateActions } from './loadStateActions';
 
 export const SET_PROFILE = 'SET_PROFILE';
 
@@ -14,7 +14,7 @@ export const setProfile = (profile) => {
     };
 };
 
-export const fetchProfileAndTasksOnLogin = () => {
+export const fetchProfileOnLogin = () => {
     return async (dispatch) => {
         let accesskey = await AsyncStorage.getItem('access_token');
         const userId = extractId(accesskey);
@@ -30,7 +30,6 @@ export const fetchProfileAndTasksOnLogin = () => {
                 let userProfile = response.data;
                 dispatch(setProfile(userProfile));
                 dispatch(ProfileStateActions.Loaded());
-                dispatch(fetchTasksOnLogin());
             })
             .catch((error) => {
                 console.log('error fetching profile', error);

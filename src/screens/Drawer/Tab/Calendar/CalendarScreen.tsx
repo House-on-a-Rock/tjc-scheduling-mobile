@@ -3,9 +3,6 @@ import { View, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import { CalendarScreenProps, CalendarData } from '../../../../shared/models';
 import { Carousel, TaskPreview } from '../../../../components/Calender';
-import { LoadingPage } from '../../../../components/LoadingPage';
-import { loadStateActionTypes } from '../../../../store/actions';
-import { determineLoadState } from '../../../../store/helper';
 
 const styles = StyleSheet.create({
     screen: {
@@ -21,31 +18,18 @@ const styles = StyleSheet.create({
 });
 
 export const CalendarScreen = (props: CalendarScreenProps) => {
-    // const dispatch = useDispatch();
-    // const [viewHeight, setViewHeight] = useState<number | undefined>(622);
-    const [isDateSelected, setIsDateSelected] = useState(false);
-    const loadState = useSelector((state) => state.loadStateReducer.loadStatus);
-    const isCalendarLoaded = determineLoadState(loadState);
-    const calCardDatesArray: CalendarData[] = useSelector(
-        (state) => state.calendarReducer.dateArray,
+    const [showPreview, setShowPreview] = useState<boolean>(false);
+    const calCardDatesArray: Date[] = useSelector(
+        ({ calendarReducer }) => calendarReducer.dateArray,
     );
 
-    if (isCalendarLoaded === loadStateActionTypes.LOADING) {
-        return <LoadingPage />;
-    }
-
     return (
-        <View
-            style={styles.screen}
-            // onLayout={(event) => {
-            //     setViewHeight(event.nativeEvent.layout.height);
-            // }}
-        >
+        <View style={styles.screen}>
             <View style={styles.scrollContainer}>
-                <Carousel items={calCardDatesArray} />
+                <Carousel data={calCardDatesArray} />
             </View>
 
-            {isDateSelected ? (
+            {showPreview ? (
                 <View>
                     <TaskPreview />
                 </View>

@@ -6,40 +6,81 @@ import { CustomInput, BodyText } from '../../shared/components';
 import { LoginScreenProps } from '../../shared/models';
 import {
     checkCredentials,
-    AuthStateActions,
     loadStateActionTypes,
+    login,
+    AuthStateActions,
+    ProfileStateActions,
+    TaskStateActions,
 } from '../../store/actions';
-import { LoadingPage } from '../../components/LoadingPage';
 import { determineLoadState } from '../../store/helper';
+import { LoadingPage } from '../../components/LoadingPage';
 
 export const LoginScreen = (props: LoginScreenProps) => {
     const dispatch = useDispatch();
-    const [userEmail, setUserEmail] = useState<string>('shaun.tung@gmail.com');
-    const [userPassword, setUserPassword] = useState<string>('password');
+    const [email, setEmail] = useState<string>('shaun.tung@gmail.com');
+    const [password, setPassword] = useState<string>('password');
     const [isValidCredentials, setIsValidCredentials] = useState<boolean>(true);
-    const loadState = useSelector((state) => state.loadStateReducer.loadStatus);
 
-    const loginState = determineLoadState(loadState);
+    //selects the loadstates that need to be listened to
+    const { AUTH: AuthState, PROFILE: ProfileState, TASKS: TasksState } = useSelector(
+        (state) => state.loadStateReducer.loadStatus,
+    );
+
+    //using the loadstates, determines if loading page should be shown
+    const loadState = determineLoadState({ AuthState, ProfileState, TasksState });
+    if (loadState === loadStateActionTypes.LOADED) dispatch(login());
+
+    const { AUTH: AuthError, PROFILE: ProfileError, TASKS: TasksError } = useSelector(
+        (state) => state.loadStateReducer.loadErrorStatus,
+    );
+    console.log('AuthError', AuthError?.status);
+    // console.log('ProfileError', ProfileError);
+    // console.log('TasksError', TasksError);
+
+    function resetErrorStatus() {
+        dispatch(AuthStateActions.ErrorHandled());
+        dispatch(ProfileStateActions.ErrorHandled());
+        dispatch(TaskStateActions.ErrorHandled());
+    }
 
     function isValidEmail() {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(String(userEmail).toLowerCase());
+        return re.test(String(email).toLowerCase());
     }
 
     const verifyLogin = () => {
-        //after x attempts, prompt login or account lockout?
-        if (isValidEmail() && userPassword.length > 0) {
-            dispatch(AuthStateActions.Loading());
-            dispatch(checkCredentials({ email: userEmail, password: userPassword }));
-            setIsValidCredentials(true);
+        resetErrorStatus();
+        setIsValidCredentials(true);
+        if (isValidEmail() && password.length > 0) {
+            dispatch(checkCredentials({ email: email, password: password }));
         } else {
-            setIsValidCredentials(false); //displays text to retry credentials
+            setIsValidCredentials(false);
         }
     };
 
-    if (loginState === loadStateActionTypes.LOADING) {
-        return <LoadingPage />;
+    const incorrectAuthCredentialsWarning = (
+        <BodyText style={styles.loginError}>
+            Invalid email and password combination
+        </BodyText>
+    );
+
+    const serverErrorWarning = (
+        <BodyText style={styles.loginError}>
+            Error retrieving your profile, please try again later
+        </BodyText>
+    );
+
+    const invalidCredentialsWarning = (
+        <BodyText style={styles.loginError}>Please enter valid credentials</BodyText>
+    );
+
+    function onTextEntered(field) {
+        if (field === 'email') {
+            return setEmail;
+        } else return setPassword;
     }
+
+    if (loadState === loadStateActionTypes.LOADING) return <LoadingPage />;
 
     return (
         <KeyboardAwareScrollView contentContainerStyle={styles.loginScreen}>
@@ -56,29 +97,22 @@ export const LoginScreen = (props: LoginScreenProps) => {
                     />
                 </View>
                 <View style={styles.loginCardContainer}>
-                    {!isValidCredentials && (
-                        <BodyText style={styles.loginError}>
-                            Please enter valid credentials
-                        </BodyText>
-                    )}
-                    {loginState === loadStateActionTypes.ERROR && (
-                        <BodyText style={styles.loginError}>
-                            Invalid Email and Password Combination
-                        </BodyText>
-                    )}
+                    {!isValidCredentials && invalidCredentialsWarning}
+                    {AuthError !== null && incorrectAuthCredentialsWarning}
+                    {(ProfileError !== null || TasksError !== null) && serverErrorWarning}
                     <View style={styles.inputStyle}>
                         <BodyText style={styles.inputLabel}>Email: </BodyText>
                         <CustomInput
-                            value={userEmail}
+                            value={email}
                             keyboardType={'email-address'}
-                            onChangeText={setUserEmail}
+                            onChangeText={onTextEntered('email')}
                         />
                     </View>
                     <View style={styles.inputStyle}>
                         <BodyText style={styles.inputLabel}>Password: </BodyText>
                         <CustomInput
-                            value={userPassword}
-                            onChangeText={setUserPassword}
+                            value={password}
+                            onChangeText={onTextEntered('password')}
                             secureTextEntry={true}
                         />
                     </View>
