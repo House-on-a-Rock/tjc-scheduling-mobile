@@ -5,6 +5,7 @@ import { fetchProfileOnLogin } from './profileActions';
 import { fetchTasksOnLogin } from './taskActions';
 import { AuthStateActions } from './loadStateActions';
 import { createCalendar } from './calendarActions';
+import { errorDataExtractor } from '../helper';
 
 export const prepHomePage = async (dispatch) => {
     dispatch(fetchProfileOnLogin());
@@ -30,27 +31,26 @@ export const logout = () => {
     };
 };
 
+function getAuth(email, password) {
+    return axios.post(secretIp + `/api/authentication/login`, {
+        email: email,
+        password: password,
+    });
+}
+
 /* Thunk */
 
 export const checkCredentials = ({ email, password }) => {
     return async (dispatch) => {
         dispatch(AuthStateActions.Loading());
-        await axios
-            .post(secretIp + `/api/authentication/login`, {
-                email: email,
-                password: password,
-            })
-            .then((response) => {
-                AsyncStorage.setItem('access_token', response.data.access_token);
-            })
-            .then(() => {
-                prepHomePage(dispatch);
-                dispatch(AuthStateActions.Loaded());
-            })
-            .catch((error) => {
-                console.log('authentication error: ', error);
-                console.log('authentication error message: ', error.message);
-                return dispatch(AuthStateActions.Error(error));
-            });
+        try {
+            const response = await getAuth(email, password);
+            AsyncStorage.setItem('access_token', response.data.access_token);
+            prepHomePage(dispatch);
+            dispatch(AuthStateActions.Loaded());
+        } catch (error) {
+            const errorData = errorDataExtractor(error);
+            return dispatch(AuthStateActions.Error(errorData));
+        }
     };
 };

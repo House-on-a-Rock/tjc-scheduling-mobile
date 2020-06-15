@@ -15,3 +15,10 @@ export function determineLoadState(updatedState) {
     else if (values.indexOf(null) >= 0) return null;
     else return loadStateActionTypes.LOADED;
 }
+
+export function errorDataExtractor(error) {
+    return {
+        message: error.response?.data?.message,
+        status: error.response?.status,
+    };
+}

@@ -26,17 +26,17 @@ export const LoginScreen = (props: LoginScreenProps) => {
         (state) => state.loadStateReducer.loadStatus,
     );
 
-    //using the loadstates, determines if loading page should be shown
-    const loadState = determineLoadState({ AuthState, ProfileState, TasksState });
-    if (loadState === loadStateActionTypes.LOADED) dispatch(login());
-
+    //selects the error states that need to be listened to
     const { AUTH: AuthError, PROFILE: ProfileError, TASKS: TasksError } = useSelector(
         (state) => state.loadStateReducer.loadErrorStatus,
     );
-    console.log('AuthError', AuthError?.status);
-    // console.log('ProfileError', ProfileError);
-    // console.log('TasksError', TasksError);
 
+    //using the loadstates, determines if loading page should be shown
+    const loadState = determineLoadState({ AuthState, ProfileState, TasksState });
+    //if everything is loaded, change state to login
+    if (loadState === loadStateActionTypes.LOADED) dispatch(login());
+
+    //clears all auth related errors, can maybe be trimmed down to reset only ones that aren't null?
     function resetErrorStatus() {
         dispatch(AuthStateActions.ErrorHandled());
         dispatch(ProfileStateActions.ErrorHandled());
@@ -64,7 +64,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
         </BodyText>
     );
 
-    const serverErrorWarning = (
+    const profileRetrievalError = (
         <BodyText style={styles.loginError}>
             Error retrieving your profile, please try again later
         </BodyText>
@@ -72,6 +72,20 @@ export const LoginScreen = (props: LoginScreenProps) => {
 
     const invalidCredentialsWarning = (
         <BodyText style={styles.loginError}>Please enter valid credentials</BodyText>
+    );
+
+    //TODO: not implemented yet
+    const serverErrorError = (
+        <BodyText style={styles.loginError}>
+            Server is experiencing issues, please try again later
+        </BodyText>
+    );
+
+    const unverifiedUserWarning = (
+        <BodyText style={styles.loginError}>
+            Your account is not verified. Please verify your account through the link
+            provided in your email before trying again
+        </BodyText>
     );
 
     function onTextEntered(field) {
@@ -99,7 +113,8 @@ export const LoginScreen = (props: LoginScreenProps) => {
                 <View style={styles.loginCardContainer}>
                     {!isValidCredentials && invalidCredentialsWarning}
                     {AuthError !== null && incorrectAuthCredentialsWarning}
-                    {(ProfileError !== null || TasksError !== null) && serverErrorWarning}
+                    {(ProfileError !== null || TasksError !== null) &&
+                        profileRetrievalError}
                     <View style={styles.inputStyle}>
                         <BodyText style={styles.inputLabel}>Email: </BodyText>
                         <CustomInput
