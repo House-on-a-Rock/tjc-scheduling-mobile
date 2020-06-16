@@ -26,9 +26,9 @@ function getProfile(userId, accesskey) {
 
 export const fetchProfileOnLogin = () => {
     return async (dispatch) => {
+        dispatch(ProfileStateActions.Loading());
         let accesskey = await AsyncStorage.getItem('access_token');
         const userId = extractId(accesskey);
-        dispatch(ProfileStateActions.Loading());
         try {
             const { data: userProfile } = await getProfile(userId, accesskey);
             dispatch(setProfile(userProfile));
