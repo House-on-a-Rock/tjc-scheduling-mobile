@@ -39,6 +39,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
     //error message handling
     let errorMessage = null;
     if (loadState === loadStateActionTypes.ERROR) {
+        //can be cleaned up better, any suggestions?
         if (AuthError) errorMessage = determineErrorMessage(AuthError.message);
         else if (ProfileError) errorMessage = determineErrorMessage(ProfileError.message);
         else if (TasksError) errorMessage = determineErrorMessage(TasksError.message);
@@ -93,13 +94,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
                     </View>
                     <View style={styles.buttonStyle}>
                         <Button
-                            title="Sign Up!"
-                            onPress={() => props.navigation.navigate('SignUp')}
-                        />
-                    </View>
-                    <View style={styles.buttonStyle}>
-                        <Button
-                            title="Recover Password"
+                            title="Recover Account"
                             onPress={() => props.navigation.navigate('RecoverLogin')}
                         />
                     </View>
@@ -108,12 +103,15 @@ export const LoginScreen = (props: LoginScreenProps) => {
         </KeyboardAwareScrollView>
     );
 
+    //helper functions
+
     //clears all auth related errors, can maybe be trimmed down to reset only ones that aren't null?
     function resetErrorStatus() {
         dispatch(AuthStateActions.ErrorHandled());
         dispatch(ProfileStateActions.ErrorHandled());
         dispatch(TaskStateActions.ErrorHandled());
     }
+
     function isValidEmail() {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
@@ -135,7 +133,6 @@ export const LoginScreen = (props: LoginScreenProps) => {
         } else return setPassword;
     }
     function determineErrorMessage(msg) {
-        console.log('msg', msg);
         return <BodyText style={styles.loginError}>{msg}</BodyText>;
     }
 };
