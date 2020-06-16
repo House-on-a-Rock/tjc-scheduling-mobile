@@ -36,63 +36,18 @@ export const LoginScreen = (props: LoginScreenProps) => {
     //if everything is loaded, change state to login
     if (loadState === loadStateActionTypes.LOADED) dispatch(login());
 
-    //clears all auth related errors, can maybe be trimmed down to reset only ones that aren't null?
-    function resetErrorStatus() {
-        dispatch(AuthStateActions.ErrorHandled());
-        dispatch(ProfileStateActions.ErrorHandled());
-        dispatch(TaskStateActions.ErrorHandled());
+    //error message handling
+    let errorMessage = null;
+    if (loadState === loadStateActionTypes.ERROR) {
+        if (AuthError) errorMessage = determineErrorMessage(AuthError.message);
+        else if (ProfileError) errorMessage = determineErrorMessage(ProfileError.message);
+        else if (TasksError) errorMessage = determineErrorMessage(TasksError.message);
+        else errorMessage = null;
     }
-
-    function isValidEmail() {
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(String(email).toLowerCase());
-    }
-
-    const verifyLogin = () => {
-        resetErrorStatus();
-        setIsValidCredentials(true);
-        if (isValidEmail() && password.length > 0) {
-            dispatch(checkCredentials({ email: email, password: password }));
-        } else {
-            setIsValidCredentials(false);
-        }
-    };
-
-    const incorrectAuthCredentialsWarning = (
-        <BodyText style={styles.loginError}>
-            Invalid email and password combination
-        </BodyText>
-    );
-
-    const profileRetrievalError = (
-        <BodyText style={styles.loginError}>
-            Error retrieving your profile, please try again later
-        </BodyText>
-    );
 
     const invalidCredentialsWarning = (
         <BodyText style={styles.loginError}>Please enter valid credentials</BodyText>
     );
-
-    //TODO: not implemented yet
-    const serverErrorError = (
-        <BodyText style={styles.loginError}>
-            Server is experiencing issues, please try again later
-        </BodyText>
-    );
-
-    const unverifiedUserWarning = (
-        <BodyText style={styles.loginError}>
-            Your account is not verified. Please verify your account through the link
-            provided in your email before trying again
-        </BodyText>
-    );
-
-    function onTextEntered(field) {
-        if (field === 'email') {
-            return setEmail;
-        } else return setPassword;
-    }
 
     if (loadState === loadStateActionTypes.LOADING) return <LoadingPage />;
 
@@ -112,22 +67,21 @@ export const LoginScreen = (props: LoginScreenProps) => {
                 </View>
                 <View style={styles.loginCardContainer}>
                     {!isValidCredentials && invalidCredentialsWarning}
-                    {AuthError !== null && incorrectAuthCredentialsWarning}
-                    {(ProfileError !== null || TasksError !== null) &&
-                        profileRetrievalError}
+
+                    {errorMessage}
                     <View style={styles.inputStyle}>
                         <BodyText style={styles.inputLabel}>Email: </BodyText>
                         <CustomInput
                             value={email}
                             keyboardType={'email-address'}
-                            onChangeText={onTextEntered('email')}
+                            onChangeText={onTextSubmitted('email')}
                         />
                     </View>
                     <View style={styles.inputStyle}>
                         <BodyText style={styles.inputLabel}>Password: </BodyText>
                         <CustomInput
                             value={password}
-                            onChangeText={onTextEntered('password')}
+                            onChangeText={onTextSubmitted('password')}
                             secureTextEntry={true}
                         />
                     </View>
@@ -153,6 +107,37 @@ export const LoginScreen = (props: LoginScreenProps) => {
             </ScrollView>
         </KeyboardAwareScrollView>
     );
+
+    //clears all auth related errors, can maybe be trimmed down to reset only ones that aren't null?
+    function resetErrorStatus() {
+        dispatch(AuthStateActions.ErrorHandled());
+        dispatch(ProfileStateActions.ErrorHandled());
+        dispatch(TaskStateActions.ErrorHandled());
+    }
+    function isValidEmail() {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+    function verifyLogin() {
+        resetErrorStatus();
+        setIsValidCredentials(true);
+        if (isValidEmail() && password.length > 0) {
+            dispatch(
+                checkCredentials({ email: email.toLowerCase(), password: password }),
+            );
+        } else {
+            setIsValidCredentials(false);
+        }
+    }
+    function onTextSubmitted(field) {
+        if (field === 'email') {
+            return setEmail;
+        } else return setPassword;
+    }
+    function determineErrorMessage(msg) {
+        console.log('msg', msg);
+        return <BodyText style={styles.loginError}>{msg}</BodyText>;
+    }
 };
 
 const styles = StyleSheet.create({

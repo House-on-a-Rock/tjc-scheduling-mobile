@@ -34,7 +34,6 @@ export const fetchTasksOnLogin = () => {
             dispatch(TaskStateActions.Loaded());
         } catch (error) {
             const errorData = errorDataExtractor(error);
-            console.log('errorData', errorData);
             return dispatch(TaskStateActions.Error(errorData));
         }
     };
