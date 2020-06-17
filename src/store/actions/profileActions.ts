@@ -2,8 +2,8 @@ import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 import { secretIp } from '../../../secrets/secrets';
 import { extractId } from '../helper';
-import { fetchTasksOnLogin } from './taskActions';
 import { ProfileStateActions } from './loadStateActions';
+import { errorDataExtractor } from '../helper';
 
 export const SET_PROFILE = 'SET_PROFILE';
 
@@ -14,28 +14,29 @@ export const setProfile = (profile) => {
     };
 };
 
-export const fetchProfileAndTasksOnLogin = () => {
+//maybe move somewhere else?
+function getProfile(userId, accesskey) {
+    return axios.get(secretIp + '/api/users/getUser', {
+        params: { id: userId },
+        headers: {
+            authorization: accesskey,
+        },
+    });
+}
+
+export const fetchProfileOnLogin = () => {
     return async (dispatch) => {
+        dispatch(ProfileStateActions.Loading());
         let accesskey = await AsyncStorage.getItem('access_token');
         const userId = extractId(accesskey);
-        dispatch(ProfileStateActions.Loading());
-        await axios
-            .get(secretIp + '/api/users/getUser', {
-                params: { id: userId },
-                headers: {
-                    authorization: accesskey,
-                },
-            })
-            .then((response) => {
-                let userProfile = response.data;
-                dispatch(setProfile(userProfile));
-                dispatch(ProfileStateActions.Loaded());
-                dispatch(fetchTasksOnLogin());
-            })
-            .catch((error) => {
-                dispatch(ProfileStateActions.Error(error));
-                console.log('error fetching profile', error);
-            });
+        try {
+            const { data: userProfile } = await getProfile(userId, accesskey);
+            dispatch(setProfile(userProfile));
+            dispatch(ProfileStateActions.Loaded());
+        } catch (error) {
+            const errorData = errorDataExtractor(error);
+            return dispatch(ProfileStateActions.Error(errorData));
+        }
 
         await AsyncStorage.clear();
     };

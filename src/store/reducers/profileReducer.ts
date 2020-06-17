@@ -1,4 +1,4 @@
-import { SET_PROFILE } from '../actions';
+import { SET_PROFILE, LOGOUT } from '../actions';
 
 const initialState = {
     profile: null,
@@ -11,6 +11,8 @@ export const profileReducer = (state = initialState, action) => {
                 ...state,
                 profile: action.payload,
             };
+        case LOGOUT:
+            return initialState;
         default:
             return state;
     }

@@ -1,18 +1,20 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 import { secretIp } from '../../../secrets/secrets';
-import { fetchProfileAndTasksOnLogin } from './profileActions';
+import { fetchProfileOnLogin } from './profileActions';
+import { fetchTasksOnLogin } from './taskActions';
 import { AuthStateActions } from './loadStateActions';
 import { createCalendar } from './calendarActions';
+import { errorDataExtractor, ErrorData } from '../helper';
 
-export const prepHomePage = (dispatch) => {
-    dispatch(fetchProfileAndTasksOnLogin());
+export const prepHomePage = async (dispatch) => {
+    dispatch(fetchProfileOnLogin());
+    dispatch(fetchTasksOnLogin());
     dispatch(createCalendar());
 };
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
-export const AUTH_ERROR = 'AUTH_ERROR';
 
 /* Action */
 
@@ -28,27 +30,26 @@ export const logout = () => {
     };
 };
 
+function getAuth(email: string, password: string) {
+    return axios.post(secretIp + `/api/authentication/login`, {
+        email: email,
+        password: password,
+    });
+}
+
 /* Thunk */
 
 export const checkCredentials = ({ email, password }) => {
     return async (dispatch) => {
         dispatch(AuthStateActions.Loading());
-        await axios
-            .post(secretIp + `/api/authentication/login`, {
-                email: email,
-                password: password,
-            })
-            .then((response) => {
-                AsyncStorage.setItem('access_token', response.data.access_token);
-            })
-            .then(() => {
-                dispatch(login());
-                prepHomePage(dispatch);
-                dispatch(AuthStateActions.Loaded());
-            })
-            .catch((error) => {
-                dispatch(AuthStateActions.Error(error));
-                console.log('authentication error: ', error);
-            });
+        try {
+            const response = await getAuth(email, password);
+            AsyncStorage.setItem('access_token', response.data.access_token);
+            prepHomePage(dispatch);
+            dispatch(AuthStateActions.Loaded());
+        } catch (error) {
+            const errorData: ErrorData = errorDataExtractor(error);
+            return dispatch(AuthStateActions.Error(errorData));
+        }
     };
 };

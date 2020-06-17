@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, AUTH_ERROR } from '../actions';
+import { LOGIN, LOGOUT } from '../actions';
 
 const initialState = {
     isLoggedIn: false,

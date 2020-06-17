@@ -1,4 +1,10 @@
-import { CREATE_CALENDAR, EXTEND_CALENDAR, REFRESHING, REFRESHED } from '../actions';
+import {
+    CREATE_CALENDAR,
+    EXTEND_CALENDAR,
+    REFRESHING,
+    REFRESHED,
+    LOGOUT,
+} from '../actions';
 import { extendDateArray } from '../../services/Calendar/helper_functions/calendar_services';
 
 const initialState = {
@@ -24,6 +30,8 @@ export const calendarReducer = (state = initialState, action) => {
                 ...state,
                 isRefreshing: true,
             };
+        case LOGOUT:
+            return initialState;
         default:
             return state;
     }
