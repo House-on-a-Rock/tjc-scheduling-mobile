@@ -45,7 +45,7 @@ function recoverEmail(email) {
 
 /* Thunk */
 
-export const checkCredentials = ({ email, password }) => {
+export const checkCredentials = (email: string, password: string) => {
     return async (dispatch) => {
         dispatch(AuthStateActions.Loading());
         try {

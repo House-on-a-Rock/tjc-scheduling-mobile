@@ -9,9 +9,11 @@ import { LoadingPage } from '../../components/LoadingPage';
 export const RecoverLoginScreen = (props: RecoverLoginScreenProps) => {
     const [email, setEmail] = useState<string>('shaun.tung@gmail.com');
     const dispatch = useDispatch();
-    const loadState = useSelector((state) => state.loadStateReducer.loadStatus.AUTH);
+    const loadState: loadStateActionTypes = useSelector(
+        (state) => state.loadStateReducer.loadStatus.AUTH,
+    );
 
-    const onSubmitHandler = () => {
+    const onSubmitHandler = (): void => {
         console.log('submit pressed');
         dispatch(sendResetEmail(email));
     };
