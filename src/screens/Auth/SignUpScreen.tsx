@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-import {
-    View,
-    StyleSheet,
-    Image,
-    Button,
-    KeyboardAvoidingView,
-    Platform,
-    Keyboard,
-} from 'react-native';
+import { StyleSheet } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { BodyText, CustomInput } from '../../shared/components';
 import { SignUpScreenProps } from '../../shared/models';
+import { SafeAreaView } from 'react-native';
+import {
+    Divider,
+    Icon,
+    Layout,
+    Text,
+    TopNavigation,
+    TopNavigationAction,
+    Button,
+} from '@ui-kitten/components';
+import { ThemeContext } from '../../../theme-context';
 
 export const SignUpScreen = (props: SignUpScreenProps) => {
     const [userEmail, setUserEmail] = useState<string>('');
@@ -20,53 +23,44 @@ export const SignUpScreen = (props: SignUpScreenProps) => {
         //make api call
     };
 
+    const navigateBack = () => {
+        props.navigation.goBack();
+    };
+
+    const BackAction = () => (
+        <TopNavigationAction icon={BackIcon} onPress={navigateBack} />
+    );
+
+    const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
+
+    const themeContext = React.useContext(ThemeContext);
+
     return (
-        <KeyboardAvoidingView
-            style={styles.signUpScreen}
-            behavior={Platform.OS === 'ios' ? 'padding' : null}
+        <SafeAreaView
+            style={{
+                height: '100%',
+                width: '100%',
+                backgroundColor: 'black',
+                justifyContent: 'center',
+            }}
         >
-            <TouchableWithoutFeedback
-                onPress={Keyboard.dismiss}
-                style={styles.feedbackContainer}
+            <TopNavigation title="MyApp" alignment="center" accessoryLeft={BackAction} />
+            <Divider />
+            <Layout
+                style={{
+                    // height: '100%',
+                    flex: 1,
+                    width: '100%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
             >
-                <View style={styles.imageContainer}>
-                    <Image
-                        source={require('../../assets/images/TjcLogo.png')}
-                        resizeMode="contain"
-                        style={styles.image}
-                    />
-                </View>
-                <View style={styles.loginCardContainer}>
-                    <View style={styles.inputStyle}>
-                        <BodyText style={styles.inputLabel}>Enter your email: </BodyText>
-                        <CustomInput
-                            value={userEmail}
-                            keyboardType={'email-address'}
-                            onChangeText={setUserEmail}
-                        />
-                    </View>
-                    <View style={styles.inputStyle}>
-                        <BodyText style={styles.inputLabel}>Choose a password: </BodyText>
-                        <CustomInput
-                            value={userPassword}
-                            onChangeText={setUserPassword}
-                            secureTextEntry={true}
-                        />
-                    </View>
-                </View>
-            </TouchableWithoutFeedback>
-            <View style={styles.buttonContainer}>
-                <View style={styles.buttonStyle}>
-                    <Button title="Sign Up!" onPress={onSignUpHandler} />
-                </View>
-                <View style={{ width: '40%' }}>
-                    <Button
-                        title="Return to login"
-                        onPress={() => props.navigation.goBack()}
-                    />
-                </View>
-            </View>
-        </KeyboardAvoidingView>
+                <Text category="h1">details</Text>
+                <Button style={{ marginVertical: 4 }} onPress={themeContext.toggleTheme}>
+                    TOGGLE THEME
+                </Button>
+            </Layout>
+        </SafeAreaView>
     );
 };
 

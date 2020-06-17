@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
-// import axios from 'axios';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { Provider } from 'react-redux';
@@ -14,6 +13,13 @@ import {
     taskReducer,
     loadStateReducer,
 } from './src/store/reducers';
+//ui kitten imports
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
+import { default as theme } from './theme.json'; // <-- Import app theme
+import { default as mapping } from './mapping.json';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import { ThemeContext } from './theme-context';
 
 const rootReducer = combineReducers({
     authReducer: authReducer,
@@ -30,11 +36,20 @@ const fetchFonts = () => {
         'Roboto-Bold': require('./src/assets/Fonts/Roboto-Bold.ttf'),
         'Roboto-Italic': require('./src/assets/Fonts/Roboto-Italic.ttf'),
         'Roboto-Regular': require('./src/assets/Fonts/Roboto-Regular.ttf'),
+        'OpenSans-Regular': require('./src/assets/Fonts/OpenSans-Regular.ttf'),
+        'OpenSans-Bold': require('./src/assets/Fonts/OpenSans-Bold.ttf'),
+        'OpenSans-SemiBold': require('./src/assets/Fonts/OpenSans-SemiBold.ttf'),
     });
 };
 
 const App: React.FC = () => {
     const [dataLoaded, setDataLoaded] = useState(false);
+    const [theme, setTheme] = React.useState('light');
+
+    const toggleTheme = () => {
+        const nextTheme = theme === 'light' ? 'dark' : 'light';
+        setTheme(nextTheme);
+    };
 
     if (!dataLoaded) {
         return (
@@ -48,9 +63,18 @@ const App: React.FC = () => {
 
     return (
         <Provider store={store}>
-            <View style={styles.app}>
-                <AppNavigation />
-            </View>
+            <IconRegistry icons={EvaIconsPack} />
+            <ThemeContext.Provider value={{ theme, toggleTheme }}>
+                <ApplicationProvider
+                    {...eva}
+                    theme={eva[theme]}
+                    customMapping={mapping} //fonts
+                >
+                    <View style={styles.app}>
+                        <AppNavigation />
+                    </View>
+                </ApplicationProvider>
+            </ThemeContext.Provider>
         </Provider>
     );
 };

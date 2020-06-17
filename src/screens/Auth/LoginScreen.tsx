@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, StyleSheet, Image, Button, ScrollView } from 'react-native';
+import { View, StyleSheet, Image, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { CustomInput, BodyText } from '../../shared/components';
 import { LoginScreenProps } from '../../shared/models';
 import { checkCredentials, loadStateActionTypes, login } from '../../store/actions';
 import { determineLoadState } from '../../store/helper';
 import { LoadingPage } from '../../components/LoadingPage';
+import { Button, Text, Icon, TopNavigation, Layout } from '@ui-kitten/components';
 
 export const LoginScreen = (props: LoginScreenProps) => {
     const dispatch = useDispatch();
@@ -47,57 +48,73 @@ export const LoginScreen = (props: LoginScreenProps) => {
         <BodyText style={styles.loginError}>Please enter valid credentials</BodyText>
     );
 
+    const FacebookIcon = (props) => <Icon name="facebook" {...props} />;
+
     if (loadState === loadStateActionTypes.LOADING) return <LoadingPage />;
 
     return (
-        <KeyboardAwareScrollView contentContainerStyle={styles.loginScreen}>
-            <ScrollView
-                keyboardShouldPersistTaps="handled"
-                contentContainerStyle={styles.feedbackContainer}
-                scrollEnabled={false}
-            >
-                <View style={styles.imageContainer}>
-                    <Image
-                        source={require('../../assets/images/TjcLogo.png')}
-                        resizeMode="contain"
-                        style={styles.image}
-                    />
-                </View>
-                <View style={styles.loginCardContainer}>
-                    {!isValidCredentials && invalidCredentialsWarning}
+        <Layout>
+            <KeyboardAwareScrollView contentContainerStyle={styles.loginScreen}>
+                <ScrollView
+                    keyboardShouldPersistTaps="handled"
+                    contentContainerStyle={styles.feedbackContainer}
+                    scrollEnabled={false}
+                >
+                    <View style={styles.imageContainer}>
+                        <Image
+                            source={require('../../assets/images/TjcLogo.png')}
+                            resizeMode="contain"
+                            style={styles.image}
+                        />
+                    </View>
+                    <View style={styles.loginCardContainer}>
+                        {!isValidCredentials && invalidCredentialsWarning}
 
-                    {errorMessage}
-                    <View style={styles.inputStyle}>
-                        <BodyText style={styles.inputLabel}>Email: </BodyText>
-                        <CustomInput
-                            value={email}
-                            keyboardType={'email-address'}
-                            onChangeText={onTextSubmitted('email')}
-                        />
+                        {errorMessage}
+                        <View style={styles.inputStyle}>
+                            <Text style={styles.inputLabel}>Email: </Text>
+                            <CustomInput
+                                value={email}
+                                keyboardType={'email-address'}
+                                onChangeText={onTextSubmitted('email')}
+                            />
+                        </View>
+                        <View style={styles.inputStyle}>
+                            <BodyText style={styles.inputLabel}>Password: </BodyText>
+                            <CustomInput
+                                value={password}
+                                onChangeText={onTextSubmitted('password')}
+                                secureTextEntry={true}
+                            />
+                        </View>
                     </View>
-                    <View style={styles.inputStyle}>
-                        <BodyText style={styles.inputLabel}>Password: </BodyText>
-                        <CustomInput
-                            value={password}
-                            onChangeText={onTextSubmitted('password')}
-                            secureTextEntry={true}
-                        />
-                    </View>
-                </View>
 
-                <View style={styles.buttonContainer}>
-                    <View style={styles.buttonStyle}>
-                        <Button title="Login!" onPress={verifyLogin} />
+                    <View style={styles.buttonContainer}>
+                        <View style={styles.buttonStyle}>
+                            <Button onPress={verifyLogin}>
+                                <Text>Login!</Text>
+                            </Button>
+                        </View>
+                        <View style={styles.buttonStyle}>
+                            <Button
+                                // title="Recover Account"
+                                onPress={() => props.navigation.navigate('RecoverLogin')}
+                            >
+                                <Text style={{ color: 'white' }}>Recover Account</Text>
+                            </Button>
+                        </View>
+                        <View>
+                            <Button
+                                accessoryLeft={FacebookIcon}
+                                onPress={() => props.navigation.navigate('SignUp')}
+                            >
+                                Sign Up!
+                            </Button>
+                        </View>
                     </View>
-                    <View style={styles.buttonStyle}>
-                        <Button
-                            title="Recover Account"
-                            onPress={() => props.navigation.navigate('RecoverLogin')}
-                        />
-                    </View>
-                </View>
-            </ScrollView>
-        </KeyboardAwareScrollView>
+                </ScrollView>
+            </KeyboardAwareScrollView>
+        </Layout>
     );
 
     //helper functions
