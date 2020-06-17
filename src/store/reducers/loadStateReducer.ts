@@ -38,6 +38,10 @@ export const loadStateReducer = (state = initialState, action) => {
                         ...state.loadStatus,
                         [domain]: loadStateActionTypes.LOADING,
                     },
+                    loadErrorStatus: {
+                        ...state.loadStatus,
+                        [domain]: null,
+                    },
                 };
             case loadStateActionTypes.ERROR:
                 return {
@@ -51,18 +55,18 @@ export const loadStateReducer = (state = initialState, action) => {
                         [domain]: action.payload,
                     },
                 };
-            case loadStateActionTypes.ERROR_HANDLED:
-                return {
-                    ...state,
-                    loadStatus: {
-                        ...state.loadStatus,
-                        [domain]: null,
-                    },
-                    loadErrorStatus: {
-                        ...state.loadErrorStatus,
-                        [domain]: null,
-                    },
-                };
+            // case loadStateActionTypes.ERROR_HANDLED:
+            //     return {
+            //         ...state,
+            //         loadStatus: {
+            //             ...state.loadStatus,
+            //             [domain]: null,
+            //         },
+            //         loadErrorStatus: {
+            //             ...state.loadErrorStatus,
+            //             [domain]: null,
+            //         },
+            //     };
             default:
                 return state;
         }

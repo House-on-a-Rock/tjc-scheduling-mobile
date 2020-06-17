@@ -5,7 +5,7 @@ import { fetchProfileOnLogin } from './profileActions';
 import { fetchTasksOnLogin } from './taskActions';
 import { AuthStateActions } from './loadStateActions';
 import { createCalendar } from './calendarActions';
-import { errorDataExtractor } from '../helper';
+import { errorDataExtractor, ErrorData } from '../helper';
 
 export const prepHomePage = async (dispatch) => {
     dispatch(fetchProfileOnLogin());
@@ -15,7 +15,6 @@ export const prepHomePage = async (dispatch) => {
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
-export const AUTH_ERROR = 'AUTH_ERROR';
 
 /* Action */
 
@@ -31,7 +30,7 @@ export const logout = () => {
     };
 };
 
-function getAuth(email, password) {
+function getAuth(email: string, password: string) {
     return axios.post(secretIp + `/api/authentication/login`, {
         email: email,
         password: password,
@@ -49,7 +48,7 @@ export const checkCredentials = ({ email, password }) => {
             prepHomePage(dispatch);
             dispatch(AuthStateActions.Loaded());
         } catch (error) {
-            const errorData = errorDataExtractor(error);
+            const errorData: ErrorData = errorDataExtractor(error);
             return dispatch(AuthStateActions.Error(errorData));
         }
     };
