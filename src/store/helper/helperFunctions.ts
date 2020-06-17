@@ -6,7 +6,7 @@ export function extractId(jwt) {
     return parseInt(decodedAccessKey.sub.split('|')[1]);
 }
 
-export function determineLoadState(updatedState) {
+export function determineLoadState(updatedState): loadStateActionTypes | null {
     const values = Object.values(updatedState);
     if (values.indexOf(loadStateActionTypes.ERROR) >= 0)
         return loadStateActionTypes.ERROR;
@@ -16,9 +16,14 @@ export function determineLoadState(updatedState) {
     else return loadStateActionTypes.LOADED;
 }
 
-export function errorDataExtractor(error) {
+export function errorDataExtractor(error): ErrorData {
     return {
         message: error.response?.data?.message,
         status: error.response?.status,
     };
+}
+
+export interface ErrorData {
+    message: string;
+    status: number;
 }

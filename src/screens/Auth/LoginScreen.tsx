@@ -4,14 +4,7 @@ import { View, StyleSheet, Image, Button, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { CustomInput, BodyText } from '../../shared/components';
 import { LoginScreenProps } from '../../shared/models';
-import {
-    checkCredentials,
-    loadStateActionTypes,
-    login,
-    AuthStateActions,
-    ProfileStateActions,
-    TaskStateActions,
-} from '../../store/actions';
+import { checkCredentials, loadStateActionTypes, login } from '../../store/actions';
 import { determineLoadState } from '../../store/helper';
 import { LoadingPage } from '../../components/LoadingPage';
 
@@ -32,12 +25,16 @@ export const LoginScreen = (props: LoginScreenProps) => {
     );
 
     //using the loadstates, determines if loading page should be shown
-    const loadState = determineLoadState({ AuthState, ProfileState, TasksState });
+    const loadState: loadStateActionTypes = determineLoadState({
+        AuthState,
+        ProfileState,
+        TasksState,
+    });
     //if everything is loaded, change state to login
     if (loadState === loadStateActionTypes.LOADED) dispatch(login());
 
     //error message handling
-    let errorMessage = null;
+    let errorMessage: React.ReactNode | null = null;
     if (loadState === loadStateActionTypes.ERROR) {
         //can be cleaned up better, any suggestions?
         if (AuthError) errorMessage = determineErrorMessage(AuthError.message);
@@ -46,7 +43,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
         else errorMessage = null;
     }
 
-    const invalidCredentialsWarning = (
+    const invalidCredentialsWarning: React.ReactNode = (
         <BodyText style={styles.loginError}>Please enter valid credentials</BodyText>
     );
 
@@ -105,19 +102,11 @@ export const LoginScreen = (props: LoginScreenProps) => {
 
     //helper functions
 
-    //clears all auth related errors, can maybe be trimmed down to reset only ones that aren't null?
-    function resetErrorStatus() {
-        dispatch(AuthStateActions.ErrorHandled());
-        dispatch(ProfileStateActions.ErrorHandled());
-        dispatch(TaskStateActions.ErrorHandled());
-    }
-
-    function isValidEmail() {
+    function isValidEmail(): boolean {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
     }
-    function verifyLogin() {
-        resetErrorStatus();
+    function verifyLogin(): void {
         setIsValidCredentials(true);
         if (isValidEmail() && password.length > 0) {
             dispatch(
@@ -127,12 +116,14 @@ export const LoginScreen = (props: LoginScreenProps) => {
             setIsValidCredentials(false);
         }
     }
-    function onTextSubmitted(field) {
+    function onTextSubmitted(
+        field: string,
+    ): React.Dispatch<React.SetStateAction<string>> {
         if (field === 'email') {
             return setEmail;
         } else return setPassword;
     }
-    function determineErrorMessage(msg) {
+    function determineErrorMessage(msg): React.ReactNode {
         return <BodyText style={styles.loginError}>{msg}</BodyText>;
     }
 };
