@@ -2,8 +2,8 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
-import { CalendarStack } from './CalendarStack';
-import { ScheduleStack } from './ScheduleStack';
+import { CalendarStack } from '../CalendarStack';
+import { ScheduleStack } from '../ScheduleStack';
 import { HomeStackTabParamList } from '../../../shared/models';
 
 const HomeTab = createBottomTabNavigator<HomeStackTabParamList>();

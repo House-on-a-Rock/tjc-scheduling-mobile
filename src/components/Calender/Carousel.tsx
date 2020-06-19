@@ -4,6 +4,7 @@ import { CalendarCard } from './CalendarCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { extendCalendar } from '../../store/actions/calendarActions';
 import { CarousalDirection } from '../../services/Calendar/models';
+import { Layout } from '@ui-kitten/components';
 
 interface CarouselProps {
     data: Date[];
@@ -22,7 +23,7 @@ export const Carousel = (props: CarouselProps) => {
     const loadMoreOnTop = () => dispatch(extendCalendar(CarousalDirection.UP));
 
     return (
-        <View>
+        <Layout>
             <FlatList
                 data={props.data}
                 keyExtractor={(item, index) => index.toString()}
@@ -45,6 +46,6 @@ export const Carousel = (props: CarouselProps) => {
                     };
                 }}
             />
-        </View>
+        </Layout>
     );
 };

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
-import { CalendarScreenProps, CalendarData } from '../../../../shared/models';
+import { CalendarScreenProps } from '../../../../shared/models';
 import { Carousel, TaskPreview } from '../../../../components/Calender';
+import { Screen } from '../../../../components/Screen';
+import { openDrawerAction } from '../../../../shared/components';
 
 const styles = StyleSheet.create({
     screen: {
@@ -23,8 +25,13 @@ export const CalendarScreen = (props: CalendarScreenProps) => {
         ({ calendarReducer }) => calendarReducer.dateArray,
     );
 
+    //TODO extract to another location, use in other stack navs
+
     return (
-        <View style={styles.screen}>
+        <Screen
+            title="Calendar"
+            accessoryLeft={() => openDrawerAction(props.navigation.toggleDrawer)}
+        >
             <View style={styles.scrollContainer}>
                 <Carousel data={calCardDatesArray} />
             </View>
@@ -36,6 +43,6 @@ export const CalendarScreen = (props: CalendarScreenProps) => {
             ) : (
                 <View></View>
             )}
-        </View>
+        </Screen>
     );
 };

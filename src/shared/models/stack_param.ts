@@ -1,6 +1,6 @@
 // ParamList
 export type DrawerStackParamList = {
-    HomeStack: undefined;
+    CalendarStack: undefined;
     ProfileStack: undefined;
     SettingsStack: undefined;
     LogoutStack: undefined;

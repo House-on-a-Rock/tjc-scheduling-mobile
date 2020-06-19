@@ -3,14 +3,22 @@ import { useDispatch } from 'react-redux';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import { LogoutScreenProps } from '../../shared/models';
 import { logout } from '../../store/actions';
+import { Screen } from '../../components/Screen';
+import { Layout } from '@ui-kitten/components';
+import { openDrawerAction } from '../../shared/components';
 
 export const LogoutScreen = (props: LogoutScreenProps) => {
     const dispatch = useDispatch();
     return (
-        <View>
-            <Text>This is the LogOutScreen</Text>
-            <Button title="Log Out" onPress={() => dispatch(logout())} />
-        </View>
+        <Screen
+            title="Logout"
+            accessoryLeft={() => openDrawerAction(props.navigation.toggleDrawer)}
+        >
+            <Layout>
+                <Text>This is the LogOutScreen</Text>
+                <Button title="Log Out" onPress={() => dispatch(logout())} />
+            </Layout>
+        </Screen>
     );
 };
 
