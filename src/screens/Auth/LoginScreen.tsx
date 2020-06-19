@@ -1,19 +1,27 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, StyleSheet, Image, ScrollView } from 'react-native';
+import {
+    View,
+    StyleSheet,
+    Image,
+    ScrollView,
+    SafeAreaView,
+    Platform,
+} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { CustomInput, BodyText } from '../../shared/components';
 import { LoginScreenProps } from '../../shared/models';
 import { checkCredentials, loadStateActionTypes, login } from '../../store/actions';
 import { determineLoadState } from '../../store/helper';
 import { LoadingPage } from '../../components/LoadingPage';
-import { Button, Text, Icon, TopNavigation, Layout } from '@ui-kitten/components';
+import { Button, Text, Icon, Layout, Input } from '@ui-kitten/components';
+import Constants from 'expo-constants';
 
 export const LoginScreen = (props: LoginScreenProps) => {
     const dispatch = useDispatch();
-    const [email, setEmail] = useState<string>('shaun.tung@gmail.com');
-    const [password, setPassword] = useState<string>('password');
+    const [email, setEmail] = useState<string>('amanda.chin@gmail.com');
+    const [password, setPassword] = useState<string>('password4');
     const [isValidCredentials, setIsValidCredentials] = useState<boolean>(true);
+    const statusBarHeight = Constants.statusBarHeight;
 
     //selects the loadstates that need to be listened to
     const { AUTH: AuthState, PROFILE: ProfileState, TASKS: TasksState } = useSelector(
@@ -45,7 +53,9 @@ export const LoginScreen = (props: LoginScreenProps) => {
     }
 
     const invalidCredentialsWarning: React.ReactNode = (
-        <BodyText style={styles.loginError}>Please enter valid credentials</BodyText>
+        <Text category={'h6'} status={'danger'}>
+            Please enter valid credentials
+        </Text>
     );
 
     const FacebookIcon = (props) => <Icon name="facebook" {...props} />;
@@ -53,68 +63,76 @@ export const LoginScreen = (props: LoginScreenProps) => {
     if (loadState === loadStateActionTypes.LOADING) return <LoadingPage />;
 
     return (
-        <Layout>
-            <KeyboardAwareScrollView contentContainerStyle={styles.loginScreen}>
-                <ScrollView
-                    keyboardShouldPersistTaps="handled"
-                    contentContainerStyle={styles.feedbackContainer}
-                    scrollEnabled={false}
-                >
-                    <View style={styles.imageContainer}>
-                        <Image
-                            source={require('../../assets/images/TjcLogo.png')}
-                            resizeMode="contain"
-                            style={styles.image}
-                        />
-                    </View>
-                    <View style={styles.loginCardContainer}>
-                        {!isValidCredentials && invalidCredentialsWarning}
-
-                        {errorMessage}
-                        <View style={styles.inputStyle}>
-                            <Text style={styles.inputLabel}>Email: </Text>
-                            <CustomInput
-                                value={email}
-                                keyboardType={'email-address'}
-                                onChangeText={onTextSubmitted('email')}
+        <SafeAreaView
+            style={{
+                flex: 1,
+                backgroundColor: 'black',
+                paddingTop: Platform.OS === 'android' ? statusBarHeight : 0,
+            }}
+        >
+            <Layout>
+                <KeyboardAwareScrollView contentContainerStyle={styles.loginScreen}>
+                    <ScrollView
+                        keyboardShouldPersistTaps="handled"
+                        contentContainerStyle={styles.feedbackContainer}
+                        scrollEnabled={false}
+                    >
+                        <View style={styles.imageContainer}>
+                            <Image
+                                source={require('../../assets/images/TjcLogo.png')}
+                                resizeMode="contain"
+                                style={styles.image}
                             />
                         </View>
-                        <View style={styles.inputStyle}>
-                            <BodyText style={styles.inputLabel}>Password: </BodyText>
-                            <CustomInput
-                                value={password}
-                                onChangeText={onTextSubmitted('password')}
-                                secureTextEntry={true}
-                            />
+                        <View style={styles.loginCardContainer}>
+                            {!isValidCredentials && invalidCredentialsWarning}
+                            {errorMessage}
+                            <View style={styles.inputStyle}>
+                                <Text appearance="hint">Email: </Text>
+                                <Input
+                                    value={email}
+                                    keyboardType={'email-address'}
+                                    onChangeText={onTextSubmitted('email')}
+                                />
+                            </View>
+                            <View style={styles.inputStyle}>
+                                <Text appearance={'hint'}>Password: </Text>
+                                <Input
+                                    value={password}
+                                    onChangeText={onTextSubmitted('password')}
+                                    secureTextEntry={true}
+                                />
+                            </View>
                         </View>
-                    </View>
 
-                    <View style={styles.buttonContainer}>
-                        <View style={styles.buttonStyle}>
-                            <Button onPress={verifyLogin}>
-                                <Text>Login!</Text>
-                            </Button>
+                        <View style={styles.buttonContainer}>
+                            <View style={styles.buttonStyle}>
+                                <Button status={'success'} onPress={verifyLogin}>
+                                    Login!
+                                </Button>
+                            </View>
+                            <View style={styles.buttonStyle}>
+                                <Button
+                                    onPress={() =>
+                                        props.navigation.navigate('RecoverLogin')
+                                    }
+                                >
+                                    Recover Account
+                                </Button>
+                            </View>
+                            <View>
+                                <Button
+                                    accessoryLeft={FacebookIcon}
+                                    onPress={() => props.navigation.navigate('SignUp')}
+                                >
+                                    Sign Up!
+                                </Button>
+                            </View>
                         </View>
-                        <View style={styles.buttonStyle}>
-                            <Button
-                                // title="Recover Account"
-                                onPress={() => props.navigation.navigate('RecoverLogin')}
-                            >
-                                <Text style={{ color: 'white' }}>Recover Account</Text>
-                            </Button>
-                        </View>
-                        <View>
-                            <Button
-                                accessoryLeft={FacebookIcon}
-                                onPress={() => props.navigation.navigate('SignUp')}
-                            >
-                                Sign Up!
-                            </Button>
-                        </View>
-                    </View>
-                </ScrollView>
-            </KeyboardAwareScrollView>
-        </Layout>
+                    </ScrollView>
+                </KeyboardAwareScrollView>
+            </Layout>
+        </SafeAreaView>
     );
 
     //helper functions
@@ -141,7 +159,11 @@ export const LoginScreen = (props: LoginScreenProps) => {
         } else return setPassword;
     }
     function determineErrorMessage(msg): React.ReactNode {
-        return <BodyText style={styles.loginError}>{msg}</BodyText>;
+        return (
+            <Text category={'h6'} status={'danger'}>
+                {msg}
+            </Text>
+        );
     }
 };
 
@@ -149,10 +171,8 @@ const styles = StyleSheet.create({
     loginScreen: {
         height: '100%',
         width: '100%',
-        backgroundColor: 'white',
     },
     feedbackContainer: {
-        backgroundColor: 'white',
         width: '100%',
         height: '100%',
         justifyContent: 'space-around',
@@ -184,10 +204,7 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingVertical: 10,
     },
-    inputLabel: {
-        fontSize: 15,
-        color: 'grey',
-    },
+
     image: {
         width: '100%',
         height: '100%',

@@ -16,10 +16,11 @@ import {
 //ui kitten imports
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
-import { default as theme } from './theme.json'; // <-- Import app theme
-import { default as mapping } from './mapping.json';
+// import { default as theme } from './theme.json'; // <-- Import app theme
+import * as ui from './ui';
+import { default as mapping } from './ui/mapping.json';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
-import { ThemeContext } from './theme-context';
+import { ThemeContext } from './ui/theme-context';
 
 const rootReducer = combineReducers({
     authReducer: authReducer,
@@ -67,7 +68,7 @@ const App: React.FC = () => {
             <ThemeContext.Provider value={{ theme, toggleTheme }}>
                 <ApplicationProvider
                     {...eva}
-                    theme={eva[theme]}
+                    theme={ui[theme]}
                     customMapping={mapping} //fonts
                 >
                     <View style={styles.app}>

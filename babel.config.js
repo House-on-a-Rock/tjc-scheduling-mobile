@@ -17,6 +17,7 @@ module.exports = function (api) {
                 },
             ],
             ['@babel/transform-runtime'],
+            ['@babel/plugin-proposal-decorators', { legacy: true }],
         ],
     };
 };

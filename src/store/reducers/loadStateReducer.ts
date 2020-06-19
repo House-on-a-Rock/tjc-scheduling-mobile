@@ -14,8 +14,6 @@ const initialState = {
 };
 
 export const loadStateReducer = (state = initialState, action) => {
-    console.log('action', action);
-
     //resets to initial state on logout
     if (action.type === LOGOUT) return initialState;
 
