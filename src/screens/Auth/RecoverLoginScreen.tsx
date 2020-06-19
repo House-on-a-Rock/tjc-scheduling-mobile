@@ -14,7 +14,6 @@ export const RecoverLoginScreen = (props: RecoverLoginScreenProps) => {
     );
 
     const onSubmitHandler = (): void => {
-        console.log('submit pressed');
         dispatch(sendResetEmail(email));
     };
 
