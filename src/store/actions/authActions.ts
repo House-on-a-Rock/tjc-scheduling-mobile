@@ -37,9 +37,15 @@ function getAuth(email: string, password: string) {
     });
 }
 
+function recoverEmail(email) {
+    return axios.post(secretIp + `/api/authentication/sendResetEmail`, {
+        email: email,
+    });
+}
+
 /* Thunk */
 
-export const checkCredentials = ({ email, password }) => {
+export const checkCredentials = (email: string, password: string) => {
     return async (dispatch) => {
         dispatch(AuthStateActions.Loading());
         try {
@@ -49,6 +55,19 @@ export const checkCredentials = ({ email, password }) => {
             dispatch(AuthStateActions.Loaded());
         } catch (error) {
             const errorData: ErrorData = errorDataExtractor(error);
+            return dispatch(AuthStateActions.Error(errorData));
+        }
+    };
+};
+
+export const sendResetEmail = (email) => {
+    return async (dispatch) => {
+        dispatch(AuthStateActions.Loading());
+        try {
+            const response = await recoverEmail(email);
+            dispatch(AuthStateActions.Loaded());
+        } catch (error) {
+            const errorData = errorDataExtractor(error);
             return dispatch(AuthStateActions.Error(errorData));
         }
     };

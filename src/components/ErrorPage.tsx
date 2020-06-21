@@ -2,7 +2,6 @@ import { View, Text } from 'react-native';
 import React from 'react';
 
 export const ErrorPage = (props) => {
-    console.log('error pageprops', props);
     return (
         <View
             style={{
