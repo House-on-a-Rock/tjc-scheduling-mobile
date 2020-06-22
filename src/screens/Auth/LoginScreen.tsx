@@ -60,7 +60,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
 
     const FacebookIcon = (props) => <Icon name="facebook" {...props} />;
 
-    if (loadState === loadStateActionTypes.LOADING) return <LoadingPage />;
+    if (loadState === loadStateActionTypes.LOADING) return <LoadingPage opacity={0.8} />;
 
     return (
         <SafeAreaView

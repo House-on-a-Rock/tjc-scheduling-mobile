@@ -14,7 +14,6 @@ const initialState = {
 };
 
 export const calendarReducer = (state = initialState, action) => {
-    console.log('action', action);
     switch (action.type) {
         case CREATE_CALENDAR:
             return action.payload;

@@ -30,7 +30,7 @@ export const fetchTasksOnLogin = () => {
         const userId = extractId(accesskey);
         try {
             const { data: userTasks } = await getTasks(userId, accesskey);
-            console.log('userTasks', userTasks);
+
             dispatch(setTasks(userTasks));
             dispatch(TaskStateActions.Loaded());
         } catch (error) {

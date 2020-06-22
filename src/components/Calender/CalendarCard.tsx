@@ -5,7 +5,7 @@ import { DayNameRow } from './DayNameRow';
 import { setFirstDay } from '../../services/Calendar/helper_functions';
 import { months } from '../../services/Calendar/models';
 import { TitleText } from '../../shared/components';
-import { Card, Text } from '@ui-kitten/components';
+import { Drawer, DrawerItem, IndexPath, Icon, Text, Layout } from '@ui-kitten/components';
 
 interface Props {
     displayedDate: Date;
@@ -18,36 +18,28 @@ export const CalendarCard = (props: Props) => {
     const month = displayedDate.getMonth();
 
     return (
-        <Card
+        <View
             style={{
                 width: '100%',
-                height: 400, // TODO extract these constants
-                justifyContent: 'center',
+                height: 380, // TODO extract these constants
+                marginBottom: 20, // TODO extract these constants
             }}
-            header={() => (
-                <Text category="h3" status="basic " style={{ paddingHorizontal: 30 }}>
-                    {months(isLeap)[month].name}
-                </Text>
-            )}
-            appearance="filled"
         >
-            <View>
-                {/* <View style={styles.container}>
-                    <TouchableOpacity>
-                        <TitleText style={styles.monthText}>
-                            {months(isLeap)[month].name} {year}
-                        </TitleText>
-                    </TouchableOpacity>
-                </View> */}
-                <View>
-                    <DayNameRow />
-                    <DateDisplay
-                        firstDay={setFirstDay(displayedDate)}
-                        displayedDate={displayedDate}
-                    />
-                </View>
+            <View style={styles.container}>
+                <TouchableOpacity>
+                    <TitleText style={styles.monthText}>
+                        {months(isLeap)[month].name} {year}
+                    </TitleText>
+                </TouchableOpacity>
             </View>
-        </Card>
+            <View>
+                <DayNameRow />
+                <DateDisplay
+                    firstDay={setFirstDay(displayedDate)}
+                    displayedDate={displayedDate}
+                />
+            </View>
+        </View>
     );
 };
 

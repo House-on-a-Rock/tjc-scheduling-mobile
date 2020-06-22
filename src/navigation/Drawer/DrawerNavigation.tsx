@@ -50,7 +50,7 @@ const DrawerContent = ({ navigation, state }) => (
             <Layout level="3">
                 <DrawerItem
                     title={drawerTitle('Home')}
-                    accessoryRight={(props) => (
+                    accessoryLeft={(props) => (
                         <Icon
                             {...props}
                             height={30}
@@ -62,7 +62,7 @@ const DrawerContent = ({ navigation, state }) => (
                 />
                 <DrawerItem
                     title={drawerTitle('Profile')}
-                    accessoryRight={(props) => (
+                    accessoryLeft={(props) => (
                         <Icon
                             {...props}
                             height={30}
@@ -74,7 +74,7 @@ const DrawerContent = ({ navigation, state }) => (
                 />
                 <DrawerItem
                     title={drawerTitle('Settings')}
-                    accessoryRight={(props) => (
+                    accessoryLeft={(props) => (
                         <Icon
                             {...props}
                             height={30}
@@ -85,7 +85,18 @@ const DrawerContent = ({ navigation, state }) => (
                     )}
                     PULSE
                 />
-                <DrawerItem title={drawerTitle('Logout')} />
+                <DrawerItem
+                    title={drawerTitle('Logout')}
+                    accessoryLeft={(props) => (
+                        <Icon
+                            {...props}
+                            height={30}
+                            width={30}
+                            animation="pulse"
+                            name="power"
+                        />
+                    )}
+                />
             </Layout>
         </SafeAreaView>
     </Drawer>

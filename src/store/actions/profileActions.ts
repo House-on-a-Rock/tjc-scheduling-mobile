@@ -31,7 +31,7 @@ export const fetchProfileOnLogin = () => {
         const userId = extractId(accesskey);
         try {
             const { data: userProfile } = await getProfile(userId, accesskey);
-            console.log('userProfile', userProfile);
+
             dispatch(setProfile(userProfile));
             dispatch(ProfileStateActions.Loaded());
         } catch (error) {

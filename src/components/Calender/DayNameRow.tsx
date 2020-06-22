@@ -28,10 +28,9 @@ const styles = StyleSheet.create({
     tiles: {
         justifyContent: 'center',
         alignItems: 'center',
-
         flex: 1,
         borderBottomWidth: 1,
-        paddingBottom: 10,
+        // paddingBottom: 10,
     },
     text: {
         fontFamily: 'Roboto-Bold',
