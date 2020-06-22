@@ -30,20 +30,21 @@ export const logout = () => {
     };
 };
 
-async function getAuth(email: string, password: string) {
+function getAuth(email: string, password: string) {
     return axios.post(secretIp + `/api/authentication/login`, {
         email: email,
         password: password,
     });
 }
 
-function recoverEmail(email) {
+function recoverEmail(email: string) {
     return axios.post(secretIp + `/api/authentication/sendResetEmail`, {
         email: email,
     });
 }
 
-function timeoutPromise() {
+//not sure what type to put in for any
+function timeoutPromise(): Promise<any> {
     return new Promise((resolve, reject) => {
         setTimeout(reject, 3000, new Error('Server timed out, please try again later'));
     });
