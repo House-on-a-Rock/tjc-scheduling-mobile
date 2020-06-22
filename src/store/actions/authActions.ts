@@ -30,7 +30,7 @@ export const logout = () => {
     };
 };
 
-function getAuth(email: string, password: string) {
+async function getAuth(email: string, password: string) {
     return axios.post(secretIp + `/api/authentication/login`, {
         email: email,
         password: password,
@@ -43,13 +43,22 @@ function recoverEmail(email) {
     });
 }
 
+function timeoutPromise() {
+    return new Promise((resolve, reject) => {
+        setTimeout(reject, 3000, new Error('Server timed out, please try again later'));
+    });
+}
+
 /* Thunk */
 
 export const checkCredentials = (email: string, password: string) => {
     return async (dispatch) => {
         dispatch(AuthStateActions.Loading());
         try {
-            const response = await getAuth(email, password);
+            const response = await Promise.race([
+                getAuth(email, password),
+                timeoutPromise(),
+            ]);
             AsyncStorage.setItem('access_token', response.data.access_token);
             prepHomePage(dispatch);
             dispatch(AuthStateActions.Loaded());

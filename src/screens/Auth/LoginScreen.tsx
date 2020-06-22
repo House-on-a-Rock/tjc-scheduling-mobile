@@ -10,8 +10,8 @@ import { LoadingPage } from '../../components/LoadingPage';
 
 export const LoginScreen = (props: LoginScreenProps) => {
     const dispatch = useDispatch();
-    const [email, setEmail] = useState<string>('shaun.tung@gmail.com');
-    const [password, setPassword] = useState<string>('password');
+    const [email, setEmail] = useState<string>('amanda.chin@gmail.com');
+    const [password, setPassword] = useState<string>('password4');
     const [isValidCredentials, setIsValidCredentials] = useState<boolean>(true);
 
     //selects the loadstates that need to be listened to
