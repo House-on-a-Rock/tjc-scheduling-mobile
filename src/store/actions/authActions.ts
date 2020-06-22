@@ -37,9 +37,16 @@ function getAuth(email: string, password: string) {
     });
 }
 
-function recoverEmail(email) {
+function recoverEmail(email: string) {
     return axios.post(secretIp + `/api/authentication/sendResetEmail`, {
         email: email,
+    });
+}
+
+//not sure what type to put in for any
+function timeoutPromise(): Promise<any> {
+    return new Promise((resolve, reject) => {
+        setTimeout(reject, 3000, new Error('Server timed out, please try again later'));
     });
 }
 
@@ -49,7 +56,10 @@ export const checkCredentials = (email: string, password: string) => {
     return async (dispatch) => {
         dispatch(AuthStateActions.Loading());
         try {
-            const response = await getAuth(email, password);
+            const response = await Promise.race([
+                getAuth(email, password),
+                timeoutPromise(),
+            ]);
             AsyncStorage.setItem('access_token', response.data.access_token);
             prepHomePage(dispatch);
             dispatch(AuthStateActions.Loaded());

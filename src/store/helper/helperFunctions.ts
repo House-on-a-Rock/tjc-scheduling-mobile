@@ -17,6 +17,7 @@ export function determineLoadState(updatedState): loadStateActionTypes | null {
 }
 
 export function errorDataExtractor(error): ErrorData {
+    if (!error.response) return { message: error.message, status: 400 };
     return {
         message: error.response?.data?.message,
         status: error.response?.status,
