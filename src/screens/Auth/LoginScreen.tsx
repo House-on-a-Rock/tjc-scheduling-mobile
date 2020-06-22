@@ -144,9 +144,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
     function verifyLogin(): void {
         setIsValidCredentials(true);
         if (isValidEmail() && password.length > 0) {
-            dispatch(
-                checkCredentials({ email: email.toLowerCase(), password: password }),
-            );
+            dispatch(checkCredentials(email.toLowerCase(), password));
         } else {
             setIsValidCredentials(false);
         }
