@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactComponentElement, ReactElement } from 'react';
 import { Layout, TopNavigation, Divider } from '@ui-kitten/components';
 import { SafeAreaView, StyleSheet, Platform } from 'react-native';
 import Constants from 'expo-constants';
@@ -6,7 +6,7 @@ const statusBarHeight = Constants.statusBarHeight;
 
 type ScreenProps = {
     children?: React.ReactNode;
-    title?: string;
+    title?: () => ReactElement | string;
     accessoryLeft?: () => JSX.Element;
     accessoryRight?: () => JSX.Element;
 };

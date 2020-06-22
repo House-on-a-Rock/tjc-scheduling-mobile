@@ -1,4 +1,5 @@
 import React from 'react';
+import { SafeAreaView, Platform } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DrawerStackParamList } from '../../shared/models';
@@ -6,34 +7,30 @@ import { CalendarStack } from './CalendarStack';
 import { ProfileStack } from './ProfileStack';
 import { SettingsStack } from './SettingsStack';
 import { LogoutStack } from './LogoutStack';
-import { Drawer, DrawerItem, Layout, Text, IndexPath } from '@ui-kitten/components';
+import { Drawer, DrawerItem, IndexPath, Icon, Text, Layout } from '@ui-kitten/components';
+
+//TODO place statusBarHeight into a constants file
+import Constants from 'expo-constants';
+const statusBarHeight = Constants.statusBarHeight;
 
 const { Navigator, Screen } = createDrawerNavigator<DrawerStackParamList>();
 
 export const DrawerNav = () => {
     return (
         <NavigationContainer>
-            <Navigator drawerContent={(props) => <DrawerContent {...props} />}>
-                <Screen
-                    name="CalendarStack"
-                    component={CalendarStack}
-                    options={{ title: 'Home' }}
-                />
-                <Screen
-                    name="ProfileStack"
-                    component={ProfileStack}
-                    options={{ title: 'Profile' }}
-                />
-                <Screen
-                    name="SettingsStack"
-                    component={SettingsStack}
-                    options={{ title: 'Settings' }}
-                />
-                <Screen
-                    name="LogoutStack"
-                    component={LogoutStack}
-                    options={{ title: 'Logout' }}
-                />
+            <Navigator
+                drawerStyle={{ width: 200 }}
+                drawerType="front"
+                drawerContent={(props) => <DrawerContent {...props} />}
+                drawerContentOptions={{
+                    activeBackgroundColor: 'red',
+                    activeTintColor: 'blue',
+                }}
+            >
+                <Screen name="CalendarStack" component={CalendarStack} />
+                <Screen name="ProfileStack" component={ProfileStack} />
+                <Screen name="SettingsStack" component={SettingsStack} />
+                <Screen name="LogoutStack" component={LogoutStack} />
             </Navigator>
         </NavigationContainer>
     );
@@ -44,9 +41,56 @@ const DrawerContent = ({ navigation, state }) => (
         selectedIndex={new IndexPath(state.index)}
         onSelect={(index) => navigation.navigate(state.routeNames[index.row])}
     >
-        <DrawerItem title="CalendarStack" />
-        <DrawerItem title="ProfileStack" />
-        <DrawerItem title="SettingsStack" />
-        <DrawerItem title="LogoutStack" />
+        <SafeAreaView
+            style={{
+                backgroundColor: 'black',
+                paddingTop: Platform.OS === 'android' ? statusBarHeight : 0,
+            }}
+        >
+            <Layout level="3">
+                <DrawerItem
+                    title={drawerTitle('Home')}
+                    accessoryRight={(props) => (
+                        <Icon
+                            {...props}
+                            height={30}
+                            width={30}
+                            animation="pulse"
+                            name="home"
+                        />
+                    )}
+                />
+                <DrawerItem
+                    title={drawerTitle('Profile')}
+                    accessoryRight={(props) => (
+                        <Icon
+                            {...props}
+                            height={30}
+                            width={30}
+                            animation="pulse"
+                            name="person"
+                        />
+                    )}
+                />
+                <DrawerItem
+                    title={drawerTitle('Settings')}
+                    accessoryRight={(props) => (
+                        <Icon
+                            {...props}
+                            height={30}
+                            width={30}
+                            animation="pulse"
+                            name="settings"
+                        />
+                    )}
+                    PULSE
+                />
+                <DrawerItem title={drawerTitle('Logout')} />
+            </Layout>
+        </SafeAreaView>
     </Drawer>
 );
+
+const drawerTitle = (title) => {
+    return <Text category="h6">{title}</Text>;
+};

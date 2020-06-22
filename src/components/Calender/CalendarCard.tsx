@@ -5,6 +5,7 @@ import { DayNameRow } from './DayNameRow';
 import { setFirstDay } from '../../services/Calendar/helper_functions';
 import { months } from '../../services/Calendar/models';
 import { TitleText } from '../../shared/components';
+import { Card, Text } from '@ui-kitten/components';
 
 interface Props {
     displayedDate: Date;
@@ -17,28 +18,36 @@ export const CalendarCard = (props: Props) => {
     const month = displayedDate.getMonth();
 
     return (
-        <View
+        <Card
             style={{
                 width: '100%',
-                height: 380, // TODO extract these constants
-                marginBottom: 20, // TODO extract these constants
+                height: 400, // TODO extract these constants
+                justifyContent: 'center',
             }}
+            header={() => (
+                <Text category="h3" status="basic " style={{ paddingHorizontal: 30 }}>
+                    {months(isLeap)[month].name}
+                </Text>
+            )}
+            appearance="filled"
         >
-            <View style={styles.container}>
-                <TouchableOpacity>
-                    <TitleText style={styles.monthText}>
-                        {months(isLeap)[month].name} {year}
-                    </TitleText>
-                </TouchableOpacity>
-            </View>
             <View>
-                <DayNameRow />
-                <DateDisplay
-                    firstDay={setFirstDay(displayedDate)}
-                    displayedDate={displayedDate}
-                />
+                {/* <View style={styles.container}>
+                    <TouchableOpacity>
+                        <TitleText style={styles.monthText}>
+                            {months(isLeap)[month].name} {year}
+                        </TitleText>
+                    </TouchableOpacity>
+                </View> */}
+                <View>
+                    <DayNameRow />
+                    <DateDisplay
+                        firstDay={setFirstDay(displayedDate)}
+                        displayedDate={displayedDate}
+                    />
+                </View>
             </View>
-        </View>
+        </Card>
     );
 };
 

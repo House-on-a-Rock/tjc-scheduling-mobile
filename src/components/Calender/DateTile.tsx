@@ -4,6 +4,7 @@ import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 import { TitleText } from '../../shared/components';
+import { Layout, Text } from '@ui-kitten/components';
 
 export const DateTile = (props) => {
     const { isToday, renderedDate, isCurrentMonth, data } = props;
@@ -14,11 +15,16 @@ export const DateTile = (props) => {
     let date = renderedDate.getDate();
 
     if (!isCurrentMonth) {
-        return <View style={styles.blank}></View>;
+        return (
+            <Layout
+                level="3"
+                style={{ width: '14.2857%', height: 50, borderBottomWidth: 1 }}
+            ></Layout>
+        );
     }
 
     return (
-        <View style={styles.tile}>
+        <Layout level="3" style={styles.tile}>
             <TouchableOpacity
                 style={
                     isToday
@@ -46,9 +52,7 @@ export const DateTile = (props) => {
                         justifyContent: 'flex-start',
                     }}
                 >
-                    <TextComponent style={{ ...styles.text, ...props.textStyle }}>
-                        {date}
-                    </TextComponent>
+                    <Text style={{ ...styles.text, ...props.textStyle }}>{date}</Text>
                     {data.length > 0 ? (
                         <Entypo name="dot-single" size={20} color="black" />
                     ) : (
@@ -56,7 +60,7 @@ export const DateTile = (props) => {
                     )}
                 </View>
             </TouchableOpacity>
-        </View>
+        </Layout>
     );
 };
 

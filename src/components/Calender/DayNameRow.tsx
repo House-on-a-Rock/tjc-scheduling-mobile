@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { AbbrevDays } from '../../services/Calendar/models';
+import { Layout, Text } from '@ui-kitten/components';
 
 // change name to CalendarDayTitleRow
 export const DayNameRow = () => {
@@ -12,7 +13,11 @@ export const DayNameRow = () => {
             </View>
         );
     }
-    return <View style={styles.container}>{dayNameArray}</View>;
+    return (
+        <Layout level="2" style={styles.container}>
+            {dayNameArray}
+        </Layout>
+    );
 };
 
 const styles = StyleSheet.create({
@@ -23,7 +28,7 @@ const styles = StyleSheet.create({
     tiles: {
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white',
+
         flex: 1,
         borderBottomWidth: 1,
         paddingBottom: 10,

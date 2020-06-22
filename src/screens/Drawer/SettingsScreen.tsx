@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { SettingsScreenProps } from '../../shared/models';
-import { Button } from '@ui-kitten/components';
+import { Button, Text } from '@ui-kitten/components';
 import { ThemeContext } from '../../../ui/theme-context';
 import { Screen } from '../../components/Screen';
 import { Layout } from '@ui-kitten/components';
@@ -11,7 +11,7 @@ export const SettingsScreen = (props: SettingsScreenProps) => {
     const themeContext = React.useContext(ThemeContext);
     return (
         <Screen
-            title="Settings"
+            title={() => <Text category="h2">Settings</Text>}
             accessoryLeft={() => openDrawerAction(props.navigation.toggleDrawer)}
         >
             <Layout style={{ flex: 1 }}>

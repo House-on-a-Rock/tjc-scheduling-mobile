@@ -5,6 +5,7 @@ import { CalendarScreenProps } from '../../../../shared/models';
 import { Carousel, TaskPreview } from '../../../../components/Calender';
 import { Screen } from '../../../../components/Screen';
 import { openDrawerAction } from '../../../../shared/components';
+import { Text } from '@ui-kitten/components';
 
 const styles = StyleSheet.create({
     screen: {
@@ -29,7 +30,11 @@ export const CalendarScreen = (props: CalendarScreenProps) => {
 
     return (
         <Screen
-            title="Calendar"
+            title={() => (
+                <Text category="h2" status="basic">
+                    Calendar
+                </Text>
+            )}
             accessoryLeft={() => openDrawerAction(props.navigation.toggleDrawer)}
         >
             <View style={styles.scrollContainer}>

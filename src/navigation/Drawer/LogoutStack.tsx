@@ -8,11 +8,11 @@ const LogOutStack = createStackNavigator<LogoutStackParamList>();
 
 export const LogoutStack = (props) => {
     return (
-        <LogOutStack.Navigator>
+        <LogOutStack.Navigator headerMode="none">
             <LogOutStack.Screen
                 name="Logout"
                 component={LogoutScreen}
-                options={stackOptions}
+                // options={stackOptions}
             />
         </LogOutStack.Navigator>
     );
