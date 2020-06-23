@@ -25,7 +25,7 @@
         "text-subtitle-2-font-size": 13,
         "text-subtitle-2-font-weight": "600",
         "text-subtitle-2-font-family": "$text-font-family",
-        "text-paragraph-1-font-size": 15,
+        "text-paragraph-1-font-size": 18,
         "text-paragraph-1-font-weight": "400",
         "text-paragraph-1-font-family": "$text-font-family",
         "text-paragraph-2-font-size": 13,

@@ -14,7 +14,7 @@ export const DayNameRow = () => {
         );
     }
     return (
-        <Layout level="2" style={styles.container}>
+        <Layout level="3" style={styles.container}>
             {dayNameArray}
         </Layout>
     );
