@@ -15,7 +15,7 @@ export const setTasks = (tasks) => {
 };
 
 function getTasks(userId, accesskey) {
-    return axios.get(secretIp + '/api/tasks/getAllUserTasks', {
+    return axios.get(secretIp + '/api/tasks/userTasks', {
         params: { id: userId },
         headers: {
             authorization: accesskey,
