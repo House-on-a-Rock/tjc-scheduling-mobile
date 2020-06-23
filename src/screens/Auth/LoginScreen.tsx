@@ -20,8 +20,27 @@ export const LoginScreen = (props: LoginScreenProps) => {
     const dispatch = useDispatch();
     const [email, setEmail] = useState<string>('amanda.chin@gmail.com');
     const [password, setPassword] = useState<string>('password4');
-    const [isValidCredentials, setIsValidCredentials] = useState<boolean>(true);
+    const [isValidCredentials, setIsValidCredentials] = useState<Object>({
+        email: true,
+        password: true,
+    });
     const statusBarHeight = Constants.statusBarHeight;
+
+    function verifyLogin(): void {
+        setIsValidCredentials({ email: true, password: true });
+        if (!isValidEmail())
+            setIsValidCredentials({ ...isValidCredentials, email: false });
+        if (password.length === 0)
+            return setIsValidCredentials({ ...isValidCredentials, password: false });
+        console.log('isValidCredentials', isValidCredentials);
+        if (isValidEmail() && password.length > 0) {
+            dispatch(checkCredentials(email.toLowerCase(), password));
+        }
+        //  else {
+        //     setIsValidCredentials({ email: false });
+        //     if (password.length <= 0) setIsValidCredentials({ password: false });
+        // }
+    }
 
     //selects the loadstates that need to be listened to
     const { AUTH: AuthState, PROFILE: ProfileState, TASKS: TasksState } = useSelector(
@@ -88,17 +107,25 @@ export const LoginScreen = (props: LoginScreenProps) => {
                             {!isValidCredentials && invalidCredentialsWarning}
                             {errorMessage}
                             <View style={styles.inputStyle}>
-                                <Text appearance="hint">Email: </Text>
                                 <Input
+                                    label="Email"
                                     value={email}
+                                    caption={
+                                        isValidCredentials.email ? '' : 'Invalid Email'
+                                    }
                                     keyboardType={'email-address'}
                                     onChangeText={onTextSubmitted('email')}
                                 />
                             </View>
                             <View style={styles.inputStyle}>
-                                <Text appearance={'hint'}>Password: </Text>
                                 <Input
+                                    label="Password"
                                     value={password}
+                                    caption={
+                                        isValidCredentials.password
+                                            ? ''
+                                            : 'Invalid Password'
+                                    }
                                     onChangeText={onTextSubmitted('password')}
                                     secureTextEntry={true}
                                 />
@@ -141,14 +168,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
     }
-    function verifyLogin(): void {
-        setIsValidCredentials(true);
-        if (isValidEmail() && password.length > 0) {
-            dispatch(checkCredentials(email.toLowerCase(), password));
-        } else {
-            setIsValidCredentials(false);
-        }
-    }
+
     function onTextSubmitted(
         field: string,
     ): React.Dispatch<React.SetStateAction<string>> {
