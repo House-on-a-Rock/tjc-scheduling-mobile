@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { View } from 'react-native';
-import { Button, Text, Icon, Layout, Input } from '@ui-kitten/components';
+import { Input } from '@ui-kitten/components';
 import { errorCaption } from '../shared/components/form_functions';
 
 interface EmailInputProps {

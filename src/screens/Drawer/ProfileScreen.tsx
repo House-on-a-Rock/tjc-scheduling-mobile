@@ -17,7 +17,7 @@ import { Entypo } from '@expo/vector-icons';
 import { ProfileScreenProps } from '../../shared/models';
 import { Screen } from '../../components/Screen';
 import { openDrawerAction } from '../../shared/components';
-import { Text } from '@ui-kitten/components';
+import { Text, Layout } from '@ui-kitten/components';
 
 export const ProfileScreen = (props: ProfileScreenProps) => {
     const { email, firstName, lastName, church } = useSelector(
@@ -36,10 +36,10 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
         return (
             <View style={styles.tile}>
                 <View style={{ width: 70 }}>
-                    <Text style={styles.text}>{props.label}:</Text>
+                    <Text>{props.label}:</Text>
                 </View>
                 <View style={{ flex: 10, paddingLeft: 10 }}>
-                    <Text style={styles.text}>{props.data}</Text>
+                    <Text>{props.data}</Text>
                 </View>
                 <TouchableOpacity style={{ flex: 1 }}>
                     <Entypo
@@ -89,7 +89,7 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
             title={() => <Text category="h2">Profile</Text>}
             accessoryLeft={() => openDrawerAction(props.navigation.toggleDrawer)}
         >
-            <View style={styles.screen}>
+            <Layout style={styles.screen}>
                 <Modal
                     animationType="fade"
                     transparent={true}
@@ -109,9 +109,7 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
                             }}
                         >
                             <View style={styles.modalCard}>
-                                <Text style={styles.text}>
-                                    Edit {modalParameter.label}
-                                </Text>
+                                <Text>Edit {modalParameter.label}</Text>
                                 <View style={{ flexDirection: 'row', flex: 1 }}>
                                     <TextInput
                                         placeholder={modalParameter.data}
@@ -157,7 +155,7 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
                         renderItem={render}
                     />
                 </View>
-            </View>
+            </Layout>
         </Screen>
     );
 };
@@ -166,7 +164,6 @@ const styles = StyleSheet.create({
     screen: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor: 'white',
         zIndex: -1,
     },
     imageCard: {

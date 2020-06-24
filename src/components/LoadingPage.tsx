@@ -1,8 +1,7 @@
 import React from 'react';
 import { Platform, SafeAreaView } from 'react-native';
 import { Layout, Spinner } from '@ui-kitten/components';
-import Constants from 'expo-constants';
-const statusBarHeight = Constants.statusBarHeight;
+import { statusBarHeight } from '../shared/constants';
 
 export const LoadingPage = (props) => {
     return (

@@ -4,7 +4,7 @@ import { DateDisplay } from './DateDisplay';
 import { DayNameRow } from './DayNameRow';
 import { setFirstDay } from '../../services/Calendar/helper_functions';
 import { months } from '../../services/Calendar/models';
-
+import { calendarCardDimensions } from '../../shared/constants';
 import { Text, Layout, Card } from '@ui-kitten/components';
 
 interface Props {
@@ -27,11 +27,11 @@ export const CalendarCard = (props: Props) => {
             appearance="filled"
             style={{
                 width: '100%',
-                height: 380, // TODO extract these constants
-                marginBottom: 20, // TODO extract these constants
+                height: calendarCardDimensions.height,
+                marginBottom: calendarCardDimensions.margin,
             }}
         >
-            <Layout level="2">
+            <Layout>
                 <View>
                     <DayNameRow />
                     <DateDisplay
@@ -43,23 +43,3 @@ export const CalendarCard = (props: Props) => {
         </Card>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        width: '100%',
-        height: '15%',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    yearText: {
-        alignSelf: 'center',
-        fontSize: 40,
-        color: '#3E48DA',
-        letterSpacing: 1,
-    },
-    monthText: {
-        alignSelf: 'center',
-        fontSize: 30,
-        color: '#3E48DA',
-    },
-});

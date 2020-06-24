@@ -60,13 +60,6 @@ export const DateDisplay = (props) => {
                     data={data}
                     renderedDate={new Date(day)}
                     key={j + j * (k + 1) + k}
-                    style={styles.dateTileStyle}
-                    textStyle={
-                        //TODO move text styling into dateTile after we determine font, etc
-                        isCurrentMonth
-                            ? styles.currentMonthDatesText
-                            : styles.notCurrentMonthDatesText
-                    }
                     isToday={isToday}
                     isCurrentMonth={isCurrentMonth}
                 />
@@ -82,15 +75,10 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         width: '100%',
     },
-    dateTileStyle: {
-        width: '14.2857%',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    currentMonthDatesText: {
-        color: '#1A7ECB',
-    },
-    notCurrentMonthDatesText: {
-        color: '#C98B8F',
-    },
+    // currentMonthDatesText: {
+    //     color: '#1A7ECB',
+    // },
+    // notCurrentMonthDatesText: {
+    //     color: '#C98B8F',
+    // },
 });

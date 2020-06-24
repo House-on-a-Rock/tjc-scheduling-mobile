@@ -1,6 +1,7 @@
 import { View, Text } from 'react-native';
 import React from 'react';
 
+//not in use
 export const ErrorPage = (props) => {
     return (
         <View

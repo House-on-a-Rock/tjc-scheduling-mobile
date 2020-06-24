@@ -13,14 +13,14 @@ import {
     taskReducer,
     loadStateReducer,
 } from './src/store/reducers';
+
 //ui kitten imports
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
-// import { default as theme } from './theme.json'; // <-- Import app theme
-import * as ui from './ui';
-import { default as mapping } from './ui/mapping.json';
+import * as ui from './src/ui';
+import { default as mapping } from './src/ui/mapping.json';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
-import { ThemeContext } from './ui/theme-context';
+import { ThemeContext } from './src/ui/theme-context';
 
 const rootReducer = combineReducers({
     authReducer: authReducer,

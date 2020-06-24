@@ -3,6 +3,7 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { Layout, Text } from '@ui-kitten/components';
+import { dateTileDimensions } from '../../shared/constants';
 
 export const DateTile = (props) => {
     const { isToday, renderedDate, isCurrentMonth, data } = props;
@@ -12,11 +13,11 @@ export const DateTile = (props) => {
     let date = renderedDate.getDate();
 
     if (!isCurrentMonth) {
-        return <Layout level="4" style={styles.blank}></Layout>;
+        return <Layout style={styles.tile}></Layout>;
     }
 
     return (
-        <Layout level="4" style={styles.tile}>
+        <Layout style={styles.tile}>
             <TouchableOpacity
                 style={
                     isToday
@@ -44,7 +45,7 @@ export const DateTile = (props) => {
                         justifyContent: 'flex-start',
                     }}
                 >
-                    <Text category="p1" status="info">
+                    <Text category="p1" status="success" style={{ color: '#5999E2' }}>
                         {date}
                     </Text>
                     {data.length > 0 ? (
@@ -60,11 +61,12 @@ export const DateTile = (props) => {
 
 const styles = StyleSheet.create({
     tile: {
-        width: '14.2857%',
-        height: 50, //TODO extract these constants
+        width: dateTileDimensions.width,
+        height: dateTileDimensions.height,
         justifyContent: 'center',
         alignItems: 'center',
-        borderBottomWidth: 1,
+        // borderBottomWidth: 1,
+        // borderBottomColor: '#B3A6A6',
     },
     touchable: {
         flex: 1,
@@ -75,7 +77,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Roboto-Regular',
     },
     blank: {
-        width: '14.2857%',
+        width: dateTileDimensions.width,
         height: 50,
         borderBottomWidth: 1,
     },

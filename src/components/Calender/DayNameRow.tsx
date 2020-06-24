@@ -9,15 +9,13 @@ export const DayNameRow = () => {
     for (let i = 0; i < dayNameArray.length; i++) {
         dayNameArray[i] = (
             <View key={i} style={styles.tiles}>
-                <Text style={styles.text}>{AbbrevDays[i]}</Text>
+                <Text status="basic" category="h6">
+                    {AbbrevDays[i]}
+                </Text>
             </View>
         );
     }
-    return (
-        <Layout level="3" style={styles.container}>
-            {dayNameArray}
-        </Layout>
-    );
+    return <Layout style={styles.container}>{dayNameArray}</Layout>;
 };
 
 const styles = StyleSheet.create({
@@ -29,12 +27,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1,
-        borderBottomWidth: 1,
-        // paddingBottom: 10,
-    },
-    text: {
-        fontFamily: 'Roboto-Bold',
-        color: '#6971E2',
-        fontSize: 18,
+        paddingBottom: 10,
+        // borderBottomWidth: 1,
+        // borderBottomColor: '#B3A6A6',
     },
 });

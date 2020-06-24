@@ -14,7 +14,7 @@ import {
     List,
     ListItem,
 } from '@ui-kitten/components';
-import { ThemeContext } from '../../../ui/theme-context';
+import { ThemeContext } from '../../../src/ui/theme-context';
 
 export const SignUpScreen = (props: SignUpScreenProps) => {
     const navigateBack = () => {

@@ -16,7 +16,7 @@ import { LoadingPage } from '../../components/LoadingPage';
 import { Button, Text, Icon, Layout, Input } from '@ui-kitten/components';
 import { EmailInput, PasswordInput } from '../../components/Forms';
 import { isValidEmail } from '../../shared/components/';
-import Constants from 'expo-constants';
+import { statusBarHeight } from '../../shared/constants';
 
 export interface PasswordState {
     value: string;
@@ -44,7 +44,6 @@ export const LoginScreen = (props: LoginScreenProps) => {
         visible: false,
         message: null,
     });
-    const statusBarHeight = Constants.statusBarHeight;
 
     function verifyLogin() {
         setEmail({ ...email, valid: true, message: '' });

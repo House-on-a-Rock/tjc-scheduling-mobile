@@ -8,10 +8,7 @@ import { ProfileStack } from './ProfileStack';
 import { SettingsStack } from './SettingsStack';
 import { LogoutStack } from './LogoutStack';
 import { Drawer, DrawerItem, IndexPath, Icon, Text, Layout } from '@ui-kitten/components';
-
-//TODO place statusBarHeight into a constants file
-import Constants from 'expo-constants';
-const statusBarHeight = Constants.statusBarHeight;
+import { statusBarHeight } from '../../shared/constants';
 
 const { Navigator, Screen } = createDrawerNavigator<DrawerStackParamList>();
 
@@ -47,7 +44,7 @@ const DrawerContent = ({ navigation, state }) => (
                 paddingTop: Platform.OS === 'android' ? statusBarHeight : 0,
             }}
         >
-            <Layout level="3">
+            <Layout>
                 <DrawerItem
                     title={drawerTitle('Home')}
                     accessoryLeft={(props) => (
