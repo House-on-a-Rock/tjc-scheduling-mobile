@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import { View } from 'react-native';
 import { Button, Text, Icon, Layout, Input } from '@ui-kitten/components';
+import { errorCaption } from '../shared/components/form_functions';
 
 interface EmailInputProps {
     label: string;
@@ -14,12 +15,6 @@ interface PasswordInputProps {
     caption?: string;
     onChangeText: React.Dispatch<React.SetStateAction<string>>;
 }
-
-const errorCaption: RenderProp<TextProps> = (caption: string) => (
-    <Text status="warning" category="s2">
-        {caption}
-    </Text>
-);
 
 export const EmailInput = ({ label, value, caption, onChangeText }: EmailInputProps) => {
     return (

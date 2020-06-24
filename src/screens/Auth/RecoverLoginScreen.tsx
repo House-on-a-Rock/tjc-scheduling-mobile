@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, StyleSheet, Button } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { RecoverLoginScreenProps } from '../../shared/models';
-import { CustomInput, BodyText } from '../../shared/components';
+import { isValidEmail } from '../../shared/components/';
 import { sendResetEmail, loadStateActionTypes } from '../../store/actions';
 import { LoadingPage } from '../../components/LoadingPage';
 import { Screen } from '../../components/Screen';
-import { TopNavigationAction, Icon } from '@ui-kitten/components';
+import { TopNavigationAction, Icon, Text, Input, Button } from '@ui-kitten/components';
+import { EmailInput } from '../../components/Forms';
 
 export const RecoverLoginScreen = (props: RecoverLoginScreenProps) => {
     const [email, setEmail] = useState<string>('shaun.tung@gmail.com');
+    const [isValidCredentials, setIsValidCredentials] = useState<boolean>(true);
     const dispatch = useDispatch();
     const loadState: loadStateActionTypes = useSelector(
         (state) => state.loadStateReducer.loadStatus.AUTH,
     );
 
     const onSubmitHandler = (): void => {
-        dispatch(sendResetEmail(email));
+        setIsValidCredentials(true);
+        if (isValidEmail(email)) dispatch(sendResetEmail(email));
+        else setIsValidCredentials(false);
     };
 
     if (loadState === loadStateActionTypes.LOADING) return <LoadingPage />;
@@ -34,27 +38,21 @@ export const RecoverLoginScreen = (props: RecoverLoginScreenProps) => {
             <View style={styles.screen}>
                 <View style={styles.inputContainer}>
                     {loadState === loadStateActionTypes.LOADED && (
-                        <BodyText style={{ fontSize: 25, color: 'blue' }}>
-                            Email has been sent!
-                        </BodyText>
+                        <Text category="h4">Email has been sent!</Text>
                     )}
-                    <BodyText style={styles.inputLabel}>
-                        Please enter your email:{' '}
-                    </BodyText>
 
-                    <CustomInput
-                        style={styles.inputStyle}
+                    <EmailInput
+                        label="Please enter your email"
                         value={email}
-                        keyboardType={'email-address'}
+                        caption={isValidCredentials ? '' : 'Please enter a valid email'}
                         onChangeText={setEmail}
                     />
                 </View>
                 <View style={styles.buttonContainer}>
-                    <View style={styles.buttonStyle}>
-                        <Button
-                            title="Email me a recovery link"
-                            onPress={onSubmitHandler}
-                        />
+                    <View>
+                        <Button onPress={onSubmitHandler}>
+                            Email me a recovery link
+                        </Button>
                     </View>
                 </View>
             </View>

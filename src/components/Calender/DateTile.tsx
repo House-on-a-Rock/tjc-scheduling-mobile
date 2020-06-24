@@ -2,14 +2,11 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-
-import { TitleText } from '../../shared/components';
 import { Layout, Text } from '@ui-kitten/components';
 
 export const DateTile = (props) => {
     const { isToday, renderedDate, isCurrentMonth, data } = props;
     const navigation = useNavigation();
-    let TextComponent = props.TextComponent || TitleText; //TODO redo font system
     let month = renderedDate.getMonth() + 1; //getMonth() returns in base 0
     let year = renderedDate.getFullYear();
     let date = renderedDate.getDate();
@@ -47,9 +44,6 @@ export const DateTile = (props) => {
                         justifyContent: 'flex-start',
                     }}
                 >
-                    {/* <TextComponent style={{ ...styles.text, ...props.textStyle }}>
-                        {date}
-                    </TextComponent> */}
                     <Text category="p1" status="info">
                         {date}
                     </Text>

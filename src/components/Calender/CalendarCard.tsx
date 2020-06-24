@@ -4,16 +4,8 @@ import { DateDisplay } from './DateDisplay';
 import { DayNameRow } from './DayNameRow';
 import { setFirstDay } from '../../services/Calendar/helper_functions';
 import { months } from '../../services/Calendar/models';
-import { TitleText } from '../../shared/components';
-import {
-    Drawer,
-    DrawerItem,
-    IndexPath,
-    Icon,
-    Text,
-    Layout,
-    Card,
-} from '@ui-kitten/components';
+
+import { Text, Layout, Card } from '@ui-kitten/components';
 
 interface Props {
     displayedDate: Date;
@@ -40,13 +32,6 @@ export const CalendarCard = (props: Props) => {
             }}
         >
             <Layout level="2">
-                {/* <View style={styles.container}>
-                    <TouchableOpacity>
-                        <TitleText style={styles.monthText}>
-                            {months(isLeap)[month].name} {year}
-                        </TitleText>
-                    </TouchableOpacity>
-                </View> */}
                 <View>
                     <DayNameRow />
                     <DateDisplay

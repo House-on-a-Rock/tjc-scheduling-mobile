@@ -15,6 +15,7 @@ import { determineLoadState } from '../../store/helper';
 import { LoadingPage } from '../../components/LoadingPage';
 import { Button, Text, Icon, Layout, Input } from '@ui-kitten/components';
 import { EmailInput, PasswordInput } from '../../components/Forms';
+import { isValidEmail } from '../../shared/components/';
 import Constants from 'expo-constants';
 
 export interface PasswordState {
@@ -49,7 +50,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
         setEmail({ ...email, valid: true, message: '' });
         setPassword({ ...password, valid: true, message: '' });
         if (isValidEmail(email.value) && password.value.length > 0) {
-            dispatch(checkCredentials(email.value, password.value));
+            dispatch(checkCredentials(email.value.toLowerCase(), password.value));
         } else {
             if (password.value.length === 0)
                 setPassword({
@@ -96,19 +97,11 @@ export const LoginScreen = (props: LoginScreenProps) => {
     let errorMessage: React.ReactNode | null = null;
     if (loadState === loadStateActionTypes.ERROR) {
         //can be cleaned up better, any suggestions?
-        if (AuthError) errorMessage = determineErrorMessage(AuthError.message);
-        else if (ProfileError) errorMessage = determineErrorMessage(ProfileError.message);
-        else if (TasksError) errorMessage = determineErrorMessage(TasksError.message);
+        if (AuthError) errorMessage = createErrorMessage(AuthError.message);
+        else if (ProfileError) errorMessage = createErrorMessage(ProfileError.message);
+        else if (TasksError) errorMessage = createErrorMessage(TasksError.message);
         else errorMessage = null;
     }
-
-    const invalidCredentialsWarning: React.ReactNode = (
-        <Text category={'h6'} status={'danger'}>
-            Please enter valid credentials
-        </Text>
-    );
-
-    const FacebookIcon = (props) => <Icon name="facebook" {...props} />;
 
     if (loadState === loadStateActionTypes.LOADING) return <LoadingPage opacity={0.8} />;
 
@@ -145,21 +138,6 @@ export const LoginScreen = (props: LoginScreenProps) => {
                                     setEmail({ ...email, value: input })
                                 }
                             />
-
-                            {/* <View style={styles.inputStyle}>
-                                <Input
-                                    label="Password"
-                                    value={password.value}
-                                    caption={password.valid ? '' : password.message}
-                                    onChangeText={(input) =>
-                                        setPassword({
-                                            ...password,
-                                            value: input,
-                                        })
-                                    }
-                                    secureTextEntry={true}
-                                />
-                            </View> */}
                             <PasswordInput
                                 label="Password"
                                 value={password.value}
@@ -187,10 +165,9 @@ export const LoginScreen = (props: LoginScreenProps) => {
                             </View>
                             <View>
                                 <Button
-                                    accessoryLeft={FacebookIcon}
                                     onPress={() => props.navigation.navigate('SignUp')}
                                 >
-                                    Sign Up!
+                                    Ui kitten test
                                 </Button>
                             </View>
                         </View>
@@ -202,19 +179,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
 
     //helper functions
 
-    function isValidEmail(email: string): boolean {
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(email.toLowerCase());
-    }
-
-    function onTextSubmitted(
-        field: string,
-    ): React.Dispatch<React.SetStateAction<string>> {
-        if (field === 'email') {
-            return setEmail;
-        } else return setPassword;
-    }
-    function determineErrorMessage(msg): React.ReactNode {
+    function createErrorMessage(msg): React.ReactNode {
         return (
             <Text category={'h6'} status={'danger'}>
                 {msg}
