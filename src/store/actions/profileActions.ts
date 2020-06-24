@@ -30,9 +30,11 @@ export const fetchProfileOnLogin = () => {
         const userId = extractId(accesskey);
         try {
             const { data: userProfile } = await getProfile(userId, accesskey);
+
             dispatch(setProfile(userProfile));
             dispatch(ProfileStateActions.Loaded());
         } catch (error) {
+            console.log('error in profile', error);
             const errorData = errorDataExtractor(error);
             return dispatch(ProfileStateActions.Error(errorData));
         }

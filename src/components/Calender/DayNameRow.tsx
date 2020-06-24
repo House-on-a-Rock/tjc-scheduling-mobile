@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { AbbrevDays } from '../../services/Calendar/models';
+import { Layout, Text } from '@ui-kitten/components';
 
 // change name to CalendarDayTitleRow
 export const DayNameRow = () => {
@@ -8,11 +9,13 @@ export const DayNameRow = () => {
     for (let i = 0; i < dayNameArray.length; i++) {
         dayNameArray[i] = (
             <View key={i} style={styles.tiles}>
-                <Text style={styles.text}>{AbbrevDays[i]}</Text>
+                <Text status="basic" category="h6">
+                    {AbbrevDays[i]}
+                </Text>
             </View>
         );
     }
-    return <View style={styles.container}>{dayNameArray}</View>;
+    return <Layout style={styles.container}>{dayNameArray}</Layout>;
 };
 
 const styles = StyleSheet.create({
@@ -23,14 +26,9 @@ const styles = StyleSheet.create({
     tiles: {
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white',
         flex: 1,
-        borderBottomWidth: 1,
         paddingBottom: 10,
-    },
-    text: {
-        fontFamily: 'Roboto-Bold',
-        color: '#6971E2',
-        fontSize: 18,
+        // borderBottomWidth: 1,
+        // borderBottomColor: '#B3A6A6',
     },
 });

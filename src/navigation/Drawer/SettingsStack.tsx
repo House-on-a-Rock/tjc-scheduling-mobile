@@ -8,11 +8,11 @@ const SetStack = createStackNavigator<SettingsStackParamList>();
 
 export const SettingsStack = (props) => {
     return (
-        <SetStack.Navigator>
+        <SetStack.Navigator headerMode="none">
             <SetStack.Screen
                 name="Settings"
                 component={SettingsScreen}
-                options={stackOptions}
+                // options={stackOptions}
             />
         </SetStack.Navigator>
     );

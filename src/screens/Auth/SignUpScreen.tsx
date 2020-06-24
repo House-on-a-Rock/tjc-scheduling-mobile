@@ -1,120 +1,98 @@
 import React, { useState } from 'react';
-import {
-    View,
-    StyleSheet,
-    Image,
-    Button,
-    KeyboardAvoidingView,
-    Platform,
-    Keyboard,
-} from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { BodyText, CustomInput } from '../../shared/components';
+import { StyleSheet, View, SafeAreaView, Platform } from 'react-native';
+
 import { SignUpScreenProps } from '../../shared/models';
+import { Screen } from '../../components/Screen';
+import {
+    Icon,
+    Layout,
+    Text,
+    TopNavigationAction,
+    Button,
+    withStyles,
+    Card,
+    List,
+    ListItem,
+} from '@ui-kitten/components';
+import { ThemeContext } from '../../../src/ui/theme-context';
 
+//was used for testing ui kitten components, currently unused
 export const SignUpScreen = (props: SignUpScreenProps) => {
-    const [userEmail, setUserEmail] = useState<string>('');
-    const [userPassword, setUserPassword] = useState<string>('');
-
-    const onSignUpHandler = () => {
-        //make api call
+    const navigateBack = () => {
+        props.navigation.goBack();
     };
 
+    const BackAction = () => (
+        <TopNavigationAction icon={BackIcon} onPress={navigateBack} />
+    );
+
+    const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
+
+    const themeContext = React.useContext(ThemeContext);
+
+    const AwesomeView = (props) => {
+        const { eva, style, ...restProps } = props;
+
+        return <View {...restProps} style={[eva.style.awesome, style]} />;
+    };
+
+    const ThemedAwesomeView = withStyles(AwesomeView, (theme) => ({
+        awesome: {
+            backgroundColor: theme['color-warning-300'],
+        },
+    }));
+
+    function cardHeader() {
+        return <Text>Wow</Text>;
+    }
+
+    function cardExample() {
+        return (
+            <Card header={cardHeader} appearance="outline" status="basic">
+                <Text category="h1">details1</Text>
+                <Text category="h2">details2</Text>
+                <Text category="h3">details3</Text>
+            </Card>
+        );
+    }
+
+    const cardArray = new Array(5).fill({
+        title: 'New card',
+    });
+
+    // const cardArray1 = [cardExample()]
+    const renderCards = ({ item, index }) => {
+        return <ListItem title={`${item.title} ${index + 1}`} />;
+    };
     return (
-        <KeyboardAvoidingView
-            style={styles.signUpScreen}
-            behavior={Platform.OS === 'ios' ? 'padding' : null}
-        >
-            <TouchableWithoutFeedback
-                onPress={Keyboard.dismiss}
-                style={styles.feedbackContainer}
+        <Screen accessoryLeft={BackAction} title="Hello">
+            <Layout
+                style={{
+                    flex: 1,
+                    width: '100%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
             >
-                <View style={styles.imageContainer}>
-                    <Image
-                        source={require('../../assets/images/TjcLogo.png')}
-                        resizeMode="contain"
-                        style={styles.image}
-                    />
-                </View>
-                <View style={styles.loginCardContainer}>
-                    <View style={styles.inputStyle}>
-                        <BodyText style={styles.inputLabel}>Enter your email: </BodyText>
-                        <CustomInput
-                            value={userEmail}
-                            keyboardType={'email-address'}
-                            onChangeText={setUserEmail}
-                        />
-                    </View>
-                    <View style={styles.inputStyle}>
-                        <BodyText style={styles.inputLabel}>Choose a password: </BodyText>
-                        <CustomInput
-                            value={userPassword}
-                            onChangeText={setUserPassword}
-                            secureTextEntry={true}
-                        />
-                    </View>
-                </View>
-            </TouchableWithoutFeedback>
-            <View style={styles.buttonContainer}>
-                <View style={styles.buttonStyle}>
-                    <Button title="Sign Up!" onPress={onSignUpHandler} />
-                </View>
-                <View style={{ width: '40%' }}>
-                    <Button
-                        title="Return to login"
-                        onPress={() => props.navigation.goBack()}
-                    />
-                </View>
-            </View>
-        </KeyboardAvoidingView>
+                <List
+                    style={styles.container}
+                    data={cardArray}
+                    renderItem={renderCards}
+                />
+                <Button style={{ marginVertical: 4 }} onPress={themeContext.toggleTheme}>
+                    TOGGLE THEME
+                </Button>
+                <ThemedAwesomeView>
+                    <Text>Themed view here</Text>
+                </ThemedAwesomeView>
+            </Layout>
+        </Screen>
     );
 };
 
 const styles = StyleSheet.create({
-    signUpScreen: {
-        flex: 1,
-        height: '100%',
+    container: {
+        maxHeight: 180,
         width: '100%',
-        backgroundColor: 'white',
-        alignItems: 'stretch',
-    },
-    feedbackContainer: {
-        backgroundColor: 'white',
-        width: '100%',
-        height: '60%',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        // flex: 1,
-    },
-    imageContainer: {
-        width: '80%',
-        height: '10%',
-        flex: 3,
-    },
-    loginCardContainer: {
-        width: '80%',
-        height: '20%',
-        alignItems: 'center',
-        flex: 1,
-    },
-    buttonContainer: {
-        height: '30%',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-    },
-    inputStyle: {
-        width: '80%',
-        paddingVertical: 10,
-    },
-    inputLabel: {
-        fontSize: 14,
-        color: 'grey',
-    },
-    image: {
-        width: '100%',
-        height: '100%',
-    },
-    buttonStyle: {
-        width: '25%',
     },
 });

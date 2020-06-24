@@ -30,9 +30,11 @@ export const fetchTasksOnLogin = () => {
         const userId = extractId(accesskey);
         try {
             const { data: userTasks } = await getTasks(userId, accesskey);
+
             dispatch(setTasks(userTasks));
             dispatch(TaskStateActions.Loaded());
         } catch (error) {
+            console.log('error in tasks', error);
             const errorData = errorDataExtractor(error);
             return dispatch(TaskStateActions.Error(errorData));
         }

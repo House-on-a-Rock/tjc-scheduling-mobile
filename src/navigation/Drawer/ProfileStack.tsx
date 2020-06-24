@@ -8,7 +8,7 @@ const ProfStack = createStackNavigator<ProfileStackParamList>();
 
 export const ProfileStack = (props) => {
     return (
-        <ProfStack.Navigator>
+        <ProfStack.Navigator headerMode="none">
             <ProfStack.Screen
                 name="Profile"
                 component={ProfileScreen}

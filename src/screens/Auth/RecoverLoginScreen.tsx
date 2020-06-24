@@ -1,47 +1,62 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, StyleSheet, Button } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { RecoverLoginScreenProps } from '../../shared/models';
-import { CustomInput, BodyText } from '../../shared/components';
+import { isValidEmail } from '../../shared/components/';
 import { sendResetEmail, loadStateActionTypes } from '../../store/actions';
 import { LoadingPage } from '../../components/LoadingPage';
+import { Screen } from '../../components/Screen';
+import { TopNavigationAction, Icon, Text, Input, Button } from '@ui-kitten/components';
+import { EmailInput } from '../../components/Forms';
 
 export const RecoverLoginScreen = (props: RecoverLoginScreenProps) => {
     const [email, setEmail] = useState<string>('shaun.tung@gmail.com');
+    const [isValidCredentials, setIsValidCredentials] = useState<boolean>(true);
     const dispatch = useDispatch();
     const loadState: loadStateActionTypes = useSelector(
         (state) => state.loadStateReducer.loadStatus.AUTH,
     );
 
     const onSubmitHandler = (): void => {
-        dispatch(sendResetEmail(email));
+        setIsValidCredentials(true);
+        if (isValidEmail(email)) dispatch(sendResetEmail(email));
+        else setIsValidCredentials(false);
     };
 
     if (loadState === loadStateActionTypes.LOADING) return <LoadingPage />;
 
-    return (
-        <View style={styles.screen}>
-            <View style={styles.inputContainer}>
-                {loadState === loadStateActionTypes.LOADED && (
-                    <BodyText style={{ fontSize: 25, color: 'blue' }}>
-                        Email has been sent!
-                    </BodyText>
-                )}
-                <BodyText style={styles.inputLabel}>Please enter your email: </BodyText>
+    const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
+    const BackAction = () => (
+        <TopNavigationAction icon={BackIcon} onPress={navigateBack} />
+    );
+    const navigateBack = () => {
+        props.navigation.goBack();
+    };
 
-                <CustomInput
-                    style={styles.inputStyle}
-                    value={email}
-                    keyboardType={'email-address'}
-                    onChangeText={setEmail}
-                />
-            </View>
-            <View style={styles.buttonContainer}>
-                <View style={styles.buttonStyle}>
-                    <Button title="Email me a recovery link" onPress={onSubmitHandler} />
+    return (
+        <Screen title="Recover Login" accessoryLeft={() => BackAction(navigateBack)}>
+            <View style={styles.screen}>
+                <View style={styles.inputContainer}>
+                    {loadState === loadStateActionTypes.LOADED && (
+                        <Text category="h4">Email has been sent!</Text>
+                    )}
+
+                    <EmailInput
+                        label="Please enter your email"
+                        value={email}
+                        caption={isValidCredentials ? '' : 'Please enter a valid email'}
+                        onChangeText={setEmail}
+                    />
+                </View>
+                <View style={styles.buttonContainer}>
+                    <View>
+                        <Button onPress={onSubmitHandler}>
+                            Email me a recovery link
+                        </Button>
+                    </View>
                 </View>
             </View>
-        </View>
+        </Screen>
     );
 };
 

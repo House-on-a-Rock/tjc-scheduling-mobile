@@ -1,18 +1,77 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, StyleSheet, Image, Button, ScrollView } from 'react-native';
+import {
+    View,
+    StyleSheet,
+    Image,
+    ScrollView,
+    SafeAreaView,
+    Platform,
+} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { CustomInput, BodyText } from '../../shared/components';
 import { LoginScreenProps } from '../../shared/models';
 import { checkCredentials, loadStateActionTypes, login } from '../../store/actions';
 import { determineLoadState } from '../../store/helper';
 import { LoadingPage } from '../../components/LoadingPage';
+import { Button, Text, Icon, Layout, Input } from '@ui-kitten/components';
+import { EmailInput, PasswordInput } from '../../components/Forms';
+import { isValidEmail } from '../../shared/components/';
+import { statusBarHeight } from '../../shared/constants';
+
+export interface PasswordState {
+    value: string;
+    visible: boolean;
+    valid: boolean;
+    message: string;
+}
+
+export interface EmailState {
+    value: string;
+    valid: boolean;
+    message: string;
+}
 
 export const LoginScreen = (props: LoginScreenProps) => {
     const dispatch = useDispatch();
-    const [email, setEmail] = useState<string>('amanda.chin@gmail.com');
-    const [password, setPassword] = useState<string>('password4');
-    const [isValidCredentials, setIsValidCredentials] = useState<boolean>(true);
+    const [email, setEmail] = useState<EmailState>({
+        value: 'amanda.chin@gmail.com',
+        valid: true,
+        message: null,
+    });
+    const [password, setPassword] = useState<PasswordState>({
+        value: 'password4',
+        valid: true,
+        visible: false,
+        message: null,
+    });
+
+    function verifyLogin() {
+        setEmail({ ...email, valid: true, message: '' });
+        setPassword({ ...password, valid: true, message: '' });
+        if (isValidEmail(email.value) && password.value.length > 0) {
+            dispatch(checkCredentials(email.value.toLowerCase(), password.value));
+        } else {
+            if (password.value.length === 0)
+                setPassword({
+                    ...password,
+                    valid: false,
+                    message: 'Please enter a password',
+                });
+            if (!isValidEmail(email.value)) {
+                setEmail({
+                    ...email,
+                    valid: false,
+                    message: 'Enter a valid email address.',
+                });
+            }
+            if (email.value.length === 0)
+                setEmail({
+                    ...email,
+                    valid: false,
+                    message: 'Please enter an email address.',
+                });
+        }
+    }
 
     //selects the loadstates that need to be listened to
     const { AUTH: AuthState, PROFILE: ProfileState, TASKS: TasksState } = useSelector(
@@ -37,92 +96,88 @@ export const LoginScreen = (props: LoginScreenProps) => {
     let errorMessage: React.ReactNode | null = null;
     if (loadState === loadStateActionTypes.ERROR) {
         //can be cleaned up better, any suggestions?
-        if (AuthError) errorMessage = determineErrorMessage(AuthError.message);
-        else if (ProfileError) errorMessage = determineErrorMessage(ProfileError.message);
-        else if (TasksError) errorMessage = determineErrorMessage(TasksError.message);
+        if (AuthError) errorMessage = createErrorMessage(AuthError.message);
+        else if (ProfileError) errorMessage = createErrorMessage(ProfileError.message);
+        else if (TasksError) errorMessage = createErrorMessage(TasksError.message);
         else errorMessage = null;
     }
 
-    const invalidCredentialsWarning: React.ReactNode = (
-        <BodyText style={styles.loginError}>Please enter valid credentials</BodyText>
-    );
-
-    if (loadState === loadStateActionTypes.LOADING) return <LoadingPage />;
+    if (loadState === loadStateActionTypes.LOADING) return <LoadingPage opacity={0.8} />;
 
     return (
-        <KeyboardAwareScrollView contentContainerStyle={styles.loginScreen}>
-            <ScrollView
-                keyboardShouldPersistTaps="handled"
-                contentContainerStyle={styles.feedbackContainer}
-                scrollEnabled={false}
-            >
-                <View style={styles.imageContainer}>
-                    <Image
-                        source={require('../../assets/images/TjcLogo.png')}
-                        resizeMode="contain"
-                        style={styles.image}
-                    />
-                </View>
-                <View style={styles.loginCardContainer}>
-                    {!isValidCredentials && invalidCredentialsWarning}
+        <SafeAreaView
+            style={{
+                flex: 1,
+                backgroundColor: 'black',
+                paddingTop: Platform.OS === 'android' ? statusBarHeight : 0,
+            }}
+        >
+            <Layout>
+                <KeyboardAwareScrollView contentContainerStyle={styles.loginScreen}>
+                    <ScrollView
+                        keyboardShouldPersistTaps="handled"
+                        contentContainerStyle={styles.feedbackContainer}
+                        scrollEnabled={false}
+                    >
+                        <View style={styles.imageContainer}>
+                            <Image
+                                source={require('../../assets/images/TjcLogo.png')}
+                                resizeMode="contain"
+                                style={styles.image}
+                            />
+                        </View>
+                        <View style={styles.loginCardContainer}>
+                            {/* {!isValidCredentials && invalidCredentialsWarning} */}
+                            {errorMessage}
+                            <EmailInput
+                                label="Email"
+                                value={email.value}
+                                caption={email.valid ? '' : email.message}
+                                onChangeText={(input) =>
+                                    setEmail({ ...email, value: input })
+                                }
+                            />
+                            <PasswordInput
+                                label="Password"
+                                value={password.value}
+                                caption={password.valid ? '' : password.message}
+                                onChangeText={(input) =>
+                                    setPassword({ ...password, value: input })
+                                }
+                            />
+                        </View>
 
-                    {errorMessage}
-                    <View style={styles.inputStyle}>
-                        <BodyText style={styles.inputLabel}>Email: </BodyText>
-                        <CustomInput
-                            value={email}
-                            keyboardType={'email-address'}
-                            onChangeText={onTextSubmitted('email')}
-                        />
-                    </View>
-                    <View style={styles.inputStyle}>
-                        <BodyText style={styles.inputLabel}>Password: </BodyText>
-                        <CustomInput
-                            value={password}
-                            onChangeText={onTextSubmitted('password')}
-                            secureTextEntry={true}
-                        />
-                    </View>
-                </View>
-
-                <View style={styles.buttonContainer}>
-                    <View style={styles.buttonStyle}>
-                        <Button title="Login!" onPress={verifyLogin} />
-                    </View>
-                    <View style={styles.buttonStyle}>
-                        <Button
-                            title="Recover Account"
-                            onPress={() => props.navigation.navigate('RecoverLogin')}
-                        />
-                    </View>
-                </View>
-            </ScrollView>
-        </KeyboardAwareScrollView>
+                        <View style={styles.buttonContainer}>
+                            <View style={styles.buttonStyle}>
+                                <Button status={'success'} onPress={verifyLogin}>
+                                    Login!
+                                </Button>
+                            </View>
+                            <View style={styles.buttonStyle}>
+                                <Button
+                                    onPress={() =>
+                                        props.navigation.navigate('RecoverLogin')
+                                    }
+                                >
+                                    Recover Account
+                                </Button>
+                            </View>
+                            <View></View>
+                        </View>
+                    </ScrollView>
+                </KeyboardAwareScrollView>
+            </Layout>
+        </SafeAreaView>
     );
 
     //helper functions
 
-    function isValidEmail(): boolean {
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(String(email).toLowerCase());
-    }
-    function verifyLogin(): void {
-        setIsValidCredentials(true);
-        if (isValidEmail() && password.length > 0) {
-            dispatch(checkCredentials(email.toLowerCase(), password));
-        } else {
-            setIsValidCredentials(false);
-        }
-    }
-    function onTextSubmitted(
-        field: string,
-    ): React.Dispatch<React.SetStateAction<string>> {
-        if (field === 'email') {
-            return setEmail;
-        } else return setPassword;
-    }
-    function determineErrorMessage(msg): React.ReactNode {
-        return <BodyText style={styles.loginError}>{msg}</BodyText>;
+    function createErrorMessage(msg): React.ReactNode {
+        return (
+            <Text category={'h6'} status={'danger'}>
+                {msg}
+            </Text>
+        );
     }
 };
 
@@ -130,10 +185,8 @@ const styles = StyleSheet.create({
     loginScreen: {
         height: '100%',
         width: '100%',
-        backgroundColor: 'white',
     },
     feedbackContainer: {
-        backgroundColor: 'white',
         width: '100%',
         height: '100%',
         justifyContent: 'space-around',
@@ -165,10 +218,7 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingVertical: 10,
     },
-    inputLabel: {
-        fontSize: 15,
-        color: 'grey',
-    },
+
     image: {
         width: '100%',
         height: '100%',
