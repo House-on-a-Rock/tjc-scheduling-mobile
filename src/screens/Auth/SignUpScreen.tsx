@@ -16,6 +16,7 @@ import {
 } from '@ui-kitten/components';
 import { ThemeContext } from '../../../src/ui/theme-context';
 
+//was used for testing ui kitten components, currently unused
 export const SignUpScreen = (props: SignUpScreenProps) => {
     const navigateBack = () => {
         props.navigation.goBack();

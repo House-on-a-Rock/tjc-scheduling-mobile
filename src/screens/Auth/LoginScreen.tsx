@@ -162,13 +162,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
                                     Recover Account
                                 </Button>
                             </View>
-                            <View>
-                                <Button
-                                    onPress={() => props.navigation.navigate('SignUp')}
-                                >
-                                    Ui kitten test
-                                </Button>
-                            </View>
+                            <View></View>
                         </View>
                     </ScrollView>
                 </KeyboardAwareScrollView>
