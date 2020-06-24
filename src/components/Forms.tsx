@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Input } from '@ui-kitten/components';
-import { errorCaption } from '../shared/components/form_functions';
+import { errorCaption } from '../shared/components/';
 
 interface EmailInputProps {
     label: string;
