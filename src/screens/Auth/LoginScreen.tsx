@@ -14,32 +14,63 @@ import { checkCredentials, loadStateActionTypes, login } from '../../store/actio
 import { determineLoadState } from '../../store/helper';
 import { LoadingPage } from '../../components/LoadingPage';
 import { Button, Text, Icon, Layout, Input } from '@ui-kitten/components';
+import { EmailInput, PasswordInput } from '../../components/Forms';
 import Constants from 'expo-constants';
+
+export interface PasswordState {
+    value: string;
+    visible: boolean;
+    valid: boolean;
+    message: string;
+}
+
+export interface EmailState {
+    value: string;
+    valid: boolean;
+    message: string;
+}
 
 export const LoginScreen = (props: LoginScreenProps) => {
     const dispatch = useDispatch();
-    const [email, setEmail] = useState<string>('amanda.chin@gmail.com');
-    const [password, setPassword] = useState<string>('password4');
-    const [isValidCredentials, setIsValidCredentials] = useState<Object>({
-        email: true,
-        password: true,
+    const [email, setEmail] = useState<EmailState>({
+        value: 'amanda.chin@gmail.com',
+        valid: true,
+        message: null,
+    });
+    const [password, setPassword] = useState<PasswordState>({
+        value: 'password4',
+        valid: true,
+        visible: false,
+        message: null,
     });
     const statusBarHeight = Constants.statusBarHeight;
 
-    function verifyLogin(): void {
-        setIsValidCredentials({ email: true, password: true });
-        if (!isValidEmail())
-            setIsValidCredentials({ ...isValidCredentials, email: false });
-        if (password.length === 0)
-            return setIsValidCredentials({ ...isValidCredentials, password: false });
-        console.log('isValidCredentials', isValidCredentials);
-        if (isValidEmail() && password.length > 0) {
-            dispatch(checkCredentials(email.toLowerCase(), password));
+    function verifyLogin() {
+        setEmail({ ...email, valid: true, message: '' });
+        setPassword({ ...password, valid: true, message: '' });
+        if (isValidEmail(email.value) && password.value.length > 0) {
+            dispatch(checkCredentials(email.value, password.value));
+        } else {
+            if (password.value.length === 0)
+                setPassword({
+                    ...password,
+                    valid: false,
+                    message: 'Please enter a password',
+                });
+            if (!isValidEmail(email.value)) {
+                setEmail({
+                    ...email,
+                    valid: false,
+                    message: 'Enter a valid email address.',
+                });
+            }
+            if (email.value.length === 0)
+                setEmail({
+                    ...email,
+                    valid: false,
+                    message: 'Please enter an email address.',
+                });
         }
-        //  else {
-        //     setIsValidCredentials({ email: false });
-        //     if (password.length <= 0) setIsValidCredentials({ password: false });
-        // }
     }
 
     //selects the loadstates that need to be listened to
@@ -104,32 +135,39 @@ export const LoginScreen = (props: LoginScreenProps) => {
                             />
                         </View>
                         <View style={styles.loginCardContainer}>
-                            {!isValidCredentials && invalidCredentialsWarning}
+                            {/* {!isValidCredentials && invalidCredentialsWarning} */}
                             {errorMessage}
-                            <View style={styles.inputStyle}>
-                                <Input
-                                    label="Email"
-                                    value={email}
-                                    caption={
-                                        isValidCredentials.email ? '' : 'Invalid Email'
-                                    }
-                                    keyboardType={'email-address'}
-                                    onChangeText={onTextSubmitted('email')}
-                                />
-                            </View>
-                            <View style={styles.inputStyle}>
+                            <EmailInput
+                                label="Email"
+                                value={email.value}
+                                caption={email.valid ? '' : email.message}
+                                onChangeText={(input) =>
+                                    setEmail({ ...email, value: input })
+                                }
+                            />
+
+                            {/* <View style={styles.inputStyle}>
                                 <Input
                                     label="Password"
-                                    value={password}
-                                    caption={
-                                        isValidCredentials.password
-                                            ? ''
-                                            : 'Invalid Password'
+                                    value={password.value}
+                                    caption={password.valid ? '' : password.message}
+                                    onChangeText={(input) =>
+                                        setPassword({
+                                            ...password,
+                                            value: input,
+                                        })
                                     }
-                                    onChangeText={onTextSubmitted('password')}
                                     secureTextEntry={true}
                                 />
-                            </View>
+                            </View> */}
+                            <PasswordInput
+                                label="Password"
+                                value={password.value}
+                                caption={password.valid ? '' : password.message}
+                                onChangeText={(input) =>
+                                    setPassword({ ...password, value: input })
+                                }
+                            />
                         </View>
 
                         <View style={styles.buttonContainer}>
@@ -164,9 +202,9 @@ export const LoginScreen = (props: LoginScreenProps) => {
 
     //helper functions
 
-    function isValidEmail(): boolean {
+    function isValidEmail(email: string): boolean {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(String(email).toLowerCase());
+        return re.test(email.toLowerCase());
     }
 
     function onTextSubmitted(
