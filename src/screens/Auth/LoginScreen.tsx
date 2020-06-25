@@ -127,7 +127,6 @@ export const LoginScreen = (props: LoginScreenProps) => {
                             />
                         </View>
                         <View style={styles.loginCardContainer}>
-                            {/* {!isValidCredentials && invalidCredentialsWarning} */}
                             {errorMessage}
                             <EmailInput
                                 label="Email"

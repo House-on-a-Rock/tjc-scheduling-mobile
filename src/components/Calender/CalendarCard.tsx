@@ -11,7 +11,7 @@ interface Props {
     displayedDate: Date;
 }
 
-export const CalendarCard = (props: Props) => {
+export const CalendarCard = React.memo((props: Props) => {
     const { displayedDate } = props;
     const isLeap = displayedDate.getFullYear() % 4 === 0 ? true : false;
     const year = displayedDate.getFullYear();
@@ -42,4 +42,4 @@ export const CalendarCard = (props: Props) => {
             </Layout>
         </Card>
     );
-};
+});

@@ -5,14 +5,19 @@ import { compareDates } from '../../services/Calendar/helper_functions';
 import { DateTile } from './DateTile';
 import { taskReducer } from '../../store/reducers';
 
-export const DateDisplay = (props) => {
+interface DateDisplayProps {
+    firstDay: number;
+    displayedDate: Date;
+}
+
+export const DateDisplay = React.memo((props: DateDisplayProps) => {
     const month = props.displayedDate.getMonth();
     const year = props.displayedDate.getFullYear();
     const dateArray = new Array(6);
     const { firstDay } = props;
     const initialDate = new Date(year, month, 1);
 
-    function determineRenderDateClosure(initial) {
+    function determineRenderDate(initial) {
         let renderDate: Date = new Date(
             initial.setDate(initial.getDate() - firstDay - 1),
         );
@@ -25,7 +30,7 @@ export const DateDisplay = (props) => {
         }
     }
 
-    const determineDate = determineRenderDateClosure(initialDate);
+    const determineDate = determineRenderDate(initialDate);
 
     const populateTasks = (date: Date): Object[] => {
         const tasks = useSelector((state) => {
@@ -51,9 +56,9 @@ export const DateDisplay = (props) => {
         dateArray[j] = new Array(7);
         for (let k = 0; k < dateArray[j].length; k++) {
             const day: Date = determineDate();
-            const isToday = compareDates(day, currentDate);
+            const isToday: boolean = compareDates(day, currentDate);
             const data: Object[] = populateTasks(new Date(day));
-            const isCurrentMonth = day.getMonth() === month;
+            const isCurrentMonth: boolean = day.getMonth() === month;
 
             dateArray[j][k] = (
                 <DateTile
@@ -67,7 +72,7 @@ export const DateDisplay = (props) => {
         }
     }
     return <View style={styles.datesContainer}>{dateArray}</View>;
-};
+});
 
 const styles = StyleSheet.create({
     datesContainer: {

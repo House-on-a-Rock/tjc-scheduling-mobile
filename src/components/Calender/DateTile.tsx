@@ -5,7 +5,14 @@ import { useNavigation } from '@react-navigation/native';
 import { Layout, Text } from '@ui-kitten/components';
 import { dateTileDimensions } from '../../shared/constants';
 
-export const DateTile = (props) => {
+interface DateTileProps {
+    isToday: boolean;
+    isCurrentMonth: boolean;
+    data: Object[];
+    renderedDate: Date;
+}
+
+export const DateTile = React.memo((props: DateTileProps) => {
     const { isToday, renderedDate, isCurrentMonth, data } = props;
     const navigation = useNavigation();
     let month = renderedDate.getMonth() + 1; //getMonth() returns in base 0
@@ -24,7 +31,7 @@ export const DateTile = (props) => {
                         ? {
                               ...styles.touchable,
                               backgroundColor: 'rgba(246, 84, 84, 0.36)',
-                              margin: 3,
+                              //   margin: 3,
                               borderRadius: 15,
                               overflow: 'hidden',
                           }
@@ -57,7 +64,7 @@ export const DateTile = (props) => {
             </TouchableOpacity>
         </Layout>
     );
-};
+});
 
 const styles = StyleSheet.create({
     tile: {
@@ -75,10 +82,5 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 20,
         fontFamily: 'Roboto-Regular',
-    },
-    blank: {
-        width: dateTileDimensions.width,
-        height: 50,
-        borderBottomWidth: 1,
     },
 });
