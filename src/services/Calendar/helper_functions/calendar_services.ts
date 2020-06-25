@@ -1,6 +1,6 @@
 import { CarousalDirection } from '../models';
 
-export const setFirstDay = (displayedDate) => {
+export const setFirstDay = (displayedDate: Date): number => {
     const tempDisplayedDay = displayedDate.getDay();
     const tempDisplayedDate = displayedDate.getDate();
     const a = tempDisplayedDay + 1 - (tempDisplayedDate % 7);

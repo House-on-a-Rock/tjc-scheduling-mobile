@@ -33,11 +33,10 @@ export const Carousel = (props: CarouselProps) => {
                 onEndReachedThreshold={0.1}
                 onEndReached={loadMoreOnBottom}
                 initialScrollIndex={12}
-                initialNumToRender={7}
+                initialNumToRender={12}
                 snapToAlignment={'start'}
-                decelerationRate={'fast'}
-                snapToInterval={400}
-                windowSize={7}
+                decelerationRate={'normal'}
+                windowSize={24}
                 getItemLayout={(data, index) => {
                     return {
                         length: 400,
