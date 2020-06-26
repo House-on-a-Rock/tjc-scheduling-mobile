@@ -5,6 +5,7 @@ export const statusBarHeight = Constants.statusBarHeight;
 export const calendarCardDimensions = {
     height: 380,
     margin: 20,
+    totalHeight: 400,
 };
 
 export const dateTileDimensions = {

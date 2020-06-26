@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import { CalendarScreenProps } from '../../shared/models';
-import { Carousel, TaskPreview } from '../../components/Calender';
+import { Carousel } from '../../components/Calender';
+import { TaskPreview } from '../../components/TaskPreview/';
 import { Screen } from '../../components/Screen';
 import { openDrawerAction } from '../../shared/components';
 import { Text } from '@ui-kitten/components';
@@ -40,12 +41,10 @@ export const CalendarScreen = (props: CalendarScreenProps) => {
                 <Carousel data={calCardDatesArray} />
             </Layout>
 
-            {showPreview ? (
+            {showPreview && (
                 <View>
                     <TaskPreview />
                 </View>
-            ) : (
-                <View></View>
             )}
         </Screen>
     );

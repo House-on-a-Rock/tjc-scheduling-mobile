@@ -8,6 +8,7 @@ import { LoadingPage } from '../../components/LoadingPage';
 import { Screen } from '../../components/Screen';
 import { TopNavigationAction, Icon, Text, Input, Button } from '@ui-kitten/components';
 import { EmailInput } from '../../components/Forms';
+import { backAction } from '../../shared/components/UI_Actions';
 
 export const RecoverLoginScreen = (props: RecoverLoginScreenProps) => {
     const [email, setEmail] = useState<string>('shaun.tung@gmail.com');
@@ -16,6 +17,9 @@ export const RecoverLoginScreen = (props: RecoverLoginScreenProps) => {
     const loadState: loadStateActionTypes = useSelector(
         (state) => state.loadStateReducer.loadStatus.AUTH,
     );
+    const navigateBack = () => {
+        props.navigation.goBack();
+    };
 
     const onSubmitHandler = (): void => {
         setIsValidCredentials(true);
@@ -25,16 +29,8 @@ export const RecoverLoginScreen = (props: RecoverLoginScreenProps) => {
 
     if (loadState === loadStateActionTypes.LOADING) return <LoadingPage />;
 
-    const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
-    const BackAction = () => (
-        <TopNavigationAction icon={BackIcon} onPress={navigateBack} />
-    );
-    const navigateBack = () => {
-        props.navigation.goBack();
-    };
-
     return (
-        <Screen title="Recover Login" accessoryLeft={() => BackAction(navigateBack)}>
+        <Screen title="Recover Login" accessoryLeft={() => backAction(navigateBack)}>
             <View style={styles.screen}>
                 <View style={styles.inputContainer}>
                     {loadState === loadStateActionTypes.LOADED && (
