@@ -5,6 +5,7 @@ export const CREATE_CALENDAR = 'CREATE_CALENDAR';
 export const EXTEND_CALENDAR = 'EXTEND_CALENDAR';
 export const REFRESHING = 'REFRESHING';
 export const REFRESHED = 'REFRESHED';
+export const SELECT_DATE = 'SELECT_DATE';
 
 export const createCalendar = () => {
     return {
@@ -32,6 +33,13 @@ export const calendarRefreshed = () => {
     };
 };
 
+export const selectDate = (date: Date) => {
+    return {
+        type: SELECT_DATE,
+        payload: date,
+    };
+};
+
 // Thunky thunk
 
 export const extendCalendar = (direction) => {
@@ -46,13 +54,16 @@ function initialCalendarData() {
         dateArray: [],
         today: null,
         isRefreshing: false,
+        selectedDate: null,
     };
     const today: Date = new Date();
+    const selectedDate = today;
     const defaultDateArray = createDateArray(
-        new Date(today.getFullYear(), today.getMonth() - 12, 1),
-        new Date(today.getFullYear(), today.getMonth() + 12, 1),
+        new Date(today.getFullYear(), today.getMonth() - 6, 1),
+        new Date(today.getFullYear(), today.getMonth() + 6, 1),
     );
     calendar.today = today;
     calendar.dateArray = defaultDateArray;
+    calendar.selectedDate = selectedDate;
     return calendar;
 }

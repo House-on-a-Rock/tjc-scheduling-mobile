@@ -11,8 +11,9 @@ export interface ProfileData {
 }
 
 export interface TaskData {
-    date: Date;
+    date: string;
     role: RoleTypes;
+    church: { name: string };
 }
 
 type RoleTypes = 'Speaker' | 'AV' | 'Hymn Leader' | 'Piano Player';
@@ -21,6 +22,7 @@ export interface CalendarData {
     dateArray: Date[];
     today: Date;
     isRefreshing: boolean;
+    selectedDate: Date;
 }
 
 export interface AuthData {

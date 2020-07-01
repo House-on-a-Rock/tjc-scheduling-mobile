@@ -1,18 +1,19 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { DateDisplay } from './DateDisplay';
 import { DayNameRow } from './DayNameRow';
 import { setFirstDay } from '../../services/Calendar/helper_functions';
 import { months } from '../../services/Calendar/models';
 import { calendarCardDimensions } from '../../shared/constants';
 import { Text, Layout, Card } from '@ui-kitten/components';
+import { TaskData } from '../../shared/models';
 
 interface Props {
     displayedDate: Date;
+    tasks: TaskData[];
 }
 
 export const CalendarCard = React.memo((props: Props) => {
-    const { displayedDate } = props;
+    const { tasks, displayedDate } = props;
     const isLeap = displayedDate.getFullYear() % 4 === 0 ? true : false;
     const year = displayedDate.getFullYear();
     const month = displayedDate.getMonth();
@@ -32,13 +33,12 @@ export const CalendarCard = React.memo((props: Props) => {
             }}
         >
             <Layout>
-                <View>
-                    <DayNameRow />
-                    <DateDisplay
-                        firstDay={setFirstDay(displayedDate)}
-                        displayedDate={displayedDate}
-                    />
-                </View>
+                <DayNameRow />
+                <DateDisplay
+                    firstDay={setFirstDay(displayedDate)}
+                    displayedDate={displayedDate}
+                    tasks={tasks}
+                />
             </Layout>
         </Card>
     );

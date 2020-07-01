@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
-import { CalendarScreenProps } from '../../shared/models';
-import { Carousel } from '../../components/Calender';
-import { TaskPreview } from '../../components/TaskPreview/';
-import { Screen } from '../../components/Screen';
-import { openDrawerAction } from '../../shared/components';
+import { CalendarScreenProps } from '../../../shared/models';
+import { Carousel } from '../../../components/Calender';
+import { TaskPreview } from '../../../components/TaskPreview';
+import { Screen } from '../../../components/Screen';
+import { openDrawerAction } from '../../../shared/components';
 import { Text } from '@ui-kitten/components';
 import { Layout } from '@ui-kitten/components';
+import { CalendarList } from 'react-native-calendars';
 
 const styles = StyleSheet.create({
     screen: {
@@ -23,11 +24,6 @@ const styles = StyleSheet.create({
 });
 
 export const CalendarScreen = (props: CalendarScreenProps) => {
-    const [showPreview, setShowPreview] = useState<boolean>(false);
-    const calCardDatesArray: Date[] = useSelector(
-        ({ calendarReducer }) => calendarReducer.dateArray,
-    );
-
     return (
         <Screen
             title={() => (
@@ -38,14 +34,14 @@ export const CalendarScreen = (props: CalendarScreenProps) => {
             accessoryLeft={() => openDrawerAction(props.navigation.toggleDrawer)}
         >
             <Layout style={styles.scrollContainer}>
-                <Carousel data={calCardDatesArray} />
+                <Carousel />
             </Layout>
 
-            {showPreview && (
+            {/* {selectedDate && (
                 <View>
-                    <TaskPreview />
+                    <TaskPreview selecteDate={selectedDate} />
                 </View>
-            )}
+            )} */}
         </Screen>
     );
 };

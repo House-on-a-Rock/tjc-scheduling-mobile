@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
-import { TasksScreenProps } from '../../../../shared/models';
+import { TasksScreenProps } from '../../../shared/models';
+import { Screen } from '../../../components/Screen';
+import { Layout } from '@ui-kitten/components';
 
 export const TasksScreen = (props: TasksScreenProps) => {
     const route = props.route;
@@ -16,27 +18,29 @@ export const TasksScreen = (props: TasksScreenProps) => {
 
     const render = ({ item }) => {
         return (
-            <View style={styles.list}>
-                <Text style={{ fontSize: 23 }}>{item.church.name} </Text>
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-around',
-                        alignItems: 'stretch',
-                        width: '100%',
-                    }}
-                >
-                    <Text style={{ fontSize: 25 }}>{item.role.name}</Text>
-                    <TouchableOpacity>
-                        <Entypo
-                            name={'swap'}
-                            size={25}
-                            color={'rgba(58, 135, 211, 0.82)'}
-                            onPress={onSwapPressHandler}
-                        />
-                    </TouchableOpacity>
-                </View>
-            </View>
+            <Screen title="Tasks Screen">
+                <Layout style={styles.list}>
+                    <Text style={{ fontSize: 23 }}>{item.church.name} </Text>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-around',
+                            alignItems: 'stretch',
+                            width: '100%',
+                        }}
+                    >
+                        <Text style={{ fontSize: 25 }}>{item.role.name}</Text>
+                        <TouchableOpacity>
+                            <Entypo
+                                name={'swap'}
+                                size={25}
+                                color={'rgba(58, 135, 211, 0.82)'}
+                                onPress={onSwapPressHandler}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                </Layout>
+            </Screen>
         );
     };
     return (
