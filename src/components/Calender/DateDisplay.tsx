@@ -36,7 +36,7 @@ export const DateDisplay = React.memo((props: DateDisplayProps) => {
 
     const determineDate: () => Date = determineRenderDate(initialDate);
 
-    const populateTasks = (date: Date): Object[] => {
+    const populateTasks = (date: Date): TaskData[] => {
         const filteredTasks = tasks.filter((task: TaskData) => {
             const tasksDate: Date = new Date(task.date.replace(/-/g, '/'));
             return compareDates(tasksDate, date);
@@ -56,8 +56,8 @@ export const DateDisplay = React.memo((props: DateDisplayProps) => {
         dateArray[j] = new Array(7);
         for (let k = 0; k < dateArray[j].length; k++) {
             const day: Date = React.useMemo(() => determineDate(), [determineDate]);
+            const data: TaskData[] = React.useMemo(() => populateTasks(day), []);
             const isToday: boolean = compareDates(day, currentDate);
-            const data: Object[] = React.useMemo(() => populateTasks(day), []);
             const isCurrentMonth: boolean = day.getMonth() === month;
             let isSelected = false;
             if (compareDates(day, selectedDate)) {
