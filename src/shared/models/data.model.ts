@@ -22,7 +22,7 @@ export interface CalendarData {
     dateArray: Date[];
     today: Date;
     isRefreshing: boolean;
-    selectedDate: Date;
+    selectedDate: { date: Date; tasks: TaskData[] };
 }
 
 export interface AuthData {

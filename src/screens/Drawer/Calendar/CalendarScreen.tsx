@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React from 'react';
+import { StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import { CalendarScreenProps } from '../../../shared/models';
 import { Carousel } from '../../../components/Calender';
@@ -8,7 +8,7 @@ import { Screen } from '../../../components/Screen';
 import { openDrawerAction } from '../../../shared/components';
 import { Text } from '@ui-kitten/components';
 import { Layout } from '@ui-kitten/components';
-import { CalendarList } from 'react-native-calendars';
+// import { calendarReducer } from 'src/store/reducers';
 
 const styles = StyleSheet.create({
     screen: {
@@ -36,12 +36,7 @@ export const CalendarScreen = (props: CalendarScreenProps) => {
             <Layout style={styles.scrollContainer}>
                 <Carousel />
             </Layout>
-
-            {/* {selectedDate && (
-                <View>
-                    <TaskPreview selecteDate={selectedDate} />
-                </View>
-            )} */}
+            <TaskPreview />
         </Screen>
     );
 };

@@ -33,10 +33,11 @@ export const calendarRefreshed = () => {
     };
 };
 
-export const selectDate = (date: Date) => {
+export const selectDate = (date: Date, tasks) => {
+    if (!date || !tasks) return { type: SELECT_DATE, payload: null };
     return {
         type: SELECT_DATE,
-        payload: date,
+        payload: { date: date, tasks: tasks },
     };
 };
 
@@ -57,13 +58,13 @@ function initialCalendarData() {
         selectedDate: null,
     };
     const today: Date = new Date();
-    const selectedDate = today;
+    const selectedDate = null;
     const defaultDateArray = createDateArray(
         new Date(today.getFullYear(), today.getMonth() - 6, 1),
         new Date(today.getFullYear(), today.getMonth() + 6, 1),
     );
     calendar.today = today;
     calendar.dateArray = defaultDateArray;
-    calendar.selectedDate = selectedDate;
+    calendar.selectedDate = null;
     return calendar;
 }

@@ -26,7 +26,7 @@ export const DateTile = React.memo((props: DateTileProps) => {
         <Layout style={styles.tile}>
             <TouchableOpacity
                 style={isSelected ? styles.selected : styles.touchable}
-                onPress={() => onPressHandler(day)}
+                onPress={() => onPressHandler(day, data)}
             >
                 <View
                     style={{

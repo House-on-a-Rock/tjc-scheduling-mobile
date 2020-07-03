@@ -20,7 +20,7 @@ export const DateDisplay = React.memo((props: DateDisplayProps) => {
     const { firstDay, tasks } = props;
     const initialDate = new Date(year, month, 1);
     const currentDate = useSelector((state) => state.calendarReducer.today);
-    const selectedDate = useSelector((state) => state.calendarReducer.selectedDate);
+    const selectedDate = useSelector((state) => state.calendarReducer.selectedDate?.date);
 
     function determineRenderDate(initial): () => Date {
         let renderDate: Date = new Date(initial.setDate(initial.getDate() - firstDay));
@@ -45,12 +45,16 @@ export const DateDisplay = React.memo((props: DateDisplayProps) => {
         return filteredTasks;
     };
 
-    const onDateTilePressed: (date: Date) => void = React.useCallback(
-        (date) => {
-            dispatch(selectDate(date));
-        },
-        [selectDate, dispatch],
-    );
+    // const onDateTilePressed: (date: Date, tasks) => void = React.useCallback(
+    //     (date) => {
+    //         dispatch(selectDate(date, tasks));
+    //     },
+    //     [selectDate, dispatch],
+    // );
+
+    const onDateTilePressed = (date: Date, dateTasks: Object[]) => {
+        dispatch(selectDate(date, dateTasks));
+    };
 
     for (let j = 0; j < dateArray.length; j++) {
         dateArray[j] = new Array(7);

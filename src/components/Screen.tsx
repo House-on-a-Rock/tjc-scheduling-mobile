@@ -14,6 +14,9 @@ export const Screen = (props: ScreenProps) => {
     return (
         <SafeAreaView style={styles.screen}>
             <TopNavigation
+                // onLayout={(event) => {
+                //     console.log('event.nativeEvent.layout', event.nativeEvent.layout);
+                // }}
                 alignment="center"
                 title={props.title}
                 accessoryLeft={props.accessoryLeft}
