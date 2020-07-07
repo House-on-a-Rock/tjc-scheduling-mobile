@@ -28,7 +28,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         paddingBottom: 10,
-        // borderBottomWidth: 1,
-        // borderBottomColor: '#B3A6A6',
     },
 });

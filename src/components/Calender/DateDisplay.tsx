@@ -1,78 +1,79 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 import { compareDates } from '../../services/Calendar/helper_functions';
 import { DateTile } from './DateTile';
-import { taskReducer } from '../../store/reducers';
+import { selectDate } from '../../store/actions';
+import { TaskData } from '../../shared/models';
 
 interface DateDisplayProps {
     firstDay: number;
     displayedDate: Date;
+    tasks: TaskData[];
 }
 
-export const DateDisplay = React.memo((props: DateDisplayProps) => {
+export const DateDisplay = (props: DateDisplayProps) => {
+    const dispatch = useDispatch();
     const month = props.displayedDate.getMonth();
     const year = props.displayedDate.getFullYear();
     const dateArray = new Array(6);
-    const { firstDay } = props;
+    const { firstDay, tasks } = props;
     const initialDate = new Date(year, month, 1);
+    const currentDate = useSelector((state) => state.calendarReducer.today);
+    const selectedDate = useSelector((state) => state.calendarReducer.selectedDate?.date);
 
-    function determineRenderDate(initial) {
-        let renderDate: Date = new Date(
-            initial.setDate(initial.getDate() - firstDay - 1),
-        );
+    function determineRenderDate(initial): () => Date {
+        let renderDate: Date = new Date(initial.setDate(initial.getDate() - firstDay));
 
         return updateDate;
+
         function updateDate() {
-            const returnDate = renderDate;
+            const returnDate: Date = new Date(renderDate);
             renderDate.setDate(renderDate.getDate() + 1);
             return returnDate;
         }
     }
 
-    const determineDate = determineRenderDate(initialDate);
+    const determineDate: () => Date = determineRenderDate(initialDate);
 
-    const populateTasks = (date: Date): Object[] => {
-        const tasks = useSelector((state) => {
-            return state.taskReducer.tasks;
-        });
-
-        date.setDate(date.getDate() - 1); //necessary to load the correct tasks into the correct tile
-        const filteredTasks = tasks.filter((task) => {
-            const tasksDate = new Date(task.date);
+    const populateTasks = (date: Date): TaskData[] => {
+        const filteredTasks = tasks.filter((task: TaskData) => {
+            const tasksDate: Date = new Date(task.date.replace(/-/g, '/'));
             return compareDates(tasksDate, date);
         });
 
         return filteredTasks;
     };
 
-    // create a function that does the math to find out with index on the array it needs to update
-
-    const currentDate = useSelector((state) => {
-        return state.calendarReducer.today;
-    });
+    const onDateTilePressed = (date: Date, dateTasks: Object[]) => {
+        dispatch(selectDate(date, dateTasks));
+    };
 
     for (let j = 0; j < dateArray.length; j++) {
         dateArray[j] = new Array(7);
         for (let k = 0; k < dateArray[j].length; k++) {
             const day: Date = determineDate();
+            const data: TaskData[] = populateTasks(day);
             const isToday: boolean = compareDates(day, currentDate);
-            const data: Object[] = populateTasks(new Date(day));
             const isCurrentMonth: boolean = day.getMonth() === month;
+            const isSelected = compareDates(day, selectedDate);
 
             dateArray[j][k] = (
                 <DateTile
                     data={data}
-                    renderedDate={new Date(day)}
-                    key={j + j * (k + 1) + k}
+                    day={day}
+                    key={`${day.toDateString}${j}-${k}`}
                     isToday={isToday}
                     isCurrentMonth={isCurrentMonth}
+                    isSelected={isSelected}
+                    onPressHandler={onDateTilePressed}
                 />
             );
         }
     }
+
     return <View style={styles.datesContainer}>{dateArray}</View>;
-});
+};
 
 const styles = StyleSheet.create({
     datesContainer: {
@@ -80,10 +81,4 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         width: '100%',
     },
-    // currentMonthDatesText: {
-    //     color: '#1A7ECB',
-    // },
-    // notCurrentMonthDatesText: {
-    //     color: '#C98B8F',
-    // },
 });

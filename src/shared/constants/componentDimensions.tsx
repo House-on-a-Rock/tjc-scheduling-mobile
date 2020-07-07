@@ -1,10 +1,14 @@
 import Constants from 'expo-constants';
+import { Dimensions } from 'react-native';
 
 export const statusBarHeight = Constants.statusBarHeight;
+export const headerBarHeight = 56;
+export const windowWidth = Dimensions.get('window').width;
 
 export const calendarCardDimensions = {
     height: 380,
     margin: 20,
+    totalHeight: 400,
 };
 
 export const dateTileDimensions = {

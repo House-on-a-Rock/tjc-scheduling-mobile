@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TopNavigationAction, Icon } from '@ui-kitten/components';
+import { TopNavigationAction, Icon, Text, Layout } from '@ui-kitten/components';
 
 export const openDrawerAction = (toggleDrawer) => {
     return (
@@ -16,5 +16,30 @@ export const openDrawerAction = (toggleDrawer) => {
             )}
             onPress={toggleDrawer}
         />
+    );
+};
+
+export const backAction = (goBack) => {
+    return (
+        <Layout
+            style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}
+        >
+            <TopNavigationAction
+                icon={(props) => (
+                    <Icon
+                        {...props}
+                        style={{ width: 25, height: 35 }}
+                        // animationConfig={}
+                        name="arrow-ios-back"
+                    />
+                )}
+                onPress={goBack}
+            />
+            <Text>Back</Text>
+        </Layout>
     );
 };

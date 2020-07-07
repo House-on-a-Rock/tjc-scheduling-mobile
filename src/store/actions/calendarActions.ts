@@ -1,10 +1,12 @@
 import { createDateArray } from '../../services/Calendar/helper_functions';
 import { CalendarData } from '../../shared/models';
+import { calendarRange } from '../../shared/constants/calendarConstants';
 
 export const CREATE_CALENDAR = 'CREATE_CALENDAR';
 export const EXTEND_CALENDAR = 'EXTEND_CALENDAR';
 export const REFRESHING = 'REFRESHING';
 export const REFRESHED = 'REFRESHED';
+export const SELECT_DATE = 'SELECT_DATE';
 
 export const createCalendar = () => {
     return {
@@ -32,6 +34,14 @@ export const calendarRefreshed = () => {
     };
 };
 
+export const selectDate = (date: Date, tasks) => {
+    if (!date || !tasks) return { type: SELECT_DATE, payload: null };
+    return {
+        type: SELECT_DATE,
+        payload: { date: date, tasks: tasks },
+    };
+};
+
 // Thunky thunk
 
 export const extendCalendar = (direction) => {
@@ -46,13 +56,15 @@ function initialCalendarData() {
         dateArray: [],
         today: null,
         isRefreshing: false,
+        selectedDate: null,
     };
     const today: Date = new Date();
     const defaultDateArray = createDateArray(
-        new Date(today.getFullYear(), today.getMonth() - 12, 1),
-        new Date(today.getFullYear(), today.getMonth() + 12, 1),
+        new Date(today.getFullYear(), today.getMonth() - calendarRange, 1),
+        new Date(today.getFullYear(), today.getMonth() + calendarRange, 1),
     );
     calendar.today = today;
     calendar.dateArray = defaultDateArray;
+    calendar.selectedDate = null;
     return calendar;
 }

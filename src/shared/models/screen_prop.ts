@@ -91,10 +91,10 @@ export type CalendarScreenProps = {
     navigation: CalendarScreenNavigationProp;
 };
 
-// TasksScreen
+// TaskListScreen
 export type TasksRouteProp = RouteProp<CalendarStackParamList, 'Tasks'>;
 
-export type TasksScreenNavigationProp = CompositeNavigationProp<
+export type TaskListScreenNavigationProp = CompositeNavigationProp<
     StackNavigationProp<CalendarStackParamList, 'Tasks'>,
     CompositeNavigationProp<
         BottomTabNavigationProp<HomeStackTabParamList>,
@@ -102,9 +102,9 @@ export type TasksScreenNavigationProp = CompositeNavigationProp<
     >
 >;
 
-export type TasksScreenProps = {
+export type TaskListScreenProps = {
     route: TasksRouteProp;
-    navigation: TasksScreenNavigationProp;
+    navigation: TaskListScreenNavigationProp;
 };
 
 // LoginScreen
