@@ -1,14 +1,39 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { useSelector } from 'react-redux';
 import { CalendarScreenProps } from '../../../shared/models';
 import { Carousel } from '../../../components/Calender';
-import { TaskPreview } from '../../../components/TaskPreview';
+import { TaskPreviewPane } from '../../../components/TaskPreviewPane';
 import { Screen } from '../../../components/Screen';
 import { openDrawerAction } from '../../../shared/components';
 import { Text } from '@ui-kitten/components';
 import { Layout } from '@ui-kitten/components';
-// import { calendarReducer } from 'src/store/reducers';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
+export const CalendarScreen = (props: CalendarScreenProps) => {
+    const leftAccessory = () => openDrawerAction(props.navigation.toggleDrawer);
+    const rightAccessory = () => (
+        <TouchableOpacity onPress={() => props.navigation.navigate('Tasks')}>
+            <Text>View as List</Text>
+        </TouchableOpacity>
+    );
+
+    return (
+        <Screen
+            title={() => (
+                <Text category="h3" status="basic">
+                    My Duties
+                </Text>
+            )}
+            accessoryLeft={leftAccessory}
+            accessoryRight={rightAccessory}
+        >
+            <Layout style={styles.scrollContainer}>
+                <Carousel />
+            </Layout>
+            <TaskPreviewPane />
+        </Screen>
+    );
+};
 
 const styles = StyleSheet.create({
     screen: {
@@ -22,21 +47,3 @@ const styles = StyleSheet.create({
         height: '100%',
     },
 });
-
-export const CalendarScreen = (props: CalendarScreenProps) => {
-    return (
-        <Screen
-            title={() => (
-                <Text category="h3" status="basic">
-                    Calendar
-                </Text>
-            )}
-            accessoryLeft={() => openDrawerAction(props.navigation.toggleDrawer)}
-        >
-            <Layout style={styles.scrollContainer}>
-                <Carousel />
-            </Layout>
-            <TaskPreview />
-        </Screen>
-    );
-};

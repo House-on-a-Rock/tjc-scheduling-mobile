@@ -45,12 +45,7 @@ export const DateDisplay = React.memo((props: DateDisplayProps) => {
         return filteredTasks;
     };
 
-    // const onDateTilePressed: (date: Date, tasks) => void = React.useCallback(
-    //     (date) => {
-    //         dispatch(selectDate(date, tasks));
-    //     },
-    //     [selectDate, dispatch],
-    // );
+    // console.log('date display rerendering', month, year);
 
     const onDateTilePressed = (date: Date, dateTasks: Object[]) => {
         dispatch(selectDate(date, dateTasks));

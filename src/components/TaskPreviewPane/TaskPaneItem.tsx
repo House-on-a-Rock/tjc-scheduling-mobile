@@ -4,11 +4,11 @@ import { Layout, Text } from '@ui-kitten/components';
 import { Entypo } from '@expo/vector-icons';
 
 type TaskViewProps = {
-    children;
+    item;
 };
 
-export const TaskItem = (props: TaskViewProps) => {
-    const { date, church, role } = props.children.item;
+export const TaskPaneItem = (props: TaskViewProps) => {
+    const { date, church, role } = props.item;
 
     return (
         <ScrollView contentContainerStyle={{ ...styles.proto, ...styles.container }}>

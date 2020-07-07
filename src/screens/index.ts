@@ -7,4 +7,4 @@ export * from './Drawer/SettingsScreen';
 export * from './Drawer/LogoutScreen';
 
 export * from './Drawer/Calendar/CalendarScreen';
-export * from './Drawer/Calendar/TasksScreen';
+export * from './Drawer/Calendar/TaskListScreen';
