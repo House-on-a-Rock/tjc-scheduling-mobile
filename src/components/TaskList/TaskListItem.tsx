@@ -1,17 +1,16 @@
 import React from 'react';
-import { View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
-import { Layout, Text } from '@ui-kitten/components';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text } from '@ui-kitten/components';
 import { months } from '../../services/Calendar/models';
+import { windowWidth } from '../../shared/constants';
 
 interface TaskListItemProps {
     item;
 }
 
-const windowWidth = Dimensions.get('window').width;
-
 export const TaskListItem = (props: TaskListItemProps) => {
-    const date = new Date(props.item.date.replace(/-/g, '/'));
-    const dayString = date.toDateString().split(' ');
+    const date: Date = new Date(props.item.date.replace(/-/g, '/'));
+    const dayString: string[] = date.toDateString().split(' ');
     return (
         <TouchableOpacity style={styles.container}>
             <View
@@ -19,7 +18,6 @@ export const TaskListItem = (props: TaskListItemProps) => {
                     padding: 10,
                     alignItems: 'center',
                     justifyContent: 'center',
-                    // width: '20%'
                     flex: 1,
                 }}
             >

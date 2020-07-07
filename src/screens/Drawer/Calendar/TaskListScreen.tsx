@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-    StyleSheet,
-    FlatList,
-    TouchableOpacity,
-    Alert,
-    Dimensions,
-    View,
-} from 'react-native';
+import { StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { TaskListScreenProps } from '../../../shared/models';
 import { Screen } from '../../../components/Screen';
 import { Text, Layout } from '@ui-kitten/components';
@@ -17,14 +10,6 @@ import { TaskListItem } from '../../../components/TaskList/TaskListItem';
 
 export const TaskListScreen = (props: TaskListScreenProps) => {
     const tasks = useSelector((state) => state.taskReducer.tasks);
-    // const windowWidth = Dimensions.get('window').width;
-
-    const onSwapPressHandler = () => {
-        Alert.alert('', 'Are you sure you want to switch with someone?', [
-            { text: 'Cancel' },
-            { text: 'Ok', onPress: () => console.log('pressed ok') }, //make api call, display loading screen until call response is ok
-        ]);
-    };
 
     const leftAccessory = () => openDrawerAction(props.navigation.toggleDrawer);
     const rightAccessory = () => (
@@ -49,32 +34,16 @@ export const TaskListScreen = (props: TaskListScreenProps) => {
             accessoryRight={rightAccessory}
             accessoryLeft={leftAccessory}
         >
-            <Layout
-                style={{
-                    flex: 1,
-                    width: '100%',
-                }}
-            >
-                <LinearGradient
-                    colors={['#EDEEF3', '#FFFFFF']}
-                    style={{
-                        flex: 1,
-                        width: '100%',
-                        alignItems: 'center',
-                    }}
-                >
+            <Layout style={styles.container}>
+                <LinearGradient colors={['#EDEEF3', '#FFFFFF']} style={styles.container}>
                     {tasks.length > 0 ? (
                         <FlatList
-                            contentContainerStyle={{
-                                width: '80%',
-                                alignItems: 'center',
-                            }}
                             data={tasks}
                             renderItem={renderItem}
                             keyExtractor={(item, index) => index.toString()}
                         />
                     ) : (
-                        <Text>You have nothing assigned!</Text>
+                        <Text>You have no assignments!</Text>
                     )}
                 </LinearGradient>
             </Layout>
@@ -83,10 +52,9 @@ export const TaskListScreen = (props: TaskListScreenProps) => {
 };
 
 const styles = StyleSheet.create({
-    list: {
-        borderWidth: 1,
-        height: 60,
-        width: 200,
+    container: {
+        flex: 1,
+        width: '100%',
         alignItems: 'center',
     },
 });

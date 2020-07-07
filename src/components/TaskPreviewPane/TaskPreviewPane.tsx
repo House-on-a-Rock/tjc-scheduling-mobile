@@ -11,9 +11,9 @@ import { TaskPaneItem } from './TaskPaneItem';
 import { LinearGradient } from 'expo-linear-gradient';
 import { selectDate } from '../../store/actions';
 
-const calendarHeight = calendarCardDimensions.totalHeight;
-const windowHeight = Dimensions.get('window').height;
-const taskPreviewHeight =
+const calendarHeight: number = calendarCardDimensions.totalHeight;
+const windowHeight: number = Dimensions.get('window').height;
+const taskPreviewHeight: number =
     windowHeight - (calendarHeight + headerBarHeight + statusBarHeight);
 
 export const TaskPreviewPane = (props) => {
@@ -32,16 +32,8 @@ export const TaskPreviewPane = (props) => {
 
     return (
         <Layout style={styles.container}>
-            <LinearGradient
-                colors={['#EDEEF3', '#FFFFFF']}
-                style={{ flex: 1, width: '100%' }}
-            >
-                <Layout
-                    style={{
-                        backgroundColor: 'transparent',
-                        width: '100%',
-                    }}
-                >
+            <LinearGradient colors={['#EDEEF3', '#FFFFFF']} style={{ flex: 1 }}>
+                <Layout style={styles.layout}>
                     <Text style={{ textAlign: 'center' }}>Tasks</Text>
                     <Text
                         style={styles.hideText}
@@ -56,12 +48,6 @@ export const TaskPreviewPane = (props) => {
                         keyExtractor={(item, index) => index.toString()}
                         data={tasks}
                         renderItem={renderItem}
-                        contentContainerStyle={
-                            {
-                                // width: windowWidth,
-                                // backgroundColor: 'red',
-                            }
-                        }
                     />
                 ) : (
                     <Text style={{ textAlign: 'center' }}>You've got no tasks!</Text>
@@ -84,7 +70,10 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         right: 0,
-        textAlign: 'right',
         paddingRight: 10,
+    },
+    layout: {
+        backgroundColor: 'transparent',
+        width: '100%',
     },
 });

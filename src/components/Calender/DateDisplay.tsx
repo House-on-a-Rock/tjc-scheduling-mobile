@@ -12,7 +12,7 @@ interface DateDisplayProps {
     tasks: TaskData[];
 }
 
-export const DateDisplay = React.memo((props: DateDisplayProps) => {
+export const DateDisplay = (props: DateDisplayProps) => {
     const dispatch = useDispatch();
     const month = props.displayedDate.getMonth();
     const year = props.displayedDate.getFullYear();
@@ -54,8 +54,8 @@ export const DateDisplay = React.memo((props: DateDisplayProps) => {
     for (let j = 0; j < dateArray.length; j++) {
         dateArray[j] = new Array(7);
         for (let k = 0; k < dateArray[j].length; k++) {
-            const day: Date = React.useMemo(() => determineDate(), [determineDate]);
-            const data: TaskData[] = React.useMemo(() => populateTasks(day), []);
+            const day: Date = determineDate();
+            const data: TaskData[] = populateTasks(day);
             const isToday: boolean = compareDates(day, currentDate);
             const isCurrentMonth: boolean = day.getMonth() === month;
             let isSelected = false;
@@ -78,7 +78,7 @@ export const DateDisplay = React.memo((props: DateDisplayProps) => {
     }
 
     return <View style={styles.datesContainer}>{dateArray}</View>;
-});
+};
 
 const styles = StyleSheet.create({
     datesContainer: {

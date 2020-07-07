@@ -4,7 +4,7 @@ import { AbbrevDays } from '../../services/Calendar/models';
 import { Layout, Text } from '@ui-kitten/components';
 
 // change name to CalendarDayTitleRow
-export const DayNameRow = React.memo(() => {
+export const DayNameRow = () => {
     const dayNameArray = new Array(7);
     for (let i = 0; i < dayNameArray.length; i++) {
         dayNameArray[i] = (
@@ -16,7 +16,7 @@ export const DayNameRow = React.memo(() => {
         );
     }
     return <Layout style={styles.container}>{dayNameArray}</Layout>;
-});
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -28,7 +28,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         paddingBottom: 10,
-        // borderBottomWidth: 1,
-        // borderBottomColor: '#B3A6A6',
     },
 });
