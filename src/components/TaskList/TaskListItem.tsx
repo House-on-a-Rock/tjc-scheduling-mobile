@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { Layout, Text } from '@ui-kitten/components';
 import { months } from '../../services/Calendar/models';
 
@@ -13,7 +13,7 @@ export const TaskListItem = (props: TaskListItemProps) => {
     const date = new Date(props.item.date.replace(/-/g, '/'));
     const dayString = date.toDateString().split(' ');
     return (
-        <Layout style={styles.container}>
+        <TouchableOpacity style={styles.container}>
             <View
                 style={{
                     padding: 10,
@@ -32,7 +32,7 @@ export const TaskListItem = (props: TaskListItemProps) => {
             <View style={{ flexDirection: 'column', padding: 10, flex: 3 }}>
                 <Text>{props.item.role.name}</Text>
             </View>
-        </Layout>
+        </TouchableOpacity>
     );
 };
 
