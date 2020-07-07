@@ -45,8 +45,6 @@ export const DateDisplay = (props: DateDisplayProps) => {
         return filteredTasks;
     };
 
-    // console.log('date display rerendering', month, year);
-
     const onDateTilePressed = (date: Date, dateTasks: Object[]) => {
         dispatch(selectDate(date, dateTasks));
     };
@@ -58,16 +56,13 @@ export const DateDisplay = (props: DateDisplayProps) => {
             const data: TaskData[] = populateTasks(day);
             const isToday: boolean = compareDates(day, currentDate);
             const isCurrentMonth: boolean = day.getMonth() === month;
-            let isSelected = false;
-            if (compareDates(day, selectedDate)) {
-                isSelected = true;
-            }
+            const isSelected = compareDates(day, selectedDate);
 
             dateArray[j][k] = (
                 <DateTile
                     data={data}
                     day={day}
-                    key={`${day.toDateString}${j}${k}`}
+                    key={`${day.toDateString}${j}-${k}`}
                     isToday={isToday}
                     isCurrentMonth={isCurrentMonth}
                     isSelected={isSelected}

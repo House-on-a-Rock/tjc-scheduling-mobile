@@ -7,6 +7,7 @@ import { CarousalDirection } from '../../services/Calendar/models';
 import { Layout } from '@ui-kitten/components';
 import { calendarCardDimensions } from '../../shared/constants/';
 import { TaskData } from '../../shared/models';
+import { calendarRange } from '../../shared/constants/';
 
 export const Carousel = () => {
     const dispatch = useDispatch();
@@ -40,14 +41,14 @@ export const Carousel = () => {
         <Layout>
             <FlatList
                 data={data}
-                keyExtractor={(item, index) => index.toString()}
+                keyExtractor={(item, index) => `${item.toString()}-${index}`}
                 renderItem={renderMonths}
                 onRefresh={loadMoreOnTop}
                 refreshing={isRefreshing}
                 onEndReachedThreshold={0.1}
                 onEndReached={loadMoreOnBottom}
-                initialScrollIndex={6}
-                initialNumToRender={6}
+                initialScrollIndex={calendarRange}
+                initialNumToRender={calendarRange}
                 snapToAlignment={'start'}
                 decelerationRate={'normal'}
                 windowSize={12}

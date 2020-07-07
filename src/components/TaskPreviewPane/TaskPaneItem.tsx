@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { TouchableOpacity, StyleSheet } from 'react-native';
 import { Layout, Text } from '@ui-kitten/components';
 import { Entypo } from '@expo/vector-icons';
 
@@ -11,16 +11,16 @@ export const TaskPaneItem = (props: TaskViewProps) => {
     const { date, church, role } = props.item;
 
     return (
-        <ScrollView contentContainerStyle={{ ...styles.proto, ...styles.container }}>
-            <Layout style={{ ...styles.proto, ...styles.taskContainer }}>
+        <Layout style={{ ...styles.proto, ...styles.container }}>
+            <TouchableOpacity style={{ ...styles.proto, ...styles.taskContainer }}>
                 <Entypo name="dot-single" size={20} color="black" />
                 <Text>{role?.name}</Text>
-            </Layout>
+            </TouchableOpacity>
 
-            <Layout style={{ ...styles.proto, ...styles.timeContainer }}>
+            <TouchableOpacity style={{ ...styles.proto, ...styles.timeContainer }}>
                 <Text>{church?.name}</Text>
-            </Layout>
-        </ScrollView>
+            </TouchableOpacity>
+        </Layout>
     );
 };
 

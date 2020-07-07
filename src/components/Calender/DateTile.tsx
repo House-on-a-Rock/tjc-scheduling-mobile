@@ -55,8 +55,7 @@ export const DateTile = React.memo((props: DateTileProps) => {
 }, areEqual);
 
 function areEqual(prevProps, nextProps): boolean {
-    if (prevProps.isSelected === nextProps.isSelected) return true; //no rerender
-    return false;
+    return prevProps.isSelected === nextProps.isSelected;
 }
 
 const styles = StyleSheet.create({

@@ -1,5 +1,6 @@
 import { createDateArray } from '../../services/Calendar/helper_functions';
 import { CalendarData } from '../../shared/models';
+import { calendarRange } from '../../shared/constants/calendarConstants';
 
 export const CREATE_CALENDAR = 'CREATE_CALENDAR';
 export const EXTEND_CALENDAR = 'EXTEND_CALENDAR';
@@ -58,10 +59,9 @@ function initialCalendarData() {
         selectedDate: null,
     };
     const today: Date = new Date();
-    const selectedDate = null;
     const defaultDateArray = createDateArray(
-        new Date(today.getFullYear(), today.getMonth() - 6, 1),
-        new Date(today.getFullYear(), today.getMonth() + 6, 1),
+        new Date(today.getFullYear(), today.getMonth() - calendarRange, 1),
+        new Date(today.getFullYear(), today.getMonth() + calendarRange, 1),
     );
     calendar.today = today;
     calendar.dateArray = defaultDateArray;
