@@ -6,13 +6,20 @@ import { windowWidth } from '../../shared/constants';
 
 interface TaskListItemProps {
     item;
+    navigation;
 }
 
 export const TaskListItem = (props: TaskListItemProps) => {
     const date: Date = new Date(props.item.date.replace(/-/g, '/'));
     const dayString: string[] = date.toDateString().split(' ');
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity
+            style={styles.container}
+            onPress={() => {
+                console.log('pressed');
+                props.navigation.navigate('TaskDetails', { task: props.item });
+            }}
+        >
             <View
                 style={{
                     padding: 10,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { CalendarScreen, TaskListScreen } from '../../screens';
+import { CalendarScreen, TaskListScreen, TaskDetailsScreen } from '../../screens';
 import { stackOptions } from '../../shared/components';
 import { CalendarStackParamList } from '../../shared/models';
 
@@ -14,11 +14,8 @@ export const CalendarStack = (props) => {
                 component={CalendarScreen}
                 options={stackOptions}
             />
-            <CalStack.Screen
-                name="Tasks"
-                component={TaskListScreen}
-                // options={({ route }) => ({ title: route.params.name })}
-            />
+            <CalStack.Screen name="TaskList" component={TaskListScreen} />
+            <CalStack.Screen name="TaskDetails" component={TaskDetailsScreen} />
         </CalStack.Navigator>
     );
 };

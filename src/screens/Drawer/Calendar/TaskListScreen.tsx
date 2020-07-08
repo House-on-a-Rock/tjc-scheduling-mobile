@@ -22,7 +22,9 @@ export const TaskListScreen = (props: TaskListScreenProps) => {
         </TouchableOpacity>
     );
 
-    const renderItem = ({ item }) => <TaskListItem item={item} />;
+    const renderItem = ({ item }) => (
+        <TaskListItem item={item} navigation={props.navigation} />
+    );
 
     return (
         <Screen

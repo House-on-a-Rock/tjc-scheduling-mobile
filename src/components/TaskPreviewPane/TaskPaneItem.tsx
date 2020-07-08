@@ -2,6 +2,7 @@ import React from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import { Layout, Text } from '@ui-kitten/components';
 import { Entypo } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 type TaskViewProps = {
     item;
@@ -9,10 +10,17 @@ type TaskViewProps = {
 
 export const TaskPaneItem = (props: TaskViewProps) => {
     const { date, church, role } = props.item;
+    const navigation = useNavigation();
 
     return (
         <Layout style={{ ...styles.proto, ...styles.container }}>
-            <TouchableOpacity style={{ ...styles.proto, ...styles.taskContainer }}>
+            <TouchableOpacity
+                style={{ ...styles.proto, ...styles.taskContainer }}
+                onPress={() => {
+                    console.log('pressed taskpane item');
+                    navigation.navigate('TaskDetails', { task: props.item });
+                }}
+            >
                 <Entypo name="dot-single" size={20} color="black" />
                 <Text>{role?.name}</Text>
             </TouchableOpacity>
