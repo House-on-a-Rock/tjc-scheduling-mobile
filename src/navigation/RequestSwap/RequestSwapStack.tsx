@@ -26,12 +26,6 @@ export const RequestSwapStack = () => {
                             }),
                         },
                         {
-                            rotate: current.progress.interpolate({
-                                inputRange: [0, 1],
-                                outputRange: [1, 0],
-                            }),
-                        },
-                        {
                             scale: next
                                 ? next.progress.interpolate({
                                       inputRange: [0, 1],
@@ -52,17 +46,17 @@ export const RequestSwapStack = () => {
     };
 
     return (
-        <NavigationContainer>
-            <ReqStack.Navigator
-                mode="card"
-                headerMode={'none'}
-                screenOptions={{
-                    ...MyTransition,
-                }}
-            >
-                <ReqStack.Screen name="SelectSwapOption" component={SelectSwapOption} />
-                <ReqStack.Screen name="SwapScreen" component={SwapScreen} />
-            </ReqStack.Navigator>
-        </NavigationContainer>
+        // <NavigationContainer>
+        <ReqStack.Navigator
+            mode="card"
+            headerMode={'none'}
+            screenOptions={{
+                ...MyTransition,
+            }}
+        >
+            <ReqStack.Screen name="SelectSwapOption" component={SelectSwapOption} />
+            <ReqStack.Screen name="SwapScreen" component={SwapScreen} />
+        </ReqStack.Navigator>
+        // </NavigationContainer>
     );
 };

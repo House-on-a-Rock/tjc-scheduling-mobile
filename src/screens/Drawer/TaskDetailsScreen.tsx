@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, View, StyleSheet } from 'react-native';
 import { Screen } from '../../components/';
-import { Layout, Text, Button, Modal } from '@ui-kitten/components';
+import { Layout, Text, Button } from '@ui-kitten/components';
 import { backAction } from '../../shared/components/UI_Actions';
 import { Entypo } from '@expo/vector-icons';
 import { windowWidth, windowHeight } from '../../shared/constants/';
-import { RequestChangeModal } from '../RequestSwap/RequestChangeModal';
+import Modal from 'react-native-modal';
 import { RequestSwapStack } from '../../navigation/RequestSwap/RequestSwapStack';
 
 export const TaskDetailsScreen = (props) => {
@@ -37,12 +37,11 @@ export const TaskDetailsScreen = (props) => {
                 <Text>if change is requested, show here</Text>
                 {/* <Button onPress={() => props.navigation.navigate('RequestSwap')}> */}
                 <Button onPress={() => setModalVisible(true)}>Request Change</Button>
+
                 <Modal
-                    visible={modalVisible}
-                    backdropStyle={{
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                    }}
+                    isVisible={modalVisible}
                     onBackdropPress={closeModalHandler}
+                    style={{ alignItems: 'center', justifyContent: 'center' }}
                 >
                     <Layout style={styles.modalLayout}>
                         <RequestSwapStack />
