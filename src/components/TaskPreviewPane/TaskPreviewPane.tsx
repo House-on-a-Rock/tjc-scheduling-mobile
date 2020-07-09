@@ -31,7 +31,7 @@ export const TaskPreviewPane = (props) => {
     };
 
     return (
-        <Layout style={styles.container} opacity={0.9}>
+        <Layout style={styles.container} opacity={1}>
             <LinearGradient colors={['#EDEEF3', '#FFFFFF']} style={{ flex: 1 }}>
                 <Layout style={styles.layout}>
                     <Text style={{ textAlign: 'center' }}>Tasks</Text>

@@ -11,5 +11,4 @@ export * from './Drawer/Calendar/TaskListScreen';
 
 export * from './Drawer/TaskDetailsScreen';
 
-export * from './RequestSwap/RequestChangeModal';
 export * from './RequestSwap/SelectSwapOption';

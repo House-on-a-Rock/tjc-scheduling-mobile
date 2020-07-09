@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { CalendarScreen, TaskListScreen, TaskDetailsScreen } from '../../screens';
 import { stackOptions } from '../../shared/components';
 import { CalendarStackParamList } from '../../shared/models';
+import { RequestSwapStack } from '../RequestSwap/RequestSwapStack';
 
 const CalStack = createStackNavigator<CalendarStackParamList>();
 
@@ -16,6 +17,7 @@ export const CalendarStack = (props) => {
             />
             <CalStack.Screen name="TaskList" component={TaskListScreen} />
             <CalStack.Screen name="TaskDetails" component={TaskDetailsScreen} />
+            <CalStack.Screen name="RequestSwap" component={RequestSwapStack} />
         </CalStack.Navigator>
     );
 };

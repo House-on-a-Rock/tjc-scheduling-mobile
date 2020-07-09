@@ -29,18 +29,12 @@ export const backAction = (goBack) => {
                 <Icon style={{ width: 25, height: 35 }} name="arrow-ios-back" />
                 <Text>Back</Text>
             </TouchableOpacity>
-            {/* <TopNavigationAction
-                icon={(props) => (
-                    <Icon
-                        {...props}
-                        style={{ width: 25, height: 35 }}
-                        // animationConfig={}
-                        name="arrow-ios-back"
-                    />
-                )}
-                onPress={goBack}
-            />
-            <Text>Back</Text> */}
         </Layout>
+    );
+};
+
+export const closeStackAction = (closeStack) => {
+    return (
+        <TopNavigationAction icon={(props) => <Icon {...props} name="close-square" />} />
     );
 };

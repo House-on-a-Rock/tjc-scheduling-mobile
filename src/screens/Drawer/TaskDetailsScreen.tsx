@@ -6,7 +6,7 @@ import { backAction } from '../../shared/components/UI_Actions';
 import { Entypo } from '@expo/vector-icons';
 import { windowWidth, windowHeight } from '../../shared/constants/';
 import { RequestChangeModal } from '../RequestSwap/RequestChangeModal';
-// import { RequestSwapStack } from '../../navigation/';
+import { RequestSwapStack } from '../../navigation/RequestSwap/RequestSwapStack';
 
 export const TaskDetailsScreen = (props) => {
     const { task } = props.route.params;
@@ -35,12 +35,20 @@ export const TaskDetailsScreen = (props) => {
                     <Text>Currently scheduled</Text>
                 </View>
                 <Text>if change is requested, show here</Text>
+                {/* <Button onPress={() => props.navigation.navigate('RequestSwap')}> */}
                 <Button onPress={() => setModalVisible(true)}>Request Change</Button>
+                <Modal
+                    visible={modalVisible}
+                    backdropStyle={{
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    }}
+                    onBackdropPress={closeModalHandler}
+                >
+                    <Layout style={styles.modalLayout}>
+                        <RequestSwapStack />
+                    </Layout>
+                </Modal>
             </Layout>
-            <RequestChangeModal
-                modalVisible={modalVisible}
-                closeModalHandler={closeModalHandler}
-            />
         </Screen>
     );
 };
@@ -49,8 +57,5 @@ const styles = StyleSheet.create({
     modalLayout: {
         height: windowHeight * 0.8,
         width: windowWidth * 0.85,
-        // justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
     },
 });

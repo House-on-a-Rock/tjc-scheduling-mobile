@@ -2,16 +2,17 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Layout, Text, Icon, Button } from '@ui-kitten/components';
 import { windowWidth, windowHeight } from '../../shared/constants';
+import { Screen } from '../../components/Screen';
+import { backAction, closeStackAction } from '../../shared/components/UI_Actions';
 
 export const SelectSwapOption = (props) => {
-    //onPress={props.closeModalHandler}
+    const leftAccessory = () => backAction(props.navigation.goBack);
+    const rightAccessory = () =>
+        closeStackAction(() => props.navigation.navigate('TaskDetails'));
+
     return (
-        <Layout style={styles.modalLayout}>
-            <View style={{ position: 'absolute', top: 0, right: 0 }}>
-                <TouchableOpacity>
-                    <Icon name="close-square" height={50} width={50} />
-                </TouchableOpacity>
-            </View>
+        // <Screen accessoryLeft={leftAccessory} accessoryRight={rightAccessory}>
+        <Layout style={styles.layout}>
             <View style={{ flex: 1 }}>
                 <Text>Choose an option</Text>
             </View>
@@ -33,18 +34,18 @@ export const SelectSwapOption = (props) => {
                     <Icon name="person" height={50} width={50} />
                 </View>
             </TouchableOpacity>
-            <Button>Next</Button>
+            <Button onPress={() => props.navigation.navigate('SwapScreen')}>Next</Button>
         </Layout>
+        // </Screen>
     );
 };
 const styles = StyleSheet.create({
-    modalLayout: {
-        height: windowHeight * 0.8,
-        width: windowWidth * 0.85,
+    layout: {
+        height: '100%',
+        width: '100%',
         alignItems: 'center',
         padding: 20,
         paddingVertical: 35,
-        backgroundColor: 'red',
     },
     selectOption: {
         flexDirection: 'column',
