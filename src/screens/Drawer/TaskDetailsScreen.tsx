@@ -44,7 +44,7 @@ export const TaskDetailsScreen = (props) => {
                     style={{ alignItems: 'center', justifyContent: 'center' }}
                 >
                     <Layout style={styles.modalLayout}>
-                        <RequestSwapStack />
+                        <RequestSwapStack closeModal={closeModalHandler} />
                     </Layout>
                 </Modal>
             </Layout>

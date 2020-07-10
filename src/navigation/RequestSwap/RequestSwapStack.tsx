@@ -12,7 +12,7 @@ import { SwapScreen } from '../../screens/RequestSwap/SwapScreen';
 
 const ReqStack = createStackNavigator();
 
-export const RequestSwapStack = () => {
+export const RequestSwapStack = (props) => {
     const MyTransition = {
         cardStyleInterpolator: ({ current, next, layouts }) => {
             return {
@@ -54,8 +54,16 @@ export const RequestSwapStack = () => {
                 ...MyTransition,
             }}
         >
-            <ReqStack.Screen name="SelectSwapOption" component={SelectSwapOption} />
-            <ReqStack.Screen name="SwapScreen" component={SwapScreen} />
+            <ReqStack.Screen
+                name="SelectSwapOption"
+                component={SelectSwapOption}
+                initialParams={{ closeModal: props.closeModal }}
+            />
+            <ReqStack.Screen
+                name="SwapScreen"
+                component={SwapScreen}
+                initialParams={{ closeModal: props.closeModal }}
+            />
         </ReqStack.Navigator>
         // </NavigationContainer>
     );

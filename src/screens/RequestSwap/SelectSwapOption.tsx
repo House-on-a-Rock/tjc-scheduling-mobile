@@ -1,22 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Layout, Text, Icon, Button } from '@ui-kitten/components';
-import { windowWidth, windowHeight } from '../../shared/constants';
-import { Screen } from '../../components/Screen';
-import { backAction, closeStackAction } from '../../shared/components/UI_Actions';
 
 export const SelectSwapOption = (props) => {
-    const leftAccessory = () => backAction(props.navigation.goBack);
-    const rightAccessory = () =>
-        closeStackAction(() => props.navigation.navigate('TaskDetails'));
+    const [selectedOption, setSelectedOption] = useState<number>(0);
 
-    return (
-        // <Screen accessoryLeft={leftAccessory} accessoryRight={rightAccessory}>
-        <Layout style={styles.layout}>
-            <View style={{ flex: 1 }}>
-                <Text>Choose an option</Text>
-            </View>
-            <TouchableOpacity style={styles.selectOption} activeOpacity={1}>
+    const onSelectHandler = (option) => {
+        setSelectedOption(option);
+    };
+
+    const SwitchSpecifically = () => {
+        return (
+            <TouchableOpacity
+                style={
+                    selectedOption === 0
+                        ? { ...styles.options, ...styles.selected }
+                        : styles.options
+                }
+                onPress={() => onSelectHandler(0)}
+                activeOpacity={1}
+            >
                 <View>
                     <Text>Switch your duty to a different time</Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
@@ -26,7 +29,20 @@ export const SelectSwapOption = (props) => {
                     </View>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.selectOption} activeOpacity={1}>
+        );
+    };
+
+    const SwitchAnyone = () => {
+        return (
+            <TouchableOpacity
+                style={
+                    selectedOption === 1
+                        ? { ...styles.options, ...styles.selected }
+                        : styles.options
+                }
+                activeOpacity={1}
+                onPress={() => onSelectHandler(1)}
+            >
                 <Text>Ask someone to take over this duty</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                     <Icon name="person" height={50} width={50} />
@@ -34,9 +50,33 @@ export const SelectSwapOption = (props) => {
                     <Icon name="person" height={50} width={50} />
                 </View>
             </TouchableOpacity>
-            <Button onPress={() => props.navigation.navigate('SwapScreen')}>Next</Button>
+        );
+    };
+
+    return (
+        <Layout style={styles.layout}>
+            <TouchableOpacity
+                style={{ position: 'absolute', top: 0, right: 0 }}
+                onPress={props.route.params.closeModal}
+            >
+                <Icon style={{ width: 50, height: 50 }} name="close-square" />
+            </TouchableOpacity>
+
+            <View style={{ flex: 1 }}>
+                <Text>Choose an option</Text>
+            </View>
+            <SwitchSpecifically />
+            <SwitchAnyone />
+            <Button
+                onPress={() =>
+                    props.navigation.navigate('SwapScreen', {
+                        selectedOption: selectedOption,
+                    })
+                }
+            >
+                Next
+            </Button>
         </Layout>
-        // </Screen>
     );
 };
 const styles = StyleSheet.create({
@@ -47,7 +87,7 @@ const styles = StyleSheet.create({
         padding: 20,
         paddingVertical: 35,
     },
-    selectOption: {
+    options: {
         flexDirection: 'column',
         flex: 2,
         width: '95%',
@@ -64,5 +104,9 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
 
         elevation: 5,
+    },
+    selected: {
+        borderWidth: 1,
+        borderColor: 'blue',
     },
 });
