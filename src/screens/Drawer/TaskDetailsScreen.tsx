@@ -7,6 +7,7 @@ import { Entypo } from '@expo/vector-icons';
 import { windowWidth, windowHeight } from '../../shared/constants/';
 import Modal from 'react-native-modal';
 import { RequestSwapStack } from '../../navigation/RequestSwap/RequestSwapStack';
+import { CustomAnimatedModal } from '../../components/CustomAnimatedModal';
 
 export const TaskDetailsScreen = (props) => {
     const { task } = props.route.params;
@@ -35,18 +36,13 @@ export const TaskDetailsScreen = (props) => {
                     <Text>Currently scheduled</Text>
                 </View>
                 <Text>if change is requested, show here</Text>
-                {/* <Button onPress={() => props.navigation.navigate('RequestSwap')}> */}
                 <Button onPress={() => setModalVisible(true)}>Request Change</Button>
-
-                <Modal
-                    isVisible={modalVisible}
-                    onBackdropPress={closeModalHandler}
-                    style={{ alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <Layout style={styles.modalLayout}>
-                        <RequestSwapStack closeModal={closeModalHandler} />
-                    </Layout>
-                </Modal>
+                {modalVisible && (
+                    <CustomAnimatedModal
+                        isVisible={modalVisible}
+                        closeModal={closeModalHandler}
+                    />
+                )}
             </Layout>
         </Screen>
     );

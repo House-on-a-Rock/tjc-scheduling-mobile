@@ -8,6 +8,7 @@ import { openDrawerAction } from '../../../shared/components';
 import { Text } from '@ui-kitten/components';
 import { Layout } from '@ui-kitten/components';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
 
 export const CalendarScreen = (props: CalendarScreenProps) => {
     const leftAccessory = () => openDrawerAction(props.navigation.toggleDrawer);
@@ -15,6 +16,10 @@ export const CalendarScreen = (props: CalendarScreenProps) => {
         <TouchableOpacity onPress={() => props.navigation.navigate('TaskList')}>
             <Text>View as List</Text>
         </TouchableOpacity>
+    );
+
+    const showPreviewPane = useSelector(
+        (state) => state.calendarReducer.previewPaneVisible,
     );
 
     return (
@@ -30,7 +35,7 @@ export const CalendarScreen = (props: CalendarScreenProps) => {
             <Layout style={styles.scrollContainer}>
                 <Carousel />
             </Layout>
-            <TaskPreviewPane />
+            {showPreviewPane && <TaskPreviewPane />}
         </Screen>
     );
 };

@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Dimensions, View, FlatList, StyleSheet } from 'react-native';
+import {
+    Dimensions,
+    TouchableOpacity,
+    FlatList,
+    StyleSheet,
+    Animated,
+} from 'react-native';
 import { Layout, Text } from '@ui-kitten/components';
 import {
     calendarCardDimensions,
@@ -9,7 +15,7 @@ import {
 } from '../../shared/constants';
 import { TaskPaneItem } from './TaskPaneItem';
 import { LinearGradient } from 'expo-linear-gradient';
-import { selectDate } from '../../store/actions';
+import { selectDate, hidePreviewPane } from '../../store/actions';
 
 const calendarHeight: number = calendarCardDimensions.totalHeight;
 const windowHeight: number = Dimensions.get('window').height;
@@ -17,10 +23,19 @@ const taskPreviewHeight: number =
     windowHeight - (calendarHeight + headerBarHeight + statusBarHeight);
 
 export const TaskPreviewPane = (props) => {
+    const defaultSelected = { date: null, tasks: null };
     const dispatch = useDispatch();
-    const selectedDate = useSelector((state) => state.calendarReducer.selectedDate);
+    let selectedDate = useSelector((state) => state.calendarReducer.selectedDate);
+    if (selectedDate === null) selectedDate = defaultSelected; //handles error with line 34 when selectedDate returns null
+    const transformY = useRef(new Animated.Value(taskPreviewHeight * -1)).current;
 
-    if (!selectedDate) return <View></View>;
+    useEffect(() => {
+        Animated.timing(transformY, {
+            toValue: 0,
+            duration: 200,
+            useNativeDriver: false,
+        }).start();
+    }, [transformY]);
 
     const { date, tasks } = selectedDate;
 
@@ -28,20 +43,26 @@ export const TaskPreviewPane = (props) => {
 
     const onHidePressHandler = () => {
         dispatch(selectDate(null, null));
+        Animated.timing(transformY, {
+            toValue: taskPreviewHeight * -1,
+            duration: 300,
+            useNativeDriver: false,
+        }).start(() => dispatch(hidePreviewPane()));
     };
 
     return (
-        <Layout style={styles.container} opacity={1}>
+        <Animated.View style={{ ...styles.container, bottom: transformY }}>
             <LinearGradient colors={['#EDEEF3', '#FFFFFF']} style={{ flex: 1 }}>
                 <Layout style={styles.layout}>
                     <Text style={{ textAlign: 'center' }}>Tasks</Text>
-                    <Text
-                        style={styles.hideText}
+                    <TouchableOpacity
                         onPress={onHidePressHandler}
-                        appearance="hint"
+                        style={styles.hideText}
                     >
-                        Hide
-                    </Text>
+                        <Text style={styles.hideText} appearance="hint">
+                            Hide
+                        </Text>
+                    </TouchableOpacity>
                 </Layout>
                 {tasks?.length > 0 ? (
                     <FlatList
@@ -53,7 +74,7 @@ export const TaskPreviewPane = (props) => {
                     <Text style={{ textAlign: 'center' }}>You've got no tasks!</Text>
                 )}
             </LinearGradient>
-        </Layout>
+        </Animated.View>
     );
 };
 
@@ -64,7 +85,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         right: 0,
-        bottom: 0,
     },
     hideText: {
         position: 'absolute',

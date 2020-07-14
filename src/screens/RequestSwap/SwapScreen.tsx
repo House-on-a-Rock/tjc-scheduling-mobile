@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { View, StyleSheet, TouchableOpacity, Picker } from 'react-native';
 import {
     Layout,
@@ -10,14 +11,13 @@ import {
     SelectItem,
     IndexPath,
 } from '@ui-kitten/components';
-// import { Picker } from '@react-native-community/picker';
+import { CalendarCard } from '../../components/Calender/CalendarCard';
 
 export const SwapScreen = (props) => {
     //props.route.params.selectedOption stores what was selected on previous screen
-
+    const selectedDate = useSelector((state) => state.calendarReducer.selectedDate.date);
     const [checked, setChecked] = useState<boolean>(false);
-    const [selected, setSelected] = useState<string | number>('option 1');
-    const [selectedIndex, setSelectedIndex] = useState<string | number>(0);
+    const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
     //don't think this is needed anywhere else, will extract if needed
     const ModalHeader = () => {
@@ -48,6 +48,8 @@ export const SwapScreen = (props) => {
         );
     };
 
+    console.log('selectedDate', selectedDate);
+
     return (
         <Layout style={styles.layout}>
             <ModalHeader />
@@ -60,25 +62,16 @@ export const SwapScreen = (props) => {
             </Radio>
             <Text style={{ padding: 10 }}>-------- OR --------</Text>
             <Layout style={{ width: '80%', minHeight: 128, padding: 10 }} level="1">
-                {/* <Select
+                <Select
                     selectedIndex={selectedIndex}
                     onSelect={(index) => setSelectedIndex(index)}
                 >
                     <SelectItem style={{ zIndex: 15 }} title="option 1" />
                     <SelectItem style={{ zIndex: 15 }} title="option 2" />
                     <SelectItem style={{ zIndex: 15 }} title="option 3" />
-                </Select> */}
-                <Picker
-                    mode="dropdown"
-                    selectedValue={selected}
-                    onValueChange={(itemValue, itemIndex) => setSelected(itemValue)}
-                >
-                    <Picker.Item label="option 1" value="option1" />
-                    <Picker.Item label="option 2" value="option2" />
-                    <Picker.Item label="option 3" value="option3" />
-                    <Picker.Item label="option 4" value="option4" />
-                </Picker>
+                </Select>
             </Layout>
+            <CalendarCard displayedDate={selectedDate} tasks={[]} />
         </Layout>
     );
 };

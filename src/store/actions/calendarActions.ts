@@ -5,6 +5,8 @@ import { calendarRange } from '../../shared/constants/calendarConstants';
 export const CREATE_CALENDAR = 'CREATE_CALENDAR';
 export const EXTEND_CALENDAR = 'EXTEND_CALENDAR';
 export const REFRESHING = 'REFRESHING';
+export const SHOW_PREVIEW_PANE = 'SHOW_PREVIEW_PANE';
+export const HIDE_PREVIEW_PANE = 'HIDE_PREVIEW_PANE';
 export const REFRESHED = 'REFRESHED';
 export const SELECT_DATE = 'SELECT_DATE';
 
@@ -19,6 +21,18 @@ export const extendingCalendar = (direction) => {
     return {
         type: EXTEND_CALENDAR,
         payload: direction,
+    };
+};
+
+export const showPreviewPane = () => {
+    return {
+        type: SHOW_PREVIEW_PANE,
+    };
+};
+
+export const hidePreviewPane = () => {
+    return {
+        type: HIDE_PREVIEW_PANE,
     };
 };
 

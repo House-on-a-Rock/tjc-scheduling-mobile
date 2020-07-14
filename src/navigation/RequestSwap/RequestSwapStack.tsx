@@ -46,25 +46,25 @@ export const RequestSwapStack = (props) => {
     };
 
     return (
-        // <NavigationContainer>
-        <ReqStack.Navigator
-            mode="card"
-            headerMode={'none'}
-            screenOptions={{
-                ...MyTransition,
-            }}
-        >
-            <ReqStack.Screen
-                name="SelectSwapOption"
-                component={SelectSwapOption}
-                initialParams={{ closeModal: props.closeModal }}
-            />
-            <ReqStack.Screen
-                name="SwapScreen"
-                component={SwapScreen}
-                initialParams={{ closeModal: props.closeModal }}
-            />
-        </ReqStack.Navigator>
-        // </NavigationContainer>
+        <NavigationContainer>
+            <ReqStack.Navigator
+                mode="card"
+                headerMode={'none'}
+                screenOptions={{
+                    ...MyTransition,
+                }}
+            >
+                <ReqStack.Screen
+                    name="SelectSwapOption"
+                    component={SelectSwapOption}
+                    initialParams={{ closeModal: props.closeModal }}
+                />
+                <ReqStack.Screen
+                    name="SwapScreen"
+                    component={SwapScreen}
+                    initialParams={{ closeModal: props.closeModal }}
+                />
+            </ReqStack.Navigator>
+        </NavigationContainer>
     );
 };
