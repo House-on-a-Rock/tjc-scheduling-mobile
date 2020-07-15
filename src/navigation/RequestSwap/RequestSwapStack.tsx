@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SelectSwapOption } from '../../screens/RequestSwap/SelectSwapOption';
-import { SwapScreen, SwapSummary } from '../../screens/RequestSwap/';
+import { SwapScreen, SwapSummary, SwapConfirmation } from '../../screens/RequestSwap/';
 
 const ReqStack = createStackNavigator();
 
@@ -61,6 +61,11 @@ export const RequestSwapStack = (props) => {
                 <ReqStack.Screen
                     name="SwapSummary"
                     component={SwapSummary}
+                    initialParams={{ closeModal: props.closeModal }}
+                />
+                <ReqStack.Screen
+                    name="SwapConfirmation"
+                    component={SwapConfirmation}
                     initialParams={{ closeModal: props.closeModal }}
                 />
             </ReqStack.Navigator>

@@ -4,6 +4,10 @@ import { Layout, Text, Button } from '@ui-kitten/components';
 import { ModalHeader } from '../../components/ModalHeader';
 
 export const SwapSummary = (props) => {
+    const onConfirmPress = () => {
+        props.navigation.navigate('SwapConfirmation');
+    };
+
     return (
         <Layout>
             <ModalHeader
@@ -11,8 +15,7 @@ export const SwapSummary = (props) => {
                 closeModal={props.route.params.closeModal}
             />
             <Text>You want to trade with _____ on _____</Text>
-            <Button>Confirm</Button>
-            <Button>Go Back</Button>
+            <Button onPress={onConfirmPress}>Confirm</Button>
         </Layout>
     );
 };
