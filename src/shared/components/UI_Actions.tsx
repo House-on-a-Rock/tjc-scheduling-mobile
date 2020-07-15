@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { TopNavigationAction, Icon, Text, Layout } from '@ui-kitten/components';
 
 export const openDrawerAction = (toggleDrawer) => {

@@ -12,6 +12,8 @@ import {
     IndexPath,
 } from '@ui-kitten/components';
 import { CalendarCard } from '../../components/Calender/CalendarCard';
+import { ModalHeader } from '../../components/';
+import { Carousel } from '../../components/Calender';
 
 export const SwapScreen = (props) => {
     //props.route.params.selectedOption stores what was selected on previous screen
@@ -19,40 +21,12 @@ export const SwapScreen = (props) => {
     const [checked, setChecked] = useState<boolean>(false);
     const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
-    //don't think this is needed anywhere else, will extract if needed
-    const ModalHeader = () => {
-        return (
-            <View
-                style={{
-                    flexDirection: 'row',
-                    width: '100%',
-                    height: 50,
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                }}
-            >
-                <TouchableOpacity
-                    style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                    }}
-                    onPress={props.navigation.goBack}
-                >
-                    <Icon style={{ width: 33, height: 55 }} name="arrow-ios-back" />
-                    <Text category="h4">Back</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={props.route.params.closeModal}>
-                    <Icon style={{ width: 50, height: 50 }} name="close-square" />
-                </TouchableOpacity>
-            </View>
-        );
-    };
-
-    console.log('selectedDate', selectedDate);
-
     return (
         <Layout style={styles.layout}>
-            <ModalHeader />
+            <ModalHeader
+                goBack={props.navigation.goBack}
+                closeModal={props.route.params.closeModal}
+            />
             <Radio
                 style={{ padding: 20, zIndex: 3 }}
                 checked={checked}
@@ -61,7 +35,14 @@ export const SwapScreen = (props) => {
                 {(evaProps) => <Text category="h6"> Switch with anyone / any time</Text>}
             </Radio>
             <Text style={{ padding: 10 }}>-------- OR --------</Text>
-            <Layout style={{ width: '80%', minHeight: 128, padding: 10 }} level="1">
+            <Layout
+                style={{
+                    width: '80%',
+                    minHeight: 64,
+                    padding: 10,
+                }}
+                level="1"
+            >
                 <Select
                     selectedIndex={selectedIndex}
                     onSelect={(index) => setSelectedIndex(index)}
@@ -71,7 +52,15 @@ export const SwapScreen = (props) => {
                     <SelectItem style={{ zIndex: 15 }} title="option 3" />
                 </Select>
             </Layout>
-            <CalendarCard displayedDate={selectedDate} tasks={[]} />
+            <View style={{ width: '100%', flex: 1, backgroundColor: 'red' }}>
+                <CalendarCard displayedDate={selectedDate} tasks={[]} />
+                {/* <Carousel /> */}
+            </View>
+            <View style={{ padding: 5 }}>
+                <Button onPress={() => props.navigation.navigate('SwapSummary')}>
+                    Next
+                </Button>
+            </View>
         </Layout>
     );
 };
@@ -80,6 +69,5 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         alignItems: 'center',
-        zIndex: 15,
     },
 });

@@ -7,3 +7,5 @@ export * from './TaskList/TaskListItem';
 
 export * from './TaskPreviewPane/TaskPaneItem';
 export * from './TaskPreviewPane/TaskPreviewPane';
+
+export * from './ModalHeader';

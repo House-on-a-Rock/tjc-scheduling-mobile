@@ -23,7 +23,7 @@ export const CustomAnimatedModal = (props) => {
                 useNativeDriver: false,
             }),
             Animated.timing(transformY, {
-                toValue: windowHeight * -0.38,
+                toValue: windowHeight * -0.43,
                 duration: 300,
                 useNativeDriver: false,
             }),
@@ -51,7 +51,7 @@ export const CustomAnimatedModal = (props) => {
                         justifyContent: 'center',
                         opacity: fadeAnim2,
                         width: windowWidth * 0.85,
-                        height: windowHeight * 0.75,
+                        height: windowHeight * 0.85,
                     }}
                 >
                     <RequestSwapStack closeModal={props.closeModal} />

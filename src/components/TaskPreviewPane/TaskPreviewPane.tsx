@@ -16,6 +16,9 @@ import {
 import { TaskPaneItem } from './TaskPaneItem';
 import { LinearGradient } from 'expo-linear-gradient';
 import { selectDate, hidePreviewPane } from '../../store/actions';
+import { YellowBox } from 'react-native';
+
+YellowBox.ignoreWarnings(['Non-serializable values were found in the navigation state']);
 
 const calendarHeight: number = calendarCardDimensions.totalHeight;
 const windowHeight: number = Dimensions.get('window').height;
@@ -55,7 +58,7 @@ export const TaskPreviewPane = (props) => {
             <LinearGradient colors={['#EDEEF3', '#FFFFFF']} style={{ flex: 1 }}>
                 <Layout style={styles.layout}>
                     <Text style={{ textAlign: 'center' }}>Tasks</Text>
-                    <TouchableOpacity
+                    <TouchableOpacity //replace with button later?
                         onPress={onHidePressHandler}
                         style={styles.hideText}
                     >
@@ -95,5 +98,6 @@ const styles = StyleSheet.create({
     layout: {
         backgroundColor: 'transparent',
         width: '100%',
+        height: 30,
     },
 });

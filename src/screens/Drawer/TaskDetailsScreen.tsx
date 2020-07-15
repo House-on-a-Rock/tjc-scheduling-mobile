@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, View, StyleSheet } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { Screen } from '../../components/';
 import { Layout, Text, Button } from '@ui-kitten/components';
 import { backAction } from '../../shared/components/UI_Actions';
 import { Entypo } from '@expo/vector-icons';
-import { windowWidth, windowHeight } from '../../shared/constants/';
-import Modal from 'react-native-modal';
-import { RequestSwapStack } from '../../navigation/RequestSwap/RequestSwapStack';
 import { CustomAnimatedModal } from '../../components/CustomAnimatedModal';
 
 export const TaskDetailsScreen = (props) => {
@@ -47,10 +44,3 @@ export const TaskDetailsScreen = (props) => {
         </Screen>
     );
 };
-
-const styles = StyleSheet.create({
-    modalLayout: {
-        height: windowHeight * 0.8,
-        width: windowWidth * 0.85,
-    },
-});
