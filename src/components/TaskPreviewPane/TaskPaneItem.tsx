@@ -12,14 +12,15 @@ export const TaskPaneItem = (props: TaskViewProps) => {
     const { date, church, role } = props.item;
     const navigation = useNavigation();
 
+    const onPressHandler = () => {
+        navigation.navigate('TaskDetails', { task: props.item });
+    };
+
     return (
         <Layout style={{ ...styles.proto, ...styles.container }}>
             <TouchableOpacity
                 style={{ ...styles.proto, ...styles.taskContainer }}
-                onPress={() => {
-                    console.log('pressed taskpane item');
-                    navigation.navigate('TaskDetails', { task: props.item });
-                }}
+                onPress={onPressHandler}
             >
                 <Entypo name="dot-single" size={20} color="black" />
                 <Text>{role?.name}</Text>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { CalendarScreenProps } from '../../../shared/models';
+// import { CalendarScreenProps } from '../../../shared/models';
 import { Carousel } from '../../../components/Calender';
 import { TaskPreviewPane } from '../../../components/TaskPreviewPane/TaskPreviewPane';
 import { Screen } from '../../../components/Screen';
@@ -9,6 +9,11 @@ import { Text } from '@ui-kitten/components';
 import { Layout } from '@ui-kitten/components';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
+
+interface CalendarScreenProps {
+    route;
+    navigation;
+}
 
 export const CalendarScreen = (props: CalendarScreenProps) => {
     const leftAccessory = () => openDrawerAction(props.navigation.toggleDrawer);
@@ -45,7 +50,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         alignItems: 'center',
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
     },
     scrollContainer: {
         width: '100%',

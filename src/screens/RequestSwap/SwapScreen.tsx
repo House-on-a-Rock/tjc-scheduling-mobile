@@ -1,25 +1,28 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { View, StyleSheet, TouchableOpacity, Picker } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import {
     Layout,
     Text,
-    Icon,
     Button,
     Radio,
     Select,
     SelectItem,
-    IndexPath,
+    IndexPath, //will be used eventually?
 } from '@ui-kitten/components';
 import { CalendarCard } from '../../components/Calender/CalendarCard';
 import { ModalHeader } from '../../components/';
-import { Carousel } from '../../components/Calender';
 
-export const SwapScreen = (props) => {
+interface SwapScreenProps {
+    navigation;
+    route;
+}
+
+export const SwapScreen = (props: SwapScreenProps) => {
     //props.route.params.selectedOption stores what was selected on previous screen
     const selectedDate = useSelector((state) => state.calendarReducer.selectedDate.date);
     const [checked, setChecked] = useState<boolean>(false);
-    const [selectedIndex, setSelectedIndex] = useState<number>(0);
+    const [selectedIndex, setSelectedIndex] = useState<IndexPath>(0);
 
     return (
         <Layout style={styles.layout}>
@@ -54,7 +57,6 @@ export const SwapScreen = (props) => {
             </Layout>
             <View style={{ width: '100%', flex: 1, backgroundColor: 'red' }}>
                 <CalendarCard displayedDate={selectedDate} tasks={[]} />
-                {/* <Carousel /> */}
             </View>
             <View style={{ padding: 5 }}>
                 <Button onPress={() => props.navigation.navigate('SwapSummary')}>

@@ -25,14 +25,15 @@ const windowHeight: number = Dimensions.get('window').height;
 const taskPreviewHeight: number =
     windowHeight - (calendarHeight + headerBarHeight + statusBarHeight);
 
-export const TaskPreviewPane = (props) => {
+export const TaskPreviewPane = () => {
     const defaultSelected = { date: null, tasks: null };
     const dispatch = useDispatch();
     let selectedDate = useSelector((state) => state.calendarReducer.selectedDate);
-    if (selectedDate === null) selectedDate = defaultSelected; //handles error with line 34 when selectedDate returns null
+    if (selectedDate === null) selectedDate = defaultSelected; //handles error with line 43 when selectedDate returns null
     const transformY = useRef(new Animated.Value(taskPreviewHeight * -1)).current;
 
     useEffect(() => {
+        //open animation
         Animated.timing(transformY, {
             toValue: 0,
             duration: 200,
@@ -46,6 +47,8 @@ export const TaskPreviewPane = (props) => {
 
     const onHidePressHandler = () => {
         dispatch(selectDate(null, null));
+
+        //close animation
         Animated.timing(transformY, {
             toValue: taskPreviewHeight * -1,
             duration: 300,
@@ -58,7 +61,7 @@ export const TaskPreviewPane = (props) => {
             <LinearGradient colors={['#EDEEF3', '#FFFFFF']} style={{ flex: 1 }}>
                 <Layout style={styles.layout}>
                     <Text style={{ textAlign: 'center' }}>Tasks</Text>
-                    <TouchableOpacity //replace with button later?
+                    <TouchableOpacity //replace with button later
                         onPress={onHidePressHandler}
                         style={styles.hideText}
                     >

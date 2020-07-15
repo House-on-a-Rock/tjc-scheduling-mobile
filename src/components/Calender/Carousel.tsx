@@ -9,8 +9,8 @@ import { calendarCardDimensions } from '../../shared/constants/';
 import { TaskData } from '../../shared/models';
 import { calendarRange } from '../../shared/constants/';
 
+//prevents rerendering on show TaskPreviewPane
 export const Carousel = React.memo(
-    //prevents rerendering on show TaskPreviewPane
     () => {
         const dispatch = useDispatch();
 

@@ -1,10 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, StyleSheet, Animated, TouchableOpacity } from 'react-native';
-import { Modal, Text } from '@ui-kitten/components';
+import { Animated } from 'react-native';
+import { Modal } from '@ui-kitten/components';
 import { windowWidth, windowHeight } from '../shared/constants';
 import { RequestSwapStack } from '../navigation/RequestSwap/RequestSwapStack';
 
-export const CustomAnimatedModal = (props) => {
+interface CustomAnimatedModalProps {
+    isVisible: boolean;
+    closeModal: () => void;
+}
+
+export const CustomAnimatedModal = (props: CustomAnimatedModalProps) => {
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const fadeAnim2 = useRef(new Animated.Value(0)).current;
     const transformY = useRef(new Animated.Value(-1000)).current;
@@ -23,7 +28,7 @@ export const CustomAnimatedModal = (props) => {
                 useNativeDriver: false,
             }),
             Animated.timing(transformY, {
-                toValue: windowHeight * -0.43,
+                toValue: windowHeight * -0.43, //positioning math needs fine tuning
                 duration: 300,
                 useNativeDriver: false,
             }),
@@ -34,7 +39,6 @@ export const CustomAnimatedModal = (props) => {
         <Animated.View
             style={{
                 height: windowHeight,
-
                 width: windowWidth,
                 opacity: fadeAnim,
                 backgroundColor: 'rgba(0,0,0,0.5)',
@@ -60,25 +64,3 @@ export const CustomAnimatedModal = (props) => {
         </Animated.View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    fadingContainer: {
-        paddingVertical: 8,
-        paddingHorizontal: 16,
-        backgroundColor: 'powderblue',
-    },
-    fadingText: {
-        fontSize: 28,
-        textAlign: 'center',
-        margin: 10,
-    },
-    buttonRow: {
-        flexDirection: 'row',
-        marginVertical: 16,
-    },
-});

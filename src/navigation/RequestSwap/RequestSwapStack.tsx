@@ -4,9 +4,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { SelectSwapOption } from '../../screens/RequestSwap/SelectSwapOption';
 import { SwapScreen, SwapSummary, SwapConfirmation } from '../../screens/RequestSwap/';
 
+interface RequestSwapStackProps {
+    closeModal: () => void;
+}
+
 const ReqStack = createStackNavigator();
 
-export const RequestSwapStack = (props) => {
+export const RequestSwapStack = (props: RequestSwapStackProps) => {
+    //animation for every screen in this stack
     const MyTransition = {
         cardStyleInterpolator: ({ current, next, layouts }) => {
             return {

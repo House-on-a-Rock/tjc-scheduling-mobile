@@ -22,14 +22,7 @@ export const TaskListItem = (props: TaskListItemProps) => {
     };
 
     return (
-        <TouchableOpacity
-            style={styles.container}
-            onPress={() => {
-                console.log('pressed');
-                // props.navigation.navigate('TaskDetails', { task: props.item });
-                onPressHandler();
-            }}
-        >
+        <TouchableOpacity style={styles.container} onPress={onPressHandler}>
             <View
                 style={{
                     padding: 10,

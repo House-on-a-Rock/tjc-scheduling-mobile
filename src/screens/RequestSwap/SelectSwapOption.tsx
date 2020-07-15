@@ -2,12 +2,19 @@ import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Layout, Text, Icon, Button } from '@ui-kitten/components';
 
-export const SelectSwapOption = (props) => {
+interface SelectSwapOptionProps {
+    navigation;
+    route;
+}
+
+export const SelectSwapOption = (props: SelectSwapOptionProps) => {
     const [selectedOption, setSelectedOption] = useState<number>(0);
 
     const onSelectHandler = (option) => {
         setSelectedOption(option);
     };
+
+    const iconDimensions = 50;
 
     const SwitchSpecifically = () => {
         return (
@@ -23,9 +30,21 @@ export const SelectSwapOption = (props) => {
                 <View>
                     <Text>Switch your duty to a different time</Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                        <Icon name="person" height={50} width={50} />
-                        <Icon name="swap" height={50} width={50} />
-                        <Icon name="person" height={50} width={50} />
+                        <Icon
+                            name="person"
+                            height={iconDimensions}
+                            width={iconDimensions}
+                        />
+                        <Icon
+                            name="swap"
+                            height={iconDimensions}
+                            width={iconDimensions}
+                        />
+                        <Icon
+                            name="person"
+                            height={iconDimensions}
+                            width={iconDimensions}
+                        />
                     </View>
                 </View>
             </TouchableOpacity>
@@ -45,9 +64,13 @@ export const SelectSwapOption = (props) => {
             >
                 <Text>Ask someone to take over this duty</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                    <Icon name="person" height={50} width={50} />
-                    <Icon name="arrow-forward" height={50} width={50} />
-                    <Icon name="person" height={50} width={50} />
+                    <Icon name="person" height={iconDimensions} width={iconDimensions} />
+                    <Icon
+                        name="arrow-forward"
+                        height={iconDimensions}
+                        width={iconDimensions}
+                    />
+                    <Icon name="person" height={iconDimensions} width={iconDimensions} />
                 </View>
             </TouchableOpacity>
         );
@@ -59,7 +82,10 @@ export const SelectSwapOption = (props) => {
                 style={{ position: 'absolute', top: 0, right: 0 }}
                 onPress={props.route.params.closeModal}
             >
-                <Icon style={{ width: 50, height: 50 }} name="close-square" />
+                <Icon
+                    style={{ width: iconDimensions, height: iconDimensions }}
+                    name="close-square"
+                />
             </TouchableOpacity>
 
             <View style={{ flex: 1 }}>
