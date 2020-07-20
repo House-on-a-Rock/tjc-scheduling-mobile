@@ -10,7 +10,7 @@ export const NewAssignmentsStack = (props) => {
     return (
         <NewAssignments.Navigator headerMode="none">
             <NewAssignments.Screen
-                name="New Assigments"
+                name="New Assignments"
                 component={NewAssignmentsScreen}
                 // options={stackOptions}
             />
