@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import { Layout, Text } from '@ui-kitten/components';
-import { FlatList, StyleSheet, TouchableOpacity, LayoutAnimation } from 'react-native';
+import {
+    FlatList,
+    StyleSheet,
+    TouchableOpacity,
+    LayoutAnimation,
+    Platform,
+    UIManager,
+} from 'react-native';
 import { Screen } from '../../components';
 import { useSelector } from 'react-redux';
 import { NewAssignmentItem } from '../../components/NewAssignments/NewAssignmentItem';
@@ -8,12 +15,22 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { openDrawerAction } from '../../shared/components';
 import SwipeRow from '../../components/SwipeableItem';
 import { windowWidth } from '../../shared/constants/';
+import Swipeable from 'react-native-swipeable-row';
 
 interface NewAssignmentsScreenProps {
     route;
     navigation;
     onSwipe;
 }
+
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
+// if (Platform.OS === 'android') {
+//     UIManager.setLayoutAnimationEnabledExperimental &&
+//         UIManager.setLayoutAnimationEnabledExperimental(true);
+// }
 
 //dummy data
 const NUM_ITEMS = 10;
@@ -35,26 +52,41 @@ export const NewAssignmentsScreen = (props: NewAssignmentsScreenProps) => {
 
     const leftAccessory = () => openDrawerAction(props.navigation.toggleDrawer);
     const rightAccessory = () => (
-        <TouchableOpacity onPress={() => console.log('pressed')}>
+        <TouchableOpacity onPress={() => setData(initialData)}>
             <Text category="s1">Delete all</Text>
             <Text category="s1">updates</Text>
         </TouchableOpacity>
     );
 
     const deleteItem = (item) => {
-        console.log('delete item', item);
         const updatedData = data.filter((d) => d !== item);
         // Animate list to close gap when item is deleted
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
         setData(updatedData);
     };
 
+    // const leftContent = <Text>Pull to activate</Text>;
+
+    // const rightButtons = [
+    //     <TouchableHighlight>
+    //         <Text>Button 1</Text>
+    //     </TouchableHighlight>,
+    //     <TouchableHighlight>
+    //         <Text>Button 2</Text>
+    //     </TouchableHighlight>,
+    // ];
+
     const renderItem = ({ item, index }) => (
-        <SwipeRow key={item.key} item={item} swipeThreshold={150} onSwipe={deleteItem}>
+        <SwipeRow key={item.key} item={item} swipeThreshold={200} onSwipe={deleteItem}>
             <Text style={[styles.text, { backgroundColor: item.backgroundColor }]}>
                 {item.text}
             </Text>
         </SwipeRow>
+        //     <Swipeable leftContent={leftContent} rightButtons={rightButtons}>
+        //     <Text style={[styles.text, { backgroundColor: item.backgroundColor }]}>
+        //         {item.text}
+        //     </Text>
+        // </Swipeable>
     );
 
     return (
@@ -71,7 +103,7 @@ export const NewAssignmentsScreen = (props: NewAssignmentsScreenProps) => {
                     <FlatList
                         data={data}
                         renderItem={renderItem}
-                        keyExtractor={(item, index) => index.toString() + item.toString()}
+                        // keyExtractor={(item, index) => index.toString() + item.toString()}  //messes with layout animation
                         contentContainerStyle={{ width: windowWidth }}
                     />
                 </LinearGradient>

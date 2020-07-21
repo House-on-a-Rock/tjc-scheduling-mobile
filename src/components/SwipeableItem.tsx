@@ -1,8 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
+//https://medium.com/async-la/swipe-to-delete-with-reanimated-react-native-gesture-handler-bd7d66085aee
 import { PanGestureHandler, State as GestureState } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
-import { ClipPath } from 'react-native-svg';
 const {
     event,
     cond,
@@ -33,12 +33,11 @@ class SwipeRow extends React.Component {
     };
 
     // Spring animation config
-    // Determines how "springy" row is when it
-    // snaps back into place after released
+    // Determines how "springy" row is when it snaps back into place after released
     animConfig = {
         toValue: new Value(0),
-        damping: 20,
-        mass: 0.2,
+        damping: 15,
+        mass: 0.3,
         stiffness: 100,
         overshootClamping: false,
         restSpeedThreshold: 0.2,
@@ -49,16 +48,31 @@ class SwipeRow extends React.Component {
     // or if the gesture is cancelled/fails for some reason)
     onHandlerStateChange = event([
         {
-            nativeEvent: ({ state }) =>
-                block([
+            nativeEvent: ({ state }) => {
+                return block([
                     // Update our animated value that tracks gesture state
                     set(this.gestureState, state),
                     // Spring row back into place when user lifts their finger before reaching threshold
                     cond(
-                        and(eq(state, GestureState.END), not(clockRunning(this.clock))),
-                        startClock(this.clock),
+                        and(
+                            greaterThan(
+                                this.animState.position,
+                                this.props.swipeThreshold,
+                            ),
+                            eq(state, GestureState.END),
+                        ),
+                        [
+                            call([this.animState.position], () => {
+                                return this.props.onSwipe(this.props.item);
+                            }),
+                        ],
                     ),
-                ]),
+                    cond(
+                        and(eq(state, GestureState.END), not(clockRunning(this.clock))),
+                        [startClock(this.clock)],
+                    ),
+                ]);
+            },
         },
     ]);
 
@@ -69,14 +83,6 @@ class SwipeRow extends React.Component {
                     cond(eq(this.gestureState, GestureState.ACTIVE), [
                         // Update our translate animated value as the user pans
                         set(this.animState.position, translationX),
-                        // If swipe distance exceeds threshold, delete item
-                        cond(
-                            greaterThan(translationX, this.props.swipeThreshold),
-                            call([this.animState.position], () => {
-                                console.log('calling onswipe');
-                                return this.props.onSwipe(this.props.item);
-                            }),
-                        ),
                     ]),
                 ]),
         },
@@ -86,7 +92,8 @@ class SwipeRow extends React.Component {
         const { children } = this.props;
         return (
             <PanGestureHandler
-                minDeltaX={10}
+                activeOffsetX={1}
+                failOffsetX={-100}
                 onGestureEvent={this.onPanEvent}
                 onHandlerStateChange={this.onHandlerStateChange}
             >
