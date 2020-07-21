@@ -1,5 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
+import { windowWidth } from '../shared/constants';
+import { Text } from '@ui-kitten/components';
 //https://medium.com/async-la/swipe-to-delete-with-reanimated-react-native-gesture-handler-bd7d66085aee
 import { PanGestureHandler, State as GestureState } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
@@ -38,7 +40,7 @@ class SwipeRow extends React.Component {
         toValue: new Value(0),
         damping: 15,
         mass: 0.3,
-        stiffness: 100,
+        stiffness: 50,
         overshootClamping: false,
         restSpeedThreshold: 0.2,
         restDisplacementThreshold: 0.2,
@@ -52,36 +54,43 @@ class SwipeRow extends React.Component {
                 return block([
                     // Update our animated value that tracks gesture state
                     set(this.gestureState, state),
-                    // Spring row back into place when user lifts their finger before reaching threshold
+
+                    cond(
+                        //resets clock and sets state to finished on swipe if clock was running before
+                        and(eq(state, GestureState.ACTIVE), clockRunning(this.clock)),
+                        stopClock(this.clock),
+                        set(this.animState.finished, 0),
+                    ),
                     cond(
                         and(
+                            eq(state, GestureState.END),
                             greaterThan(
                                 this.animState.position,
                                 this.props.swipeThreshold,
                             ),
-                            eq(state, GestureState.END),
                         ),
-                        [
-                            call([this.animState.position], () => {
-                                return this.props.onSwipe(this.props.item);
-                            }),
-                        ],
-                    ),
-                    cond(
-                        and(eq(state, GestureState.END), not(clockRunning(this.clock))),
-                        [startClock(this.clock)],
+                        call([this.animState.position], () => {
+                            return this.props.onSwipe(this.props.item);
+                        }),
+                        //elseif
+                        cond(
+                            and(
+                                eq(state, GestureState.END),
+                                not(clockRunning(this.clock)),
+                            ),
+                            startClock(this.clock),
+                        ),
                     ),
                 ]);
             },
         },
     ]);
 
-    onPanEvent = event([
+    onGestureEvent = event([
         {
             nativeEvent: ({ translationX }) =>
                 block([
                     cond(eq(this.gestureState, GestureState.ACTIVE), [
-                        // Update our translate animated value as the user pans
                         set(this.animState.position, translationX),
                     ]),
                 ]),
@@ -92,15 +101,21 @@ class SwipeRow extends React.Component {
         const { children } = this.props;
         return (
             <PanGestureHandler
-                activeOffsetX={1}
-                failOffsetX={-100}
-                onGestureEvent={this.onPanEvent}
+                activeOffsetX={10}
+                onGestureEvent={this.onGestureEvent}
                 onHandlerStateChange={this.onHandlerStateChange}
             >
                 <Animated.View
                     style={{
                         flex: 1,
                         transform: [{ translateX: this.animState.position }],
+                        flexDirection: 'row',
+                        // width: windowWidth,
+                        // position: 'absolute',
+                        // top: 0,
+                        // right: 0,
+                        // bottom: 0,
+                        // left: 0,
                     }}
                 >
                     <Animated.Code>
@@ -118,6 +133,19 @@ class SwipeRow extends React.Component {
                             ])
                         }
                     </Animated.Code>
+                    <Animated.View
+                        style={{
+                            width: 100,
+                            height: 40,
+                            position: 'absolute',
+                            left: -100,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            backgroundColor: 'red',
+                        }}
+                    >
+                        <Text>Delete</Text>
+                    </Animated.View>
                     {children}
                 </Animated.View>
             </PanGestureHandler>
