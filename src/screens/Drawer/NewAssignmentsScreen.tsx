@@ -15,8 +15,7 @@ import { useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 import { openDrawerAction } from '../../shared/components';
 import SwipeRow from '../../components/SwipeableItem';
-
-import Swipeable from 'react-native-swipeable-row';
+import { NewAssignmentItem } from '../../components/NewAssignments/NewAssignmentItem';
 import { windowWidth } from '../../shared/constants';
 
 interface NewAssignmentsScreenProps {
@@ -24,10 +23,6 @@ interface NewAssignmentsScreenProps {
     navigation;
     onSwipe;
 }
-
-// if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
-//     UIManager.setLayoutAnimationEnabledExperimental(true);
-// }
 
 if (Platform.OS === 'android') {
     UIManager.setLayoutAnimationEnabledExperimental &&
@@ -49,8 +44,10 @@ const initialData = [...Array(NUM_ITEMS)].fill(0).map((d, index) => ({
 
 export const NewAssignmentsScreen = (props: NewAssignmentsScreenProps) => {
     //grab new assignments instead of tasks
-    // const newAssignments = useSelector((state) => state.taskReducer.tasks);
-    const [data, setData] = useState(initialData);
+    const newAssignments = useSelector((state) => state.taskReducer.tasks);
+
+    const [data, setData] = useState(() => newAssignments);
+    // const [data, setData] = useState(initialData);
 
     const leftAccessory = () => openDrawerAction(props.navigation.toggleDrawer);
     const rightAccessory = () => (
@@ -74,12 +71,8 @@ export const NewAssignmentsScreen = (props: NewAssignmentsScreenProps) => {
     };
 
     const renderItem = ({ item, index }) => (
-        <SwipeRow key={item.key} item={item} swipeThreshold={270} onSwipe={deleteItem}>
-            <View style={{ width: windowWidth }}>
-                <Text style={[styles.text, { backgroundColor: item.backgroundColor }]}>
-                    {item.text}
-                </Text>
-            </View>
+        <SwipeRow key={item.toString()} swipeThreshold={270} onSwipe={deleteItem}>
+            <NewAssignmentItem key={item.toString()} item={item} />
         </SwipeRow>
     );
 
@@ -94,13 +87,7 @@ export const NewAssignmentsScreen = (props: NewAssignmentsScreenProps) => {
                     colors={['#EDEEF3', '#FFFFFF']}
                     style={{ flex: 1, width: '100%', alignItems: 'center' }}
                 >
-                    <FlatList
-                        data={data}
-                        renderItem={renderItem}
-                        // directionalLockEnabled={true}
-                        // keyExtractor={(item, index) => index.toString() + item.toString()}  //messes with layout animation
-                        // contentContainerStyle={{ width: windowWidth }}
-                    />
+                    <FlatList data={data} renderItem={renderItem} />
                 </LinearGradient>
             </Layout>
         </Screen>
@@ -110,7 +97,6 @@ export const NewAssignmentsScreen = (props: NewAssignmentsScreenProps) => {
 const styles = StyleSheet.create({
     layout: {
         flex: 1,
-        // height: '100%',
     },
     text: {
         fontWeight: 'bold',
