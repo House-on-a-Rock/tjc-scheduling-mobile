@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 import { compareDates } from '../../services/Calendar/helper_functions';
 import { DateTile } from './DateTile';
-import { selectDate } from '../../store/actions';
+import { selectDate, showPreviewPane } from '../../store/actions';
 import { TaskData } from '../../shared/models';
 
 interface DateDisplayProps {
@@ -45,8 +45,9 @@ export const DateDisplay = (props: DateDisplayProps) => {
         return filteredTasks;
     };
 
-    const onDateTilePressed = (date: Date, dateTasks: Object[]) => {
+    const onDateTilePressed = (date: Date, dateTasks: TaskData[]) => {
         dispatch(selectDate(date, dateTasks));
+        dispatch(showPreviewPane());
     };
 
     for (let j = 0; j < dateArray.length; j++) {

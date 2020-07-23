@@ -10,3 +10,6 @@ export * from './Drawer/Calendar/CalendarScreen';
 export * from './Drawer/Calendar/TaskListScreen';
 
 export * from './Drawer/NewAssignmentsScreen';
+export * from './Drawer/TaskDetailsScreen';
+
+export * from './RequestSwap/SelectSwapOption';
