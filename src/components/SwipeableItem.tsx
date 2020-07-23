@@ -28,11 +28,18 @@ const {
     color,
 } = Animated;
 
-class SwipeRow extends React.Component {
+interface SwipeRowProps {
+    swipeThreshold: number;
+    onSwipe: (taskId: number) => void;
+    itemId: number;
+    children?;
+}
+
+class SwipeRow extends React.Component<SwipeRowProps> {
     clock = new Clock();
     gestureState = new Value(GestureState.UNDETERMINED);
 
-    //main row animstate
+    //main animState
     animState = {
         finished: new Animated.Value(0),
         position: new Value(0),
@@ -66,6 +73,7 @@ class SwipeRow extends React.Component {
         restDisplacementThreshold: 0.2,
     };
 
+    //determines width of trash icon tray
     panWidth = 100;
 
     // Called whenever gesture state changes. (User begins/ends pan, or if the gesture is cancelled/fails for some reason)
@@ -89,7 +97,10 @@ class SwipeRow extends React.Component {
                             eq(this.animState.shouldDelete, 1),
                         ),
                         call([this.animState.position], () => {
-                            return this.props.onSwipe(this.props.item);
+                            return this.props.onSwipe(
+                                // this.props.children.props.item.taskId,
+                                this.props.itemId,
+                            );
                         }),
                         //else if gesture ended but !shouldDelete, start spring animation
                         cond(
@@ -105,6 +116,7 @@ class SwipeRow extends React.Component {
         },
     ]);
 
+    //called during gestures
     onGestureEvent = event([
         {
             nativeEvent: ({ translationX }) =>
@@ -154,6 +166,21 @@ class SwipeRow extends React.Component {
                 ]),
         },
     ]);
+
+    renderSpringAnim = () =>
+        block([
+            // If the clock is running, increment position in next tick by calling spring()
+            cond(clockRunning(this.clock), [
+                spring(this.clock, this.animState, this.animConfig),
+                spring(this.clock, this.iconAnimState, this.animConfig),
+                // Stop and reset clock when spring is complete
+                cond(this.animState.finished, [
+                    stopClock(this.clock),
+                    set(this.animState.finished, 0),
+                    set(this.iconAnimState.finished, 0),
+                ]),
+            ]),
+        ]);
 
     render() {
         const { children } = this.props;
@@ -207,31 +234,7 @@ class SwipeRow extends React.Component {
                             flexDirection: 'row',
                         }}
                     >
-                        <Animated.Code>
-                            {() =>
-                                block([
-                                    // If the clock is running, increment position in next tick by calling spring()
-                                    cond(clockRunning(this.clock), [
-                                        spring(
-                                            this.clock,
-                                            this.animState,
-                                            this.animConfig,
-                                        ),
-                                        spring(
-                                            this.clock,
-                                            this.iconAnimState,
-                                            this.animConfig,
-                                        ),
-                                        // Stop and reset clock when spring is complete
-                                        cond(this.animState.finished, [
-                                            stopClock(this.clock),
-                                            set(this.animState.finished, 0),
-                                            set(this.iconAnimState.finished, 0),
-                                        ]),
-                                    ]),
-                                ])
-                            }
-                        </Animated.Code>
+                        <Animated.Code>{this.renderSpringAnim}</Animated.Code>
                         {children}
                     </Animated.View>
                 </Animated.View>

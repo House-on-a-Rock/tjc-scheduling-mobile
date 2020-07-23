@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import { Screen } from '../../components';
 import { useSelector } from 'react-redux';
-
 import { LinearGradient } from 'expo-linear-gradient';
 import { openDrawerAction } from '../../shared/components';
 import SwipeRow from '../../components/SwipeableItem';
@@ -29,50 +28,43 @@ if (Platform.OS === 'android') {
         UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-//dummy data
-const NUM_ITEMS = 10;
-function getColor(i) {
-    const multiplier = 255 / (NUM_ITEMS - 1);
-    const colorVal = i * multiplier;
-    return `rgb(${colorVal}, ${Math.abs(128 - colorVal)}, ${255 - colorVal})`;
-}
-const initialData = [...Array(NUM_ITEMS)].fill(0).map((d, index) => ({
-    text: `Row ${index}`,
-    key: `key-${index}`, // Note: It's bad practice to use index as your key. Don't do it in production!
-    backgroundColor: getColor(index),
-}));
-
 export const NewAssignmentsScreen = (props: NewAssignmentsScreenProps) => {
     //grab new assignments instead of tasks
     const newAssignments = useSelector((state) => state.taskReducer.tasks);
 
     const [data, setData] = useState(() => newAssignments);
-    // const [data, setData] = useState(initialData);
 
     const leftAccessory = () => openDrawerAction(props.navigation.toggleDrawer);
     const rightAccessory = () => (
-        <TouchableOpacity onPress={() => setData(initialData)}>
+        //delete needs to communicate to server as well, to mark them as seen
+        <TouchableOpacity onPress={() => setData([])}>
             <Text category="s1">Delete all</Text>
             <Text category="s1">updates</Text>
         </TouchableOpacity>
     );
 
-    const deleteItem = (item) => {
-        const updatedData = data.filter((d) => d !== item);
+    const deleteItem = (taskId) => {
+        const updatedData = data.filter((d) => d.taskId !== taskId);
+
         // Animate list to close gap when item is deleted
         const nextLayout = LayoutAnimation.create(
             250,
             'opacity',
             LayoutAnimation.Properties.opacity,
         );
-        // LayoutAnimation.configureNext(nextLayout);
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         setData(updatedData);
     };
 
+    const deleteThreshold = windowWidth * 0.5;
+
     const renderItem = ({ item, index }) => (
-        <SwipeRow key={item.toString()} swipeThreshold={270} onSwipe={deleteItem}>
-            <NewAssignmentItem key={item.toString()} item={item} />
+        <SwipeRow
+            swipeThreshold={deleteThreshold}
+            onSwipe={deleteItem}
+            itemId={item.taskId}
+        >
+            <NewAssignmentItem item={item} />
         </SwipeRow>
     );
 
@@ -87,7 +79,15 @@ export const NewAssignmentsScreen = (props: NewAssignmentsScreenProps) => {
                     colors={['#EDEEF3', '#FFFFFF']}
                     style={{ flex: 1, width: '100%', alignItems: 'center' }}
                 >
-                    <FlatList data={data} renderItem={renderItem} />
+                    {data.length > 0 ? (
+                        <FlatList
+                            data={data}
+                            renderItem={renderItem}
+                            keyExtractor={(item, index) => item.taskId.toString()}
+                        />
+                    ) : (
+                        <Text>You don't have any new assignments!</Text>
+                    )}
                 </LinearGradient>
             </Layout>
         </Screen>
