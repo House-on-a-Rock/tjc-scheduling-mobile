@@ -10,6 +10,8 @@ import { TaskData } from '../../shared/models';
 interface Props {
     displayedDate: Date;
     tasks?: TaskData[];
+    onPressScroll: (index) => void;
+    cardIndex: number;
 }
 
 export const CalendarCard = React.memo((props: Props) => {
@@ -38,6 +40,8 @@ export const CalendarCard = React.memo((props: Props) => {
                     firstDay={setFirstDay(displayedDate)}
                     displayedDate={displayedDate}
                     tasks={tasks}
+                    onPressScroll={props.onPressScroll}
+                    cardIndex={props.cardIndex}
                 />
             </Layout>
         </Card>
