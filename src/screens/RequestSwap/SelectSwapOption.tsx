@@ -9,11 +9,6 @@ interface SelectSwapOptionProps {
 
 export const SelectSwapOption = (props: SelectSwapOptionProps) => {
     const [selectedOption, setSelectedOption] = useState<number>(0);
-
-    const onSelectHandler = (option) => {
-        setSelectedOption(option);
-    };
-
     const iconDimensions = 50;
 
     const SwitchSpecifically = () => {
@@ -24,7 +19,7 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
                         ? { ...styles.options, ...styles.selected }
                         : styles.options
                 }
-                onPress={() => onSelectHandler(0)}
+                onPress={() => setSelectedOption(0)}
                 activeOpacity={1}
             >
                 <View>
@@ -60,7 +55,7 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
                         : styles.options
                 }
                 activeOpacity={1}
-                onPress={() => onSelectHandler(1)}
+                onPress={() => setSelectedOption(1)}
             >
                 <Text>Ask someone to take over this duty</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>

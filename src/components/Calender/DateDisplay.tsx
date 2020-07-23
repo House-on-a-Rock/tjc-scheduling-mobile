@@ -45,7 +45,7 @@ export const DateDisplay = (props: DateDisplayProps) => {
         return filteredTasks;
     };
 
-    const onDateTilePressed = (date: Date, dateTasks: Object[]) => {
+    const onDateTilePressed = (date: Date, dateTasks: TaskData[]) => {
         dispatch(selectDate(date, dateTasks));
         dispatch(showPreviewPane());
     };

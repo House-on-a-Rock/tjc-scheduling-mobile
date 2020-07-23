@@ -6,6 +6,7 @@ import {
     FlatList,
     StyleSheet,
     Animated,
+    YellowBox,
 } from 'react-native';
 import { Layout, Text } from '@ui-kitten/components';
 import {
@@ -16,7 +17,6 @@ import {
 import { TaskPaneItem } from './TaskPaneItem';
 import { LinearGradient } from 'expo-linear-gradient';
 import { selectDate, hidePreviewPane } from '../../store/actions';
-import { YellowBox } from 'react-native';
 
 YellowBox.ignoreWarnings(['Non-serializable values were found in the navigation state']);
 

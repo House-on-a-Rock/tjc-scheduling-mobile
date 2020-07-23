@@ -13,7 +13,6 @@ export const CustomAnimatedModal = (props: CustomAnimatedModalProps) => {
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const fadeAnim2 = useRef(new Animated.Value(0)).current;
     const transformY = useRef(new Animated.Value(-1000)).current;
-    const [isVisible, setIsVisible] = useState(true);
 
     useEffect(() => {
         Animated.parallel([
@@ -46,7 +45,7 @@ export const CustomAnimatedModal = (props: CustomAnimatedModalProps) => {
                 bottom: 0,
             }}
         >
-            <Modal visible={isVisible} onBackdropPress={props.closeModal}>
+            <Modal visible={props.isVisible} onBackdropPress={props.closeModal}>
                 <Animated.View
                     style={{
                         position: 'absolute',

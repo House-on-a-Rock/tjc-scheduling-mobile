@@ -23,7 +23,7 @@ export const CalendarScreen = (props: CalendarScreenProps) => {
         </TouchableOpacity>
     );
 
-    const showPreviewPane = useSelector(
+    const isPreviewPaneOpen = useSelector(
         (state) => state.calendarReducer.previewPaneVisible,
     );
 
@@ -40,7 +40,7 @@ export const CalendarScreen = (props: CalendarScreenProps) => {
             <Layout style={styles.scrollContainer}>
                 <Carousel />
             </Layout>
-            {showPreviewPane && <TaskPreviewPane />}
+            {isPreviewPaneOpen && <TaskPreviewPane />}
         </Screen>
     );
 };
