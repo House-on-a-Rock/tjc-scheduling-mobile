@@ -3,16 +3,26 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text } from '@ui-kitten/components';
 import { months } from '../../services/Calendar/models';
 import { windowWidth } from '../../shared/constants';
+import { selectDate } from '../../store/actions/calendarActions';
+import { useDispatch } from 'react-redux';
 
 interface TaskListItemProps {
     item;
+    navigation;
 }
 
 export const TaskListItem = (props: TaskListItemProps) => {
+    const dispatch = useDispatch();
     const date: Date = new Date(props.item.date.replace(/-/g, '/'));
     const dayString: string[] = date.toDateString().split(' ');
+
+    const onPressHandler = () => {
+        dispatch(selectDate(date, props.item));
+        props.navigation.navigate('TaskDetails', { task: props.item });
+    };
+
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={onPressHandler}>
             <View
                 style={{
                     padding: 10,

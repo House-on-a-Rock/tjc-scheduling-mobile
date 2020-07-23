@@ -1,18 +1,12 @@
 import React from 'react';
-
+import { TouchableOpacity, View } from 'react-native';
 import { TopNavigationAction, Icon, Text, Layout } from '@ui-kitten/components';
 
 export const openDrawerAction = (toggleDrawer) => {
     return (
         <TopNavigationAction
             icon={(props) => (
-                <Icon
-                    {...props}
-                    style={{ width: 35, height: 35 }}
-                    animation="zoom"
-                    // animationConfig={}
-                    name="menu"
-                />
+                <Icon {...props} style={{ width: 35, height: 35 }} name="menu" />
             )}
             onPress={toggleDrawer}
         />
@@ -28,18 +22,19 @@ export const backAction = (goBack) => {
                 justifyContent: 'center',
             }}
         >
-            <TopNavigationAction
-                icon={(props) => (
-                    <Icon
-                        {...props}
-                        style={{ width: 25, height: 35 }}
-                        // animationConfig={}
-                        name="arrow-ios-back"
-                    />
-                )}
+            <TouchableOpacity
                 onPress={goBack}
-            />
-            <Text>Back</Text>
+                style={{ flexDirection: 'row', alignItems: 'center' }}
+            >
+                <Icon style={{ width: 25, height: 35 }} name="arrow-ios-back" />
+                <Text>Back</Text>
+            </TouchableOpacity>
         </Layout>
+    );
+};
+
+export const closeStackAction = (closeStack) => {
+    return (
+        <TopNavigationAction icon={(props) => <Icon {...props} name="close-square" />} />
     );
 };

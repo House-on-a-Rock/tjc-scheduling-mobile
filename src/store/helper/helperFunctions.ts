@@ -1,5 +1,5 @@
 import jwtDecode from 'jwt-decode';
-import { loadStateActionTypes } from '../actions';
+import { loadStateActionTypes } from '../actions/loadStateActions';
 
 export function extractId(jwt) {
     let decodedAccessKey = jwtDecode(jwt);

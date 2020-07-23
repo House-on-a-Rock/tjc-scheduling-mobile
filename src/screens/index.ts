@@ -8,3 +8,7 @@ export * from './Drawer/LogoutScreen';
 
 export * from './Drawer/Calendar/CalendarScreen';
 export * from './Drawer/Calendar/TaskListScreen';
+
+export * from './Drawer/TaskDetailsScreen';
+
+export * from './RequestSwap/SelectSwapOption';

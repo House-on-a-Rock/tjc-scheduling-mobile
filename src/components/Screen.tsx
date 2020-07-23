@@ -8,11 +8,12 @@ type ScreenProps = {
     title?: () => ReactNode | string;
     accessoryLeft?: () => JSX.Element;
     accessoryRight?: () => JSX.Element;
+    style?;
 };
 
 export const Screen = (props: ScreenProps) => {
     return (
-        <SafeAreaView style={styles.screen}>
+        <SafeAreaView style={{ ...styles.screen, ...props.style }}>
             <TopNavigation
                 // onLayout={(event) => {
                 //     console.log('event.nativeEvent.layout', event.nativeEvent.layout);
