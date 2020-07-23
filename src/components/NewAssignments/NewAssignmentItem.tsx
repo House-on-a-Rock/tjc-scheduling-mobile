@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text } from '@ui-kitten/components';
 import { months } from '../../services/Calendar/models';
 import { windowWidth } from '../../shared/constants';
-
+import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 
 interface NewAssignmentItemProps {
@@ -12,9 +12,13 @@ interface NewAssignmentItemProps {
 export const NewAssignmentItem = (props: NewAssignmentItemProps) => {
     const date: Date = new Date(props.item.date.replace(/-/g, '/'));
     const dayString: string[] = date.toDateString().split(' ');
+    const navigation = useNavigation();
 
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity
+            style={styles.container}
+            onPress={() => navigation.navigate('Task Details', { task: props.item })}
+        >
             <View
                 style={{
                     padding: 10,
