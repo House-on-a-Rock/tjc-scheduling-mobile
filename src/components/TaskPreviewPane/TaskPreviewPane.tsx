@@ -28,8 +28,11 @@ const taskPreviewHeight: number =
 export const TaskPreviewPane = () => {
     const defaultSelected = { date: null, tasks: null };
     const dispatch = useDispatch();
-    let selectedDate = useSelector((state) => state.calendarReducer.selectedDate);
-    if (selectedDate === null) selectedDate = defaultSelected; //handles error with line 43 when selectedDate returns null
+    let selectedDate = useSelector((state) =>
+        !!state.calendarReducer.selectedDate
+            ? state.calendarReducer.selectedDate
+            : defaultSelected,
+    );
     const transformY = useRef(new Animated.Value(taskPreviewHeight * -1)).current;
 
     useEffect(() => {
@@ -41,7 +44,7 @@ export const TaskPreviewPane = () => {
         }).start();
     }, [transformY]);
 
-    const { date, tasks } = selectedDate;
+    let { date, tasks } = selectedDate;
 
     const renderItem = ({ item }) => <TaskPaneItem item={item} />;
 
