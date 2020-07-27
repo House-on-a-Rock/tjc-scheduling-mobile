@@ -9,7 +9,7 @@ import { TaskData } from '../../shared/models';
 
 interface Props {
     displayedDate: Date;
-    tasks: TaskData[];
+    tasks?: TaskData[];
 }
 
 export const CalendarCard = React.memo((props: Props) => {

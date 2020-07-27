@@ -7,6 +7,7 @@ import { CalendarStack } from './CalendarStack';
 import { ProfileStack } from './ProfileStack';
 import { SettingsStack } from './SettingsStack';
 import { LogoutStack } from './LogoutStack';
+import { NewAssignmentsStack } from './NewAssignmentsStack';
 import { Drawer, DrawerItem, IndexPath, Icon, Text, Layout } from '@ui-kitten/components';
 import { statusBarHeight } from '../../shared/constants';
 
@@ -25,6 +26,7 @@ export const DrawerNav = () => {
                 }}
             >
                 <Screen name="CalendarStack" component={CalendarStack} />
+                <Screen name="NewAssignmentsStack" component={NewAssignmentsStack} />
                 <Screen name="ProfileStack" component={ProfileStack} />
                 <Screen name="SettingsStack" component={SettingsStack} />
                 <Screen name="LogoutStack" component={LogoutStack} />
@@ -47,6 +49,18 @@ const DrawerContent = ({ navigation, state }) => (
             <Layout>
                 <DrawerItem
                     title={drawerTitle('Home')}
+                    accessoryLeft={(props) => (
+                        <Icon
+                            {...props}
+                            height={30}
+                            width={30}
+                            animation="pulse"
+                            name="home"
+                        />
+                    )}
+                />
+                <DrawerItem
+                    title={drawerTitle('New Assignments')}
                     accessoryLeft={(props) => (
                         <Icon
                             {...props}
