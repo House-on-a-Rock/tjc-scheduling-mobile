@@ -44,6 +44,10 @@ export const RequestSwapStack = (props: RequestSwapStackProps) => {
         },
     };
 
+    const initialParams = {
+        closeModal: props.closeModal,
+    };
+
     return (
         <NavigationContainer>
             <ReqStack.Navigator
@@ -56,22 +60,22 @@ export const RequestSwapStack = (props: RequestSwapStackProps) => {
                 <ReqStack.Screen
                     name="SelectSwapOption"
                     component={SelectSwapOption}
-                    initialParams={{ closeModal: props.closeModal }}
+                    initialParams={initialParams}
                 />
                 <ReqStack.Screen
                     name="SwapScreen"
                     component={SwapScreen}
-                    initialParams={{ closeModal: props.closeModal }}
+                    initialParams={initialParams}
                 />
                 <ReqStack.Screen
                     name="SwapSummary"
                     component={SwapSummary}
-                    initialParams={{ closeModal: props.closeModal }}
+                    initialParams={initialParams}
                 />
                 <ReqStack.Screen
                     name="SwapConfirmation"
                     component={SwapConfirmation}
-                    initialParams={{ closeModal: props.closeModal }}
+                    initialParams={initialParams}
                 />
             </ReqStack.Navigator>
         </NavigationContainer>
