@@ -32,7 +32,7 @@ export const NewAssignmentsScreen = (props: NewAssignmentsScreenProps) => {
     //grab new assignments instead of tasks
     const newAssignments = useSelector((state) => state.taskReducer.tasks);
 
-    const [data, setData] = useState(() => newAssignments);
+    const [data, setData] = useState(newAssignments);
 
     const leftAccessory = () => openDrawerAction(props.navigation.toggleDrawer);
     const rightAccessory = () => (
