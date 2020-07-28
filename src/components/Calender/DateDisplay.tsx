@@ -10,6 +10,8 @@ interface DateDisplayProps {
     firstDay: number;
     displayedDate: Date;
     tasks: TaskData[];
+    onDateTilePress?;
+    selectedDate: Date;
 }
 
 export const DateDisplay = (props: DateDisplayProps) => {
@@ -20,7 +22,7 @@ export const DateDisplay = (props: DateDisplayProps) => {
     const { firstDay, tasks } = props;
     const initialDate = new Date(year, month, 1);
     const currentDate = useSelector((state) => state.calendarReducer.today);
-    const selectedDate = useSelector((state) => state.calendarReducer.selectedDate?.date);
+    // const selectedDate = useSelector((state) => state.calendarReducer.selectedDate?.date);
 
     function determineRenderDate(initial): () => Date {
         let renderDate: Date = new Date(initial.setDate(initial.getDate() - firstDay));
@@ -45,11 +47,6 @@ export const DateDisplay = (props: DateDisplayProps) => {
         return filteredTasks;
     };
 
-    const onDateTilePressed = (date: Date, dateTasks: TaskData[]) => {
-        dispatch(selectDate(date, dateTasks));
-        dispatch(showPreviewPane());
-    };
-
     for (let j = 0; j < dateArray.length; j++) {
         dateArray[j] = new Array(7);
         for (let k = 0; k < dateArray[j].length; k++) {
@@ -57,7 +54,7 @@ export const DateDisplay = (props: DateDisplayProps) => {
             const data: TaskData[] = populateTasks(day);
             const isToday: boolean = compareDates(day, currentDate);
             const isCurrentMonth: boolean = day.getMonth() === month;
-            const isSelected = compareDates(day, selectedDate);
+            const isSelected = compareDates(day, props.selectedDate);
 
             dateArray[j][k] = (
                 <DateTile
@@ -67,7 +64,7 @@ export const DateDisplay = (props: DateDisplayProps) => {
                     isToday={isToday}
                     isCurrentMonth={isCurrentMonth}
                     isSelected={isSelected}
-                    onPressHandler={onDateTilePressed}
+                    onPressHandler={props.onDateTilePress}
                 />
             );
         }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { FlatList } from 'react-native';
-import { CalendarCard } from './CalendarCard';
+import { Card, Text } from '@ui-kitten/components';
+import { Calendar } from './Calendar';
 import { useDispatch, useSelector } from 'react-redux';
 import { extendCalendar } from '../../store/actions/calendarActions';
 import { CarousalDirection } from '../../services/Calendar/models';
@@ -8,10 +9,22 @@ import { Layout } from '@ui-kitten/components';
 import { calendarCardDimensions } from '../../shared/constants/';
 import { TaskData } from '../../shared/models';
 import { calendarRange } from '../../shared/constants/';
+import { months } from '../../services/Calendar/models';
+import { useStringDate } from '../../services/Hooks/useStringDate';
+import { selectDate, showPreviewPane } from '../../store/actions';
 
 //prevents rerendering on show TaskPreviewPane
 export const Carousel = React.memo(
     () => {
+        //useSelectors
+        const data: Date[] = useSelector(
+            ({ calendarReducer }) => calendarReducer.dateArray,
+        );
+        const tasks: TaskData[] = useSelector((state) => state.taskReducer.tasks);
+        const selectedDate = useSelector(
+            (state) => state.calendarReducer.selectedDate?.date,
+        );
+
         const dispatch = useDispatch();
 
         //extends date array
@@ -20,11 +33,6 @@ export const Carousel = React.memo(
         );
         const loadMoreOnBottom = () => dispatch(extendCalendar(CarousalDirection.DOWN));
         const loadMoreOnTop = () => dispatch(extendCalendar(CarousalDirection.UP));
-
-        const data: Date[] = useSelector(
-            ({ calendarReducer }) => calendarReducer.dateArray,
-        );
-        const tasks: TaskData[] = useSelector((state) => state.taskReducer.tasks);
 
         //distributes tasks to appropriate calendar month
         const filterTasks = (monthItem) =>
@@ -37,8 +45,35 @@ export const Carousel = React.memo(
                 );
             });
 
+        const dateTilePressHandler = (date, dateTasks) => {
+            dispatch(selectDate(date, dateTasks));
+            dispatch(showPreviewPane());
+        };
+
         const renderMonths = ({ item }) => {
-            return <CalendarCard displayedDate={item} tasks={filterTasks(item)} />;
+            const [isLeap, year, month] = useStringDate(item);
+            return (
+                <Card
+                    header={() => (
+                        <Text style={{ paddingLeft: 20 }} category="h5">
+                            {months(isLeap)[month].name} {year}
+                        </Text>
+                    )}
+                    appearance="filled"
+                    style={{
+                        width: '100%',
+                        height: calendarCardDimensions.height,
+                        marginBottom: calendarCardDimensions.margin,
+                    }}
+                >
+                    <Calendar
+                        displayedDate={item}
+                        tasks={filterTasks(item)}
+                        onDateTilePress={dateTilePressHandler}
+                        selectedDate={selectedDate}
+                    />
+                </Card>
+            );
         };
 
         return (

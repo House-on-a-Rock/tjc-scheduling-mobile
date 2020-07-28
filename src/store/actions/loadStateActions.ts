@@ -4,6 +4,7 @@ export enum reducerDomains {
     AUTH = 'AUTH',
     PROFILE = 'PROFILE',
     TASKS = 'TASKS',
+    SWAP = 'SWAP',
 }
 
 export enum loadStateActionTypes {
@@ -13,15 +14,16 @@ export enum loadStateActionTypes {
     // ERROR_HANDLED = 'ERROR_HANDLED',
 }
 
-export const AuthStateActions: StateActions = mapLoadStateActions(reducerDomains.AUTH)();
+export const AuthStateActions: StateActions = mapLoadStateActions(reducerDomains.AUTH);
 export const ProfileStateActions: StateActions = mapLoadStateActions(
     reducerDomains.PROFILE,
-)();
-export const TaskStateActions: StateActions = mapLoadStateActions(reducerDomains.TASKS)();
+);
+export const TaskStateActions: StateActions = mapLoadStateActions(reducerDomains.TASKS);
+export const SwapStateActions: StateActions = mapLoadStateActions(reducerDomains.SWAP);
 
 //this may be moved to a more appropriate location?
-function mapLoadStateActions(domain): () => StateActions {
-    return () => ({
+function mapLoadStateActions(domain): StateActions {
+    return {
         Loaded: () => ({ domain: domain, type: loadStateActionTypes.LOADED }),
         Loading: () => ({ domain: domain, type: loadStateActionTypes.LOADING }),
         Error: (error) => ({
@@ -29,7 +31,7 @@ function mapLoadStateActions(domain): () => StateActions {
             type: loadStateActionTypes.ERROR,
             payload: error,
         }),
-    });
+    };
 }
 
 interface StateActions {

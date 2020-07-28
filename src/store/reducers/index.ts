@@ -3,3 +3,4 @@ export * from './profileReducer';
 export * from './calendarReducer';
 export * from './taskReducer';
 export * from './loadStateReducer';
+export * from './swapReducer';
