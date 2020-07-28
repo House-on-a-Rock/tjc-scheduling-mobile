@@ -9,13 +9,11 @@ import { selectSwapDate } from '../../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export const CalendarSwiper = (props) => {
+export const CalendarSelector = (props) => {
     const [displayedDate, setDisplayedDate] = useState(props.displayedDate);
     const [isLeap, year, month] = useStringDate(displayedDate);
     const selectedDate = useSelector((state) => state.swapReducer.swapDate);
     const dispatch = useDispatch();
-
-    console.log('displayedDate', displayedDate);
 
     const onDateTilePress = (date, data) => {
         dispatch(selectSwapDate(date));
