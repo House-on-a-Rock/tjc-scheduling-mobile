@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Animated } from 'react-native';
-import { Modal } from '@ui-kitten/components';
+
+import { View, Animated } from 'react-native';
+import { Modal, Button, Text } from '@ui-kitten/components';
 import { windowWidth, windowHeight } from '../shared/constants';
 import { RequestSwapStack } from '../navigation/RequestSwap/RequestSwapStack';
 
@@ -27,7 +28,7 @@ export const CustomAnimatedModal = (props: CustomAnimatedModalProps) => {
                 useNativeDriver: false,
             }),
             Animated.timing(transformY, {
-                toValue: windowHeight * -0.43, //positioning math needs fine tuning
+                toValue: windowHeight * -0.01, //positioning math needs fine tuning
                 duration: 300,
                 useNativeDriver: false,
             }),
@@ -48,7 +49,6 @@ export const CustomAnimatedModal = (props: CustomAnimatedModalProps) => {
             <Modal visible={props.isVisible} onBackdropPress={props.closeModal}>
                 <Animated.View
                     style={{
-                        position: 'absolute',
                         bottom: transformY,
                         alignSelf: 'center',
                         justifyContent: 'center',
@@ -57,7 +57,9 @@ export const CustomAnimatedModal = (props: CustomAnimatedModalProps) => {
                         height: windowHeight * 0.85,
                     }}
                 >
+                    {/* <View style={{ height: '100%', width: '100%' }}> */}
                     <RequestSwapStack closeModal={props.closeModal} />
+                    {/* </View> */}
                 </Animated.View>
             </Modal>
         </Animated.View>
