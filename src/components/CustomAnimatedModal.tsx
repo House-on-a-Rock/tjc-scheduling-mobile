@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-
-import { View, Animated } from 'react-native';
-import { Modal, Button, Text } from '@ui-kitten/components';
+import React, { useEffect, useRef } from 'react';
+import { Animated } from 'react-native';
+import { Modal } from '@ui-kitten/components';
 import { windowWidth, windowHeight } from '../shared/constants';
 import { RequestSwapStack } from '../navigation/RequestSwap/RequestSwapStack';
 
@@ -57,9 +56,7 @@ export const CustomAnimatedModal = (props: CustomAnimatedModalProps) => {
                         height: windowHeight * 0.85,
                     }}
                 >
-                    {/* <View style={{ height: '100%', width: '100%' }}> */}
                     <RequestSwapStack closeModal={props.closeModal} />
-                    {/* </View> */}
                 </Animated.View>
             </Modal>
         </Animated.View>
