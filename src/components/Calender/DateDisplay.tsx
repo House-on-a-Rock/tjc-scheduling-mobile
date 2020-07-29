@@ -3,15 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 import { compareDates } from '../../services/Calendar/helper_functions';
 import { DateTile } from './DateTile';
-import { selectDate, showPreviewPane } from '../../store/actions';
 import { TaskData } from '../../shared/models';
 
 interface DateDisplayProps {
     firstDay: number;
     displayedDate: Date;
     tasks: TaskData[];
+    reducerType: string;
     onDateTilePress?;
-    selectedDate: Date;
 }
 
 export const DateDisplay = (props: DateDisplayProps) => {
@@ -22,7 +21,11 @@ export const DateDisplay = (props: DateDisplayProps) => {
     const { firstDay, tasks } = props;
     const initialDate = new Date(year, month, 1);
     const currentDate = useSelector((state) => state.calendarReducer.today);
-    // const selectedDate = useSelector((state) => state.calendarReducer.selectedDate?.date);
+
+    const selectedDate =
+        props.reducerType === 'calendarReducer'
+            ? useSelector((state) => state.calendarReducer.selectedDate?.date)
+            : useSelector((state) => state.swapReducer.swapDate);
 
     function determineRenderDate(initial): () => Date {
         let renderDate: Date = new Date(initial.setDate(initial.getDate() - firstDay));
@@ -54,7 +57,7 @@ export const DateDisplay = (props: DateDisplayProps) => {
             const data: TaskData[] = populateTasks(day);
             const isToday: boolean = compareDates(day, currentDate);
             const isCurrentMonth: boolean = day.getMonth() === month;
-            const isSelected = compareDates(day, props.selectedDate);
+            const isSelected = compareDates(day, selectedDate);
 
             dateArray[j][k] = (
                 <DateTile

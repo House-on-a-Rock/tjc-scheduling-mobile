@@ -56,6 +56,7 @@ export const DateTile = React.memo((props: DateTileProps) => {
 }, areEqual);
 
 function areEqual(prevProps, nextProps): boolean {
+    //true will not rerender
     return (
         prevProps.isSelected === nextProps.isSelected &&
         compareDates(prevProps.day, nextProps.day)

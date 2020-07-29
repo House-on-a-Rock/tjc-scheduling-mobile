@@ -21,9 +21,6 @@ export const Carousel = React.memo(
             ({ calendarReducer }) => calendarReducer.dateArray,
         );
         const tasks: TaskData[] = useSelector((state) => state.taskReducer.tasks);
-        const selectedDate = useSelector(
-            (state) => state.calendarReducer.selectedDate?.date,
-        );
 
         const dispatch = useDispatch();
 
@@ -35,23 +32,30 @@ export const Carousel = React.memo(
         const loadMoreOnTop = () => dispatch(extendCalendar(CarousalDirection.UP));
 
         //distributes tasks to appropriate calendar month
-        const filterTasks = (monthItem) =>
-            tasks.filter((task) => {
-                //https://stackoverflow.com/questions/7556591/is-the-javascript-date-object-always-one-day-off
-                const taskDate = new Date(task.date.replace(/-/g, '/')); //replacing - with / returns the correct date consistently
-                return (
-                    taskDate.getMonth() === monthItem.getMonth() &&
-                    taskDate.getFullYear() === monthItem.getFullYear()
-                );
-            });
+        const filterTasks = React.useMemo(
+            () => (dateItem) =>
+                tasks.filter((task) => {
+                    //https://stackoverflow.com/questions/7556591/is-the-javascript-date-object-always-one-day-off
+                    const taskDate = new Date(task.date.replace(/-/g, '/')); //replacing - with / returns the correct date consistently
+                    return (
+                        taskDate.getMonth() === dateItem.getMonth() &&
+                        taskDate.getFullYear() === dateItem.getFullYear()
+                    );
+                }),
+            [tasks],
+        );
 
-        const dateTilePressHandler = (date, dateTasks) => {
-            dispatch(selectDate(date, dateTasks));
-            dispatch(showPreviewPane());
-        };
+        const dateTilePressHandler = React.useCallback(
+            (date, dateTasks) => {
+                dispatch(selectDate(date, dateTasks));
+                dispatch(showPreviewPane());
+            },
+            [dispatch, selectDate, showPreviewPane],
+        );
 
         const renderMonths = ({ item }) => {
             const [isLeap, year, month] = useStringDate(item);
+
             return (
                 <Card
                     header={() => (
@@ -70,7 +74,7 @@ export const Carousel = React.memo(
                         displayedDate={item}
                         tasks={filterTasks(item)}
                         onDateTilePress={dateTilePressHandler}
-                        selectedDate={selectedDate}
+                        reducerType="calendarReducer"
                     />
                 </Card>
             );
@@ -102,5 +106,5 @@ export const Carousel = React.memo(
             </Layout>
         );
     },
-    // () => true,
+    () => true,
 );

@@ -11,12 +11,14 @@ interface Props {
     displayedDate: Date;
     tasks?: TaskData[];
     onDateTilePress?: (date, data) => void;
-    selectedDate: Date;
+    reducerType: string;
 }
 
 export const Calendar = React.memo(
     (props: Props) => {
         const { tasks, displayedDate } = props;
+
+        console.log('rendering calendar ', displayedDate);
 
         return (
             <Layout>
@@ -26,12 +28,12 @@ export const Calendar = React.memo(
                     displayedDate={displayedDate}
                     tasks={tasks}
                     onDateTilePress={props.onDateTilePress}
-                    selectedDate={props.selectedDate}
+                    reducerType={props.reducerType}
                 />
             </Layout>
         );
     },
     (prevProps, nextProps) => {
-        return prevProps.displayedDate.getMonth() !== nextProps.selectedDate?.getMonth();
+        return prevProps.displayedDate === nextProps.displayedDate;
     },
 );

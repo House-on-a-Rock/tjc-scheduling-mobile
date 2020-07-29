@@ -55,7 +55,8 @@ export const CalendarSelector = (props) => {
                 displayedDate={displayedDate}
                 tasks={[]}
                 onDateTilePress={onDateTilePress}
-                selectedDate={selectedDate}
+                // selectedDate={selectedDate}
+                dateSelectionState="swapReducer"
             />
         </Layout>
     );
