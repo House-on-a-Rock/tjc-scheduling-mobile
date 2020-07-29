@@ -50,7 +50,6 @@ export const TaskPreviewPane = () => {
     const renderItem = ({ item }) => <TaskPaneItem item={item} />;
 
     const onHidePressHandler = () => {
-        console.log('hide pressed');
         dispatch(selectDate(null, null));
 
         //close animation
