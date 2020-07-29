@@ -10,6 +10,8 @@ interface DateDisplayProps {
     firstDay: number;
     displayedDate: Date;
     tasks: TaskData[];
+    onPressScroll: (index) => void;
+    cardIndex: number;
 }
 
 export const DateDisplay = (props: DateDisplayProps) => {
@@ -48,6 +50,7 @@ export const DateDisplay = (props: DateDisplayProps) => {
     const onDateTilePressed = (date: Date, dateTasks: TaskData[]) => {
         dispatch(selectDate(date, dateTasks));
         dispatch(showPreviewPane());
+        props.onPressScroll(props.cardIndex);
     };
 
     for (let j = 0; j < dateArray.length; j++) {
