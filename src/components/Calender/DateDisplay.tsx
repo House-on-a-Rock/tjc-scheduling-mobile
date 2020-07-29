@@ -9,7 +9,7 @@ interface DateDisplayProps {
     firstDay: number;
     displayedDate: Date;
     tasks: TaskData[];
-    reducerType: string;
+    type: string;
     handleTilePress?;
 }
 
