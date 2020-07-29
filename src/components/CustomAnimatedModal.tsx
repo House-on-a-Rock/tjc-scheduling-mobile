@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
 import { Modal } from '@ui-kitten/components';
 import { windowWidth, windowHeight } from '../shared/constants';
@@ -27,7 +27,7 @@ export const CustomAnimatedModal = (props: CustomAnimatedModalProps) => {
                 useNativeDriver: false,
             }),
             Animated.timing(transformY, {
-                toValue: windowHeight * -0.43, //positioning math needs fine tuning
+                toValue: windowHeight * -0.01, //positioning math needs fine tuning
                 duration: 300,
                 useNativeDriver: false,
             }),
@@ -48,7 +48,6 @@ export const CustomAnimatedModal = (props: CustomAnimatedModalProps) => {
             <Modal visible={props.isVisible} onBackdropPress={props.closeModal}>
                 <Animated.View
                     style={{
-                        position: 'absolute',
                         bottom: transformY,
                         alignSelf: 'center',
                         justifyContent: 'center',
