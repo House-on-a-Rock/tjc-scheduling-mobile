@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
 import { Calendar } from './Calendar';
 import { Icon, Layout, Text } from '@ui-kitten/components';
-
-import { View, StyleSheet } from 'react-native';
+import { TaskData } from '../../shared/models/';
+import { View } from 'react-native';
 import { months } from '../../services/Calendar/models';
 import { useStringDate } from '../../services/Hooks/useStringDate';
 import { selectSwapDate } from '../../store/actions';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export const CalendarSelector = (props) => {
-    const [displayedDate, setDisplayedDate] = useState(props.displayedDate);
-    const [isLeap, year, month] = useStringDate(displayedDate);
-    const selectedDate = useSelector((state) => state.swapReducer.swapDate);
+interface CalendarSelectorWrapperProps {
+    displayedDate: Date;
+    tasks: TaskData[];
+}
+
+export const CalendarSelectorWrapper = ({
+    displayedDate,
+    tasks,
+}: CalendarSelectorWrapperProps) => {
+    const [currentDate, setCurrentDate] = useState(displayedDate);
+    const [isLeap, year, month] = useStringDate(currentDate);
     const dispatch = useDispatch();
 
     const onDateTilePress = (date, data) => {
@@ -20,13 +27,13 @@ export const CalendarSelector = (props) => {
     };
 
     const onArrowPressHandler = (direction) => {
-        let newDate = new Date(displayedDate);
+        let newDate = new Date(currentDate);
         if (direction === 'forward') {
             newDate.setMonth(newDate.getMonth() + 1);
-            setDisplayedDate(newDate);
+            setCurrentDate(newDate);
         } else {
             newDate.setMonth(newDate.getMonth() - 1);
-            setDisplayedDate(newDate);
+            setCurrentDate(newDate);
         }
     };
 
@@ -52,11 +59,10 @@ export const CalendarSelector = (props) => {
                 </TouchableOpacity>
             </View>
             <Calendar
-                displayedDate={displayedDate}
-                tasks={[]}
-                onDateTilePress={onDateTilePress}
-                // selectedDate={selectedDate}
-                dateSelectionState="swapReducer"
+                displayedDate={currentDate}
+                tasks={tasks}
+                handleTilePress={onDateTilePress}
+                type="swapReducer"
             />
         </Layout>
     );

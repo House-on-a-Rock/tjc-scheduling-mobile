@@ -32,26 +32,20 @@ export const Carousel = React.memo(
         const loadMoreOnTop = () => dispatch(extendCalendar(CarousalDirection.UP));
 
         //distributes tasks to appropriate calendar month
-        const filterTasks = React.useMemo(
-            () => (dateItem) =>
-                tasks.filter((task) => {
-                    //https://stackoverflow.com/questions/7556591/is-the-javascript-date-object-always-one-day-off
-                    const taskDate = new Date(task.date.replace(/-/g, '/')); //replacing - with / returns the correct date consistently
-                    return (
-                        taskDate.getMonth() === dateItem.getMonth() &&
-                        taskDate.getFullYear() === dateItem.getFullYear()
-                    );
-                }),
-            [tasks],
-        );
+        const filterTasks = (dateItem) =>
+            tasks.filter((task) => {
+                //https://stackoverflow.com/questions/7556591/is-the-javascript-date-object-always-one-day-off
+                const taskDate = new Date(task.date.replace(/-/g, '/')); //replacing - with / returns the correct date consistently
+                return (
+                    taskDate.getMonth() === dateItem.getMonth() &&
+                    taskDate.getFullYear() === dateItem.getFullYear()
+                );
+            });
 
-        const dateTilePressHandler = React.useCallback(
-            (date, dateTasks) => {
-                dispatch(selectDate(date, dateTasks));
-                dispatch(showPreviewPane());
-            },
-            [dispatch, selectDate, showPreviewPane],
-        );
+        const tilePressHandler = (date, dateTasks) => {
+            dispatch(selectDate(date, dateTasks));
+            dispatch(showPreviewPane());
+        };
 
         const renderMonths = ({ item }) => {
             const [isLeap, year, month] = useStringDate(item);
@@ -73,8 +67,8 @@ export const Carousel = React.memo(
                     <Calendar
                         displayedDate={item}
                         tasks={filterTasks(item)}
-                        onDateTilePress={dateTilePressHandler}
-                        reducerType="calendarReducer"
+                        handleTilePress={tilePressHandler}
+                        type="calendarReducer"
                     />
                 </Card>
             );
@@ -106,5 +100,5 @@ export const Carousel = React.memo(
             </Layout>
         );
     },
-    () => true,
+    () => true, //prevents rerender of carousel on isPreviewPaneShowing state changes
 );

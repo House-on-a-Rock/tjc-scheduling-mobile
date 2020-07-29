@@ -1,39 +1,34 @@
 import React from 'react';
 import { DateDisplay } from './DateDisplay';
 import { DayNameRow } from './DayNameRow';
-import { setFirstDay, compareDates } from '../../services/Calendar/helper_functions';
-import { months } from '../../services/Calendar/models';
-import { calendarCardDimensions } from '../../shared/constants';
-import { Text, Layout, Card } from '@ui-kitten/components';
+import { setFirstDay } from '../../services/Calendar/helper_functions';
+
+import { Layout } from '@ui-kitten/components';
 import { TaskData } from '../../shared/models';
 
-interface Props {
+interface CalendarProps {
     displayedDate: Date;
     tasks?: TaskData[];
-    onDateTilePress?: (date, data) => void;
-    reducerType: string;
+    handleTilePress?: (date, data) => void;
+    type: string;
 }
 
-export const Calendar = React.memo(
-    (props: Props) => {
-        const { tasks, displayedDate } = props;
-
-        console.log('rendering calendar ', displayedDate);
-
-        return (
-            <Layout>
-                <DayNameRow />
-                <DateDisplay
-                    firstDay={setFirstDay(displayedDate)}
-                    displayedDate={displayedDate}
-                    tasks={tasks}
-                    onDateTilePress={props.onDateTilePress}
-                    reducerType={props.reducerType}
-                />
-            </Layout>
-        );
-    },
-    (prevProps, nextProps) => {
-        return prevProps.displayedDate === nextProps.displayedDate;
-    },
-);
+export const Calendar = ({
+    tasks,
+    displayedDate,
+    handleTilePress,
+    type,
+}: CalendarProps) => {
+    return (
+        <Layout>
+            <DayNameRow />
+            <DateDisplay
+                firstDay={setFirstDay(displayedDate)}
+                displayedDate={displayedDate}
+                tasks={tasks}
+                handleTilePress={handleTilePress}
+                type={type}
+            />
+        </Layout>
+    );
+};

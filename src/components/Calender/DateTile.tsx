@@ -11,11 +11,11 @@ interface DateTileProps {
     data: Object[];
     day: Date;
     isSelected?: boolean;
-    onPressHandler;
+    handlePress: (day, data) => void;
 }
 
 export const DateTile = React.memo((props: DateTileProps) => {
-    const { isToday, day, isCurrentMonth, data, isSelected, onPressHandler } = props;
+    const { isToday, day, isCurrentMonth, data, isSelected, handlePress } = props;
 
     let date = day.getDate();
 
@@ -27,7 +27,7 @@ export const DateTile = React.memo((props: DateTileProps) => {
         <Layout style={styles.tile}>
             <TouchableOpacity
                 style={isSelected ? styles.selected : styles.touchable}
-                onPress={() => onPressHandler(day, data)}
+                onPress={() => handlePress(day, data)}
             >
                 <View
                     style={{

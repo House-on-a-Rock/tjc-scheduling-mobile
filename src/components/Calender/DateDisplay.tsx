@@ -10,20 +10,24 @@ interface DateDisplayProps {
     displayedDate: Date;
     tasks: TaskData[];
     reducerType: string;
-    onDateTilePress?;
+    handleTilePress?;
 }
 
-export const DateDisplay = (props: DateDisplayProps) => {
-    const dispatch = useDispatch();
-    const month = props.displayedDate.getMonth();
-    const year = props.displayedDate.getFullYear();
+export const DateDisplay = ({
+    firstDay,
+    displayedDate,
+    tasks,
+    type,
+    handleTilePress,
+}: DateDisplayProps) => {
+    const month = displayedDate.getMonth();
+    const year = displayedDate.getFullYear();
     const dateArray = new Array(6);
-    const { firstDay, tasks } = props;
     const initialDate = new Date(year, month, 1);
     const currentDate = useSelector((state) => state.calendarReducer.today);
 
     const selectedDate =
-        props.reducerType === 'calendarReducer'
+        type === 'calendarReducer'
             ? useSelector((state) => state.calendarReducer.selectedDate?.date)
             : useSelector((state) => state.swapReducer.swapDate);
 
@@ -67,7 +71,7 @@ export const DateDisplay = (props: DateDisplayProps) => {
                     isToday={isToday}
                     isCurrentMonth={isCurrentMonth}
                     isSelected={isSelected}
-                    onPressHandler={props.onDateTilePress}
+                    handlePress={handleTilePress}
                 />
             );
         }
