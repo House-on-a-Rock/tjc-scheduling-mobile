@@ -3,6 +3,7 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { Layout, Text } from '@ui-kitten/components';
 import { dateTileDimensions } from '../../shared/constants';
+import { compareDates } from '../../services/Calendar/helper_functions/calendar_services';
 
 interface DateTileProps {
     isToday: boolean;
@@ -10,11 +11,20 @@ interface DateTileProps {
     data: Object[];
     day: Date;
     isSelected?: boolean;
-    onPressHandler;
+    handlePress: (day, data, cardIndex) => void;
+    cardIndex: number;
 }
 
 export const DateTile = React.memo((props: DateTileProps) => {
-    const { isToday, day, isCurrentMonth, data, isSelected, onPressHandler } = props;
+    const {
+        isToday,
+        day,
+        isCurrentMonth,
+        data,
+        isSelected,
+        handlePress,
+        cardIndex,
+    } = props;
 
     let date = day.getDate();
 
@@ -26,7 +36,7 @@ export const DateTile = React.memo((props: DateTileProps) => {
         <Layout style={styles.tile}>
             <TouchableOpacity
                 style={isSelected ? styles.selected : styles.touchable}
-                onPress={() => onPressHandler(day, data)}
+                onPress={() => handlePress(day, data, cardIndex)}
             >
                 <View
                     style={{
@@ -55,7 +65,11 @@ export const DateTile = React.memo((props: DateTileProps) => {
 }, areEqual);
 
 function areEqual(prevProps, nextProps): boolean {
-    return prevProps.isSelected === nextProps.isSelected;
+    //true will not rerender
+    return (
+        prevProps.isSelected === nextProps.isSelected &&
+        compareDates(prevProps.day, nextProps.day)
+    );
 }
 
 const styles = StyleSheet.create({

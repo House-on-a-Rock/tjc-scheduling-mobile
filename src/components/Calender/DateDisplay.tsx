@@ -3,26 +3,35 @@ import { useSelector, useDispatch } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 import { compareDates } from '../../services/Calendar/helper_functions';
 import { DateTile } from './DateTile';
-import { selectDate, showPreviewPane } from '../../store/actions';
 import { TaskData } from '../../shared/models';
 
 interface DateDisplayProps {
     firstDay: number;
     displayedDate: Date;
     tasks: TaskData[];
-    onPressScroll: (index) => void;
+    type: string;
+    handleTilePress: (day, data, cardIndex) => void;
     cardIndex: number;
 }
 
-export const DateDisplay = (props: DateDisplayProps) => {
-    const dispatch = useDispatch();
-    const month = props.displayedDate.getMonth();
-    const year = props.displayedDate.getFullYear();
+export const DateDisplay = ({
+    firstDay,
+    displayedDate,
+    tasks,
+    type,
+    handleTilePress,
+    cardIndex,
+}: DateDisplayProps) => {
+    const month = displayedDate.getMonth();
+    const year = displayedDate.getFullYear();
     const dateArray = new Array(6);
-    const { firstDay, tasks } = props;
     const initialDate = new Date(year, month, 1);
     const currentDate = useSelector((state) => state.calendarReducer.today);
-    const selectedDate = useSelector((state) => state.calendarReducer.selectedDate?.date);
+
+    const selectedDate =
+        type === 'calendarReducer'
+            ? useSelector((state) => state.calendarReducer.selectedDate?.date)
+            : useSelector((state) => state.swapReducer.swapDate);
 
     function determineRenderDate(initial): () => Date {
         let renderDate: Date = new Date(initial.setDate(initial.getDate() - firstDay));
@@ -47,12 +56,6 @@ export const DateDisplay = (props: DateDisplayProps) => {
         return filteredTasks;
     };
 
-    const onDateTilePressed = (date: Date, dateTasks: TaskData[]) => {
-        dispatch(selectDate(date, dateTasks));
-        dispatch(showPreviewPane());
-        props.onPressScroll(props.cardIndex);
-    };
-
     for (let j = 0; j < dateArray.length; j++) {
         dateArray[j] = new Array(7);
         for (let k = 0; k < dateArray[j].length; k++) {
@@ -70,7 +73,8 @@ export const DateDisplay = (props: DateDisplayProps) => {
                     isToday={isToday}
                     isCurrentMonth={isCurrentMonth}
                     isSelected={isSelected}
-                    onPressHandler={onDateTilePressed}
+                    handlePress={handleTilePress}
+                    cardIndex={cardIndex}
                 />
             );
         }

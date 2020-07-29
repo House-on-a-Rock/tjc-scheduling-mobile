@@ -12,6 +12,7 @@ import {
     calendarReducer,
     taskReducer,
     loadStateReducer,
+    swapReducer,
 } from './src/store/reducers';
 
 //ui kitten imports
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
     calendarReducer: calendarReducer,
     taskReducer: taskReducer,
     loadStateReducer: loadStateReducer,
+    swapReducer: swapReducer,
 });
 
 export const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

@@ -20,10 +20,12 @@ export const DrawerNav = () => {
                 drawerStyle={{ width: 200 }}
                 drawerType="front"
                 drawerContent={(props) => <DrawerContent {...props} />}
-                drawerContentOptions={{
-                    activeBackgroundColor: 'red',
-                    activeTintColor: 'blue',
-                }}
+                drawerContentOptions={
+                    {
+                        // activeBackgroundColor: 'red',
+                        // activeTintColor: 'blue',
+                    }
+                }
             >
                 <Screen name="CalendarStack" component={CalendarStack} />
                 <Screen name="NewAssignmentsStack" component={NewAssignmentsStack} />

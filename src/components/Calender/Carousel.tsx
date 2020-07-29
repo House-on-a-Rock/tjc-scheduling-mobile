@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { FlatList } from 'react-native';
-import { CalendarCard } from './CalendarCard';
+import { Card, Text } from '@ui-kitten/components';
+import { Calendar } from './Calendar';
 import { useDispatch, useSelector } from 'react-redux';
 import { extendCalendar } from '../../store/actions/calendarActions';
 import { CarousalDirection } from '../../services/Calendar/models';
@@ -8,10 +9,19 @@ import { Layout } from '@ui-kitten/components';
 import { calendarCardDimensions } from '../../shared/constants/';
 import { TaskData } from '../../shared/models';
 import { calendarRange } from '../../shared/constants/';
+import { months } from '../../services/Calendar/models';
+import { useStringDate } from '../../services/Hooks/useStringDate';
+import { selectDate, showPreviewPane } from '../../store/actions';
 
 //prevents rerendering on show TaskPreviewPane
 export const Carousel = React.memo(
     () => {
+        //useSelectors
+        const data: Date[] = useSelector(
+            ({ calendarReducer }) => calendarReducer.dateArray,
+        );
+        const tasks: TaskData[] = useSelector((state) => state.taskReducer.tasks);
+
         const dispatch = useDispatch();
         const carouselRef = useRef(null);
 
@@ -22,33 +32,48 @@ export const Carousel = React.memo(
         const loadMoreOnBottom = () => dispatch(extendCalendar(CarousalDirection.DOWN));
         const loadMoreOnTop = () => dispatch(extendCalendar(CarousalDirection.UP));
 
-        const data: Date[] = useSelector(
-            ({ calendarReducer }) => calendarReducer.dateArray,
-        );
-        const tasks: TaskData[] = useSelector((state) => state.taskReducer.tasks);
-
         //distributes tasks to appropriate calendar month
-        const filterTasks = (monthItem) =>
+        const filterTasks = (dateItem) =>
             tasks.filter((task) => {
                 //https://stackoverflow.com/questions/7556591/is-the-javascript-date-object-always-one-day-off
                 const taskDate = new Date(task.date.replace(/-/g, '/')); //replacing '-' with '/' returns the correct date consistently
                 return (
-                    taskDate.getMonth() === monthItem.getMonth() &&
-                    taskDate.getFullYear() === monthItem.getFullYear()
+                    taskDate.getMonth() === dateItem.getMonth() &&
+                    taskDate.getFullYear() === dateItem.getFullYear()
                 );
             });
 
-        const onPressScrollHandler = (index) =>
-            carouselRef.current.scrollToIndex({ index: index, animated: true });
+        const tilePressHandler = (date, dateTasks, cardIndex) => {
+            dispatch(selectDate(date, dateTasks));
+            dispatch(showPreviewPane());
+            carouselRef.current.scrollToIndex({ index: cardIndex, animated: true });
+        };
 
         const renderMonths = ({ item, index }) => {
+            const [isLeap, year, month] = useStringDate(item);
+
             return (
-                <CalendarCard
-                    cardIndex={index}
-                    displayedDate={item}
-                    tasks={filterTasks(item)}
-                    onPressScroll={onPressScrollHandler}
-                />
+                <Card
+                    header={() => (
+                        <Text style={{ paddingLeft: 20 }} category="h5">
+                            {months(isLeap)[month].name} {year}
+                        </Text>
+                    )}
+                    appearance="filled"
+                    style={{
+                        width: '100%',
+                        height: calendarCardDimensions.height,
+                        marginBottom: calendarCardDimensions.margin,
+                    }}
+                >
+                    <Calendar
+                        displayedDate={item}
+                        tasks={filterTasks(item)}
+                        handleTilePress={tilePressHandler}
+                        type="calendarReducer"
+                        cardIndex={index}
+                    />
+                </Card>
             );
         };
 
@@ -79,5 +104,5 @@ export const Carousel = React.memo(
             </Layout>
         );
     },
-    () => true,
+    () => true, //prevents rerender of carousel on isPreviewPaneShowing state changes
 );

@@ -10,7 +10,7 @@ import {
     SelectItem,
     IndexPath, //will be used eventually?
 } from '@ui-kitten/components';
-import { CalendarCard } from '../../components/Calender/CalendarCard';
+import { CalendarSelectorWrapper } from '../../components/Calender/CalendarSelectorWrapper';
 import { ModalHeader } from '../../components/';
 
 interface SwapScreenProps {
@@ -31,7 +31,7 @@ export const SwapScreen = (props: SwapScreenProps) => {
                 closeModal={props.route.params.closeModal}
             />
             <Radio
-                style={{ padding: 20, zIndex: 3 }}
+                style={{ padding: 20 }}
                 checked={checked}
                 onChange={(nextChecked) => setChecked(nextChecked)}
             >
@@ -55,8 +55,8 @@ export const SwapScreen = (props: SwapScreenProps) => {
                     <SelectItem style={{ zIndex: 15 }} title="option 3" />
                 </Select>
             </Layout>
-            <View style={{ width: '100%', flex: 1, backgroundColor: 'red' }}>
-                <CalendarCard displayedDate={selectedDate} tasks={[]} />
+            <View style={{ width: '100%', flex: 1 }}>
+                <CalendarSelectorWrapper displayedDate={selectedDate} tasks={[]} />
             </View>
             <View style={{ padding: 5 }}>
                 <Button onPress={() => props.navigation.navigate('SwapSummary')}>
