@@ -9,8 +9,9 @@ import { TaskData } from '../../shared/models';
 interface CalendarProps {
     displayedDate: Date;
     tasks?: TaskData[];
-    handleTilePress?: (date, data) => void;
+    handleTilePress?: (date, data, cardIndex?) => void;
     type: string;
+    cardIndex: number;
 }
 
 export const Calendar = ({
@@ -18,6 +19,7 @@ export const Calendar = ({
     displayedDate,
     handleTilePress,
     type,
+    cardIndex,
 }: CalendarProps) => {
     return (
         <Layout>
@@ -28,6 +30,7 @@ export const Calendar = ({
                 tasks={tasks}
                 handleTilePress={handleTilePress}
                 type={type}
+                cardIndex={cardIndex}
             />
         </Layout>
     );

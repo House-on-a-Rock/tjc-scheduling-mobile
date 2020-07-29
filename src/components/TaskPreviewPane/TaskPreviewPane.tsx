@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
+    View,
     Dimensions,
     TouchableOpacity,
     FlatList,
@@ -8,7 +9,7 @@ import {
     Animated,
     YellowBox,
 } from 'react-native';
-import { Layout, Text } from '@ui-kitten/components';
+import { Layout, Text, Button } from '@ui-kitten/components';
 import {
     calendarCardDimensions,
     headerBarHeight,
@@ -33,7 +34,7 @@ export const TaskPreviewPane = () => {
             ? state.calendarReducer.selectedDate
             : defaultSelected,
     );
-    const transformY = useRef(new Animated.Value(taskPreviewHeight * -1)).current;
+    const transformY = useRef(new Animated.Value(-taskPreviewHeight)).current;
 
     useEffect(() => {
         //open animation
@@ -64,14 +65,9 @@ export const TaskPreviewPane = () => {
             <LinearGradient colors={['#EDEEF3', '#FFFFFF']} style={{ flex: 1 }}>
                 <Layout style={styles.layout}>
                     <Text style={{ textAlign: 'center' }}>Tasks</Text>
-                    <TouchableOpacity //replace with button later
-                        onPress={onHidePressHandler}
-                        style={styles.hideText}
-                    >
-                        <Text style={styles.hideText} appearance="hint">
-                            Hide
-                        </Text>
-                    </TouchableOpacity>
+                    <View style={styles.hideText}>
+                        <Button onPress={onHidePressHandler}>Hide</Button>
+                    </View>
                 </Layout>
                 {tasks?.length > 0 ? (
                     <FlatList

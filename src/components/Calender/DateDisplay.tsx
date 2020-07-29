@@ -10,7 +10,8 @@ interface DateDisplayProps {
     displayedDate: Date;
     tasks: TaskData[];
     type: string;
-    handleTilePress?;
+    handleTilePress: (day, data, cardIndex) => void;
+    cardIndex: number;
 }
 
 export const DateDisplay = ({
@@ -19,6 +20,7 @@ export const DateDisplay = ({
     tasks,
     type,
     handleTilePress,
+    cardIndex,
 }: DateDisplayProps) => {
     const month = displayedDate.getMonth();
     const year = displayedDate.getFullYear();
@@ -72,6 +74,7 @@ export const DateDisplay = ({
                     isCurrentMonth={isCurrentMonth}
                     isSelected={isSelected}
                     handlePress={handleTilePress}
+                    cardIndex={cardIndex}
                 />
             );
         }

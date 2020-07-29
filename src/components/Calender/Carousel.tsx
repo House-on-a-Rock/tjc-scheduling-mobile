@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { FlatList } from 'react-native';
 import { Card, Text } from '@ui-kitten/components';
 import { Calendar } from './Calendar';
@@ -23,6 +23,7 @@ export const Carousel = React.memo(
         const tasks: TaskData[] = useSelector((state) => state.taskReducer.tasks);
 
         const dispatch = useDispatch();
+        const carouselRef = useRef(null);
 
         //extends date array
         const isRefreshing: boolean = useSelector(
@@ -35,19 +36,20 @@ export const Carousel = React.memo(
         const filterTasks = (dateItem) =>
             tasks.filter((task) => {
                 //https://stackoverflow.com/questions/7556591/is-the-javascript-date-object-always-one-day-off
-                const taskDate = new Date(task.date.replace(/-/g, '/')); //replacing - with / returns the correct date consistently
+                const taskDate = new Date(task.date.replace(/-/g, '/')); //replacing '-' with '/' returns the correct date consistently
                 return (
                     taskDate.getMonth() === dateItem.getMonth() &&
                     taskDate.getFullYear() === dateItem.getFullYear()
                 );
             });
 
-        const tilePressHandler = (date, dateTasks) => {
+        const tilePressHandler = (date, dateTasks, cardIndex) => {
             dispatch(selectDate(date, dateTasks));
             dispatch(showPreviewPane());
+            carouselRef.current.scrollToIndex({ index: cardIndex, animated: true });
         };
 
-        const renderMonths = ({ item }) => {
+        const renderMonths = ({ item, index }) => {
             const [isLeap, year, month] = useStringDate(item);
 
             return (
@@ -69,6 +71,7 @@ export const Carousel = React.memo(
                         tasks={filterTasks(item)}
                         handleTilePress={tilePressHandler}
                         type="calendarReducer"
+                        cardIndex={index}
                     />
                 </Card>
             );
@@ -77,6 +80,7 @@ export const Carousel = React.memo(
         return (
             <Layout>
                 <FlatList
+                    ref={carouselRef}
                     data={data}
                     keyExtractor={(item, index) => `${item.toString()}-${index}`}
                     renderItem={renderMonths}
