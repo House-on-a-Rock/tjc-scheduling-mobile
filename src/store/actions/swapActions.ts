@@ -39,25 +39,16 @@ export const resetSwapConfig = () => {
     };
 };
 
-function swapRequest() {}
+function swapRequest() {
+    // axios
+}
 
-export const sendSwapRequest = () => {
+export const sendSwapRequest = (swapOption, swapDate, swapTarget) => {
     console.log('calling sendSwapRequest');
     // return async (dispatch) => {
     //     dispatch(SwapStateActions.Loading())
-    //     try {
-    //         const response = await Promise.race([
-    //             getAuth(email, password),
-    //             timeoutPromise(),
-    //         ]);
-    //         AsyncStorage.setItem('access_token', response.data.access_token);
-    //         prepHomePage(dispatch);
-    //         dispatch(AuthStateActions.Loaded());
-    //     } catch (error) {
-    //         const errorData: ErrorData = errorDataExtractor(error);
-    //         return dispatch(AuthStateActions.Error(errorData));
-    //     }
-    //     //send swap request
-    //     //handle loading screen
+
+    //     send swap request
+    //     handle loading screen
     // };
 };

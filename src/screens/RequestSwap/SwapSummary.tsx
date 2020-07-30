@@ -7,13 +7,15 @@ import { sendSwapRequest } from '../../store/actions/swapActions';
 
 export const SwapSummary = (props) => {
     const dispatch = useDispatch();
-    const onConfirmPress = () => {
-        dispatch(sendSwapRequest());
-        props.navigation.navigate('SwapConfirmation');
-    };
+
     const { swapOption, swapDate, swapTarget } = useSelector(
         (state) => state.swapReducer,
     );
+
+    const onConfirmPress = () => {
+        dispatch(sendSwapRequest(swapOption, swapDate, swapTarget));
+        props.navigation.navigate('SwapConfirmation');
+    };
 
     const swapTargetString =
         swapTarget === undefined || swapTarget === null ? 'anyone' : swapTarget.row;
