@@ -5,10 +5,13 @@ import { Layout, Text, Button } from '@ui-kitten/components';
 import { backAction } from '../../shared/components/UI_Actions';
 import { Entypo } from '@expo/vector-icons';
 import { CustomAnimatedModal } from '../../components/CustomAnimatedModal';
+import { resetSwapConfig } from '../../store/actions/swapActions';
+import { useDispatch } from 'react-redux';
 
 export const TaskDetailsScreen = (props) => {
     const { task } = props.route.params;
     const [modalVisible, setModalVisible] = useState<boolean>(false);
+    const dispatch = useDispatch();
 
     const leftAccessory = () => backAction(props.navigation.goBack);
     const rightAccessory = () => (
@@ -21,6 +24,7 @@ export const TaskDetailsScreen = (props) => {
 
     const closeModalHandler = () => {
         setModalVisible(false);
+        dispatch(resetSwapConfig());
     };
 
     return (
