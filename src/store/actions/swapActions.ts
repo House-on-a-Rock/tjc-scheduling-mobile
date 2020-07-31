@@ -4,7 +4,8 @@ import { AsyncStorage } from 'react-native';
 import { secretIp } from '../../../secrets/secrets';
 import { extractId } from '../helper';
 import { SwapStateActions } from '../actions/loadStateActions';
-import { errorDataExtractor } from '../helper';
+import { errorDataExtractor, ErrorData } from '../helper';
+import { timeoutPromise } from '../../services/API/api_helper_functions';
 
 export const SELECT_SWAP_OPTION = 'SELECT_SWAP_OPTION';
 export const SELECT_SWAP_DATE = 'SELECT_SWAP_DATE';
@@ -39,16 +40,36 @@ export const resetSwapConfig = () => {
     };
 };
 
-function swapRequest() {
-    // axios
+function createSwapRequest(swapOption, swapDate, swapTarget, accesskey) {
+    return axios.post(
+        secretIp + '/api/swap-request',
+        {
+            taskId: 5,
+            switchWithId: 3,
+        },
+        {
+            headers: {
+                authorization: accesskey,
+            },
+        },
+    );
 }
 
 export const sendSwapRequest = (swapOption, swapDate, swapTarget) => {
-    console.log('calling sendSwapRequest');
-    // return async (dispatch) => {
-    //     dispatch(SwapStateActions.Loading())
-
-    //     send swap request
-    //     handle loading screen
-    // };
+    return async (dispatch) => {
+        dispatch(SwapStateActions.Loading());
+        let accesskey = await AsyncStorage.getItem('access_token');
+        console.log('accesskey', accesskey);
+        // setTimeout(() => dispatch(SwapStateActions.Loaded()), 2000);
+        try {
+            const response = await Promise.race([
+                createSwapRequest(swapOption, swapDate, swapTarget, accesskey),
+                timeoutPromise(),
+            ]);
+            dispatch(SwapStateActions.Loaded());
+        } catch (error) {
+            const errorData: ErrorData = errorDataExtractor(error);
+            return dispatch(SwapStateActions.Error(errorData));
+        }
+    };
 };

@@ -5,11 +5,13 @@ const initialState = {
         [reducerDomains.AUTH]: null,
         [reducerDomains.PROFILE]: null,
         [reducerDomains.TASKS]: null,
+        [reducerDomains.SWAP]: null,
     },
     loadErrorStatus: {
         [reducerDomains.AUTH]: null,
         [reducerDomains.PROFILE]: null,
         [reducerDomains.TASKS]: null,
+        [reducerDomains.SWAP]: null,
     },
 };
 

@@ -27,6 +27,7 @@ export const fetchTasksOnLogin = () => {
     return async (dispatch) => {
         dispatch(TaskStateActions.Loading());
         let accesskey = await AsyncStorage.getItem('access_token');
+
         const userId = extractId(accesskey);
         try {
             const { data: userTasks } = await getTasks(userId, accesskey);

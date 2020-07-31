@@ -39,6 +39,6 @@ export const fetchProfileOnLogin = () => {
             return dispatch(ProfileStateActions.Error(errorData));
         }
 
-        await AsyncStorage.clear();
+        // await AsyncStorage.clear();
     };
 };
