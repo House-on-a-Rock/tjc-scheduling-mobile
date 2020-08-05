@@ -34,7 +34,7 @@ export interface EmailState {
 export const LoginScreen = (props: LoginScreenProps) => {
     const dispatch = useDispatch();
     const [email, setEmail] = useState<EmailState>({
-        value: 'geoff.chu@gmail.com',
+        value: 'jonathan.lee@gmail.com',
         valid: true,
         message: null,
     });

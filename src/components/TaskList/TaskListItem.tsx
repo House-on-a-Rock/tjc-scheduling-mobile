@@ -13,7 +13,7 @@ interface TaskListItemProps {
 
 export const TaskListItem = (props: TaskListItemProps) => {
     const dispatch = useDispatch();
-    const date: Date = new Date(props.item.date.replace(/-/g, '/'));
+    const date: Date = new Date(props.item.date);
     const dayString: string[] = date.toDateString().split(' ');
 
     const onPressHandler = () => {

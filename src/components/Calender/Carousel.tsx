@@ -36,7 +36,8 @@ export const Carousel = React.memo(
         const filterTasks = (dateItem) =>
             tasks.filter((task) => {
                 //https://stackoverflow.com/questions/7556591/is-the-javascript-date-object-always-one-day-off
-                const taskDate = new Date(task.date.replace(/-/g, '/')); //replacing '-' with '/' returns the correct date consistently
+                // const taskDate = new Date(task.date.replace(/-/g, '/')); //replacing '-' with '/' returns the correct date consistently
+                const taskDate = new Date(task.date);
                 return (
                     taskDate.getMonth() === dateItem.getMonth() &&
                     taskDate.getFullYear() === dateItem.getFullYear()

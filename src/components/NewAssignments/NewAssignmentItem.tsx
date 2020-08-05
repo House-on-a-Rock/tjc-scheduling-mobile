@@ -10,7 +10,7 @@ interface NewAssignmentItemProps {
 }
 
 export const NewAssignmentItem = (props: NewAssignmentItemProps) => {
-    const date: Date = new Date(props.item.date.replace(/-/g, '/'));
+    const date: Date = new Date(props.item.date);
     const dayString: string[] = date.toDateString().split(' ');
     const navigation = useNavigation();
 

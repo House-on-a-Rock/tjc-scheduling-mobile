@@ -49,7 +49,7 @@ export const DateDisplay = ({
 
     const populateTasks = (date: Date): TaskData[] => {
         const filteredTasks = tasks.filter((task: TaskData) => {
-            const tasksDate: Date = new Date(task.date.replace(/-/g, '/'));
+            const tasksDate: Date = new Date(task.date);
             return compareDates(tasksDate, date);
         });
 

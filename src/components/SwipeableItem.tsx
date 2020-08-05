@@ -30,7 +30,7 @@ const {
 
 interface SwipeRowProps {
     swipeThreshold: number;
-    onSwipe: (taskId: number) => void;
+    onSwipe: (TaskId: number) => void;
     itemId: number;
     children?;
 }

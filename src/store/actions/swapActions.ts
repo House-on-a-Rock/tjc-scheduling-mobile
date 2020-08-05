@@ -42,7 +42,7 @@ export const resetSwapConfig = () => {
 
 function createSwapRequest(swapOption, swapDate, swapTarget, accesskey) {
     return axios.post(
-        secretIp + '/api/swap-request',
+        secretIp + '/api/swap-requests',
         {
             taskId: 5,
             switchWithId: 3,
@@ -59,8 +59,6 @@ export const sendSwapRequest = (swapOption, swapDate, swapTarget) => {
     return async (dispatch) => {
         dispatch(SwapStateActions.Loading());
         let accesskey = await AsyncStorage.getItem('access_token');
-        console.log('accesskey', accesskey);
-        // setTimeout(() => dispatch(SwapStateActions.Loaded()), 2000);
         try {
             const response = await Promise.race([
                 createSwapRequest(swapOption, swapDate, swapTarget, accesskey),
