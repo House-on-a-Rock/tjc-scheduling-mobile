@@ -25,7 +25,7 @@ export const SwapScreen = (props: SwapScreenProps) => {
     const selectedDate = useSelector((state) => state.calendarReducer.selectedDate.date);
     const [checked, setChecked] = useState<boolean>(false);
     const [selectedIndex, setSelectedIndex] = useState(null);
-    // const [nextClickable, setNextClickable] = useState<boolean>(false);
+
     //this is the date they select to swap on
     const selectedSwapDate = useSelector((state) => state.swapReducer.date);
     const dispatch = useDispatch();

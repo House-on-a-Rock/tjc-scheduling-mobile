@@ -55,18 +55,18 @@ export const loadStateReducer = (state = initialState, action) => {
                         [domain]: action.payload,
                     },
                 };
-            // case loadStateActionTypes.ERROR_HANDLED:
-            //     return {
-            //         ...state,
-            //         loadStatus: {
-            //             ...state.loadStatus,
-            //             [domain]: null,
-            //         },
-            //         loadErrorStatus: {
-            //             ...state.loadErrorStatus,
-            //             [domain]: null,
-            //         },
-            //     };
+            case loadStateActionTypes.DEFAULT_STATE:
+                return {
+                    ...state,
+                    loadStatus: {
+                        ...state.loadStatus,
+                        [domain]: null,
+                    },
+                    loadErrorStatus: {
+                        ...state.loadErrorStatus,
+                        [domain]: null,
+                    },
+                };
             default:
                 return state;
         }

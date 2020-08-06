@@ -17,19 +17,15 @@ export const SwapSummary = (props) => {
         (state) => state.loadStateReducer.loadErrorStatus.SWAP,
     );
 
-    const { swapOption, swapDate, swapTarget } = useSelector(
-        (state) => state.swapReducer,
-    );
+    const { option, date, target } = useSelector((state) => state.swapReducer);
 
     const onConfirmPress = () => {
-        dispatch(sendSwapRequest(swapOption, swapDate, swapTarget));
-        // props.navigation.navigate('SwapConfirmation');
+        dispatch(sendSwapRequest(option, date, target));
     };
 
-    const targetName =
-        swapTarget === undefined || swapTarget === null ? 'anyone' : swapTarget.row;
-    const targetDate =
-        swapDate === undefined || swapDate === null ? 'any day' : swapDate.toString();
+    // || target === null phrase needed to handle error when closing the modal
+    const targetName = target === undefined || target === null ? 'anyone' : target.row;
+    const targetDate = date === undefined || date === null ? 'any day' : date.toString();
 
     if (
         loadState === loadStateActionTypes.LOADED ||
