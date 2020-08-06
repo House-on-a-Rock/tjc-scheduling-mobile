@@ -7,9 +7,9 @@ import {
 } from '../actions';
 
 const initialState = {
-    swapOption: 0,
-    swapDate: null,
-    swapTarget: null,
+    option: 0,
+    date: null,
+    target: null,
 };
 
 export const swapReducer = (state = initialState, action) => {
@@ -17,21 +17,20 @@ export const swapReducer = (state = initialState, action) => {
         case SELECT_SWAP_OPTION:
             return {
                 ...state,
-                swapOption: action.payload,
+                option: action.payload,
             };
         case SELECT_SWAP_TARGET: {
             return {
                 ...state,
-                swapTarget: action.payload,
+                target: action.payload,
             };
         }
         case SELECT_SWAP_DATE:
             return {
                 ...state,
-                swapDate: action.payload,
+                date: action.payload,
             };
         case RESET_SWAP_CONFIG: {
-            // console.log('returning to initial state');
             return {
                 ...initialState,
             };

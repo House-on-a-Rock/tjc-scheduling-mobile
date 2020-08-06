@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { loadStateActionTypes } from '../../store/actions';
 
 export const SwapConfirmation = (props) => {
-    const requestState = useSelector((state) => state.loadStateReducer.loadStatus);
+    const requestState = useSelector((state) => state.loadStateReducer.loadStatus.SWAP);
 
     return (
         <View>

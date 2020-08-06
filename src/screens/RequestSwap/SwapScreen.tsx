@@ -27,7 +27,7 @@ export const SwapScreen = (props: SwapScreenProps) => {
     const [selectedIndex, setSelectedIndex] = useState(null);
     // const [nextClickable, setNextClickable] = useState<boolean>(false);
     //this is the date they select to swap on
-    const selectedSwapDate = useSelector((state) => state.swapReducer.swapDate);
+    const selectedSwapDate = useSelector((state) => state.swapReducer.date);
     const dispatch = useDispatch();
 
     //true if radio is checked or (if an index and a date are both selected)

@@ -43,8 +43,8 @@ export const NewAssignmentsScreen = (props: NewAssignmentsScreenProps) => {
         </TouchableOpacity>
     );
 
-    const deleteItem = (TaskId) => {
-        const updatedData = data.filter((d) => d.TaskId !== TaskId);
+    const deleteItem = (taskId) => {
+        const updatedData = data.filter((d) => d.taskId !== taskId);
 
         // Animate list to close gap when item is deleted
         const nextLayout = LayoutAnimation.create(
@@ -62,7 +62,7 @@ export const NewAssignmentsScreen = (props: NewAssignmentsScreenProps) => {
         <SwipeRow
             swipeThreshold={deleteThreshold}
             onSwipe={deleteItem}
-            itemId={item.TaskId}
+            itemId={item.taskId}
         >
             <NewAssignmentItem item={item} />
         </SwipeRow>
@@ -83,7 +83,7 @@ export const NewAssignmentsScreen = (props: NewAssignmentsScreenProps) => {
                         <FlatList
                             data={data}
                             renderItem={renderItem}
-                            keyExtractor={(item, index) => item.TaskId.toString()}
+                            keyExtractor={(item, index) => item.taskId.toString()}
                         />
                     ) : (
                         <Text>You don't have any new assignments!</Text>

@@ -31,7 +31,7 @@ export const DateDisplay = ({
     const selectedDate =
         type === 'calendarReducer'
             ? useSelector((state) => state.calendarReducer.selectedDate?.date)
-            : useSelector((state) => state.swapReducer.swapDate);
+            : useSelector((state) => state.swapReducer.date);
 
     function determineRenderDate(initial): () => Date {
         let renderDate: Date = new Date(initial.setDate(initial.getDate() - firstDay));

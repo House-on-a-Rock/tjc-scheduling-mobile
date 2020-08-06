@@ -11,14 +11,14 @@ interface TaskListItemProps {
     navigation;
 }
 
-export const TaskListItem = (props: TaskListItemProps) => {
+export const TaskListItem = ({ item, navigation }: TaskListItemProps) => {
     const dispatch = useDispatch();
-    const date: Date = new Date(props.item.date);
+    const date: Date = new Date(item.date);
     const dayString: string[] = date.toDateString().split(' ');
 
     const onPressHandler = () => {
-        dispatch(selectDate(date, props.item));
-        props.navigation.navigate('TaskDetails', { task: props.item });
+        dispatch(selectDate(date, item));
+        navigation.navigate('TaskDetails', { task: item });
     };
 
     return (
@@ -38,7 +38,7 @@ export const TaskListItem = (props: TaskListItemProps) => {
                 <Text category="s1">{dayString[0]}</Text>
             </View>
             <View style={{ flexDirection: 'column', padding: 10, flex: 3 }}>
-                <Text>{props.item.role.name}</Text>
+                <Text>{item.role.name}</Text>
             </View>
         </TouchableOpacity>
     );

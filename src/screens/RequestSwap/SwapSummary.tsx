@@ -26,9 +26,9 @@ export const SwapSummary = (props) => {
         // props.navigation.navigate('SwapConfirmation');
     };
 
-    const swapTargetString =
+    const targetName =
         swapTarget === undefined || swapTarget === null ? 'anyone' : swapTarget.row;
-    const swapTargetDate =
+    const targetDate =
         swapDate === undefined || swapDate === null ? 'any day' : swapDate.toString();
 
     if (
@@ -58,7 +58,7 @@ export const SwapSummary = (props) => {
                     closeModal={props.route.params.closeModal}
                 />
                 <Text>
-                    You want to trade with {swapTargetString} on {swapTargetDate}
+                    You want to trade with {targetName} on {targetDate}
                 </Text>
                 <Button onPress={onConfirmPress}>Confirm</Button>
             </View>
