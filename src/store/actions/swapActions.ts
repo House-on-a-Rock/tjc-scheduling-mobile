@@ -1,22 +1,73 @@
-//will need in future
+//will need in future?
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 import { secretIp } from '../../../secrets/secrets';
 import { extractId } from '../helper';
-import { TaskStateActions } from '../actions/loadStateActions';
-import { errorDataExtractor } from '../helper';
+import { SwapStateActions } from '../actions/loadStateActions';
+import { errorDataExtractor, ErrorData } from '../helper';
+import { timeoutPromise } from '../../services/API/api_helper_functions';
 
+export const SELECT_SWAP_OPTION = 'SELECT_SWAP_OPTION';
 export const SELECT_SWAP_DATE = 'SELECT_SWAP_DATE';
+export const SELECT_SWAP_TARGET = 'SELECT_SWAP_TARGET';
+export const SEND_SWAP_REQUEST = 'SEND_SWAP_REQUEST';
+export const RESET_SWAP_CONFIG = 'RESET_SWAP_CONFIG';
 
-export const selectSwapDate = (date: Date) => {
+export const selectSwapOption = (option: number) => {
+    return {
+        type: SELECT_SWAP_OPTION,
+        payload: option,
+    };
+};
+
+export const selectSwapDate = (date) => {
     return {
         type: SELECT_SWAP_DATE,
         payload: date,
     };
 };
 
-export const sendSwapRequest = () => {
+export const selectSwapTarget = (targetId: number) => {
+    return {
+        type: SELECT_SWAP_TARGET,
+        payload: targetId,
+    };
+};
+
+export const resetSwapConfig = () => {
+    return {
+        type: RESET_SWAP_CONFIG,
+    };
+};
+
+function createSwapRequest(option, date, target, accesskey) {
+    return axios.post(
+        secretIp + '/api/swap-requests',
+        {
+            taskId: 5,
+            switchWithId: 3,
+        },
+        {
+            headers: {
+                authorization: accesskey,
+            },
+        },
+    );
+}
+
+export const sendSwapRequest = (option, date, target) => {
     return async (dispatch) => {
-        //send swap request
+        dispatch(SwapStateActions.Loading());
+        let accesskey = await AsyncStorage.getItem('access_token');
+        try {
+            const response = await Promise.race([
+                createSwapRequest(option, date, target, accesskey),
+                timeoutPromise(),
+            ]);
+            dispatch(SwapStateActions.Loaded());
+        } catch (error) {
+            const errorData: ErrorData = errorDataExtractor(error);
+            return dispatch(SwapStateActions.Error(errorData));
+        }
     };
 };

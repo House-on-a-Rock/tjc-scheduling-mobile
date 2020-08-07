@@ -97,10 +97,7 @@ class SwipeRow extends React.Component<SwipeRowProps> {
                             eq(this.animState.shouldDelete, 1),
                         ),
                         call([this.animState.position], () => {
-                            return this.props.onSwipe(
-                                // this.props.children.props.item.taskId,
-                                this.props.itemId,
-                            );
+                            return this.props.onSwipe(this.props.itemId);
                         }),
                         //else if gesture ended but !shouldDelete, start spring animation
                         cond(

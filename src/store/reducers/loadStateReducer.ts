@@ -5,11 +5,13 @@ const initialState = {
         [reducerDomains.AUTH]: null,
         [reducerDomains.PROFILE]: null,
         [reducerDomains.TASKS]: null,
+        [reducerDomains.SWAP]: null,
     },
     loadErrorStatus: {
         [reducerDomains.AUTH]: null,
         [reducerDomains.PROFILE]: null,
         [reducerDomains.TASKS]: null,
+        [reducerDomains.SWAP]: null,
     },
 };
 
@@ -53,18 +55,18 @@ export const loadStateReducer = (state = initialState, action) => {
                         [domain]: action.payload,
                     },
                 };
-            // case loadStateActionTypes.ERROR_HANDLED:
-            //     return {
-            //         ...state,
-            //         loadStatus: {
-            //             ...state.loadStatus,
-            //             [domain]: null,
-            //         },
-            //         loadErrorStatus: {
-            //             ...state.loadErrorStatus,
-            //             [domain]: null,
-            //         },
-            //     };
+            case loadStateActionTypes.DEFAULT_STATE:
+                return {
+                    ...state,
+                    loadStatus: {
+                        ...state.loadStatus,
+                        [domain]: null,
+                    },
+                    loadErrorStatus: {
+                        ...state.loadErrorStatus,
+                        [domain]: null,
+                    },
+                };
             default:
                 return state;
         }

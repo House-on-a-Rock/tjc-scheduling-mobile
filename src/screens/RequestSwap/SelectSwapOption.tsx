@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Layout, Text, Icon, Button } from '@ui-kitten/components';
+import { useDispatch } from 'react-redux';
+import { selectSwapOption } from '../../store/actions/swapActions';
 
 interface SelectSwapOptionProps {
     navigation;
@@ -10,6 +12,7 @@ interface SelectSwapOptionProps {
 export const SelectSwapOption = (props: SelectSwapOptionProps) => {
     const [selectedOption, setSelectedOption] = useState<number>(0);
     const iconDimensions = 50;
+    const dispatch = useDispatch();
 
     const SwitchSpecifically = () => {
         return (
@@ -71,6 +74,13 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
         );
     };
 
+    const onNextHandler = () => {
+        dispatch(selectSwapOption(selectedOption));
+        props.navigation.navigate('SwapScreen', {
+            selectedOption: selectedOption,
+        });
+    };
+
     return (
         <Layout style={styles.layout}>
             <TouchableOpacity
@@ -88,15 +98,7 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
             </View>
             <SwitchSpecifically />
             <SwitchAnyone />
-            <Button
-                onPress={() =>
-                    props.navigation.navigate('SwapScreen', {
-                        selectedOption: selectedOption,
-                    })
-                }
-            >
-                Next
-            </Button>
+            <Button onPress={onNextHandler}>Next</Button>
         </Layout>
     );
 };

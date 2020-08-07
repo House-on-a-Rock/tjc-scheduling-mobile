@@ -6,6 +6,7 @@ import { fetchTasksOnLogin } from './taskActions';
 import { AuthStateActions } from './loadStateActions';
 import { createCalendar } from './calendarActions';
 import { errorDataExtractor, ErrorData } from '../helper';
+import { timeoutPromise } from '../../services/API/api_helper_functions';
 
 export const prepHomePage = async (dispatch) => {
     dispatch(fetchProfileOnLogin());
@@ -40,13 +41,6 @@ function getAuth(email: string, password: string) {
 function recoverEmail(email: string) {
     return axios.post(secretIp + `/api/authentication/sendResetEmail`, {
         email: email,
-    });
-}
-
-//not sure what type to put in for any
-function timeoutPromise(): Promise<any> {
-    return new Promise((resolve, reject) => {
-        setTimeout(reject, 3000, new Error('Server timed out, please try again later'));
     });
 }
 

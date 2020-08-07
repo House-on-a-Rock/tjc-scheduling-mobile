@@ -34,12 +34,12 @@ export interface EmailState {
 export const LoginScreen = (props: LoginScreenProps) => {
     const dispatch = useDispatch();
     const [email, setEmail] = useState<EmailState>({
-        value: 'amanda.chin@gmail.com',
+        value: 'jonathan.lee@gmail.com',
         valid: true,
         message: null,
     });
     const [password, setPassword] = useState<PasswordState>({
-        value: 'password4',
+        value: 'password3',
         valid: true,
         visible: false,
         message: null,
@@ -104,6 +104,10 @@ export const LoginScreen = (props: LoginScreenProps) => {
 
     if (loadState === loadStateActionTypes.LOADING) return <LoadingPage opacity={0.8} />;
 
+    const clearInputHandler = (inputField) => {
+        if (inputField === 'email') return setEmail({ ...email, value: '' });
+    };
+
     return (
         <SafeAreaView
             style={{
@@ -135,6 +139,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
                                 onChangeText={(input) =>
                                     setEmail({ ...email, value: input })
                                 }
+                                clearInputHandler={clearInputHandler}
                             />
                             <PasswordInput
                                 label="Password"

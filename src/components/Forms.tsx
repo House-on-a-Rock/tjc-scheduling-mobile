@@ -1,6 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Input } from '@ui-kitten/components';
+import { View, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { Input, Icon } from '@ui-kitten/components';
 import { errorCaption } from '../shared/components/';
 
 interface EmailInputProps {
@@ -8,6 +8,7 @@ interface EmailInputProps {
     value: string;
     caption?: string;
     onChangeText: React.Dispatch<React.SetStateAction<string>>;
+    clearInputHandler: (inputField) => void;
 }
 interface PasswordInputProps {
     label: string;
@@ -16,7 +17,25 @@ interface PasswordInputProps {
     onChangeText: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const EmailInput = ({ label, value, caption, onChangeText }: EmailInputProps) => {
+const clearInputIcon = (callback) => (
+    <TouchableWithoutFeedback onPress={() => callback('email')}>
+        <Icon
+            color={'red'}
+            width={20}
+            height={20}
+            name="close-circle-outline"
+            style={{ opacity: 0.4 }}
+        />
+    </TouchableWithoutFeedback>
+);
+
+export const EmailInput = ({
+    label,
+    value,
+    caption,
+    onChangeText,
+    clearInputHandler,
+}: EmailInputProps) => {
     return (
         <View style={{ width: '100%', paddingVertical: 10 }}>
             <Input
@@ -25,6 +44,7 @@ export const EmailInput = ({ label, value, caption, onChangeText }: EmailInputPr
                 caption={errorCaption(caption)}
                 keyboardType={'email-address'}
                 onChangeText={onChangeText}
+                accessoryRight={() => clearInputIcon(clearInputHandler)}
             />
         </View>
     );

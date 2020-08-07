@@ -4,21 +4,26 @@ import { months } from '../../services/Calendar/models';
 import { windowWidth } from '../../shared/constants';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { selectDate } from '../../store/actions';
+import { useDispatch } from 'react-redux';
 
 interface NewAssignmentItemProps {
     item;
 }
 
-export const NewAssignmentItem = (props: NewAssignmentItemProps) => {
-    const date: Date = new Date(props.item.date.replace(/-/g, '/'));
+export const NewAssignmentItem = ({ item }: NewAssignmentItemProps) => {
+    const dispatch = useDispatch();
+    const date: Date = new Date(item.date);
     const dayString: string[] = date.toDateString().split(' ');
     const navigation = useNavigation();
 
+    const onPressHandler = () => {
+        dispatch(selectDate(date, item));
+        navigation.navigate('Task Details', { task: item });
+    };
+
     return (
-        <TouchableOpacity
-            style={styles.container}
-            onPress={() => navigation.navigate('Task Details', { task: props.item })}
-        >
+        <TouchableOpacity style={styles.container} onPress={onPressHandler}>
             <View
                 style={{
                     padding: 10,
@@ -34,7 +39,7 @@ export const NewAssignmentItem = (props: NewAssignmentItemProps) => {
                 <Text category="s1">{dayString[0]}</Text>
             </View>
             <View style={{ flexDirection: 'column', padding: 10, flex: 3 }}>
-                <Text>{props.item.role.name}</Text>
+                <Text>{item.role.name}</Text>
             </View>
         </TouchableOpacity>
     );

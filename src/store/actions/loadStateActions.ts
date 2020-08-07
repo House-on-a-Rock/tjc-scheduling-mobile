@@ -11,7 +11,7 @@ export enum loadStateActionTypes {
     LOADED = 'LOADED',
     LOADING = 'LOADING',
     ERROR = 'ERROR',
-    // ERROR_HANDLED = 'ERROR_HANDLED',
+    DEFAULT_STATE = 'DEFAULT_STATE',
 }
 
 export const AuthStateActions: StateActions = mapLoadStateActions(reducerDomains.AUTH);
@@ -31,6 +31,10 @@ function mapLoadStateActions(domain): StateActions {
             type: loadStateActionTypes.ERROR,
             payload: error,
         }),
+        DefaultState: () => ({
+            domain: domain,
+            type: loadStateActionTypes.DEFAULT_STATE,
+        }),
     };
 }
 
@@ -40,4 +44,5 @@ interface StateActions {
     Error: (
         error: ErrorData,
     ) => { domain: reducerDomains; type: loadStateActionTypes; payload: ErrorData };
+    DefaultState: () => { domain: reducerDomains; type: loadStateActionTypes };
 }

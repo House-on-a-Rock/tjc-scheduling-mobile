@@ -31,7 +31,7 @@ export const DateDisplay = ({
     const selectedDate =
         type === 'calendarReducer'
             ? useSelector((state) => state.calendarReducer.selectedDate?.date)
-            : useSelector((state) => state.swapReducer.swapDate);
+            : useSelector((state) => state.swapReducer.date);
 
     function determineRenderDate(initial): () => Date {
         let renderDate: Date = new Date(initial.setDate(initial.getDate() - firstDay));
@@ -49,7 +49,7 @@ export const DateDisplay = ({
 
     const populateTasks = (date: Date): TaskData[] => {
         const filteredTasks = tasks.filter((task: TaskData) => {
-            const tasksDate: Date = new Date(task.date.replace(/-/g, '/'));
+            const tasksDate: Date = new Date(task.date);
             return compareDates(tasksDate, date);
         });
 

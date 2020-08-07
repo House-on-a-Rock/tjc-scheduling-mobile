@@ -3,13 +3,20 @@ import { Platform, SafeAreaView } from 'react-native';
 import { Layout, Spinner } from '@ui-kitten/components';
 import { statusBarHeight } from '../shared/constants';
 
-export const LoadingPage = (props) => {
+interface LoadingPageProps {
+    style?;
+    styleSafeArea?;
+    opacity?;
+}
+
+export const LoadingPage = (props: LoadingPageProps) => {
     return (
         <SafeAreaView
             style={{
                 flex: 1,
                 backgroundColor: 'black',
                 paddingTop: Platform.OS === 'android' ? statusBarHeight : 0,
+                ...props.styleSafeArea,
             }}
         >
             <Layout
