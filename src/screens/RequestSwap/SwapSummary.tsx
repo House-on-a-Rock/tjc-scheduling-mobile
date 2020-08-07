@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { sendSwapRequest } from '../../store/actions/swapActions';
 import { LoadingPage } from '../../components/LoadingPage';
 import { loadStateActionTypes } from '../../store/actions';
-import { isAbsolute } from 'path';
+
 import { windowHeight } from '../../shared/constants/';
 
 export const SwapSummary = (props) => {
@@ -16,7 +16,6 @@ export const SwapSummary = (props) => {
     const errorState = useSelector(
         (state) => state.loadStateReducer.loadErrorStatus.SWAP,
     );
-
     const { option, date, target } = useSelector((state) => state.swapReducer);
 
     const onConfirmPress = () => {
@@ -24,7 +23,8 @@ export const SwapSummary = (props) => {
     };
 
     // || target === null phrase needed to handle error when closing the modal
-    const targetName = target === undefined || target === null ? 'anyone' : target.row;
+    const targetName =
+        target === undefined || target === null ? 'anyone' : target.row.toString();
     const targetDate = date === undefined || date === null ? 'any day' : date.toString();
 
     if (
@@ -41,11 +41,13 @@ export const SwapSummary = (props) => {
                     style={{
                         height: '100%',
                         width: '100%',
-                        position: isAbsolute,
+                        position: 'absolute',
                         right: 0,
                         left: 0,
                         top: windowHeight / 2 - 30,
+                        paddingTop: 0,
                     }}
+                    styleSafeArea={{ paddingTop: 0 }}
                 />
             )}
             <View opacity={loadState === loadStateActionTypes.LOADING ? 0.5 : 1}>
