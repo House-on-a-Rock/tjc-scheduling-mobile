@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Alert, Platform } from 'react-native';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
@@ -14,6 +14,12 @@ import {
     loadStateReducer,
     swapReducer,
 } from './src/store/reducers';
+
+// //notification imports
+// import * as Permissions from 'expo-permissions';
+// import { Linking } from 'expo';
+// import Constants from 'expo-constants';
+// import { Notifications } from 'expo';
 
 //ui kitten imports
 import * as eva from '@eva-design/eva';
@@ -44,6 +50,54 @@ const fetchFonts = () => {
         'OpenSans-SemiBold': require('./src/assets/Fonts/OpenSans-SemiBold.ttf'),
     });
 };
+
+//https://farazpatankar.com/push-notifications-in-react-native/
+//notifications tutorial
+// const hasNotificationPermission = async () => {
+//     try {
+//         const { status: existingStatus } = await Permissions.getAsync(
+//             Permissions.NOTIFICATIONS,
+//         );
+//         let finalStatus = existingStatus;
+//         // If we don't already have permission, ask for it
+//         if (existingStatus !== 'granted') {
+//             const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+//             finalStatus = status;
+//         }
+//         if (finalStatus === 'granted') return true;
+//         if (finalStatus !== 'granted') {
+//             Alert.alert(
+//                 'Warning',
+//                 'You will not receive reminders if you do not enable push notifications. If you would like to receive reminders, please enable push notifications for Fin in your settings.',
+//                 [
+//                     { text: 'Cancel' },
+//                     // If they said no initially and want to change their mind,
+//                     // we can automatically open our app in their settings
+//                     // so there's less friction in turning notifications on
+//                     {
+//                         text: 'Enable Notifications',
+//                         onPress: () =>
+//                             Platform.OS === 'ios'
+//                                 ? Linking.openURL('app-settings:')
+//                                 : Linking.openSettings(),
+//                     },
+//                 ],
+//             );
+//             return false;
+//         }
+//     } catch (error) {
+//         Alert.alert(
+//             'Error',
+//             'Something went wrong while check your notification permissions, please try again later.',
+//         );
+//         return false;
+//     }
+// };
+
+// const getPushToken = async () => {
+//     const token = await Notifications.getExpoPushTokenAsync();
+//     return token;
+// };
 
 const App: React.FC = () => {
     const [dataLoaded, setDataLoaded] = useState(false);

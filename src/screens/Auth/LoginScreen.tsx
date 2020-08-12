@@ -18,6 +18,9 @@ import { EmailInput, PasswordInput } from '../../components/Forms';
 import { isValidEmail } from '../../shared/components/';
 import { statusBarHeight } from '../../shared/constants';
 
+//temp imports
+import * as Notifications from 'expo-notifications';
+
 export interface PasswordState {
     value: string;
     visible: boolean;
@@ -108,6 +111,18 @@ export const LoginScreen = (props: LoginScreenProps) => {
         if (inputField === 'email') return setEmail({ ...email, value: '' });
     };
 
+    const notificationhandler = () => {
+        Notifications.scheduleNotificationAsync({
+            content: {
+                title: 'local notification',
+                body: 'first notification',
+            },
+            trigger: {
+                seconds: 10,
+            },
+        });
+    };
+
     return (
         <SafeAreaView
             style={{
@@ -166,7 +181,11 @@ export const LoginScreen = (props: LoginScreenProps) => {
                                     Recover Account
                                 </Button>
                             </View>
-                            <View></View>
+                            <View>
+                                {/* <Button onPress={notificationhandler}>
+                                    Display Local Notification
+                                </Button> */}
+                            </View>
                         </View>
                     </ScrollView>
                 </KeyboardAwareScrollView>
