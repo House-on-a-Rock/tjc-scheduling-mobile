@@ -8,33 +8,22 @@ import { extractId } from '../../store/helper';
 export const useCheckPermissions = async () => {
     let accesskey = await AsyncStorage.getItem('access_token');
     const userId = extractId(accesskey);
-    return Permissions.getAsync(Permissions.NOTIFICATIONS)
-        .then((statusObj) => {
-            if (statusObj.status !== 'granted') {
-                return Permissions.askAsync(Permissions.NOTIFICATIONS);
-            }
-            return statusObj;
-        })
-        .then((statusObj) => {
-            if (statusObj.status !== 'granted') {
-                throw new Error('Permission not granted');
-            }
-        })
-        .then(() => {
-            //talks to expo server and signs up for push tokens
-            return Notifications.getExpoPushTokenAsync();
-        })
-        .then((response) => {
-            console.log('response.data', response.data);
-            const token = response.data;
-            savePushToken(accesskey, userId, token);
-            return token;
-        })
-        .catch((err) => {
-            console.log('catching error in check permissions');
-            throw err;
-            // return null;
-        });
+
+    try {
+        let pushToken;
+        let permissionStatus = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+        if (permissionStatus.status !== 'granted') {
+            permissionStatus = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        }
+        if (permissionStatus.status !== 'granted') {
+            pushToken = null;
+        } else {
+            pushToken = (await Notifications.getExpoPushTokenAsync()).data;
+        }
+        savePushToken(accesskey, userId, pushToken);
+    } catch (err) {
+        console.log('err', err);
+    }
 };
 
 function savePushToken(accesskey, userId, token) {
