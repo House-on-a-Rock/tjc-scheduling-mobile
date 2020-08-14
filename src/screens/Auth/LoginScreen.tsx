@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     View,
@@ -17,6 +17,8 @@ import { Button, Text, Icon, Layout, Input } from '@ui-kitten/components';
 import { EmailInput, PasswordInput } from '../../components/Forms';
 import { isValidEmail } from '../../shared/components/';
 import { statusBarHeight } from '../../shared/constants';
+import * as Permissions from 'expo-permissions';
+import useCheckPermissions from '../../services/Hooks/useCheckPermissions';
 
 //temp imports
 import * as Notifications from 'expo-notifications';
@@ -47,6 +49,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
         visible: false,
         message: null,
     });
+    const [pushToken, setPushToken] = useState(null);
 
     function verifyLogin() {
         setEmail({ ...email, valid: true, message: '' });
@@ -105,23 +108,53 @@ export const LoginScreen = (props: LoginScreenProps) => {
         else errorMessage = null;
     }
 
-    if (loadState === loadStateActionTypes.LOADING) return <LoadingPage opacity={0.8} />;
-
     const clearInputHandler = (inputField) => {
         if (inputField === 'email') return setEmail({ ...email, value: '' });
     };
 
     const notificationhandler = () => {
-        Notifications.scheduleNotificationAsync({
-            content: {
-                title: 'local notification',
-                body: 'first notification',
+        console.log('sending push notificatin through expo');
+        console.log('pushToken', pushToken);
+        fetch('https://exp.host/--/api/v2/push/send', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Accept-Encoding': 'gzip, deflate',
+                'Content-Type': 'application/json',
             },
-            trigger: {
-                seconds: 10,
-            },
+            body: JSON.stringify({
+                to: 'ExponentPushToken[-uuepvN27WLr5fHqJoK3y8]',
+                data: {
+                    extraData: 'eugh shaun',
+                },
+                title: 'shut up!!!',
+                body: 'this push notification was sent via the app',
+            }),
         });
     };
+
+    useEffect(() => {
+        //run when notification is received and tapped and when app is NOT running
+        const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(
+            (response) => {
+                // console.log('response: ', response);
+            },
+        );
+
+        //run when notification is received and when app is running
+        const foregroundSubscription = Notifications.addNotificationReceivedListener(
+            (notification) => {
+                // console.log('notification', notification);
+            },
+        );
+
+        return () => {
+            foregroundSubscription.remove(); //removes subscription on unmount
+            backgroundSubscription.remove();
+        };
+    });
+
+    if (loadState === loadStateActionTypes.LOADING) return <LoadingPage opacity={0.8} />;
 
     return (
         <SafeAreaView
@@ -182,9 +215,9 @@ export const LoginScreen = (props: LoginScreenProps) => {
                                 </Button>
                             </View>
                             <View>
-                                {/* <Button onPress={notificationhandler}>
+                                <Button onPress={notificationhandler}>
                                     Display Local Notification
-                                </Button> */}
+                                </Button>
                             </View>
                         </View>
                     </ScrollView>

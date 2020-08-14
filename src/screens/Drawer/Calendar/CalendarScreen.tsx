@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-// import { CalendarScreenProps } from '../../../shared/models';
 import { Carousel } from '../../../components/Calender';
 import { TaskPreviewPane } from '../../../components/TaskPreviewPane/TaskPreviewPane';
 import { Screen } from '../../../components/Screen';
@@ -9,6 +8,7 @@ import { Text } from '@ui-kitten/components';
 import { Layout } from '@ui-kitten/components';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
+import { useCheckPermissions } from '../../../services/Hooks/useCheckPermissions';
 
 interface CalendarScreenProps {
     route;
@@ -26,6 +26,10 @@ export const CalendarScreen = (props: CalendarScreenProps) => {
     const isPreviewPaneOpen = useSelector(
         (state) => state.calendarReducer.previewPaneVisible,
     );
+
+    useEffect(() => {
+        useCheckPermissions(); //maybe turn this into an action instead of hook?
+    }, []);
 
     return (
         <Screen

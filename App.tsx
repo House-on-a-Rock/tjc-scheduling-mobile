@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Alert, Platform } from 'react-native';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
@@ -20,6 +20,18 @@ import {
 // import { Linking } from 'expo';
 // import Constants from 'expo-constants';
 // import { Notifications } from 'expo';
+import * as Notifications from 'expo-notifications';
+
+Notifications.setNotificationHandler({
+    //lets os know what to do with notification before its displayed to user
+    handleNotification: async () => {
+        return {
+            shouldPlaySound: true,
+            // shouldSetBadge: true,
+            shouldShowAlert: true,
+        };
+    },
+});
 
 //ui kitten imports
 import * as eva from '@eva-design/eva';
@@ -117,6 +129,19 @@ const App: React.FC = () => {
             />
         );
     }
+
+    // useEffect(() => {
+    //     //run when notification is received and when app is running
+    //     const subscription = Notifications.addNotificationReceivedListener(
+    //         (notification) => {
+    //             console.log('notification', notification);
+    //         },
+    //     );
+
+    //     return () => {
+    //         subscription.remove(); //removes subscription on unmount
+    //     };
+    // });
 
     return (
         <Provider store={store}>
