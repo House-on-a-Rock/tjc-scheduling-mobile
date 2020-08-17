@@ -3,7 +3,7 @@ import { Icon, Text } from '@ui-kitten/components';
 //https://medium.com/async-la/swipe-to-delete-with-reanimated-react-native-gesture-handler-bd7d66085aee
 import { PanGestureHandler, State as GestureState } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
-// import { windowWidth } from '../shared/constants/';
+
 const {
     multiply,
     min,
@@ -36,6 +36,14 @@ interface SwipeRowProps {
 }
 
 class SwipeRow extends React.Component<SwipeRowProps> {
+    // constructor(props){
+    //     super(props)
+
+    // }
+    state = {
+        iconColor: '#000000',
+    };
+
     clock = new Clock();
     gestureState = new Value(GestureState.UNDETERMINED);
 
@@ -118,7 +126,7 @@ class SwipeRow extends React.Component<SwipeRowProps> {
         {
             nativeEvent: ({ translationX }) =>
                 block([
-                    //icon scaling on drag
+                    //trash icon scaling on drag
                     set(
                         this.iconAnimState.scaling,
                         min(add(divide(translationX, 150), 1), 2),
@@ -145,7 +153,7 @@ class SwipeRow extends React.Component<SwipeRowProps> {
                         ],
                     ),
                     //if past swipe threshold, set shouldDelete to true
-                    //set icon anim
+                    //determines if icon anim color visible or not
                     cond(
                         and(
                             eq(this.gestureState, GestureState.ACTIVE),
@@ -179,6 +187,13 @@ class SwipeRow extends React.Component<SwipeRowProps> {
             ]),
         ]);
 
+    iconRed = ([]) => {
+        this.setState({ iconColor: '#FF0905' });
+    };
+    iconBlack = ([]) => {
+        this.setState({ iconColor: '#000000' });
+    };
+
     render() {
         const { children } = this.props;
 
@@ -206,21 +221,29 @@ class SwipeRow extends React.Component<SwipeRowProps> {
                                     { scale: this.iconAnimState.scaling },
                                     { translateX: this.iconAnimState.position },
                                 ],
-                                borderColor: color(
-                                    255,
-                                    0,
-                                    0,
-                                    this.iconAnimState.colorVisible,
-                                ),
-                                borderWidth: this.iconAnimState.colorVisible,
-                                borderRadius: 20,
                             }}
                         >
+                            <Animated.Code>
+                                {() =>
+                                    cond(
+                                        eq(this.iconAnimState.colorVisible, new Value(1)),
+                                        call([], this.iconRed),
+                                    )
+                                }
+                            </Animated.Code>
+                            <Animated.Code>
+                                {() =>
+                                    cond(
+                                        eq(this.iconAnimState.colorVisible, new Value(0)),
+                                        call([], this.iconBlack),
+                                    )
+                                }
+                            </Animated.Code>
                             <Icon
                                 height={15}
-                                width={30}
-                                color="red"
+                                width={25}
                                 name="trash-2-outline"
+                                fill={this.state.iconColor}
                             />
                         </Animated.View>
                     </Animated.View>

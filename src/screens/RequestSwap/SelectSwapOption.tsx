@@ -12,6 +12,7 @@ interface SelectSwapOptionProps {
 export const SelectSwapOption = (props: SelectSwapOptionProps) => {
     const [selectedOption, setSelectedOption] = useState<number>(0);
     const iconDimensions = 50;
+    const iconColor = '#8F9BB3';
     const dispatch = useDispatch();
 
     const SwitchSpecifically = () => {
@@ -32,16 +33,19 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
                             name="person"
                             height={iconDimensions}
                             width={iconDimensions}
+                            fill={iconColor}
                         />
                         <Icon
                             name="swap"
                             height={iconDimensions}
                             width={iconDimensions}
+                            fill={iconColor}
                         />
                         <Icon
                             name="person"
                             height={iconDimensions}
                             width={iconDimensions}
+                            fill={iconColor}
                         />
                     </View>
                 </View>
@@ -62,13 +66,24 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
             >
                 <Text>Ask someone to take over this duty</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                    <Icon name="person" height={iconDimensions} width={iconDimensions} />
+                    <Icon
+                        name="person"
+                        height={iconDimensions}
+                        width={iconDimensions}
+                        fill={iconColor}
+                    />
                     <Icon
                         name="arrow-forward"
                         height={iconDimensions}
                         width={iconDimensions}
+                        fill={iconColor}
                     />
-                    <Icon name="person" height={iconDimensions} width={iconDimensions} />
+                    <Icon
+                        name="person"
+                        height={iconDimensions}
+                        width={iconDimensions}
+                        fill={iconColor}
+                    />
                 </View>
             </TouchableOpacity>
         );

@@ -56,7 +56,7 @@ export const NewAssignmentsScreen = (props: NewAssignmentsScreenProps) => {
         setData(updatedData);
     };
 
-    const deleteThreshold = windowWidth * 0.5;
+    const deleteThreshold = windowWidth * 0.3;
 
     const renderItem = ({ item, index }) => (
         <SwipeRow

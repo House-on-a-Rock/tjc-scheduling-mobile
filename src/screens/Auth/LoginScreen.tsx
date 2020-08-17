@@ -138,6 +138,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
         const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(
             (response) => {
                 // console.log('response: ', response);
+                Notifications.setBadgeCountAsync(0);
             },
         );
 
