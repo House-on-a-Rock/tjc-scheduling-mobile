@@ -12,7 +12,7 @@ interface SelectSwapOptionProps {
 export const SelectSwapOption = (props: SelectSwapOptionProps) => {
     const [selectedOption, setSelectedOption] = useState<number>(0);
     const iconDimensions = 50;
-    const iconColor = '#8F9BB3';
+    const iconColor = '#000000';
     const dispatch = useDispatch();
 
     const SwitchSpecifically = () => {

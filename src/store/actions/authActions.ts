@@ -55,6 +55,8 @@ export const checkCredentials = (email: string, password: string) => {
                 timeoutPromise(),
             ]);
             AsyncStorage.setItem('access_token', response.data.access_token);
+            //sets headers for all future axios calls to use the access token for 'authorization' property
+            axios.defaults.headers.common['authorization'] = response.data.access_token;
             prepHomePage(dispatch);
             dispatch(AuthStateActions.Loaded());
         } catch (error) {

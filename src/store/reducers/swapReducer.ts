@@ -4,12 +4,14 @@ import {
     SELECT_SWAP_TARGET,
     SEND_SWAP_REQUEST,
     RESET_SWAP_CONFIG,
+    SET_SWAP_CANDIDATES,
 } from '../actions';
 
 const initialState = {
     option: 0,
     date: null,
     target: null,
+    candidates: null,
 };
 
 export const swapReducer = (state = initialState, action) => {
@@ -33,6 +35,12 @@ export const swapReducer = (state = initialState, action) => {
         case RESET_SWAP_CONFIG: {
             return {
                 ...initialState,
+            };
+        }
+        case SET_SWAP_CANDIDATES: {
+            return {
+                ...initialState,
+                candidates: action.payload,
             };
         }
         default:

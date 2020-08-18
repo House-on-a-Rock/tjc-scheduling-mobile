@@ -23,6 +23,7 @@ interface SwapScreenProps {
 export const SwapScreen = (props: SwapScreenProps) => {
     //props.route.params.selectedOption stores what was selected on previous screen
     const selectedDate = useSelector((state) => state.calendarReducer.selectedDate.date);
+    const swapCandidates = useSelector((state) => state.swapReducer.candidates);
     const [checked, setChecked] = useState<boolean>(false);
     const [selectedIndex, setSelectedIndex] = useState(null);
 
@@ -44,6 +45,12 @@ export const SwapScreen = (props: SwapScreenProps) => {
         }
         props.navigation.navigate('SwapSummary');
     };
+
+    console.log('swapCandidates', swapCandidates);
+
+    const candidates = swapCandidates.map((candidate) => {
+        return <SelectItem title={`${candidate.firstName} ${candidate.lastName}`} />;
+    });
 
     return (
         <Layout style={styles.layout}>
@@ -74,9 +81,10 @@ export const SwapScreen = (props: SwapScreenProps) => {
                         selectedIndex={selectedIndex}
                         onSelect={(index) => setSelectedIndex(index)}
                     >
-                        <SelectItem style={{ zIndex: 15 }} title="option 1" />
+                        {/* <SelectItem style={{ zIndex: 15 }} title="option 1" />
                         <SelectItem style={{ zIndex: 15 }} title="option 2" />
-                        <SelectItem style={{ zIndex: 15 }} title="option 3" />
+                        <SelectItem style={{ zIndex: 15 }} title="option 3" /> */}
+                        {candidates}
                     </Select>
                 </Layout>
                 <View style={{ width: '100%', flex: 1 }}>

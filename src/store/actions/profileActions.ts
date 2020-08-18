@@ -17,9 +17,9 @@ export const setProfile = (profile) => {
 //maybe move somewhere else?
 function getProfile(userId, accesskey) {
     return axios.get(secretIp + `/api/users/${userId}`, {
-        headers: {
-            authorization: accesskey,
-        },
+        // headers: {
+        //     authorization: accesskey,
+        // },
     });
 }
 
@@ -37,7 +37,5 @@ export const fetchProfileOnLogin = () => {
             const errorData = errorDataExtractor(error);
             return dispatch(ProfileStateActions.Error(errorData));
         }
-
-        // await AsyncStorage.clear();
     };
 };

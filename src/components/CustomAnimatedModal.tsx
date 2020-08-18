@@ -7,6 +7,7 @@ import { RequestSwapStack } from '../navigation/RequestSwap/RequestSwapStack';
 interface CustomAnimatedModalProps {
     isVisible: boolean;
     closeModal: () => void;
+    children?;
 }
 
 export const CustomAnimatedModal = (props: CustomAnimatedModalProps) => {
@@ -56,7 +57,7 @@ export const CustomAnimatedModal = (props: CustomAnimatedModalProps) => {
                         height: windowHeight * 0.85,
                     }}
                 >
-                    <RequestSwapStack closeModal={props.closeModal} />
+                    {props.children}
                 </Animated.View>
             </Modal>
         </Animated.View>

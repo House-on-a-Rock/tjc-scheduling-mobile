@@ -188,7 +188,7 @@ class SwipeRow extends React.Component<SwipeRowProps> {
         ]);
 
     iconRed = ([]) => {
-        this.setState({ iconColor: '#FF0905' });
+        this.setState({ iconColor: '#DB0300' });
     };
     iconBlack = ([]) => {
         this.setState({ iconColor: '#000000' });

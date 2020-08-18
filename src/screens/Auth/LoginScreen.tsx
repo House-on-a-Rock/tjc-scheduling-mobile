@@ -17,8 +17,6 @@ import { Button, Text, Icon, Layout, Input } from '@ui-kitten/components';
 import { EmailInput, PasswordInput } from '../../components/Forms';
 import { isValidEmail } from '../../shared/components/';
 import { statusBarHeight } from '../../shared/constants';
-import * as Permissions from 'expo-permissions';
-import useCheckPermissions from '../../services/Hooks/useCheckPermissions';
 
 //temp imports
 import * as Notifications from 'expo-notifications';
@@ -216,9 +214,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
                                 </Button>
                             </View>
                             <View>
-                                <Button onPress={notificationhandler}>
-                                    Display Local Notification
-                                </Button>
+                                <Button onPress={notificationhandler}>Annoy shaun</Button>
                             </View>
                         </View>
                     </ScrollView>
