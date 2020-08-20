@@ -8,12 +8,12 @@ import {
     Radio,
     Select,
     SelectItem,
-    IndexPath, //will be used eventually?
+    IndexPath,
 } from '@ui-kitten/components';
 import { CalendarSelectorWrapper } from '../../components/Calender/CalendarSelectorWrapper';
 import { ModalHeader } from '../../components/';
 import { useDispatch } from 'react-redux';
-import { selectSwapDate, selectSwapTarget } from '../../store/actions/swapActions';
+import { selectTargetTask } from '../../store/actions/swapActions';
 
 interface SwapScreenProps {
     navigation;
@@ -22,12 +22,13 @@ interface SwapScreenProps {
 
 export const SwapScreen = (props: SwapScreenProps) => {
     //props.route.params.selectedOption stores what was selected on previous screen
+    //jk its in reducer too now
     const selectedDate = useSelector((state) => state.calendarReducer.selectedDate.date);
-    const swapCandidates = useSelector((state) => state.swapReducer.candidates);
+    const swapCandidates = useSelector((state) => state.swapReducer.candidates || []);
     const [checked, setChecked] = useState<boolean>(false);
-    const [selectedIndex, setSelectedIndex] = useState(null);
+    const [selectedIndex, setSelectedIndex] = useState(new IndexPath(0));
 
-    //this is the date they select to swap on
+    //this is the date they chose to swap on
     const selectedSwapDate = useSelector((state) => state.swapReducer.date);
     const dispatch = useDispatch();
 
@@ -37,20 +38,23 @@ export const SwapScreen = (props: SwapScreenProps) => {
 
     const onNextHandler = () => {
         if (checked) {
-            dispatch(selectSwapDate(undefined));
-            dispatch(selectSwapTarget(undefined));
+            dispatch(selectTargetTask(undefined));
         } else {
-            dispatch(selectSwapDate(selectedSwapDate));
-            dispatch(selectSwapTarget(selectedIndex));
+            dispatch(selectTargetTask(displayValue.tasks[0]));
         }
         props.navigation.navigate('SwapSummary');
     };
 
-    console.log('swapCandidates', swapCandidates);
-
-    const candidates = swapCandidates.map((candidate) => {
-        return <SelectItem title={`${candidate.firstName} ${candidate.lastName}`} />;
+    const candidates = swapCandidates.map((candidate, index) => {
+        return (
+            <SelectItem
+                key={`${index}-candidate.email`}
+                title={`${candidate.firstName} ${candidate.lastName}`}
+            />
+        );
     });
+
+    const displayValue = swapCandidates[selectedIndex.row];
 
     return (
         <Layout style={styles.layout}>
@@ -79,11 +83,12 @@ export const SwapScreen = (props: SwapScreenProps) => {
                 <Layout style={styles.selectionDropdown} level="1">
                     <Select
                         selectedIndex={selectedIndex}
-                        onSelect={(index) => setSelectedIndex(index)}
+                        placeholder="place holder"
+                        value={`${displayValue?.firstName} ${displayValue?.lastName}`}
+                        onSelect={(index) => {
+                            setSelectedIndex(index);
+                        }}
                     >
-                        {/* <SelectItem style={{ zIndex: 15 }} title="option 1" />
-                        <SelectItem style={{ zIndex: 15 }} title="option 2" />
-                        <SelectItem style={{ zIndex: 15 }} title="option 3" /> */}
                         {candidates}
                     </Select>
                 </Layout>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { Screen } from '../../components/';
 import { Layout, Text, Button } from '@ui-kitten/components';
@@ -7,12 +7,13 @@ import { Entypo } from '@expo/vector-icons';
 import { CustomAnimatedModal } from '../../components/CustomAnimatedModal';
 import { resetSwapConfig } from '../../store/actions/swapActions';
 import { SwapStateActions } from '../../store/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RequestSwapStack } from '../../navigation/RequestSwap/RequestSwapStack';
-import { retrieveSwapCandidates } from '../../store/actions';
+import { retrieveSwapCandidates, setMyTask } from '../../store/actions/swapActions';
 
 export const TaskDetailsScreen = (props) => {
     const { task } = props.route.params;
+    const { myTask } = useSelector((state) => state.swapReducer);
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const dispatch = useDispatch();
 
@@ -32,7 +33,8 @@ export const TaskDetailsScreen = (props) => {
     };
 
     const onButtonPressHandler = () => {
-        dispatch(retrieveSwapCandidates(task.church.churchId, task.roleId));
+        dispatch(retrieveSwapCandidates(task.church.churchId, task.roleId, task.userId));
+        if (myTask === null || myTask.taskId !== task.taskId) dispatch(setMyTask(task));
         setModalVisible(true);
     };
 

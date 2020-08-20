@@ -1,6 +1,6 @@
 import { View, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
-import { Layout, Text, Button } from '@ui-kitten/components';
+import { Layout, Text, Button, Input } from '@ui-kitten/components';
 import { ModalHeader } from '../../components/ModalHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendSwapRequest } from '../../store/actions/swapActions';
@@ -16,16 +16,30 @@ export const SwapSummary = (props) => {
     const errorState = useSelector(
         (state) => state.loadStateReducer.loadErrorStatus.SWAP,
     );
-    const { option, date, target } = useSelector((state) => state.swapReducer);
-
-    const onConfirmPress = () => {
-        dispatch(sendSwapRequest(option, date, target));
-    };
+    const { myTask, targetTask } = useSelector((state) => state.swapReducer);
 
     // || target === null phrase needed to handle error when closing the modal
     const targetName =
-        target === undefined || target === null ? 'anyone' : target.row.toString();
-    const targetDate = date === undefined || date === null ? 'any day' : date.toString();
+        targetTask === undefined || targetTask === null
+            ? 'anyone'
+            : `${targetTask.user.firstName} ${targetTask.user.lastName}`;
+    const targetDate =
+        targetTask === undefined || targetTask === null
+            ? 'any day'
+            : targetTask.date.toString();
+
+    const myTaskRole = myTask?.role.name;
+    const myTaskDate = myTask?.date;
+    const defaultMessage =
+        targetName === 'anyone'
+            ? `Hi, I'd like to swap ${myTaskRole} on ${myTaskDate}, would you be able to switch with me?`
+            : `Hi ${targetTask.user.firstName}, I'd like to swap ${myTaskRole} on ${myTaskDate} with you on ${targetDate}`;
+
+    const [message, setMessage] = useState<string>(defaultMessage);
+
+    const onConfirmPress = () => {
+        dispatch(sendSwapRequest(myTask.taskId, targetTask?.taskId, message));
+    };
 
     if (
         loadState === loadStateActionTypes.LOADED ||
@@ -56,8 +70,15 @@ export const SwapSummary = (props) => {
                     closeModal={props.route.params.closeModal}
                 />
                 <Text>
-                    You want to trade with {targetName} on {targetDate}
+                    You want to trade {myTaskRole} on {myTaskDate} with {targetName} on{' '}
+                    {targetDate}
                 </Text>
+                <Text>Message: </Text>
+                <Input
+                    value={message}
+                    onChangeText={(nextValue) => setMessage(nextValue)}
+                    multiline={true}
+                />
                 <Button onPress={onConfirmPress}>Confirm</Button>
             </View>
         </Layout>

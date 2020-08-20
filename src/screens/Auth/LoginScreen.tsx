@@ -42,7 +42,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
         message: null,
     });
     const [password, setPassword] = useState<PasswordState>({
-        value: 'password3',
+        value: 'password',
         valid: true,
         visible: false,
         message: null,
