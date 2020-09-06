@@ -25,7 +25,6 @@ const {
     lessThan,
     call,
     Clock,
-    color,
 } = Animated;
 
 interface SwipeRowProps {
@@ -36,10 +35,6 @@ interface SwipeRowProps {
 }
 
 class SwipeRow extends React.Component<SwipeRowProps> {
-    // constructor(props){
-    //     super(props)
-
-    // }
     state = {
         iconColor: '#000000',
     };

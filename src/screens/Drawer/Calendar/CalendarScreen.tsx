@@ -28,7 +28,8 @@ export const CalendarScreen = (props: CalendarScreenProps) => {
     );
 
     useEffect(() => {
-        useCheckPermissions(); //maybe turn this into an action instead of hook?
+        //checks for notification permission, requests expo token, and updates db with updated expo token
+        useCheckPermissions();
     }, []);
 
     return (

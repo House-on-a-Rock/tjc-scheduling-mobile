@@ -110,27 +110,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
         if (inputField === 'email') return setEmail({ ...email, value: '' });
     };
 
-    const notificationhandler = () => {
-        console.log('sending push notificatin through expo');
-        console.log('pushToken', pushToken);
-        fetch('https://exp.host/--/api/v2/push/send', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Accept-Encoding': 'gzip, deflate',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                to: 'ExponentPushToken[-uuepvN27WLr5fHqJoK3y8]',
-                data: {
-                    extraData: 'eugh shaun',
-                },
-                title: 'shut up!!!',
-                body: 'this push notification was sent via the app',
-            }),
-        });
-    };
-
+    //will be used to handle receiving of notifications once activity feed is finished
     useEffect(() => {
         //run when notification is received and tapped and when app is NOT running
         const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(
@@ -212,9 +192,6 @@ export const LoginScreen = (props: LoginScreenProps) => {
                                 >
                                     Recover Account
                                 </Button>
-                            </View>
-                            <View>
-                                <Button onPress={notificationhandler}>Annoy shaun</Button>
                             </View>
                         </View>
                     </ScrollView>
