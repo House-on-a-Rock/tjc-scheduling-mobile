@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Layout, Text } from '@ui-kitten/components';
+import {
+    Layout,
+    Text,
+    Autocomplete,
+    AutocompleteItem,
+    Icon,
+} from '@ui-kitten/components';
 import {
     FlatList,
     StyleSheet,
@@ -8,11 +14,10 @@ import {
     Platform,
     UIManager,
     View,
+    TouchableWithoutFeedback,
 } from 'react-native';
-import { Screen } from '../../components';
 import { useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
-import { openDrawerAction } from '../../shared/components';
 import SwipeRow from '../../components/SwipeableItem';
 import { NewAssignmentItem } from '../../components/NewAssignments/NewAssignmentItem';
 import { windowWidth } from '../../shared/constants';
@@ -28,20 +33,11 @@ if (Platform.OS === 'android') {
         UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-export const ActivityFeed = (props: ActivityFeedProps) => {
+export const ActivityFeedScreen = (props: ActivityFeedProps) => {
     //grab new assignments instead of tasks
     const newAssignments = useSelector((state) => state.taskReducer.tasks);
-
     const [data, setData] = useState(newAssignments);
-
-    const leftAccessory = () => openDrawerAction(props.navigation.toggleDrawer);
-    const rightAccessory = () => (
-        //delete needs to communicate to server as well, to mark them as seen
-        <TouchableOpacity onPress={() => setData([])}>
-            <Text category="s1">Delete all</Text>
-            <Text category="s1">updates</Text>
-        </TouchableOpacity>
-    );
+    const deleteThreshold = windowWidth * 0.3;
 
     const deleteItem = (taskId) => {
         const updatedData = data.filter((d) => d.taskId !== taskId);
@@ -50,8 +46,6 @@ export const ActivityFeed = (props: ActivityFeedProps) => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         setData(updatedData);
     };
-
-    const deleteThreshold = windowWidth * 0.3;
 
     const renderItem = ({ item, index }) => (
         <SwipeRow
@@ -63,17 +57,62 @@ export const ActivityFeed = (props: ActivityFeedProps) => {
         </SwipeRow>
     );
 
+    //uikitten example
+    const autoCompleteData = [
+        { title: 'Star Wars' },
+        { title: 'Back to the Future' },
+        { title: 'The Matrix' },
+        { title: 'Inception' },
+        { title: 'Interstellar' },
+    ];
+    const filter = (item, query) =>
+        item.title.toLowerCase().includes(query.toLowerCase());
+
+    const StarIcon = (props) => <Icon {...props} name="star" />;
+    const [value, setValue] = React.useState(null);
+    const [autoData, setAutoData] = React.useState(autoCompleteData);
+
+    const onSelect = (index) => {
+        setValue(autoData[index].title);
+    };
+
+    const onChangeText = (query) => {
+        setValue(query);
+        setAutoData(autoCompleteData.filter((item) => filter(item, query)));
+    };
+
+    const clearInput = () => {
+        setValue('');
+        setAutoData(autoCompleteData);
+    };
+
+    const renderOption = (item, index) => (
+        <AutocompleteItem key={index} title={item.title} accessoryLeft={StarIcon} />
+    );
+
+    const renderCloseIcon = (props) => (
+        <TouchableWithoutFeedback onPress={clearInput}>
+            <Icon {...props} name="close" />
+        </TouchableWithoutFeedback>
+    );
+    //end autocomplete example
+
     return (
-        // <Screen
-        //     title={() => <Text category="h5">New Assignments</Text>}
-        //     accessoryLeft={leftAccessory}
-        //     accessoryRight={rightAccessory}
-        // >
         <Layout style={styles.layout}>
             <LinearGradient
                 colors={['#EDEEF3', '#FFFFFF']}
                 style={{ flex: 1, width: '100%', alignItems: 'center' }}
             >
+                <Autocomplete
+                    placeholder="Place your Text"
+                    value={value}
+                    accessoryRight={renderCloseIcon}
+                    onChangeText={onChangeText}
+                    onSelect={onSelect}
+                    style={{ width: 300 }}
+                >
+                    {autoData.map(renderOption)}
+                </Autocomplete>
                 {data.length > 0 ? (
                     <FlatList
                         data={data}
@@ -85,20 +124,11 @@ export const ActivityFeed = (props: ActivityFeedProps) => {
                 )}
             </LinearGradient>
         </Layout>
-        // </Screen>
     );
 };
 
 const styles = StyleSheet.create({
     layout: {
         flex: 1,
-    },
-    text: {
-        fontWeight: 'bold',
-        color: 'white',
-        fontSize: 32,
-        flex: 1,
-        textAlign: 'center',
-        padding: 25,
     },
 });

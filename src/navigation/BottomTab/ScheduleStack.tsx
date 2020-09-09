@@ -1,18 +1,24 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ScheduleScreen } from '../../screens';
+import { TaskDetailsScreen } from '../../screens';
 import { stackOptions } from '../../shared/components';
 
-const stack = createStackNavigator();
+const Stack = createStackNavigator();
 
 export const ScheduleStack = (props) => {
     return (
-        <stack.Navigator>
-            <stack.Screen
+        <Stack.Navigator>
+            <Stack.Screen
                 name="Schedule"
                 component={ScheduleScreen}
                 // options={stackOptions}
             />
-        </stack.Navigator>
+            <Stack.Screen
+                name="TaskDetails"
+                component={TaskDetailsScreen}
+                // options={stackOptions}
+            />
+        </Stack.Navigator>
     );
 };

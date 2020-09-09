@@ -16,12 +16,12 @@ interface ScheduleScreenProps {
 }
 
 export const ScheduleScreen = (props: ScheduleScreenProps) => {
-    const leftAccessory = () => openDrawerAction(props.navigation.toggleDrawer);
-    const rightAccessory = () => (
-        <TouchableOpacity onPress={() => props.navigation.navigate('TaskList')}>
-            <Text>View as List</Text>
-        </TouchableOpacity>
-    );
+    // const leftAccessory = () => openDrawerAction(props.navigation.toggleDrawer);
+    // const rightAccessory = () => (
+    //     <TouchableOpacity onPress={() => props.navigation.navigate('TaskList')}>
+    //         <Text>View as List</Text>
+    //     </TouchableOpacity>
+    // );
 
     const isPreviewPaneOpen = useSelector(
         (state) => state.calendarReducer.previewPaneVisible,

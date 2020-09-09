@@ -7,7 +7,7 @@ export * from './Tab/ProfileScreen';
 export * from './Tab/ScheduleScreen';
 export * from './Tab/TaskListScreen';
 
-export * from './Tab/ActivityFeed';
+export * from './Tab/ActivityFeedScreen';
 export * from './Tab/TaskDetailsScreen';
 
 export * from './RequestSwap/SelectSwapOption';

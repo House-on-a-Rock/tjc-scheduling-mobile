@@ -4,7 +4,7 @@ import { SettingsScreen } from '../../screens';
 import { GeneralSettingsScreen } from '../../screens/';
 import { LogoutScreen } from '../../screens';
 
-const stack = createStackNavigator();
+const Stack = createStackNavigator();
 
 export const settingStackNames = {
     Settings: 'Settings',
@@ -14,10 +14,10 @@ export const settingStackNames = {
 
 export const SettingsStack = (props) => {
     return (
-        <stack.Navigator>
-            <stack.Screen name="Settings" component={SettingsScreen} />
-            <stack.Screen name="General" component={GeneralSettingsScreen} />
-            <stack.Screen name="Logout" component={LogoutScreen} />
-        </stack.Navigator>
+        <Stack.Navigator>
+            <Stack.Screen name="Settings" component={SettingsScreen} />
+            <Stack.Screen name="General" component={GeneralSettingsScreen} />
+            <Stack.Screen name="Logout" component={LogoutScreen} />
+        </Stack.Navigator>
     );
 };

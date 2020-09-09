@@ -1,13 +1,19 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { ActivityFeed } from '../../screens';
+import { ActivityFeedScreen } from '../../screens';
+import { TaskDetailsScreen } from '../../screens';
 
-const stack = createStackNavigator();
+const Stack = createStackNavigator();
 
 export const ActivityFeedStack = (props) => {
     return (
-        <stack.Navigator>
-            <stack.Screen name="ActivityFeed" component={ActivityFeed} />
-        </stack.Navigator>
+        <Stack.Navigator>
+            <Stack.Screen
+                name="ActivityFeed"
+                component={ActivityFeedScreen}
+                options={{ title: 'Feed' }}
+            />
+            <Stack.Screen name="TaskDetails" component={TaskDetailsScreen} />
+        </Stack.Navigator>
     );
 };
