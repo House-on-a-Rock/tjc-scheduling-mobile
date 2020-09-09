@@ -3,8 +3,6 @@ export * from './Auth/RecoverLoginScreen';
 export * from './Auth/SignUpScreen';
 
 export * from './Tab/ProfileScreen';
-export * from './Tab/SettingsScreen';
-export * from './Tab/LogoutScreen';
 
 export * from './Tab/ScheduleScreen';
 export * from './Tab/TaskListScreen';
@@ -13,3 +11,7 @@ export * from './Tab/ActivityFeed';
 export * from './Tab/TaskDetailsScreen';
 
 export * from './RequestSwap/SelectSwapOption';
+
+export * from './Tab/SettingsScreens/SettingsScreen';
+export * from './Tab/SettingsScreens/GeneralSettingsScreen';
+export * from './Tab/SettingsScreens/LogoutScreen';

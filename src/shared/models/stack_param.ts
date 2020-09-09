@@ -3,12 +3,12 @@ export type DrawerStackParamList = {
     CalendarStack: undefined;
     ProfileStack: undefined;
     SettingsStack: undefined;
-    LogoutStack: undefined;
+    // LogoutStack: undefined;
 };
 
-export type LogoutStackParamList = {
-    Logout: undefined;
-};
+// export type LogoutStackParamList = {
+//     Logout: undefined;
+// };
 
 export type ProfileStackParamList = {
     Profile: undefined;

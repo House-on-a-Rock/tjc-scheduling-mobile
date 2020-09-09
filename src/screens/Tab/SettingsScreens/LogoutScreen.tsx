@@ -1,13 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { View, Text, StyleSheet, Button } from 'react-native';
-import { LogoutScreenProps } from '../../shared/models';
-import { logout } from '../../store/actions';
-import { Screen } from '../../components/Screen';
-import { Layout } from '@ui-kitten/components';
-import { openDrawerAction } from '../../shared/components';
 
-export const LogoutScreen = (props: LogoutScreenProps) => {
+import { logout } from '../../../store/actions';
+import { Screen } from '../../../components/Screen';
+import { Layout } from '@ui-kitten/components';
+import { openDrawerAction } from '../../../shared/components';
+
+export const LogoutScreen = (props) => {
     const dispatch = useDispatch();
     return (
         // <Screen
