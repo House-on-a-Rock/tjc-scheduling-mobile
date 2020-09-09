@@ -6,7 +6,7 @@ const stack = createStackNavigator();
 
 export const ActivityFeedStack = (props) => {
     return (
-        <stack.Navigator headerMode="none">
+        <stack.Navigator>
             <stack.Screen name="ActivityFeed" component={ActivityFeed} />
         </stack.Navigator>
     );

@@ -10,17 +10,17 @@ import { openDrawerAction } from '../../shared/components';
 export const SettingsScreen = (props: SettingsScreenProps) => {
     const themeContext = React.useContext(ThemeContext);
     return (
-        <Screen
-            title={() => <Text category="h2">Settings</Text>}
-            accessoryLeft={() => openDrawerAction(props.navigation.toggleDrawer)}
-        >
-            <Layout style={{ flex: 1 }}>
-                <Text>This is the settings screen</Text>
-                <Button style={{ marginVertical: 4 }} onPress={themeContext.toggleTheme}>
-                    TOGGLE THEME
-                </Button>
-            </Layout>
-        </Screen>
+        // <Screen
+        //     title={() => <Text category="h2">Settings</Text>}
+        //     accessoryLeft={() => openDrawerAction(props.navigation.toggleDrawer)}
+        // >
+        <Layout style={{ flex: 1 }}>
+            <Text>This is the settings screen</Text>
+            <Button style={{ marginVertical: 4 }} onPress={themeContext.toggleTheme}>
+                TOGGLE THEME
+            </Button>
+        </Layout>
+        // </Screen>
     );
 };
 

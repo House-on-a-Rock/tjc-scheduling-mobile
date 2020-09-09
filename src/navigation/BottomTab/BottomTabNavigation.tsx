@@ -1,23 +1,20 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { DashboardStack } from './DashboardStack';
 import { ScheduleStack } from './ScheduleStack';
 import { SettingsStack } from './SettingsStack';
-import {
-    Icon,
-    BottomNavigation,
-    BottomNavigationTab,
-    Layout,
-    Text,
-} from '@ui-kitten/components';
+import { Icon, BottomNavigation, BottomNavigationTab } from '@ui-kitten/components';
 
 import { ActivityFeedStack } from './ActivityFeedStack';
 
 const Tab = createBottomTabNavigator();
 
 const icons = {
-    feedIcon: (props) => <Icon name="bar-chart-outline" {...props} />,
+    // feedIcon: (props) => (
+    //     <Icon name="bar-chart-outline" height={30} width={30} fill="#000000" />
+    // ),
+    feed: (props) => <Icon name="bar-chart-outline" {...props} />,
     dashboard: (props) => <Icon name="clipboard-outline" {...props} />,
     schedule: (props) => <Icon name="calendar-outline" {...props} />,
     settings: (props) => <Icon name="settings-outline" {...props} />,
@@ -28,12 +25,14 @@ const BottomTabBar = ({ navigation, state }) => (
         selectedIndex={state.index}
         onSelect={(index) => navigation.navigate(state.routeNames[index])}
     >
-        <BottomNavigationTab title="Feed" icon={icons.feedIcon} />
+        <BottomNavigationTab title="Feed" icon={icons.feed} />
         <BottomNavigationTab title="Dashboard" icon={icons.dashboard} />
         <BottomNavigationTab title="Schedule" icon={icons.schedule} />
         <BottomNavigationTab title="Settings" icon={icons.settings} />
     </BottomNavigation>
 );
+
+//add badges to the bottom tab in the future:  https://github.com/akveo/react-native-ui-kitten/issues/865
 
 export const BottomTabs = () => {
     return (
@@ -43,7 +42,15 @@ export const BottomTabs = () => {
                 initialRouteName="Feed"
                 tabBar={(props) => <BottomTabBar {...props} />}
             >
-                <Tab.Screen name="Feed" component={ActivityFeedStack} />
+                <Tab.Screen
+                    name="Feed"
+                    component={ActivityFeedStack}
+                    // to add badges to the icon:
+                    // options={{
+                    //     tabBarIcon: icons.feedIcon,
+                    //     tabBarBadge: '1',
+                    // }}
+                />
                 <Tab.Screen name="Dashboard" component={DashboardStack} />
                 <Tab.Screen name="Schedule" component={ScheduleStack} />
                 <Tab.Screen name="Settings" component={SettingsStack} />

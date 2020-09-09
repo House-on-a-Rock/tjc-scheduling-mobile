@@ -64,28 +64,28 @@ export const ActivityFeed = (props: ActivityFeedProps) => {
     );
 
     return (
-        <Screen
-            title={() => <Text category="h5">New Assignments</Text>}
-            accessoryLeft={leftAccessory}
-            accessoryRight={rightAccessory}
-        >
-            <Layout style={styles.layout}>
-                <LinearGradient
-                    colors={['#EDEEF3', '#FFFFFF']}
-                    style={{ flex: 1, width: '100%', alignItems: 'center' }}
-                >
-                    {data.length > 0 ? (
-                        <FlatList
-                            data={data}
-                            renderItem={renderItem}
-                            keyExtractor={(item, index) => item.taskId.toString()}
-                        />
-                    ) : (
-                        <Text>You don't have any new assignments!</Text>
-                    )}
-                </LinearGradient>
-            </Layout>
-        </Screen>
+        // <Screen
+        //     title={() => <Text category="h5">New Assignments</Text>}
+        //     accessoryLeft={leftAccessory}
+        //     accessoryRight={rightAccessory}
+        // >
+        <Layout style={styles.layout}>
+            <LinearGradient
+                colors={['#EDEEF3', '#FFFFFF']}
+                style={{ flex: 1, width: '100%', alignItems: 'center' }}
+            >
+                {data.length > 0 ? (
+                    <FlatList
+                        data={data}
+                        renderItem={renderItem}
+                        keyExtractor={(item, index) => item.taskId.toString()}
+                    />
+                ) : (
+                    <Text>You don't have any new assignments!</Text>
+                )}
+            </LinearGradient>
+        </Layout>
+        // </Screen>
     );
 };
 
