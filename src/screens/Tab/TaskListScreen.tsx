@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
-import { TaskListScreenProps } from '../../../shared/models';
-import { Screen } from '../../../components/Screen';
+import { TaskListScreenProps } from '../../shared/models';
+import { Screen } from '../../components/Screen';
 import { Text, Layout } from '@ui-kitten/components';
-import { openDrawerAction } from '../../../shared/components';
+import { openDrawerAction } from '../../shared/components';
 import { useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
-import { TaskListItem } from '../../../components/TaskList/TaskListItem';
+import { TaskListItem } from '../../components/TaskList/TaskListItem';
 
 export const TaskListScreen = (props: TaskListScreenProps) => {
     const tasks = useSelector((state) => state.taskReducer.tasks);

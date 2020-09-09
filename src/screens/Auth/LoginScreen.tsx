@@ -47,7 +47,6 @@ export const LoginScreen = (props: LoginScreenProps) => {
         visible: false,
         message: null,
     });
-    const [pushToken, setPushToken] = useState(null);
 
     function verifyLogin() {
         setEmail({ ...email, valid: true, message: '' });

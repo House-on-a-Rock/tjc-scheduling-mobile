@@ -7,7 +7,7 @@ import { CalendarStack } from './CalendarStack';
 import { ProfileStack } from './ProfileStack';
 import { SettingsStack } from './SettingsStack';
 import { LogoutStack } from './LogoutStack';
-// import { NewAssignmentsStack } from './NewAssignmentsStack';
+// import { NewAssignmentsStack } from './ActivityFeedStack';
 import { Drawer, DrawerItem, IndexPath, Icon, Text, Layout } from '@ui-kitten/components';
 import { statusBarHeight } from '../../shared/constants';
 
@@ -61,7 +61,7 @@ const DrawerContent = ({ navigation, state }) => (
                         />
                     )}
                 />
-                <DrawerItem
+                {/* <DrawerItem
                     title={drawerTitle('New Assignments')}
                     accessoryLeft={(props) => (
                         <Icon
@@ -72,7 +72,7 @@ const DrawerContent = ({ navigation, state }) => (
                             name="home"
                         />
                     )}
-                />
+                /> */}
                 <DrawerItem
                     title={drawerTitle('Profile')}
                     accessoryLeft={(props) => (

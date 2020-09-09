@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { Screen } from '../../components/';
+import { Screen } from '../../components';
 import { Layout, Text, Button } from '@ui-kitten/components';
 import { backAction } from '../../shared/components/UI_Actions';
 import { Entypo } from '@expo/vector-icons';

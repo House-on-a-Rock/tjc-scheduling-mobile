@@ -17,7 +17,7 @@ import SwipeRow from '../../components/SwipeableItem';
 import { NewAssignmentItem } from '../../components/NewAssignments/NewAssignmentItem';
 import { windowWidth } from '../../shared/constants';
 
-interface NewAssignmentsScreenProps {
+interface ActivityFeedProps {
     route;
     navigation;
     onSwipe;
@@ -28,7 +28,7 @@ if (Platform.OS === 'android') {
         UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-export const NewAssignmentsScreen = (props: NewAssignmentsScreenProps) => {
+export const ActivityFeed = (props: ActivityFeedProps) => {
     //grab new assignments instead of tasks
     const newAssignments = useSelector((state) => state.taskReducer.tasks);
 

@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { Carousel } from '../../../components/Calender';
-import { TaskPreviewPane } from '../../../components/TaskPreviewPane/TaskPreviewPane';
-import { Screen } from '../../../components/Screen';
-import { openDrawerAction } from '../../../shared/components';
+import { Carousel } from '../../components/Calender';
+import { TaskPreviewPane } from '../../components/TaskPreviewPane/TaskPreviewPane';
+import { Screen } from '../../components/Screen';
+import { openDrawerAction } from '../../shared/components';
 import { Text } from '@ui-kitten/components';
 import { Layout } from '@ui-kitten/components';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
-import { useCheckPermissions } from '../../../services/Hooks/useCheckPermissions';
+import { useCheckPermissions } from '../../services/Hooks/useCheckPermissions';
 
 interface CalendarScreenProps {
     route;

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { SettingsScreenProps } from '../../shared/models';
 import { Button, Text } from '@ui-kitten/components';
-import { ThemeContext } from '../../../src/ui/theme-context';
+import { ThemeContext } from '../../ui/theme-context';
 import { Screen } from '../../components/Screen';
 import { Layout } from '@ui-kitten/components';
 import { openDrawerAction } from '../../shared/components';
