@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { AuthenticationStack, DrawerNav } from './index';
+import { AuthenticationStack, BottomTabs } from './index';
 import { YellowBox } from 'react-native';
 
 YellowBox.ignoreWarnings(['Non-serializable values were found in the navigation state']);
@@ -11,7 +11,7 @@ const AppNavigation = () => {
 
     if (!isLoggedIn) return <AuthenticationStack />;
 
-    return <DrawerNav />;
+    return <BottomTabs />;
 };
 
 export default AppNavigation;

@@ -6,7 +6,7 @@ export * from './Tab/ProfileScreen';
 export * from './Tab/SettingsScreen';
 export * from './Tab/LogoutScreen';
 
-export * from './Tab/CalendarScreen';
+export * from './Tab/ScheduleScreen';
 export * from './Tab/TaskListScreen';
 
 export * from './Tab/ActivityFeed';

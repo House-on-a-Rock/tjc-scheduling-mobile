@@ -10,12 +10,12 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
 import { useCheckPermissions } from '../../services/Hooks/useCheckPermissions';
 
-interface CalendarScreenProps {
+interface ScheduleScreenProps {
     route;
     navigation;
 }
 
-export const CalendarScreen = (props: CalendarScreenProps) => {
+export const ScheduleScreen = (props: ScheduleScreenProps) => {
     const leftAccessory = () => openDrawerAction(props.navigation.toggleDrawer);
     const rightAccessory = () => (
         <TouchableOpacity onPress={() => props.navigation.navigate('TaskList')}>
@@ -33,20 +33,20 @@ export const CalendarScreen = (props: CalendarScreenProps) => {
     }, []);
 
     return (
-        <Screen
-            title={() => (
-                <Text category="h3" status="basic">
-                    My Duties
-                </Text>
-            )}
-            accessoryLeft={leftAccessory}
-            accessoryRight={rightAccessory}
-        >
-            <Layout style={styles.scrollContainer}>
-                <Carousel />
-            </Layout>
+        // <Screen
+        //     title={() => (
+        //         <Text category="h3" status="basic">
+        //             My Duties
+        //         </Text>
+        //     )}
+        //     accessoryLeft={leftAccessory}
+        //     accessoryRight={rightAccessory}
+        // >
+        <Layout style={styles.scrollContainer}>
+            <Carousel />
             {isPreviewPaneOpen && <TaskPreviewPane />}
-        </Screen>
+        </Layout>
+        // </Screen>
     );
 };
 

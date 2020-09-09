@@ -4,16 +4,16 @@ import { SettingsScreen } from '../../screens';
 import { stackOptions } from '../../shared/components';
 import { SettingsStackParamList } from '../../shared/models';
 
-const SetStack = createStackNavigator<SettingsStackParamList>();
+const stack = createStackNavigator();
 
 export const SettingsStack = (props) => {
     return (
-        <SetStack.Navigator headerMode="none">
-            <SetStack.Screen
+        <stack.Navigator headerMode="none">
+            <stack.Screen
                 name="Settings"
                 component={SettingsScreen}
                 // options={stackOptions}
             />
-        </SetStack.Navigator>
+        </stack.Navigator>
     );
 };

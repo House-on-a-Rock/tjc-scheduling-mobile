@@ -2,18 +2,17 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ScheduleScreen } from '../../screens';
 import { stackOptions } from '../../shared/components';
-import { ScheduleStackParamList } from '../../shared/models';
 
-const SchedStack = createStackNavigator<ScheduleStackParamList>();
+const stack = createStackNavigator();
 
 export const ScheduleStack = (props) => {
     return (
-        <SchedStack.Navigator>
-            <SchedStack.Screen
+        <stack.Navigator>
+            <stack.Screen
                 name="Schedule"
                 component={ScheduleScreen}
-                options={stackOptions}
+                // options={stackOptions}
             />
-        </SchedStack.Navigator>
+        </stack.Navigator>
     );
 };

@@ -36,9 +36,9 @@ export const TaskPreviewPane = () => {
     useEffect(() => {
         //open animation
         Animated.timing(transformY, {
-            toValue: 0,
+            toValue: -500,
             duration: 200,
-            useNativeDriver: false,
+            useNativeDriver: true,
         }).start();
     }, [transformY]);
 
@@ -53,12 +53,12 @@ export const TaskPreviewPane = () => {
         Animated.timing(transformY, {
             toValue: taskPreviewHeight * -1,
             duration: 300,
-            useNativeDriver: false,
+            useNativeDriver: true,
         }).start(() => dispatch(hidePreviewPane()));
     };
 
     return (
-        <Animated.View style={{ ...styles.container, bottom: transformY }}>
+        <Animated.View style={{ ...styles.container, translateY: transformY }}>
             <LinearGradient colors={['#EDEEF3', '#FFFFFF']} style={{ flex: 1 }}>
                 <Layout style={styles.layout}>
                     <Text style={{ textAlign: 'center' }}>Tasks</Text>

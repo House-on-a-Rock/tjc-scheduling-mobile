@@ -8,3 +8,5 @@ export * from './Drawer/SettingsStack';
 export * from './Drawer/LogoutStack';
 
 export * from './RequestSwap/RequestSwapStack';
+
+export * from './BottomTab/BottomTabNavigation';
