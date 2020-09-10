@@ -36,7 +36,7 @@ export const TaskPreviewPane = () => {
     useEffect(() => {
         //open animation
         Animated.timing(transformY, {
-            toValue: taskPreviewHeight + 100, //100 seems to be the magic number, works on a smaller phone on android too not sure why lol
+            toValue: taskPreviewHeight + 110, //100 seems to work, works on a smaller android phone too
             duration: 200,
             useNativeDriver: true,
         }).start();
