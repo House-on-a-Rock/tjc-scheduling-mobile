@@ -21,6 +21,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import SwipeRow from '../../components/SwipeableItem';
 import { NewAssignmentItem } from '../../components/NewAssignments/NewAssignmentItem';
 import { windowWidth } from '../../shared/constants';
+import { Swipeable } from '../../components/Swipeable';
 
 interface ActivityFeedProps {
     route;
@@ -59,7 +60,7 @@ export const ActivityFeedScreen = (props: ActivityFeedProps) => {
 
     return (
         <Layout style={styles.layout}>
-            <LinearGradient
+            {/* <LinearGradient
                 colors={['#EDEEF3', '#FFFFFF']}
                 style={{ flex: 1, width: '100%', alignItems: 'center' }}
             >
@@ -72,7 +73,8 @@ export const ActivityFeedScreen = (props: ActivityFeedProps) => {
                 ) : (
                     <Text>You don't have any new assignments!</Text>
                 )}
-            </LinearGradient>
+            </LinearGradient> */}
+            <Swipeable />
         </Layout>
     );
 };
