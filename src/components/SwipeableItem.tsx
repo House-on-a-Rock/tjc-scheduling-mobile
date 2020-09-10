@@ -183,6 +183,13 @@ class SwipeRow extends React.Component<SwipeRowProps> {
             ]),
         ]);
 
+    renderColorAnim = () =>
+        cond(
+            eq(this.iconAnimState.colorVisible, new Value(1)),
+            call([], this.iconRed),
+            call([], this.iconBlack),
+        );
+
     iconRed = ([]) => {
         this.setState({ iconColor: '#DB0300' });
     };
@@ -214,15 +221,7 @@ class SwipeRow extends React.Component<SwipeRowProps> {
                             ],
                         }}
                     >
-                        <Animated.Code>
-                            {() =>
-                                cond(
-                                    eq(this.iconAnimState.colorVisible, new Value(1)),
-                                    call([], this.iconRed),
-                                    call([], this.iconBlack),
-                                )
-                            }
-                        </Animated.Code>
+                        <Animated.Code>{this.renderColorAnim}</Animated.Code>
                         <Icon
                             height={15}
                             width={25}
