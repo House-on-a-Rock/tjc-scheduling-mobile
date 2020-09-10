@@ -60,7 +60,7 @@ class SwipeRow extends React.Component<SwipeRowProps> {
         time: new Value(0),
 
         scaling: new Value(0),
-        colorRange: new Value(0),
+        // colorRange: new Value(0),
         colorVisible: new Value(0),
     };
 
@@ -130,7 +130,7 @@ class SwipeRow extends React.Component<SwipeRowProps> {
                     //sets position for row
                     cond(eq(this.gestureState, GestureState.ACTIVE), [
                         set(this.animState.position, translationX),
-                        set(this.iconAnimState.colorRange, translationX),
+                        // set(this.iconAnimState.colorRange, translationX),
                     ]),
 
                     //sets position for delete icon
@@ -203,44 +203,38 @@ class SwipeRow extends React.Component<SwipeRowProps> {
                         style={{
                             width: this.panWidth,
                             height: '100%',
-
                             position: 'absolute',
                             left: -this.panWidth,
                             justifyContent: 'center',
                             alignItems: 'center',
+                            transform: [
+                                { scale: this.iconAnimState.scaling },
+                                { translateX: this.iconAnimState.position },
+                            ],
                         }}
                     >
-                        <Animated.View
-                            style={{
-                                transform: [
-                                    { scale: this.iconAnimState.scaling },
-                                    { translateX: this.iconAnimState.position },
-                                ],
-                            }}
-                        >
-                            <Animated.Code>
-                                {() =>
-                                    cond(
-                                        eq(this.iconAnimState.colorVisible, new Value(1)),
-                                        call([], this.iconRed),
-                                    )
-                                }
-                            </Animated.Code>
-                            <Animated.Code>
-                                {() =>
-                                    cond(
-                                        eq(this.iconAnimState.colorVisible, new Value(0)),
-                                        call([], this.iconBlack),
-                                    )
-                                }
-                            </Animated.Code>
-                            <Icon
-                                height={15}
-                                width={25}
-                                name="trash-2-outline"
-                                fill={this.state.iconColor}
-                            />
-                        </Animated.View>
+                        <Animated.Code>
+                            {() =>
+                                cond(
+                                    eq(this.iconAnimState.colorVisible, new Value(1)),
+                                    call([], this.iconRed),
+                                )
+                            }
+                        </Animated.Code>
+                        <Animated.Code>
+                            {() =>
+                                cond(
+                                    eq(this.iconAnimState.colorVisible, new Value(0)),
+                                    call([], this.iconBlack),
+                                )
+                            }
+                        </Animated.Code>
+                        <Icon
+                            height={15}
+                            width={25}
+                            name="trash-2-outline"
+                            fill={this.state.iconColor}
+                        />
                     </Animated.View>
                     <Animated.View
                         style={{

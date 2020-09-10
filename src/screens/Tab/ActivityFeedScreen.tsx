@@ -57,62 +57,12 @@ export const ActivityFeedScreen = (props: ActivityFeedProps) => {
         </SwipeRow>
     );
 
-    //uikitten example
-    const autoCompleteData = [
-        { title: 'Star Wars' },
-        { title: 'Back to the Future' },
-        { title: 'The Matrix' },
-        { title: 'Inception' },
-        { title: 'Interstellar' },
-    ];
-    const filter = (item, query) =>
-        item.title.toLowerCase().includes(query.toLowerCase());
-
-    const StarIcon = (props) => <Icon {...props} name="star" />;
-    const [value, setValue] = React.useState(null);
-    const [autoData, setAutoData] = React.useState(autoCompleteData);
-
-    const onSelect = (index) => {
-        setValue(autoData[index].title);
-    };
-
-    const onChangeText = (query) => {
-        setValue(query);
-        setAutoData(autoCompleteData.filter((item) => filter(item, query)));
-    };
-
-    const clearInput = () => {
-        setValue('');
-        setAutoData(autoCompleteData);
-    };
-
-    const renderOption = (item, index) => (
-        <AutocompleteItem key={index} title={item.title} accessoryLeft={StarIcon} />
-    );
-
-    const renderCloseIcon = (props) => (
-        <TouchableWithoutFeedback onPress={clearInput}>
-            <Icon {...props} name="close" />
-        </TouchableWithoutFeedback>
-    );
-    //end autocomplete example
-
     return (
         <Layout style={styles.layout}>
             <LinearGradient
                 colors={['#EDEEF3', '#FFFFFF']}
                 style={{ flex: 1, width: '100%', alignItems: 'center' }}
             >
-                <Autocomplete
-                    placeholder="Place your Text"
-                    value={value}
-                    accessoryRight={renderCloseIcon}
-                    onChangeText={onChangeText}
-                    onSelect={onSelect}
-                    style={{ width: 300 }}
-                >
-                    {autoData.map(renderOption)}
-                </Autocomplete>
                 {data.length > 0 ? (
                     <FlatList
                         data={data}

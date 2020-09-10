@@ -32,12 +32,20 @@ export const SettingsScreen = (props) => {
     const render = ({ item }) => {
         return (
             <Layout
-                style={{ justifyContent: 'center', paddingLeft: 40, paddingVertical: 20 }}
+                style={{
+                    justifyContent: 'center',
+                    paddingLeft: 40,
+                    paddingVertical: 20,
+                    borderWidth: 1,
+                    borderColor: '#BCBCBC',
+                    borderRadius: 10,
+                    margin: 10,
+                }}
             >
                 <TouchableOpacity
                     onPress={() => props.navigation.navigate(item.navigationTarget)}
                 >
-                    <Text category="h4" status="primary">
+                    <Text category="h4" status="basic">
                         {item.title}
                     </Text>
                 </TouchableOpacity>
