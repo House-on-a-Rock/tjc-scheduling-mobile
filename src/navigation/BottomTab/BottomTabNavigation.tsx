@@ -24,6 +24,7 @@ const BottomTabBar = ({ navigation, state }) => (
     <BottomNavigation
         selectedIndex={state.index}
         onSelect={(index) => navigation.navigate(state.routeNames[index])}
+        // onLayout={(event) => console.log('height', event.nativeEvent.layout.height)} may need this value later
     >
         <BottomNavigationTab title="Feed" icon={icons.feed} />
         <BottomNavigationTab title="Dashboard" icon={icons.dashboard} />

@@ -31,12 +31,12 @@ export const TaskPreviewPane = () => {
             ? state.calendarReducer.selectedDate
             : defaultSelected,
     );
-    const transformY = useRef(new Animated.Value(-taskPreviewHeight)).current;
+    const transformY = useRef(new Animated.Value(windowHeight)).current;
 
     useEffect(() => {
         //open animation
         Animated.timing(transformY, {
-            toValue: -500,
+            toValue: taskPreviewHeight + 100, //100 seems to be the magic number, works on a smaller phone on android too not sure why lol
             duration: 200,
             useNativeDriver: true,
         }).start();
@@ -51,14 +51,16 @@ export const TaskPreviewPane = () => {
 
         //close animation
         Animated.timing(transformY, {
-            toValue: taskPreviewHeight * -1,
+            toValue: windowHeight,
             duration: 300,
             useNativeDriver: true,
         }).start(() => dispatch(hidePreviewPane()));
     };
 
     return (
-        <Animated.View style={{ ...styles.container, translateY: transformY }}>
+        <Animated.View
+            style={{ ...styles.container, transform: [{ translateY: transformY }] }}
+        >
             <LinearGradient colors={['#EDEEF3', '#FFFFFF']} style={{ flex: 1 }}>
                 <Layout style={styles.layout}>
                     <Text style={{ textAlign: 'center' }}>Tasks</Text>
