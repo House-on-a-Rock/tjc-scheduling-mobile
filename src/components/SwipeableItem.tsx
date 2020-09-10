@@ -42,6 +42,7 @@ class SwipeRow extends React.Component<SwipeRowProps> {
 
     clock = new Clock();
     gestureState = new Value(GestureState.UNDETERMINED);
+    one = new Value(1);
 
     //main animState
     animState = {
@@ -181,14 +182,21 @@ class SwipeRow extends React.Component<SwipeRowProps> {
                     set(this.iconAnimState.finished, 0),
                 ]),
             ]),
+            // cond(
+            //     eq(this.iconAnimState.colorVisible, this.one),
+            //     call([], this.iconRed),
+            //     call([], this.iconBlack),
+            // ),
         ]);
 
     renderColorAnim = () =>
-        cond(
-            eq(this.iconAnimState.colorVisible, new Value(1)),
-            call([], this.iconRed),
-            call([], this.iconBlack),
-        );
+        block([
+            cond(
+                eq(this.iconAnimState.colorVisible, this.one),
+                call([], this.iconRed),
+                call([], this.iconBlack),
+            ),
+        ]);
 
     iconRed = ([]) => {
         this.setState({ iconColor: '#DB0300' });
@@ -207,7 +215,7 @@ class SwipeRow extends React.Component<SwipeRowProps> {
                 onHandlerStateChange={this.onHandlerStateChange}
             >
                 <Animated.View>
-                    <Animated.View //trash icon scaling
+                    <Animated.View //trash icon scaling and color
                         style={{
                             width: this.panWidth,
                             height: '100%',
