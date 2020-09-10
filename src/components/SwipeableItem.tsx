@@ -3,6 +3,7 @@ import { Icon, Text } from '@ui-kitten/components';
 //https://medium.com/async-la/swipe-to-delete-with-reanimated-react-native-gesture-handler-bd7d66085aee
 import { PanGestureHandler, State as GestureState } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
+import { View } from 'react-native';
 
 const {
     multiply,
@@ -218,13 +219,6 @@ class SwipeRow extends React.Component<SwipeRowProps> {
                                 cond(
                                     eq(this.iconAnimState.colorVisible, new Value(1)),
                                     call([], this.iconRed),
-                                )
-                            }
-                        </Animated.Code>
-                        <Animated.Code>
-                            {() =>
-                                cond(
-                                    eq(this.iconAnimState.colorVisible, new Value(0)),
                                     call([], this.iconBlack),
                                 )
                             }
