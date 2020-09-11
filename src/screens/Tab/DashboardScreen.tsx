@@ -58,7 +58,7 @@ export const DashboardScreen = (props: DashboardProps) => {
                     data={tasks}
                     renderItem={renderTasks}
                     horizontal={true}
-                    keyExtractor={(item, index) => item.taskId + index}
+                    keyExtractor={(item, index) => (item.taskId + index).toString()}
                 />
             </View>
             <View style={styles.scrollContainer}>
