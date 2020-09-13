@@ -1,5 +1,5 @@
 //https://medium.com/async-la/swipe-to-delete-with-reanimated-react-native-gesture-handler-bd7d66085aee
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { PanGestureHandler, State as GestureState } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 
@@ -22,27 +22,28 @@ const {
     Clock,
 } = Animated;
 
-interface SwipeRowProps {
+interface SwipeableItemProps {
     swipeThreshold: number;
     onSwipe: (taskId: number) => void;
     itemId: number;
     children?;
-    leftIcon?;
+    leftIcon?: (string) => ReactNode;
 }
 
-class SwipeRow extends React.Component<SwipeRowProps> {
+class SwipeableItem extends React.Component<SwipeableItemProps> {
     state = {
         iconColor: '#000000',
     };
 
-    //icon dimensions
+    //icon state and dimensions, can be sent through props later
     iconContainerWidth = 75;
     iconMaxTravelDistance = 15;
-    shouldDelete = new Value(0);
+    iconMaxScaling = 2;
 
     //anim vars
     clock = new Clock();
     gestureState = new Value(GestureState.UNDETERMINED);
+    shouldDelete = new Value(0);
 
     //main animState
     animState = {
@@ -81,7 +82,7 @@ class SwipeRow extends React.Component<SwipeRowProps> {
             inputRange: [0, this.props.swipeThreshold],
             outputRange: [0.5, 2],
         }),
-        2,
+        this.iconMaxScaling,
     );
 
     iconRed = () => this.setState({ iconColor: '#DB0300' });
@@ -211,4 +212,4 @@ class SwipeRow extends React.Component<SwipeRowProps> {
     }
 }
 
-export default SwipeRow;
+export default SwipeableItem;

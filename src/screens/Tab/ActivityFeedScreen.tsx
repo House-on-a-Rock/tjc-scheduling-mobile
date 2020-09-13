@@ -1,16 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, ReactNode } from 'react';
 import { Layout, Text, Icon } from '@ui-kitten/components';
-import {
-    FlatList,
-    StyleSheet,
-    LayoutAnimation,
-    Platform,
-    UIManager,
-    View,
-} from 'react-native';
+import { FlatList, StyleSheet, LayoutAnimation, Platform, UIManager } from 'react-native';
 import { useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
-import SwipeRow from '../../components/SwipeableItem';
+import SwipeableItem from '../../components/SwipeableItem';
 import { NewAssignmentItem } from '../../components/NewAssignments/NewAssignmentItem';
 import { windowWidth } from '../../shared/constants';
 
@@ -26,32 +19,31 @@ if (Platform.OS === 'android') {
 }
 
 export const ActivityFeedScreen = (props: ActivityFeedProps) => {
-    //grab new assignments instead of tasks
+    //TODO grab activities from notifications instead of tasks
     const newAssignments = useSelector((state) => state.taskReducer.tasks);
     const [data, setData] = useState(newAssignments);
-    const deleteThreshold = windowWidth * 0.4;
+    const deleteThreshold: number = windowWidth * 0.4;
 
-    const leftIcon = (color) => (
+    const leftIcon: (string) => ReactNode = (color) => (
         <Icon height={20} width={20} name="trash-2-outline" fill={color} />
     );
 
-    const deleteItem = (taskId) => {
+    const deleteItem: (number) => void = (taskId) => {
         const updatedData = data.filter((d) => d.taskId !== taskId);
-
         // Animate list to close gap when item is deleted
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         setData(updatedData);
     };
 
     const renderItem = ({ item, index }) => (
-        <SwipeRow
+        <SwipeableItem
             swipeThreshold={deleteThreshold}
             onSwipe={deleteItem}
             itemId={item.taskId}
             leftIcon={leftIcon}
         >
             <NewAssignmentItem item={item} />
-        </SwipeRow>
+        </SwipeableItem>
     );
 
     return (
