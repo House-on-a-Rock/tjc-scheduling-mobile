@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { LoginScreenProps } from '../../shared/models';
-import { checkCredentials, loadStateActionTypes, login } from '../../store/actions';
+import { checkCredentials, LoadStateActionTypes, login } from '../../store/actions';
 import { determineLoadState } from '../../store/helper';
 import { LoadingPage } from '../../components/LoadingPage';
 import { Button, Text, Icon, Layout, Input } from '@ui-kitten/components';
@@ -88,17 +88,17 @@ export const LoginScreen = (props: LoginScreenProps) => {
     );
 
     //using the loadstates, determines if loading page should be shown
-    const loadState: loadStateActionTypes = determineLoadState({
+    const loadState: LoadStateActionTypes = determineLoadState({
         AuthState,
         ProfileState,
         TasksState,
     });
     //if everything is loaded, change state to login
-    if (loadState === loadStateActionTypes.LOADED) dispatch(login());
+    if (loadState === LoadStateActionTypes.LOADED) dispatch(login());
 
     //error message handling
     let errorMessage: React.ReactNode | null = null;
-    if (loadState === loadStateActionTypes.ERROR) {
+    if (loadState === LoadStateActionTypes.ERROR) {
         //can be cleaned up better, any suggestions?
         if (AuthError) errorMessage = createErrorMessage(AuthError.message);
         else if (ProfileError) errorMessage = createErrorMessage(ProfileError.message);
@@ -133,7 +133,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
         };
     });
 
-    if (loadState === loadStateActionTypes.LOADING) return <LoadingPage opacity={0.8} />;
+    if (loadState === LoadStateActionTypes.LOADING) return <LoadingPage opacity={0.8} />;
 
     return (
         <SafeAreaView

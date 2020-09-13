@@ -1,48 +1,48 @@
 import { ErrorData } from '../helper';
 
-export enum reducerDomains {
+export enum ReducerDomains {
     AUTH = 'AUTH',
     PROFILE = 'PROFILE',
     TASKS = 'TASKS',
     SWAP = 'SWAP',
 }
 
-export enum loadStateActionTypes {
+export enum LoadStateActionTypes {
     LOADED = 'LOADED',
     LOADING = 'LOADING',
     ERROR = 'ERROR',
     DEFAULT_STATE = 'DEFAULT_STATE',
 }
 
-export const AuthStateActions: StateActions = mapLoadStateActions(reducerDomains.AUTH);
+export const AuthStateActions: StateActions = mapLoadStateActions(ReducerDomains.AUTH);
 export const ProfileStateActions: StateActions = mapLoadStateActions(
-    reducerDomains.PROFILE,
+    ReducerDomains.PROFILE,
 );
-export const TaskStateActions: StateActions = mapLoadStateActions(reducerDomains.TASKS);
-export const SwapStateActions: StateActions = mapLoadStateActions(reducerDomains.SWAP);
+export const TaskStateActions: StateActions = mapLoadStateActions(ReducerDomains.TASKS);
+export const SwapStateActions: StateActions = mapLoadStateActions(ReducerDomains.SWAP);
 
 //this may be moved to a more appropriate location?
 function mapLoadStateActions(domain): StateActions {
     return {
-        Loaded: () => ({ domain: domain, type: loadStateActionTypes.LOADED }),
-        Loading: () => ({ domain: domain, type: loadStateActionTypes.LOADING }),
+        Loaded: () => ({ domain: domain, type: LoadStateActionTypes.LOADED }),
+        Loading: () => ({ domain: domain, type: LoadStateActionTypes.LOADING }),
         Error: (error) => ({
             domain: domain,
-            type: loadStateActionTypes.ERROR,
+            type: LoadStateActionTypes.ERROR,
             payload: error,
         }),
         DefaultState: () => ({
             domain: domain,
-            type: loadStateActionTypes.DEFAULT_STATE,
+            type: LoadStateActionTypes.DEFAULT_STATE,
         }),
     };
 }
 
 interface StateActions {
-    Loaded: () => { domain: reducerDomains; type: loadStateActionTypes };
-    Loading: () => { domain: reducerDomains; type: loadStateActionTypes };
+    Loaded: () => { domain: ReducerDomains; type: LoadStateActionTypes };
+    Loading: () => { domain: ReducerDomains; type: LoadStateActionTypes };
     Error: (
         error: ErrorData,
-    ) => { domain: reducerDomains; type: loadStateActionTypes; payload: ErrorData };
-    DefaultState: () => { domain: reducerDomains; type: loadStateActionTypes };
+    ) => { domain: ReducerDomains; type: LoadStateActionTypes; payload: ErrorData };
+    DefaultState: () => { domain: ReducerDomains; type: LoadStateActionTypes };
 }
