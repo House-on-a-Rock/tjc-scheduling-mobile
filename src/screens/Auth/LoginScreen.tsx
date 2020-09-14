@@ -130,7 +130,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
             foregroundSubscription.remove(); //removes subscription on unmount
             backgroundSubscription.remove();
         };
-    });
+    }, []);
 
     if (loadState === loadStateActionTypes.LOADING) return <LoadingPage opacity={0.8} />;
 
