@@ -110,28 +110,29 @@ export const LoginScreen = (props: LoginScreenProps) => {
         if (inputField === 'email') return setEmail({ ...email, value: '' });
     };
 
+    //This is an example for future implementation of handling notification presses
     //will be used to handle receiving of notifications once activity feed is finished
-    useEffect(() => {
-        //run when notification is received and tapped and when app is NOT running
-        const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(
-            (response) => {
-                // console.log('response: ', response);
-                Notifications.setBadgeCountAsync(0);
-            },
-        );
+    // useEffect(() => {
+    //     //run when notification is received and tapped and when app is NOT running
+    //     const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(
+    //         (response) => {
+    //             // console.log('response: ', response);
+    //             Notifications.setBadgeCountAsync(0);
+    //         },
+    //     );
 
-        //run when notification is received and when app is running
-        const foregroundSubscription = Notifications.addNotificationReceivedListener(
-            (notification) => {
-                // console.log('notification', notification);
-            },
-        );
+    //     //run when notification is received and when app is running
+    //     const foregroundSubscription = Notifications.addNotificationReceivedListener(
+    //         (notification) => {
+    //             // console.log('notification', notification);
+    //         },
+    //     );
 
-        return () => {
-            foregroundSubscription.remove(); //removes subscription on unmount
-            backgroundSubscription.remove();
-        };
-    });
+    //     return () => {
+    //         foregroundSubscription.remove(); //removes subscription on unmount
+    //         backgroundSubscription.remove();
+    //     };
+    // }, []);
 
     if (loadState === LoadStateActionTypes.LOADING) return <LoadingPage opacity={0.8} />;
 
