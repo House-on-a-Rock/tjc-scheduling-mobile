@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 import { RecoverLoginScreenProps } from '../../shared/models';
 import { isValidEmail } from '../../shared/components/';
-import { sendResetEmail, loadStateActionTypes } from '../../store/actions';
+import { sendResetEmail, LoadStateActionTypes } from '../../store/actions';
 import { LoadingPage } from '../../components/LoadingPage';
 import { Screen } from '../../components/Screen';
 import { TopNavigationAction, Icon, Text, Input, Button } from '@ui-kitten/components';
@@ -14,7 +14,7 @@ export const RecoverLoginScreen = (props: RecoverLoginScreenProps) => {
     const [email, setEmail] = useState<string>('shaun.tung@gmail.com');
     const [isValidCredentials, setIsValidCredentials] = useState<boolean>(true);
     const dispatch = useDispatch();
-    const loadState: loadStateActionTypes = useSelector(
+    const loadState: LoadStateActionTypes = useSelector(
         (state) => state.loadStateReducer.loadStatus.AUTH,
     );
     const navigateBack = () => {
@@ -27,13 +27,13 @@ export const RecoverLoginScreen = (props: RecoverLoginScreenProps) => {
         else setIsValidCredentials(false);
     };
 
-    if (loadState === loadStateActionTypes.LOADING) return <LoadingPage />;
+    if (loadState === LoadStateActionTypes.LOADING) return <LoadingPage />;
 
     return (
         <Screen title="Recover Login" accessoryLeft={() => backAction(navigateBack)}>
             <View style={styles.screen}>
                 <View style={styles.inputContainer}>
-                    {loadState === loadStateActionTypes.LOADED && (
+                    {loadState === LoadStateActionTypes.LOADED && (
                         <Text category="h4">Email has been sent!</Text>
                     )}
 

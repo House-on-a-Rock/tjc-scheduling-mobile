@@ -1,19 +1,19 @@
 import jwtDecode from 'jwt-decode';
-import { loadStateActionTypes } from '../actions/loadStateActions';
+import { LoadStateActionTypes } from '../actions/loadStateActions';
 
 export function extractId(jwt) {
     let decodedAccessKey = jwtDecode(jwt);
     return parseInt(decodedAccessKey.sub.split('|')[1]);
 }
 
-export function determineLoadState(updatedState): loadStateActionTypes | null {
+export function determineLoadState(updatedState): LoadStateActionTypes | null {
     const values = Object.values(updatedState);
-    if (values.indexOf(loadStateActionTypes.ERROR) >= 0)
-        return loadStateActionTypes.ERROR;
-    else if (values.indexOf(loadStateActionTypes.LOADING) >= 0)
-        return loadStateActionTypes.LOADING;
+    if (values.indexOf(LoadStateActionTypes.ERROR) >= 0)
+        return LoadStateActionTypes.ERROR;
+    else if (values.indexOf(LoadStateActionTypes.LOADING) >= 0)
+        return LoadStateActionTypes.LOADING;
     else if (values.indexOf(null) >= 0) return null;
-    else return loadStateActionTypes.LOADED;
+    else return LoadStateActionTypes.LOADED;
 }
 
 export function errorDataExtractor(error): ErrorData {

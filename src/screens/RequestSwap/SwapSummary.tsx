@@ -5,7 +5,7 @@ import { ModalHeader } from '../../components/ModalHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendSwapRequest } from '../../store/actions/swapActions';
 import { LoadingPage } from '../../components/LoadingPage';
-import { loadStateActionTypes } from '../../store/actions';
+import { LoadStateActionTypes } from '../../store/actions';
 
 import { windowHeight } from '../../shared/constants/';
 
@@ -42,15 +42,15 @@ export const SwapSummary = (props) => {
     };
 
     if (
-        loadState === loadStateActionTypes.LOADED ||
-        loadState === loadStateActionTypes.ERROR
+        loadState === LoadStateActionTypes.LOADED ||
+        loadState === LoadStateActionTypes.ERROR
     ) {
         props.navigation.navigate('SwapConfirmation');
     }
 
     return (
         <Layout>
-            {loadState === loadStateActionTypes.LOADING && (
+            {loadState === LoadStateActionTypes.LOADING && (
                 <LoadingPage
                     style={{
                         height: '100%',
@@ -64,7 +64,7 @@ export const SwapSummary = (props) => {
                     styleSafeArea={{ paddingTop: 0 }}
                 />
             )}
-            <View opacity={loadState === loadStateActionTypes.LOADING ? 0.5 : 1}>
+            <View opacity={loadState === LoadStateActionTypes.LOADING ? 0.5 : 1}>
                 <ModalHeader
                     goBack={props.navigation.goBack}
                     closeModal={props.route.params.closeModal}
