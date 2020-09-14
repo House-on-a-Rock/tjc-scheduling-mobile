@@ -48,14 +48,24 @@ export const CalendarSelectorWrapper = ({
                 }}
             >
                 <TouchableOpacity onPress={() => onArrowPressHandler('backward')}>
-                    <Icon height={50} width={50} name="arrow-left-outline" />
+                    <Icon
+                        height={50}
+                        width={50}
+                        fill="#000000"
+                        name="arrow-left-outline"
+                    />
                 </TouchableOpacity>
 
                 <Text category="h5">
                     {months(isLeap)[month].name} {year}
                 </Text>
                 <TouchableOpacity onPress={() => onArrowPressHandler('forward')}>
-                    <Icon height={50} width={50} name="arrow-right-outline" />
+                    <Icon
+                        height={50}
+                        width={50}
+                        fill="#000000"
+                        name="arrow-right-outline"
+                    />
                 </TouchableOpacity>
             </View>
             <Calendar

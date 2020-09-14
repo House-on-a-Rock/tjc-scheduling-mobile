@@ -14,12 +14,9 @@ export const setTasks = (tasks) => {
     };
 };
 
-function getTasks(userId, accesskey) {
+function getTasks(userId) {
     return axios.get(secretIp + '/api/tasks', {
         params: { userId: userId },
-        headers: {
-            authorization: accesskey,
-        },
     });
 }
 
@@ -30,8 +27,7 @@ export const fetchTasksOnLogin = () => {
 
         const userId = extractId(accesskey);
         try {
-            const { data: userTasks } = await getTasks(userId, accesskey);
-
+            const { data: userTasks } = await getTasks(userId);
             dispatch(setTasks(userTasks));
             dispatch(TaskStateActions.Loaded());
         } catch (error) {

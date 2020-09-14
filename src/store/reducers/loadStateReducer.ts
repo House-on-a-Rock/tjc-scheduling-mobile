@@ -1,17 +1,17 @@
-import { reducerDomains, loadStateActionTypes, LOGOUT } from '../actions';
+import { ReducerDomains, LoadStateActionTypes, LOGOUT } from '../actions';
 
 const initialState = {
     loadStatus: {
-        [reducerDomains.AUTH]: null,
-        [reducerDomains.PROFILE]: null,
-        [reducerDomains.TASKS]: null,
-        [reducerDomains.SWAP]: null,
+        [ReducerDomains.AUTH]: null,
+        [ReducerDomains.PROFILE]: null,
+        [ReducerDomains.TASKS]: null,
+        [ReducerDomains.SWAP]: null,
     },
     loadErrorStatus: {
-        [reducerDomains.AUTH]: null,
-        [reducerDomains.PROFILE]: null,
-        [reducerDomains.TASKS]: null,
-        [reducerDomains.SWAP]: null,
+        [ReducerDomains.AUTH]: null,
+        [ReducerDomains.PROFILE]: null,
+        [ReducerDomains.TASKS]: null,
+        [ReducerDomains.SWAP]: null,
     },
 };
 
@@ -23,39 +23,39 @@ export const loadStateReducer = (state = initialState, action) => {
 
     function mapActionToDomain(domain) {
         switch (action.type) {
-            case loadStateActionTypes.LOADED:
+            case LoadStateActionTypes.LOADED:
                 return {
                     ...state,
                     loadStatus: {
                         ...state.loadStatus,
-                        [domain]: loadStateActionTypes.LOADED,
+                        [domain]: LoadStateActionTypes.LOADED,
                     },
                 };
-            case loadStateActionTypes.LOADING:
+            case LoadStateActionTypes.LOADING:
                 return {
                     ...state,
                     loadStatus: {
                         ...state.loadStatus,
-                        [domain]: loadStateActionTypes.LOADING,
+                        [domain]: LoadStateActionTypes.LOADING,
                     },
                     loadErrorStatus: {
                         ...state.loadStatus,
                         [domain]: null,
                     },
                 };
-            case loadStateActionTypes.ERROR:
+            case LoadStateActionTypes.ERROR:
                 return {
                     ...state,
                     loadStatus: {
                         ...state.loadStatus,
-                        [domain]: loadStateActionTypes.ERROR,
+                        [domain]: LoadStateActionTypes.ERROR,
                     },
                     loadErrorStatus: {
                         ...state.loadErrorStatus,
                         [domain]: action.payload,
                     },
                 };
-            case loadStateActionTypes.DEFAULT_STATE:
+            case LoadStateActionTypes.DEFAULT_STATE:
                 return {
                     ...state,
                     loadStatus: {

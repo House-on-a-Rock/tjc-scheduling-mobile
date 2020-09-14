@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     View,
@@ -10,13 +10,16 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { LoginScreenProps } from '../../shared/models';
-import { checkCredentials, loadStateActionTypes, login } from '../../store/actions';
+import { checkCredentials, LoadStateActionTypes, login } from '../../store/actions';
 import { determineLoadState } from '../../store/helper';
 import { LoadingPage } from '../../components/LoadingPage';
 import { Button, Text, Icon, Layout, Input } from '@ui-kitten/components';
 import { EmailInput, PasswordInput } from '../../components/Forms';
 import { isValidEmail } from '../../shared/components/';
 import { statusBarHeight } from '../../shared/constants';
+
+//temp imports
+import * as Notifications from 'expo-notifications';
 
 export interface PasswordState {
     value: string;
@@ -39,7 +42,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
         message: null,
     });
     const [password, setPassword] = useState<PasswordState>({
-        value: 'password3',
+        value: 'password',
         valid: true,
         visible: false,
         message: null,
@@ -84,17 +87,17 @@ export const LoginScreen = (props: LoginScreenProps) => {
     );
 
     //using the loadstates, determines if loading page should be shown
-    const loadState: loadStateActionTypes = determineLoadState({
+    const loadState: LoadStateActionTypes = determineLoadState({
         AuthState,
         ProfileState,
         TasksState,
     });
     //if everything is loaded, change state to login
-    if (loadState === loadStateActionTypes.LOADED) dispatch(login());
+    if (loadState === LoadStateActionTypes.LOADED) dispatch(login());
 
     //error message handling
     let errorMessage: React.ReactNode | null = null;
-    if (loadState === loadStateActionTypes.ERROR) {
+    if (loadState === LoadStateActionTypes.ERROR) {
         //can be cleaned up better, any suggestions?
         if (AuthError) errorMessage = createErrorMessage(AuthError.message);
         else if (ProfileError) errorMessage = createErrorMessage(ProfileError.message);
@@ -102,11 +105,35 @@ export const LoginScreen = (props: LoginScreenProps) => {
         else errorMessage = null;
     }
 
-    if (loadState === loadStateActionTypes.LOADING) return <LoadingPage opacity={0.8} />;
-
     const clearInputHandler = (inputField) => {
         if (inputField === 'email') return setEmail({ ...email, value: '' });
     };
+
+    //This is an example for future implementation of handling notification presses
+    //will be used to handle receiving of notifications once activity feed is finished
+    // useEffect(() => {
+    //     //run when notification is received and tapped and when app is NOT running
+    //     const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(
+    //         (response) => {
+    //             // console.log('response: ', response);
+    //             Notifications.setBadgeCountAsync(0);
+    //         },
+    //     );
+
+    //     //run when notification is received and when app is running
+    //     const foregroundSubscription = Notifications.addNotificationReceivedListener(
+    //         (notification) => {
+    //             // console.log('notification', notification);
+    //         },
+    //     );
+
+    //     return () => {
+    //         foregroundSubscription.remove(); //removes subscription on unmount
+    //         backgroundSubscription.remove();
+    //     };
+    // }, []);
+
+    if (loadState === LoadStateActionTypes.LOADING) return <LoadingPage opacity={0.8} />;
 
     return (
         <SafeAreaView
@@ -166,7 +193,6 @@ export const LoginScreen = (props: LoginScreenProps) => {
                                     Recover Account
                                 </Button>
                             </View>
-                            <View></View>
                         </View>
                     </ScrollView>
                 </KeyboardAwareScrollView>

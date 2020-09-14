@@ -47,16 +47,11 @@ export const NewAssignmentsScreen = (props: NewAssignmentsScreenProps) => {
         const updatedData = data.filter((d) => d.taskId !== taskId);
 
         // Animate list to close gap when item is deleted
-        const nextLayout = LayoutAnimation.create(
-            250,
-            'opacity',
-            LayoutAnimation.Properties.opacity,
-        );
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         setData(updatedData);
     };
 
-    const deleteThreshold = windowWidth * 0.5;
+    const deleteThreshold = windowWidth * 0.3;
 
     const renderItem = ({ item, index }) => (
         <SwipeRow

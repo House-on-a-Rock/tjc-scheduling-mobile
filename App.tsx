@@ -15,6 +15,18 @@ import {
     swapReducer,
 } from './src/store/reducers';
 
+import * as Notifications from 'expo-notifications';
+Notifications.setNotificationHandler({
+    //lets os know what to do with notification before its displayed to user
+    handleNotification: async () => {
+        return {
+            shouldPlaySound: true,
+            // shouldSetBadge: true,
+            shouldShowAlert: true,
+        };
+    },
+});
+
 //ui kitten imports
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
