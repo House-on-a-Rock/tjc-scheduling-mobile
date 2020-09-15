@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { Screen } from '../../components';
 import { Layout, Text, Button } from '@ui-kitten/components';
@@ -15,6 +15,7 @@ export const TaskDetailsScreen = (props) => {
     const { task } = props.route.params;
     const { myTask } = useSelector((state) => state.swapReducer);
     const [modalVisible, setModalVisible] = useState<boolean>(false);
+    let layoutHeight = useRef(0);
     const dispatch = useDispatch();
 
     const leftAccessory = () => backAction(props.navigation.goBack);
@@ -33,6 +34,7 @@ export const TaskDetailsScreen = (props) => {
     };
 
     const onButtonPressHandler = () => {
+        //move this to useEffect inside swapOptions
         dispatch(retrieveSwapCandidates(task.church.churchId, task.roleId, task.userId));
         if (myTask === null || myTask.taskId !== task.taskId) dispatch(setMyTask(task));
         setModalVisible(true);
@@ -40,7 +42,10 @@ export const TaskDetailsScreen = (props) => {
 
     return (
         // <Screen accessoryLeft={leftAccessory} accessoryRight={rightAccessory}>
-        <Layout style={{ flex: 1, width: '100%', padding: 30 }}>
+        <Layout
+            style={{ flex: 1, width: '100%', padding: 30 }}
+            onLayout={(e) => (layoutHeight.current = e.nativeEvent.layout.height)}
+        >
             <Text category="h1">{task.role.name}</Text>
             <Text>{task.date}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -53,6 +58,7 @@ export const TaskDetailsScreen = (props) => {
                 <CustomAnimatedModal
                     isVisible={modalVisible}
                     closeModal={closeModalHandler}
+                    layoutHeight={layoutHeight.current}
                 >
                     <RequestSwapStack closeModal={closeModalHandler} />
                 </CustomAnimatedModal>

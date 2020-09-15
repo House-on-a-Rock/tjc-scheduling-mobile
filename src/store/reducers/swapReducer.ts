@@ -1,6 +1,6 @@
 import {
     SELECT_SWAP_DATE,
-    SELECT_SWAP_OPTION,
+    SET_SWAP_CONFIG,
     SELECT_TARGET_TASK,
     SEND_SWAP_REQUEST,
     RESET_SWAP_CONFIG,
@@ -9,7 +9,7 @@ import {
 } from '../actions';
 
 const initialState = {
-    option: 0,
+    config: 0,
     date: null,
     myTask: null,
     targetTask: null,
@@ -18,10 +18,10 @@ const initialState = {
 
 export const swapReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SELECT_SWAP_OPTION:
+        case SET_SWAP_CONFIG:
             return {
                 ...state,
-                option: action.payload,
+                config: action.payload,
             };
         case SELECT_TARGET_TASK: {
             return {

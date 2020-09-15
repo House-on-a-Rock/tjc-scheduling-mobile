@@ -7,54 +7,50 @@ import { RequestSwapStack } from '../navigation/RequestSwap/RequestSwapStack';
 interface CustomAnimatedModalProps {
     isVisible: boolean;
     closeModal: () => void;
+    layoutHeight: number;
     children?;
 }
 
 export const CustomAnimatedModal = (props: CustomAnimatedModalProps) => {
     const fadeAnim = useRef(new Animated.Value(0)).current;
-    const fadeAnim2 = useRef(new Animated.Value(0)).current;
-    const transformY = useRef(new Animated.Value(-1000)).current;
+
+    const transformY = useRef(new Animated.Value(1000)).current;
+
+    // console.log('windowHeight', windowHeight);
+    // console.log('props.layoutHeight', props.layoutHeight);
 
     useEffect(() => {
         Animated.parallel([
             Animated.timing(fadeAnim, {
                 toValue: 1,
-                duration: 300,
-                useNativeDriver: false,
+                duration: 350,
+                useNativeDriver: true,
             }),
-            Animated.timing(fadeAnim2, {
-                toValue: 1,
-                duration: 300,
-                useNativeDriver: false,
-            }),
+
             Animated.timing(transformY, {
-                toValue: windowHeight * -0.01, //positioning math needs fine tuning
-                duration: 300,
-                useNativeDriver: false,
+                toValue: 0, //positioning math needs fine tuning
+                duration: 350,
+                useNativeDriver: true,
             }),
         ]).start();
-    }, [fadeAnim, fadeAnim2, transformY]);
+    }, []);
 
     return (
         <Animated.View
             style={{
-                height: windowHeight,
+                height: props.layoutHeight,
                 width: windowWidth,
                 opacity: fadeAnim,
                 backgroundColor: 'rgba(0,0,0,0.5)',
                 position: 'absolute',
-                bottom: 0,
             }}
         >
             <Modal visible={props.isVisible} onBackdropPress={props.closeModal}>
                 <Animated.View
                     style={{
-                        bottom: transformY,
-                        alignSelf: 'center',
-                        justifyContent: 'center',
-                        opacity: fadeAnim2,
-                        width: windowWidth * 0.85,
-                        height: windowHeight * 0.85,
+                        transform: [{ translateY: transformY }],
+                        width: windowWidth * 0.95,
+                        height: props.layoutHeight * 0.95,
                     }}
                 >
                     {props.children}

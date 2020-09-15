@@ -7,7 +7,7 @@ import { SwapStateActions } from '../actions/loadStateActions';
 import { errorDataExtractor, ErrorData } from '../helper';
 import { timeoutPromise } from '../../services/API/api_helper_functions';
 
-export const SELECT_SWAP_OPTION = 'SELECT_SWAP_OPTION';
+export const SET_SWAP_CONFIG = 'SET_SWAP_CONFIG';
 export const SELECT_SWAP_DATE = 'SELECT_SWAP_DATE';
 export const SELECT_TARGET_TASK = 'SELECT_TARGET_TASK';
 export const SET_MY_TASK = 'SET_MY_TASK';
@@ -15,10 +15,10 @@ export const SEND_SWAP_REQUEST = 'SEND_SWAP_REQUEST';
 export const RESET_SWAP_CONFIG = 'RESET_SWAP_CONFIG';
 export const SET_SWAP_CANDIDATES = 'SET_SWAP_CANDIDATES';
 
-export const selectSwapOption = (option: number) => {
+export const setSwapConfig = (configs: object) => {
     return {
-        type: SELECT_SWAP_OPTION,
-        payload: option,
+        type: SET_SWAP_CONFIG,
+        payload: configs,
     };
 };
 
