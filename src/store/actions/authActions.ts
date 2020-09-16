@@ -3,7 +3,9 @@ import { AsyncStorage } from 'react-native';
 import { secretIp } from '../../../secrets/secrets';
 import { fetchProfileOnLogin } from './profileActions';
 import { fetchTasksOnLogin } from './taskActions';
+import { fetchNotificationsOnLogin } from './notificationActions';
 import { AuthStateActions } from './loadStateActions';
+
 import { createCalendar } from './calendarActions';
 import { errorDataExtractor, ErrorData } from '../helper';
 import { timeoutPromise } from '../../services/API/api_helper_functions';
@@ -11,6 +13,7 @@ import { timeoutPromise } from '../../services/API/api_helper_functions';
 export const prepHomePage = async (dispatch) => {
     dispatch(fetchProfileOnLogin());
     dispatch(fetchTasksOnLogin());
+    dispatch(fetchNotificationsOnLogin());
     dispatch(createCalendar());
 };
 

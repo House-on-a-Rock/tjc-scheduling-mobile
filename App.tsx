@@ -13,6 +13,7 @@ import {
     taskReducer,
     loadStateReducer,
     swapReducer,
+    notificationsReducer,
 } from './src/store/reducers';
 
 import * as Notifications from 'expo-notifications';
@@ -42,6 +43,7 @@ const rootReducer = combineReducers({
     taskReducer: taskReducer,
     loadStateReducer: loadStateReducer,
     swapReducer: swapReducer,
+    notificationsReducer: notificationsReducer,
 });
 
 export const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

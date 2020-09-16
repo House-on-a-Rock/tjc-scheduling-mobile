@@ -6,6 +6,7 @@ const initialState = {
         [ReducerDomains.PROFILE]: null,
         [ReducerDomains.TASKS]: null,
         [ReducerDomains.SWAP]: null,
+        [ReducerDomains.NOTIFICATIONS]: null,
     },
     loadErrorStatus: {
         [ReducerDomains.AUTH]: null,
