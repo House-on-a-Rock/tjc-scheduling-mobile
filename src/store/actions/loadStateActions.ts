@@ -5,6 +5,7 @@ export enum ReducerDomains {
     PROFILE = 'PROFILE',
     TASKS = 'TASKS',
     SWAP = 'SWAP',
+    NOTIFICATIONS = 'NOTIFICATIONS',
 }
 
 export enum LoadStateActionTypes {
@@ -20,6 +21,9 @@ export const ProfileStateActions: StateActions = mapLoadStateActions(
 );
 export const TaskStateActions: StateActions = mapLoadStateActions(ReducerDomains.TASKS);
 export const SwapStateActions: StateActions = mapLoadStateActions(ReducerDomains.SWAP);
+export const NotificationStateActions: StateActions = mapLoadStateActions(
+    ReducerDomains.NOTIFICATIONS,
+);
 
 //this may be moved to a more appropriate location?
 function mapLoadStateActions(domain): StateActions {
