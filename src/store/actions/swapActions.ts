@@ -110,7 +110,7 @@ export const retrieveSwapCandidates = (churchId, roleId, userId) => {
             dispatch(setSwapCandidates(completeCandidateData));
         } catch (error) {
             const errorData: ErrorData = errorDataExtractor(error);
-            console.log('error in there', error);
+            console.log('error in retrieving swap', error);
             return dispatch(SwapStateActions.Error(errorData));
         }
     };

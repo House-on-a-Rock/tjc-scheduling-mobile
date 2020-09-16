@@ -20,13 +20,11 @@ if (Platform.OS === 'android') {
 }
 
 export const ActivityFeedScreen = (props: ActivityFeedProps) => {
-    //TODO grab activities from notifications instead of tasks
     const notifications = useSelector(
         (state) => state.notificationsReducer.notifications,
     );
 
     const [data, setData] = useState(notifications);
-    console.log('data', data);
     const deleteThreshold: number = windowWidth * 0.4;
 
     const leftIcon: (string) => ReactNode = (color) => (
@@ -35,7 +33,7 @@ export const ActivityFeedScreen = (props: ActivityFeedProps) => {
 
     const deleteItem: (number) => void = (taskId) => {
         const updatedData = data.filter((d) => d.taskId !== taskId);
-        // Animate list to close gap when item is deleted
+        // Animates list to close gap when item is deleted
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         setData(updatedData);
     };
@@ -47,7 +45,6 @@ export const ActivityFeedScreen = (props: ActivityFeedProps) => {
             itemId={item.taskId}
             leftIcon={leftIcon}
         >
-            {/* <NewAssignmentItem item={item} /> */}
             <FeedItem item={item} />
         </SwipeableItem>
     );

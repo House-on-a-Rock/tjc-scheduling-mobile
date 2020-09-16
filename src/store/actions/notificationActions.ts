@@ -19,18 +19,16 @@ function getNotifications(userId) {
 }
 
 export const fetchNotificationsOnLogin = () => {
-    console.log('grabbing notifications');
     return async (dispatch) => {
         dispatch(NotificationStateActions.Loading());
         let accesskey = await AsyncStorage.getItem('access_token');
         const userId = extractId(accesskey);
         try {
             const { data: notifications } = await getNotifications(userId);
-            console.log('notifications', notifications);
             dispatch(setNotifications(notifications));
             dispatch(NotificationStateActions.Loaded());
         } catch (error) {
-            console.log('error in profile', error);
+            console.log('error in notifications', error);
             const errorData = errorDataExtractor(error);
             return dispatch(NotificationStateActions.Error(errorData));
         }

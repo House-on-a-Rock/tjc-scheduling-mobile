@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Text } from '@ui-kitten/components';
-import { months } from '../../services/Calendar/models';
 import { windowWidth } from '../../shared/constants';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
@@ -15,15 +14,19 @@ export const FeedItem = ({ item }: FeedItemProps) => {
     const dispatch = useDispatch();
     const navigation = useNavigation();
 
-    const onPressHandler = () => {};
+    const onPressHandler = () => {
+        //navigate to screen depending on what the notification is linked to
+        //task --> task details
+        //
+        //request --> request details
+        //? anything else
+    };
 
     return (
         <TouchableOpacity style={styles.container} onPress={onPressHandler}>
             <View
                 style={{
-                    // paddingTop: 5,
                     paddingLeft: 30,
-                    // alignItems: 'center',
                     justifyContent: 'center',
                 }}
             >
