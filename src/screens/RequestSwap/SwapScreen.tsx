@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, FlatList } from 'react-native';
 import {
     Layout,
     Text,
@@ -9,11 +9,17 @@ import {
     Select,
     SelectItem,
     IndexPath,
+    Datepicker,
+    Icon,
+    NativeDateService,
 } from '@ui-kitten/components';
 import { CalendarSelectorWrapper } from '../../components/Calender/CalendarSelectorWrapper';
 import { ModalHeader } from '../../components/';
 import { useDispatch } from 'react-redux';
 import { selectTargetTask } from '../../store/actions/swapActions';
+import { Entypo } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { compareDates } from '../../services/Calendar/helper_functions';
 
 interface SwapScreenProps {
     navigation;
@@ -21,89 +27,109 @@ interface SwapScreenProps {
 }
 
 export const SwapScreen = (props: SwapScreenProps) => {
-    //props.route.params.selectedOption stores what was selected on previous screen
-    //jk its in reducer too now
-    const selectedDate = useSelector((state) => state.calendarReducer.selectedDate.date);
     const swapCandidates = useSelector((state) => state.swapReducer.candidates || []);
-    const [checked, setChecked] = useState<boolean>(false);
-    const [selectedIndex, setSelectedIndex] = useState(new IndexPath(0));
+    const [date, setDate] = useState(new Date());
+    const [searchParams, setSearchParams] = useState([]);
 
-    //this is the date they chose to swap on
-    const selectedSwapDate = useSelector((state) => state.swapReducer.date);
-    const dispatch = useDispatch();
+    const [pinnedIndex, setPinnedIndex] = useState();
 
-    //true if radio is checked or (if an index and a date are both selected)
-    let nextButtonClickable =
-        checked || (selectedIndex !== null && selectedSwapDate !== null);
+    //creates sorted array of tasks from candidates array
+    // let initialArray = [];
+    const initialTasks = swapCandidates.reduce(
+        (acc, currentValue) => [...acc, ...currentValue.tasks],
+        [],
+    );
+    initialTasks.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    const [displayedTasks, setDisplayedTasks] = useState(initialTasks);
 
-    const onNextHandler = () => {
-        if (checked) {
-            dispatch(selectTargetTask(undefined));
-        } else {
-            dispatch(selectTargetTask(displayValue.tasks[0]));
-        }
-        props.navigation.navigate('SwapSummary');
+    //props for datepicker
+    const dateService = new NativeDateService('en', { format: 'MM/DD/YYYY' });
+
+    //callbacks
+    const onItemSelect = (item, index) => {
+        console.log('item, index', item, index);
+        //change border color of item
+        //if filter changes, move to top of array
     };
 
-    const candidates = swapCandidates.map((candidate, index) => {
-        return (
-            <SelectItem
-                key={`${index}-candidate.email`}
-                title={`${candidate.firstName} ${candidate.lastName}`}
-            />
-        );
-    });
+    const filteredTasks = () => {};
 
-    const displayValue = swapCandidates[selectedIndex.row];
+    //rendered components and stuff
+    // const CalendarIcon = (props) => <Icon {...props} name="calendar" />;
+
+    //renders day for datepicker calendar
+    const renderDay = (date, namedStyles) => {
+        //if date appears in tasks array, then render dot indicator
+
+        const dateCompare = (item) =>
+            compareDates(new Date(item.date), new Date(date.date));
+        //https://medium.com/@d7k/js-includes-vs-some-b3cd546a7bc3 array.some() vs array.includes()
+        const shouldRender = initialTasks.some(dateCompare);
+
+        return (
+            <View
+                style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    ...namedStyles.container,
+                }}
+            >
+                <Text style={{ ...namedStyles.text }}>{date.date.getDate()}</Text>
+                {shouldRender && <Entypo name="dot-single" size={20} color="black" />}
+            </View>
+        );
+    };
+
+    //flatlist of tasks -- task has {church, date, role, roleId, taskId, user-First/Last names, userId}
+    const renderFlatlist = ({ item, index }) => {
+        return (
+            <TouchableOpacity
+                style={styles.listItem}
+                onPress={() => onItemSelect(item, index)}
+            >
+                <Text>{item.role.name}</Text>
+                <Text>{item.date}</Text>
+                <Text>
+                    {item.user.firstName} {item.user.lastName}
+                </Text>
+            </TouchableOpacity>
+        );
+    };
 
     return (
         <Layout style={styles.layout}>
-            <ModalHeader
-                goBack={props.navigation.goBack}
-                closeModal={props.route.params.closeModal}
-            />
-            <Radio
-                style={{ padding: 20 }}
-                checked={checked}
-                onChange={(nextChecked) => {
-                    setChecked(nextChecked);
-                }}
-            >
-                {(evaProps) => <Text category="h6"> Switch with anyone / any time</Text>}
-            </Radio>
-            <Text style={{ padding: 10 }}>-------- OR --------</Text>
-            <Layout
-                style={
-                    checked
-                        ? { ...styles.selectionContainer, ...styles.disabledView }
-                        : styles.selectionContainer
-                }
-                pointerEvents={checked ? 'none' : 'auto'}
-            >
-                <Layout style={styles.selectionDropdown} level="1">
-                    <Select
-                        selectedIndex={selectedIndex}
-                        placeholder="place holder"
-                        value={`${displayValue?.firstName} ${displayValue?.lastName}`}
-                        onSelect={(index) => {
-                            setSelectedIndex(index);
-                        }}
-                    >
-                        {candidates}
-                    </Select>
-                </Layout>
-                <View style={{ width: '100%', flex: 1 }}>
-                    <CalendarSelectorWrapper displayedDate={selectedDate} tasks={[]} />
-                </View>
-            </Layout>
-            <View
-                style={nextButtonClickable ? { opacity: 1 } : styles.disabledView}
-                pointerEvents={nextButtonClickable ? 'auto' : 'none'}
-            >
-                {!nextButtonClickable && (
-                    <Text status="warning">Please select an option</Text>
-                )}
-                <Button onPress={onNextHandler}>Next</Button>
+            <View style={styles.filterContainer}>
+                <Datepicker
+                    style={{ padding: 10 }}
+                    date={date}
+                    onSelect={(nextDate) => setDate(nextDate)}
+                    // accessoryRight={CalendarIcon}
+                    size="large"
+                    autoDismiss={false}
+                    dateService={dateService}
+                    renderDay={(date, namedStyles) => renderDay(date, namedStyles)}
+                />
+                <Button
+                    size="small"
+                    style={{ margin: 10, width: '25%' }}
+                    appearance="ghost"
+                >
+                    Person
+                </Button>
+                <Button
+                    size="small"
+                    style={{ margin: 10, width: '25%' }}
+                    appearance="ghost"
+                >
+                    Time
+                </Button>
+            </View>
+            <View style={styles.listContainer}>
+                <FlatList
+                    data={displayedTasks}
+                    renderItem={renderFlatlist}
+                    keyExtractor={(item) => `${item.date} ${item.id} ${item.taskId}`}
+                />
             </View>
         </Layout>
     );
@@ -114,17 +140,20 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
     },
-    selectionContainer: {
-        flex: 1,
+    filterContainer: {
+        height: 80,
         width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
     },
-    disabledView: {
-        opacity: 0.4,
+    listContainer: {
+        flex: 1,
+        width: '100%',
     },
-    selectionDropdown: {
-        width: '80%',
-        minHeight: 64,
-        padding: 10,
+    listItem: {
+        margin: 5,
+        padding: 5,
+        borderWidth: 1,
     },
 });

@@ -31,8 +31,8 @@ export const ActivityFeedScreen = (props: ActivityFeedProps) => {
         <Icon height={20} width={20} name="trash-2-outline" fill={color} />
     );
 
-    const deleteItem: (number) => void = (taskId) => {
-        const updatedData = data.filter((d) => d.taskId !== taskId);
+    const deleteItem: (number) => void = (itemId) => {
+        const updatedData = data.filter((d) => d.notificationId !== itemId);
         // Animates list to close gap when item is deleted
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         setData(updatedData);
@@ -42,7 +42,7 @@ export const ActivityFeedScreen = (props: ActivityFeedProps) => {
         <SwipeableItem
             swipeThreshold={deleteThreshold}
             onSwipe={deleteItem}
-            itemId={item.taskId}
+            itemId={item.notificationId}
             leftIcon={leftIcon}
         >
             <FeedItem item={item} />
@@ -63,7 +63,9 @@ export const ActivityFeedScreen = (props: ActivityFeedProps) => {
                     <FlatList
                         data={data}
                         renderItem={renderItem}
-                        keyExtractor={(item, index) => item.id.toString()}
+                        keyExtractor={(item, index) =>
+                            `ActivityFeed ${item.notificationId}${index}`
+                        }
                         decelerationRate={0.1}
                     />
                 ) : (
