@@ -29,12 +29,12 @@ interface SwapScreenProps {
 export const SwapScreen = (props: SwapScreenProps) => {
     const swapCandidates = useSelector((state) => state.swapReducer.candidates || []);
     const [date, setDate] = useState(new Date());
-    const [searchParams, setSearchParams] = useState([]);
-
+    const [searchParams, setSearchParams] = useState({});
     const [pinnedIndex, setPinnedIndex] = useState();
+    const [selectedPersonIndex, setSelectedPersonIndex] = useState(new IndexPath(0));
+    const [selectedTimeIndex, setSelectedTimeIndex] = useState(new IndexPath(0));
 
     //creates sorted array of tasks from candidates array
-    // let initialArray = [];
     const initialTasks = swapCandidates.reduce(
         (acc, currentValue) => [...acc, ...currentValue.tasks],
         [],
@@ -52,11 +52,23 @@ export const SwapScreen = (props: SwapScreenProps) => {
         //if filter changes, move to top of array
     };
 
-    const filteredTasks = () => {};
+    //dropdown items for people
+    const candidates = swapCandidates.map((candidate, index) => {
+        return (
+            <SelectItem
+                key={`${index}-${candidate.email}`}
+                title={`${candidate.firstName} ${candidate.lastName}`}
+            />
+        );
+    });
+    const displayedPerson = swapCandidates[selectedPersonIndex.row];
 
-    //rendered components and stuff
-    // const CalendarIcon = (props) => <Icon {...props} name="calendar" />;
-
+    //dropdown items for time
+    const possibleTimes = ['AM', 'PM'];
+    const times = possibleTimes.map((item, index) => (
+        <SelectItem key={index} title={item} />
+    ));
+    const displayedTime = possibleTimes[selectedTimeIndex.row];
     //renders day for datepicker calendar
     const renderDay = (date, namedStyles) => {
         //if date appears in tasks array, then render dot indicator
@@ -81,7 +93,7 @@ export const SwapScreen = (props: SwapScreenProps) => {
     };
 
     //flatlist of tasks -- task has {church, date, role, roleId, taskId, user-First/Last names, userId}
-    const renderFlatlist = ({ item, index }) => {
+    const renderTaskList = ({ item, index }) => {
         return (
             <TouchableOpacity
                 style={styles.listItem}
@@ -104,30 +116,39 @@ export const SwapScreen = (props: SwapScreenProps) => {
                     date={date}
                     onSelect={(nextDate) => setDate(nextDate)}
                     // accessoryRight={CalendarIcon}
-                    size="large"
+                    size="small"
                     autoDismiss={false}
                     dateService={dateService}
                     renderDay={(date, namedStyles) => renderDay(date, namedStyles)}
                 />
-                <Button
-                    size="small"
-                    style={{ margin: 10, width: '25%' }}
-                    appearance="ghost"
+
+                <Select
+                    selectedIndex={selectedPersonIndex}
+                    placeholder="Name"
+                    value={`${displayedPerson?.firstName} ${displayedPerson?.lastName}`}
+                    onSelect={(index) => {
+                        setSelectedPersonIndex(index);
+                    }}
+                    style={{ width: '40%', padding: 2 }}
                 >
-                    Person
-                </Button>
-                <Button
-                    size="small"
-                    style={{ margin: 10, width: '25%' }}
-                    appearance="ghost"
+                    {candidates}
+                </Select>
+                <Select
+                    selectedIndex={selectedTimeIndex}
+                    placeholder="Time"
+                    value={displayedTime}
+                    onSelect={(index) => {
+                        setSelectedTimeIndex(index);
+                    }}
+                    style={{ width: '30%' }}
                 >
-                    Time
-                </Button>
+                    {times}
+                </Select>
             </View>
             <View style={styles.listContainer}>
                 <FlatList
                     data={displayedTasks}
-                    renderItem={renderFlatlist}
+                    renderItem={renderTaskList}
                     keyExtractor={(item) => `${item.date} ${item.id} ${item.taskId}`}
                 />
             </View>
@@ -155,5 +176,6 @@ const styles = StyleSheet.create({
         margin: 5,
         padding: 5,
         borderWidth: 1,
+        borderRadius: 20,
     },
 });
