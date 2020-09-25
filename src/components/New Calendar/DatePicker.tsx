@@ -4,6 +4,42 @@ import { Text, Button, Icon } from '@ui-kitten/components';
 import { Calendar } from './Calendar';
 import { calendarCardDimensions } from '../../shared/constants/';
 
+const Picker = ({
+    incrementMonth,
+    decrementMonth,
+    selectedDates,
+    displayedMonth,
+    onTilePress,
+    initialTasks,
+}) => (
+    <View style={styles.pickerContainer}>
+        <View style={styles.monthSelectionRow}>
+            <TouchableOpacity style={styles.button} onPress={decrementMonth}>
+                <Icon
+                    name="arrow-ios-back-outline"
+                    height={30}
+                    width={30}
+                    fill="#000000"
+                />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={incrementMonth}>
+                <Icon
+                    name="arrow-ios-forward-outline"
+                    height={30}
+                    width={30}
+                    fill="#000000"
+                />
+            </TouchableOpacity>
+        </View>
+        <Calendar
+            displayedMonth={displayedMonth}
+            selectedDates={selectedDates}
+            onTilePress={onTilePress}
+            initialTasks={initialTasks}
+        />
+    </View>
+);
+
 export const DatePicker = ({ onTilePress, selectedDates, initialTasks }) => {
     const [isPickerVisible, setIsPickerVisible] = useState(false);
     const [displayedMonth, setDisplayedMonth] = useState(new Date());
@@ -14,34 +50,13 @@ export const DatePicker = ({ onTilePress, selectedDates, initialTasks }) => {
     const incrementMonth = () =>
         setDisplayedMonth((d) => new Date(d.setMonth(d.getMonth() + 1)));
 
-    const Picker = () => (
-        <View style={styles.pickerContainer}>
-            <View style={styles.monthSelectionRow}>
-                <TouchableOpacity style={styles.button} onPress={decrementMonth}>
-                    <Icon
-                        name="arrow-ios-back-outline"
-                        height={30}
-                        width={30}
-                        fill="#000000"
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={incrementMonth}>
-                    <Icon
-                        name="arrow-ios-forward-outline"
-                        height={30}
-                        width={30}
-                        fill="#000000"
-                    />
-                </TouchableOpacity>
-            </View>
-            <Calendar
-                displayedMonth={displayedMonth}
-                selectedDates={selectedDates}
-                onTilePress={onTilePress}
-                initialTasks={initialTasks}
-            />
-        </View>
-    );
+    const stringifyDate = (date: Date) => {
+        return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+    };
+
+    const displayedText = selectedDates[0]
+        ? stringifyDate(new Date(selectedDates[0]))
+        : 'Date';
 
     return (
         <View>
@@ -50,7 +65,7 @@ export const DatePicker = ({ onTilePress, selectedDates, initialTasks }) => {
                 onPress={() => setIsPickerVisible((d) => !d)}
                 style={styles.dropDown}
             >
-                <Text category="s1">Date</Text>
+                <Text category="s1">{displayedText}</Text>
                 <Icon
                     name="arrow-ios-downward-outline"
                     width={20}
@@ -58,16 +73,19 @@ export const DatePicker = ({ onTilePress, selectedDates, initialTasks }) => {
                     fill="rgb(191, 191, 191)"
                 />
             </TouchableOpacity>
-            {isPickerVisible && <Picker />}
+            {isPickerVisible && (
+                <Picker
+                    incrementMonth={incrementMonth}
+                    decrementMonth={decrementMonth}
+                    selectedDates={selectedDates}
+                    displayedMonth={displayedMonth}
+                    onTilePress={onTilePress}
+                    initialTasks={initialTasks}
+                />
+            )}
         </View>
     );
 };
-
-function areEqual(prevProps, nextProps) {
-    console.log('prevProps', prevProps);
-    console.log('nextProps', nextProps);
-    return false;
-}
 
 const styles = StyleSheet.create({
     dropDown: {

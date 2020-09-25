@@ -11,16 +11,16 @@ import {
     IndexPath,
     Icon,
     NativeDateService,
+    Datepicker,
 } from '@ui-kitten/components';
 import { CalendarSelectorWrapper } from '../../components/Calender/CalendarSelectorWrapper';
 import { ModalHeader } from '../../components/';
 import { useDispatch } from 'react-redux';
 import { selectTargetTask } from '../../store/actions/swapActions';
-import { Entypo } from '@expo/vector-icons';
+
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { compareDates } from '../../services/Calendar/helper_functions';
 import { DatePicker } from '../../components/New Calendar/DatePicker';
-import { dateTileDimensions } from '../../shared/constants';
 
 interface SwapScreenProps {
     navigation;
@@ -32,12 +32,14 @@ export const SwapScreen = (props: SwapScreenProps) => {
     const [date, setDate] = useState(new Date());
     const [searchParams, setSearchParams] = useState({});
     const [pinnedIndex, setPinnedIndex] = useState();
-    const [selectedPersonIndex, setSelectedPersonIndex] = useState(new IndexPath(0));
-    const [selectedTimeIndex, setSelectedTimeIndex] = useState(new IndexPath(0));
+    const [selectedPersonIndex, setSelectedPersonIndex] = useState();
+    const [selectedTimeIndex, setSelectedTimeIndex] = useState();
     const [selectedDates, setSelectedDates] = useState([]);
 
+    //tile press callback
     const onTilePress = (date) => {
         const dates = selectedDates.filter((item) => !compareDates(item, date));
+
         //if after filtering, length is the same, then the date was not selected before so add the new date
         //else the date was prev selected, so set selectedDates to the filtered list
         dates.length === selectedDates.length
@@ -56,12 +58,13 @@ export const SwapScreen = (props: SwapScreenProps) => {
 
     //callbacks
     const onItemSelect = (item, index) => {
-        console.log('item, index', item, index);
+        // console.log('item, index', item, index);
         //change border color of item
         //if filter changes, move to top of array
     };
 
     //dropdown items for people
+
     const candidates = swapCandidates.map((candidate, index) => {
         return (
             <SelectItem
@@ -70,14 +73,17 @@ export const SwapScreen = (props: SwapScreenProps) => {
             />
         );
     });
-    const displayedPerson = swapCandidates[selectedPersonIndex.row];
+    // const displayedPerson = swapCandidates[selectedPersonIndex?.row] || 'Person';
+    console.log('candidates', candidates);
+    console.log('swapCandidates', swapCandidates);
+    const displayedPerson = candidates[selectedPersonIndex?.row]?.title || 'Person';
 
     //dropdown items for time
     const possibleTimes = ['AM', 'PM'];
     const times = possibleTimes.map((item, index) => (
         <SelectItem key={index} title={item} />
     ));
-    const displayedTime = possibleTimes[selectedTimeIndex.row];
+    const displayedTime = possibleTimes[selectedTimeIndex?.row];
 
     //flatlist of tasks -- task has {church, date, role, roleId, taskId, user-First/Last names, userId}
     const renderTaskList = ({ item, index }) => {
@@ -103,10 +109,12 @@ export const SwapScreen = (props: SwapScreenProps) => {
                     onTilePress={onTilePress}
                     initialTasks={initialTasks}
                 />
+
                 <Select
                     selectedIndex={selectedPersonIndex}
-                    placeholder="Name"
-                    value={`${displayedPerson?.firstName} ${displayedPerson?.lastName}`}
+                    placeholder="Person"
+                    // value={`${displayedPerson?.firstName} ${displayedPerson?.lastName}`}
+                    value={displayedPerson}
                     onSelect={(index) => {
                         setSelectedPersonIndex(index);
                     }}

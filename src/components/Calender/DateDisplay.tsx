@@ -70,7 +70,7 @@ export const DateDisplay = ({
                 <DateTile
                     data={data}
                     day={day}
-                    key={`${day.toDateString}${j}-${k}`}
+                    key={`${day.toDateString()}${j}-${k}`}
                     isToday={isToday}
                     isCurrentMonth={isCurrentMonth}
                     isSelected={isSelected}

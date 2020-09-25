@@ -9,9 +9,7 @@ import { dateTileDimensions } from '../../shared/constants';
 
 interface CalendarProps {
     displayedMonth: Date;
-    onTilePress?: (date, data, cardIndex?) => void;
-    cardIndex?: number;
-    renderDay?;
+    onTilePress?: (date) => void;
     selectedDates?;
     initialTasks;
 }
@@ -19,8 +17,6 @@ interface CalendarProps {
 export const Calendar = ({
     displayedMonth,
     onTilePress,
-    cardIndex,
-    renderDay,
     selectedDates = [],
     initialTasks,
 }: CalendarProps) => {
@@ -28,7 +24,6 @@ export const Calendar = ({
     const year = displayedMonth.getFullYear();
     const initialDate = new Date(year, month, 1);
     const dateArray = new Array(6);
-    // const firstDay = displayedMonth.getDay();
     const today = new Date();
 
     function determineRenderDate(initial): () => Date {
@@ -47,7 +42,8 @@ export const Calendar = ({
     }
 
     const determineDate: () => Date = determineRenderDate(initialDate);
-    // const DateTileRender = renderDay ? renderDay : DateTile;
+
+    console.log('rendering calendar');
 
     for (let j = 0; j < dateArray.length; j++) {
         dateArray[j] = new Array(7);
@@ -55,9 +51,6 @@ export const Calendar = ({
             const day: Date = determineDate();
             const isCurrentMonth = day.getMonth() === month;
             const isSelected = selectedDates.some((date) => compareDates(day, date));
-            const tileStyling = isCurrentMonth
-                ? isSelected && styles.selectedStyle
-                : styles.fadedStyle;
             const hasTask = initialTasks.some((item) =>
                 compareDates(new Date(item.date), day),
             );
@@ -65,9 +58,10 @@ export const Calendar = ({
             dateArray[j][k] = (
                 <DateTile
                     day={day}
-                    key={`${day.toDateString}${j}-${k}`}
+                    key={`${day.toDateString()}${j}-${k}`}
                     onTilePress={onTilePress}
-                    styling={tileStyling}
+                    isCurrentMonth={isCurrentMonth}
+                    isSelected={isSelected}
                     textStyling={compareDates(day, today) && styles.todayText}
                     hasTask={hasTask}
                 />
