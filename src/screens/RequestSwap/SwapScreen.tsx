@@ -9,7 +9,6 @@ import {
     Select,
     SelectItem,
     IndexPath,
-    Datepicker,
     Icon,
     NativeDateService,
 } from '@ui-kitten/components';
@@ -20,6 +19,8 @@ import { selectTargetTask } from '../../store/actions/swapActions';
 import { Entypo } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { compareDates } from '../../services/Calendar/helper_functions';
+import { DatePicker } from '../../components/New Calendar/DatePicker';
+import { dateTileDimensions } from '../../shared/constants';
 
 interface SwapScreenProps {
     navigation;
@@ -33,17 +34,25 @@ export const SwapScreen = (props: SwapScreenProps) => {
     const [pinnedIndex, setPinnedIndex] = useState();
     const [selectedPersonIndex, setSelectedPersonIndex] = useState(new IndexPath(0));
     const [selectedTimeIndex, setSelectedTimeIndex] = useState(new IndexPath(0));
+    const [selectedDates, setSelectedDates] = useState([]);
+
+    const onTilePress = (date) => {
+        const dates = selectedDates.filter((item) => !compareDates(item, date));
+        //if after filtering, length is the same, then the date was not selected before so add the new date
+        //else the date was prev selected, so set selectedDates to the filtered list
+        dates.length === selectedDates.length
+            ? setSelectedDates([...selectedDates, date])
+            : setSelectedDates(dates);
+    };
 
     //creates sorted array of tasks from candidates array
     const initialTasks = swapCandidates.reduce(
         (acc, currentValue) => [...acc, ...currentValue.tasks],
         [],
     );
+    //tasks sorted by date
     initialTasks.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
     const [displayedTasks, setDisplayedTasks] = useState(initialTasks);
-
-    //props for datepicker
-    const dateService = new NativeDateService('en', { format: 'MM/DD/YYYY' });
 
     //callbacks
     const onItemSelect = (item, index) => {
@@ -69,28 +78,6 @@ export const SwapScreen = (props: SwapScreenProps) => {
         <SelectItem key={index} title={item} />
     ));
     const displayedTime = possibleTimes[selectedTimeIndex.row];
-    //renders day for datepicker calendar
-    const renderDay = (date, namedStyles) => {
-        //if date appears in tasks array, then render dot indicator
-
-        const dateCompare = (item) =>
-            compareDates(new Date(item.date), new Date(date.date));
-        //https://medium.com/@d7k/js-includes-vs-some-b3cd546a7bc3 array.some() vs array.includes()
-        const shouldRender = initialTasks.some(dateCompare);
-
-        return (
-            <View
-                style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    ...namedStyles.container,
-                }}
-            >
-                <Text style={{ ...namedStyles.text }}>{date.date.getDate()}</Text>
-                {shouldRender && <Entypo name="dot-single" size={20} color="black" />}
-            </View>
-        );
-    };
 
     //flatlist of tasks -- task has {church, date, role, roleId, taskId, user-First/Last names, userId}
     const renderTaskList = ({ item, index }) => {
@@ -111,17 +98,11 @@ export const SwapScreen = (props: SwapScreenProps) => {
     return (
         <Layout style={styles.layout}>
             <View style={styles.filterContainer}>
-                <Datepicker
-                    style={{ padding: 10 }}
-                    date={date}
-                    onSelect={(nextDate) => setDate(nextDate)}
-                    // accessoryRight={CalendarIcon}
-                    size="small"
-                    autoDismiss={false}
-                    dateService={dateService}
-                    renderDay={(date, namedStyles) => renderDay(date, namedStyles)}
+                <DatePicker
+                    selectedDates={selectedDates}
+                    onTilePress={onTilePress}
+                    initialTasks={initialTasks}
                 />
-
                 <Select
                     selectedIndex={selectedPersonIndex}
                     placeholder="Name"
@@ -165,12 +146,13 @@ const styles = StyleSheet.create({
         height: 80,
         width: '100%',
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-evenly',
         alignItems: 'center',
     },
     listContainer: {
         flex: 1,
         width: '100%',
+        zIndex: -1,
     },
     listItem: {
         margin: 5,

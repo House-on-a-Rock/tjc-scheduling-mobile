@@ -2,10 +2,13 @@ import { CarousalDirection } from '../models';
 
 export const setFirstDay = (displayedDate: Date): number => {
     //determines the month's first day of week (eg. if 5/1/2020 is wed or sat)
-    const tempDisplayedDay = displayedDate.getDay();
-    const tempDisplayedDate = displayedDate.getDate();
-    const a = tempDisplayedDay + 1 - (tempDisplayedDate % 7);
-    return a >= 0 ? a : a + 7;
+    // const tempDisplayedDay = displayedDate.getDay();
+    // const tempDisplayedDate = displayedDate.getDate();
+    // const a = tempDisplayedDay + 1 - (tempDisplayedDate % 7);
+    // const x = a >= 0 ? a : a + 7;
+    // console.log('x', x);
+    // console.log('tempDisplayedDay', tempDisplayedDay);
+    return displayedDate.getDay();
 };
 
 export const getUpdatedMonth = (carousalDirection, displayedDate) => {

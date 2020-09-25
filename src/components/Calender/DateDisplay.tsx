@@ -34,6 +34,7 @@ export const DateDisplay = ({
             : useSelector((state) => state.swapReducer.date);
 
     function determineRenderDate(initial): () => Date {
+        //sets start of week to correct day
         let renderDate: Date = new Date(initial.setDate(initial.getDate() - firstDay));
 
         return updateDate;
