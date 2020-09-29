@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-// import { DateDisplay } from './DateDisplay';
 import { DayNameRow } from './DayNameRow';
 import { DateTile } from './DateTile';
 import { Text, Layout } from '@ui-kitten/components';
@@ -42,8 +41,6 @@ export const Calendar = ({
     }
 
     const determineDate: () => Date = determineRenderDate(initialDate);
-
-    console.log('rendering calendar');
 
     for (let j = 0; j < dateArray.length; j++) {
         dateArray[j] = new Array(7);

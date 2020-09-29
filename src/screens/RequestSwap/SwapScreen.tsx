@@ -21,6 +21,7 @@ import { selectTargetTask } from '../../store/actions/swapActions';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { compareDates } from '../../services/Calendar/helper_functions';
 import { DatePicker } from '../../components/New Calendar/DatePicker';
+import { populateCandidates, populateTimes } from './swapHelper';
 
 interface SwapScreenProps {
     navigation;
@@ -28,13 +29,50 @@ interface SwapScreenProps {
 }
 
 export const SwapScreen = (props: SwapScreenProps) => {
+    //TODO: sort candidates alphabetically before here, maybe server side?
     const swapCandidates = useSelector((state) => state.swapReducer.candidates || []);
-    const [date, setDate] = useState(new Date());
-    const [searchParams, setSearchParams] = useState({});
+
     const [pinnedIndex, setPinnedIndex] = useState();
-    const [selectedPersonIndex, setSelectedPersonIndex] = useState();
-    const [selectedTimeIndex, setSelectedTimeIndex] = useState();
+    const [selectedPersonIndex, setSelectedPersonIndex] = useState<IndexPath>(
+        new IndexPath(0),
+    );
+    const [selectedTimeIndex, setSelectedTimeIndex] = useState<IndexPath>(
+        new IndexPath(0),
+    );
     const [selectedDates, setSelectedDates] = useState([]);
+
+    //https://stackoverflow.com/questions/48834275/good-way-to-chain-filter-functions-in-javascript/48834470#48834470
+    //thank god for stack overflow
+    const filters = [
+        (task) =>
+            selectedPersonIndex.row !== 0
+                ? task.user.firstName ===
+                      swapCandidates[selectedPersonIndex.row - 1].firstName &&
+                  task.user.lastName ===
+                      swapCandidates[selectedPersonIndex.row - 1].lastName
+                : true,
+        (task) =>
+            selectedDates.length > 0
+                ? selectedDates.some((date) =>
+                      compareDates(new Date(date), new Date(task.date)),
+                  )
+                : true,
+    ];
+
+    const tasks = swapCandidates
+        .reduce((acc, currentValue) => [...acc, ...currentValue.tasks], [])
+        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    const filteredData = filters.reduce(
+        (accumulator, filterFunc) => accumulator.filter(filterFunc),
+        tasks,
+    );
+
+    //callbacks
+    const onItemSelect = (item, index) => {
+        // console.log('item, index', item, index);
+        //change border color of item
+        //if filter changes, move to top of array
+    };
 
     //tile press callback
     const onTilePress = (date) => {
@@ -45,45 +83,24 @@ export const SwapScreen = (props: SwapScreenProps) => {
         dates.length === selectedDates.length
             ? setSelectedDates([...selectedDates, date])
             : setSelectedDates(dates);
-    };
-
-    //creates sorted array of tasks from candidates array
-    const initialTasks = swapCandidates.reduce(
-        (acc, currentValue) => [...acc, ...currentValue.tasks],
-        [],
-    );
-    //tasks sorted by date
-    initialTasks.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-    const [displayedTasks, setDisplayedTasks] = useState(initialTasks);
-
-    //callbacks
-    const onItemSelect = (item, index) => {
-        // console.log('item, index', item, index);
-        //change border color of item
-        //if filter changes, move to top of array
+        //filter displayed Tasks
     };
 
     //dropdown items for people
-
-    const candidates = swapCandidates.map((candidate, index) => {
-        return (
-            <SelectItem
-                key={`${index}-${candidate.email}`}
-                title={`${candidate.firstName} ${candidate.lastName}`}
-            />
-        );
-    });
-    // const displayedPerson = swapCandidates[selectedPersonIndex?.row] || 'Person';
-    console.log('candidates', candidates);
-    console.log('swapCandidates', swapCandidates);
-    const displayedPerson = candidates[selectedPersonIndex?.row]?.title || 'Person';
+    const candidates = populateCandidates(swapCandidates);
+    const displayedPerson =
+        selectedPersonIndex.row === 0
+            ? 'Name'
+            : `${swapCandidates[selectedPersonIndex.row - 1].firstName} ${
+                  swapCandidates[selectedPersonIndex.row - 1].lastName
+              }`;
 
     //dropdown items for time
-    const possibleTimes = ['AM', 'PM'];
-    const times = possibleTimes.map((item, index) => (
-        <SelectItem key={index} title={item} />
-    ));
-    const displayedTime = possibleTimes[selectedTimeIndex?.row];
+    const possibleTimes = ['AM', 'PM']; //temp until database is finished
+
+    const times = populateTimes(possibleTimes);
+    const displayedTime =
+        selectedTimeIndex.row === 0 ? 'Time' : possibleTimes[selectedTimeIndex.row - 1];
 
     //flatlist of tasks -- task has {church, date, role, roleId, taskId, user-First/Last names, userId}
     const renderTaskList = ({ item, index }) => {
@@ -93,7 +110,7 @@ export const SwapScreen = (props: SwapScreenProps) => {
                 onPress={() => onItemSelect(item, index)}
             >
                 <Text>{item.role.name}</Text>
-                <Text>{item.date}</Text>
+                <Text>{new Date(item.date).toLocaleDateString('en-US')}</Text>
                 <Text>
                     {item.user.firstName} {item.user.lastName}
                 </Text>
@@ -107,26 +124,26 @@ export const SwapScreen = (props: SwapScreenProps) => {
                 <DatePicker
                     selectedDates={selectedDates}
                     onTilePress={onTilePress}
-                    initialTasks={initialTasks}
+                    initialTasks={tasks}
                 />
 
                 <Select
                     selectedIndex={selectedPersonIndex}
                     placeholder="Person"
-                    // value={`${displayedPerson?.firstName} ${displayedPerson?.lastName}`}
                     value={displayedPerson}
-                    onSelect={(index) => {
+                    onSelect={(index: IndexPath) => {
                         setSelectedPersonIndex(index);
                     }}
                     style={{ width: '40%', padding: 2 }}
                 >
                     {candidates}
                 </Select>
+
                 <Select
                     selectedIndex={selectedTimeIndex}
                     placeholder="Time"
                     value={displayedTime}
-                    onSelect={(index) => {
+                    onSelect={(index: IndexPath) => {
                         setSelectedTimeIndex(index);
                     }}
                     style={{ width: '30%' }}
@@ -136,7 +153,7 @@ export const SwapScreen = (props: SwapScreenProps) => {
             </View>
             <View style={styles.listContainer}>
                 <FlatList
-                    data={displayedTasks}
+                    data={filteredData}
                     renderItem={renderTaskList}
                     keyExtractor={(item) => `${item.date} ${item.id} ${item.taskId}`}
                 />
