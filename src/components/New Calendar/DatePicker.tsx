@@ -40,7 +40,7 @@ const Picker = ({
     </View>
 );
 
-export const DatePicker = ({ onTilePress, selectedDates, initialTasks }) => {
+export const DatePicker = ({ onTilePress, selectedDates, initialTasks, onBlur }) => {
     const [isPickerVisible, setIsPickerVisible] = useState(false);
     const [displayedMonth, setDisplayedMonth] = useState(new Date());
 
@@ -62,7 +62,10 @@ export const DatePicker = ({ onTilePress, selectedDates, initialTasks }) => {
         <View>
             <TouchableOpacity
                 activeOpacity={0.5}
-                onPress={() => setIsPickerVisible((d) => !d)}
+                onPress={() => {
+                    setIsPickerVisible((d) => !d);
+                    onBlur();
+                }}
                 style={styles.dropDown}
             >
                 <Text category="s1">{displayedText}</Text>

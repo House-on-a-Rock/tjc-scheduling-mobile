@@ -11,15 +11,15 @@ export const populateCandidates = (swapCandidates) => {
             />
         );
     });
-    tempC.unshift(
-        <SelectItem key={'Unselected placeholder candidates'} title={'Name'} />,
-    );
+    // tempC.unshift(
+    //     <SelectItem key={'Unselected placeholder candidates'} title={'Name'} />,
+    // );
     return tempC;
 };
 
 export const populateTimes = (times) => {
     const tempT = times.map((item, index) => <SelectItem key={index} title={item} />);
-    tempT.unshift(<SelectItem key={'Unselected placeholder times'} title={'Time'} />);
+    // tempT.unshift(<SelectItem key={'Unselected placeholder times'} title={'Time'} />);
     return tempT;
 };
 
