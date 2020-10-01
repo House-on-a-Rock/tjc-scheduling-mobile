@@ -20,22 +20,31 @@ const icons = {
     settings: (props) => <Icon name="settings-outline" {...props} />,
 };
 
-const BottomTabBar = ({ navigation, state }) => (
-    <BottomNavigation
-        selectedIndex={state.index}
-        onSelect={(index) => navigation.navigate(state.routeNames[index])}
-        // onLayout={(event) => console.log('height', event.nativeEvent.layout.height)} may need this value later
-    >
-        <BottomNavigationTab title="Feed" icon={icons.feed} />
-        <BottomNavigationTab title="Dashboard" icon={icons.dashboard} />
-        <BottomNavigationTab title="Schedule" icon={icons.schedule} />
-        <BottomNavigationTab title="Settings" icon={icons.settings} />
-    </BottomNavigation>
-);
+const BottomTabBar = ({ navigation, state }) => {
+    const routeName =
+        state?.routes[state.index].state?.routes[state.routes[state.index].state.index]
+            .name;
+    return routeName?.includes('Swap') ? null : (
+        <BottomNavigation
+            selectedIndex={state.index}
+            onSelect={(index) => navigation.navigate(state.routeNames[index])}
+        >
+            <BottomNavigationTab title="Feed" icon={icons.feed} />
+            <BottomNavigationTab title="Dashboard" icon={icons.dashboard} />
+            <BottomNavigationTab title="Schedule" icon={icons.schedule} />
+            <BottomNavigationTab title="Settings" icon={icons.settings} />
+        </BottomNavigation>
+    );
+};
 
 //add badges to the bottom tab in the future:  https://github.com/akveo/react-native-ui-kitten/issues/865
 
 export const BottomTabs = () => {
+    const getTabBarVisibility = (route) => {
+        const routeName = route.state ? route.state.routes[route.state.index].name : '';
+        return routeName === 'RequestStack' ? false : true;
+    };
+
     return (
         <NavigationContainer>
             <Tab.Navigator
@@ -53,7 +62,14 @@ export const BottomTabs = () => {
                     // }}
                 />
                 <Tab.Screen name="Dashboard" component={DashboardStack} />
-                <Tab.Screen name="Schedule" component={ScheduleStack} />
+                <Tab.Screen
+                    name="Schedule"
+                    component={ScheduleStack}
+                    options={({ route }) => ({
+                        tabBarVisible: getTabBarVisibility(route),
+                        // tabBarVisible: false,
+                    })}
+                />
                 <Tab.Screen name="Settings" component={SettingsStack} />
             </Tab.Navigator>
         </NavigationContainer>

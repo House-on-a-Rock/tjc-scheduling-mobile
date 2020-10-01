@@ -50,13 +50,16 @@ export const DatePicker = ({ onTilePress, selectedDates, initialTasks, onBlur })
     const incrementMonth = () =>
         setDisplayedMonth((d) => new Date(d.setMonth(d.getMonth() + 1)));
 
-    const stringifyDate = (date: Date) => {
-        return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
-    };
+    const stringifyDate = (date: Date) => `${date.getMonth() + 1}/${date.getDate()}`;
 
-    const displayedText = selectedDates[0]
-        ? stringifyDate(new Date(selectedDates[0]))
-        : 'Date';
+    const displayedText =
+        selectedDates.length > 0
+            ? selectedDates.length === 1
+                ? stringifyDate(new Date(selectedDates[0]))
+                : `${stringifyDate(new Date(selectedDates[0]))}...${stringifyDate(
+                      new Date(selectedDates[selectedDates.length - 1]),
+                  )}`
+            : 'Date';
 
     return (
         <View>

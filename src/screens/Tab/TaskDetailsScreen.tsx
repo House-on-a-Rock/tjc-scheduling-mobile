@@ -14,34 +14,23 @@ import { retrieveSwapCandidates, setMyTask } from '../../store/actions/swapActio
 export const TaskDetailsScreen = (props) => {
     const { task } = props.route.params;
     const { myTask } = useSelector((state) => state.swapReducer);
-    const [modalVisible, setModalVisible] = useState<boolean>(false);
     let layoutHeight = useRef(0);
     const dispatch = useDispatch();
 
-    const leftAccessory = () => backAction(props.navigation.goBack);
-    const rightAccessory = () => (
-        <TouchableOpacity onPress={() => console.log('pressed alert me')}>
-            <Text>Alert Me</Text>
-        </TouchableOpacity>
-    );
-
     const dotColor = 'green';
 
-    const closeModalHandler = () => {
-        setModalVisible(false);
-        dispatch(SwapStateActions.DefaultState());
-        dispatch(resetSwapConfig());
-    };
+    // const closeModalHandler = () => {
+    //     dispatch(SwapStateActions.DefaultState()); //do i still need this ?
+    //     dispatch(resetSwapConfig());
+    // };
 
     const onButtonPressHandler = () => {
-        //move this to useEffect inside swapOptions
         dispatch(retrieveSwapCandidates(task.church.churchId, task.roleId, task.userId));
         if (myTask === null || myTask.taskId !== task.taskId) dispatch(setMyTask(task));
-        setModalVisible(true);
+        props.navigation.navigate('SelectSwapOption');
     };
 
     return (
-        // <Screen accessoryLeft={leftAccessory} accessoryRight={rightAccessory}>
         <Layout
             style={{ flex: 1, width: '100%', padding: 30 }}
             onLayout={(e) => (layoutHeight.current = e.nativeEvent.layout.height)}
@@ -54,16 +43,6 @@ export const TaskDetailsScreen = (props) => {
             </View>
             <Text>if change is requested, show here</Text>
             <Button onPress={onButtonPressHandler}>Request Change</Button>
-            {modalVisible && (
-                <CustomAnimatedModal
-                    isVisible={modalVisible}
-                    closeModal={closeModalHandler}
-                    layoutHeight={layoutHeight.current}
-                >
-                    <RequestSwapStack closeModal={closeModalHandler} />
-                </CustomAnimatedModal>
-            )}
         </Layout>
-        // </Screen>
     );
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { View, StyleSheet, FlatList } from 'react-native';
-import { Layout, Text, Select, IndexPath, Icon } from '@ui-kitten/components';
+import { Layout, Text, Select, IndexPath, Icon, Button } from '@ui-kitten/components';
 import { CalendarSelectorWrapper } from '../../components/Calender/CalendarSelectorWrapper';
 import { ModalHeader } from '../../components/';
 import { useDispatch } from 'react-redux';
@@ -12,18 +12,12 @@ import { compareDates } from '../../services/Calendar/helper_functions';
 import { DatePicker } from '../../components/New Calendar/DatePicker';
 import { populateCandidates, populateTimes } from './swapHelper';
 
-interface SwapScreenProps {
-    navigation;
-    route;
-}
-
-export const SwapScreen = (props: SwapScreenProps) => {
+export const SwapScreen = () => {
     //TODO: sort candidates alphabetically before here, maybe server side?
     const swapCandidates = useSelector((state) => state.swapReducer.candidates || []);
     const [selectedPeopleIndices, setSelectedPeopleIndices] = useState<IndexPath[]>([]);
     const [selectedTimeIndices, setSelectedTimeIndices] = useState<IndexPath[]>([]);
     const [selectedDates, setSelectedDates] = useState([]);
-    const [selectedIndices, setSelectedIndices] = useState([]);
 
     //https://stackoverflow.com/questions/48834275/good-way-to-chain-filter-functions-in-javascript/48834470#48834470
     //thank god for stack overflow
@@ -51,7 +45,7 @@ export const SwapScreen = (props: SwapScreenProps) => {
             .map((task) => {
                 return { ...task, isSelected: false };
             })
-            .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+            .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()); //may not need if swapCandidates are pre-sorted
     }, [swapCandidates]);
 
     const [filteredTasks, setFilteredTasks] = useState(tasks);
@@ -64,8 +58,6 @@ export const SwapScreen = (props: SwapScreenProps) => {
             return tempFilteredTasks;
         });
     };
-
-    //tile press callback
     const onTilePress = (date) => {
         const dates = selectedDates.filter((item) => !compareDates(item, date));
         dates.length === selectedDates.length
@@ -73,7 +65,7 @@ export const SwapScreen = (props: SwapScreenProps) => {
             : setSelectedDates(dates);
     };
 
-    //dropdown items for people
+    //dropdown items for people select
     const candidates = populateCandidates(swapCandidates);
     const displayedPerson =
         selectedPeopleIndices.length === 0
@@ -86,7 +78,7 @@ export const SwapScreen = (props: SwapScreenProps) => {
                   swapCandidates[selectedPeopleIndices[0].row].lastName
               }...`;
 
-    //dropdown items for time
+    //dropdown items for time select
     const possibleTimes = ['AM', 'PM']; //temp until database is finished
     const times = populateTimes(possibleTimes);
     const displayedTime =
@@ -96,7 +88,7 @@ export const SwapScreen = (props: SwapScreenProps) => {
             ? possibleTimes[selectedTimeIndices[0].row]
             : `${possibleTimes[selectedTimeIndices[0].row]}...`;
 
-    //flatlist of tasks -- task has {church, date, role, roleId, taskId, user-First/Last names, userId}
+    //flatlist render
     const renderTaskList = ({ item, index }) => {
         const taskStyle = item.isSelected
             ? { ...styles.listItem, ...styles.selectedItem }
@@ -123,9 +115,6 @@ export const SwapScreen = (props: SwapScreenProps) => {
         );
         const selected = tasks.filter((task) => task.isSelected);
         return [...selected, ...filtered];
-        // .sort((a, b) => {
-        //     return a.isSelected && !b.isSelected ? -1 : 1;
-        // });
     }
 
     const onBlurHandler = () => {
