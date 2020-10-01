@@ -12,7 +12,7 @@ import { compareDates } from '../../services/Calendar/helper_functions';
 import { DatePicker } from '../../components/New Calendar/DatePicker';
 import { populateCandidates, populateTimes } from './swapHelper';
 
-export const SwapScreen = () => {
+export const SwapScreen = (props) => {
     //TODO: sort candidates alphabetically before here, maybe server side?
     const swapCandidates = useSelector((state) => state.swapReducer.candidates || []);
     const [selectedPeopleIndices, setSelectedPeopleIndices] = useState<IndexPath[]>([]);
@@ -88,6 +88,11 @@ export const SwapScreen = () => {
             ? possibleTimes[selectedTimeIndices[0].row]
             : `${possibleTimes[selectedTimeIndices[0].row]}...`;
 
+    const iconProps = {
+        height: 30,
+        width: 30,
+        fill: '#000000',
+    };
     //flatlist render
     const renderTaskList = ({ item, index }) => {
         const taskStyle = item.isSelected
@@ -99,11 +104,14 @@ export const SwapScreen = () => {
                 onPress={() => onItemSelect(item, index)}
                 activeOpacity={1}
             >
-                <Text>{item.role.name}</Text>
-                <Text>{new Date(item.date).toLocaleDateString('en-US')}</Text>
+                <Icon name="person-outline" {...iconProps} />
                 <Text>
                     {item.user.firstName} {item.user.lastName}
                 </Text>
+                <View style={{ flexDirection: 'column' }}>
+                    <Text>{item.role.name}</Text>
+                    <Text>{new Date(item.date).toLocaleDateString('en-US')}</Text>
+                </View>
             </TouchableOpacity>
         );
     };
@@ -121,8 +129,16 @@ export const SwapScreen = () => {
         setFilteredTasks(() => filterTasks());
     };
 
+    const onNextHandler = () => {
+        props.navigation.navigate('SwapSummary');
+    };
+
     return (
         <Layout style={styles.layout}>
+            <View style={styles.textContainer}>
+                <Text>Select one or more workers to request</Text>
+                <Text>an exchange of duty times</Text>
+            </View>
             <View style={styles.filterContainer}>
                 <DatePicker
                     selectedDates={selectedDates}
@@ -152,7 +168,7 @@ export const SwapScreen = () => {
                     onSelect={(index: IndexPath[]) => {
                         setSelectedTimeIndices(index);
                     }}
-                    style={{ width: '30%' }}
+                    style={{ width: '28%' }}
                     multiSelect={true}
                 >
                     {times}
@@ -163,7 +179,11 @@ export const SwapScreen = () => {
                     data={filteredTasks}
                     renderItem={renderTaskList}
                     keyExtractor={(item) => `${item.date} ${item.id} ${item.taskId}`}
+                    showsVerticalScrollIndicator={false}
                 />
+                <Button style={{ margin: 10, width: 130 }} onPress={onNextHandler}>
+                    Next
+                </Button>
             </View>
         </Layout>
     );
@@ -175,29 +195,39 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     filterContainer: {
-        height: 80,
+        height: '25%',
         width: '100%',
         flexDirection: 'row',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-between',
         alignItems: 'center',
+        padding: 10,
     },
     listContainer: {
         flex: 1,
         width: '100%',
         zIndex: -1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgb(108, 207, 212)',
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        padding: 30,
+    },
+    textContainer: {
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     listItem: {
+        width: 330,
+        height: 70,
         margin: 5,
         padding: 5,
-        borderWidth: 1,
         borderRadius: 20,
-    },
-    selectedItem: {
-        borderColor: 'rgb(127, 15, 239)',
-        borderWidth: 2,
         backgroundColor: 'white',
-        margin: 5,
-        padding: 4,
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
 
         shadowColor: '#000',
         shadowOffset: {
@@ -208,5 +238,12 @@ const styles = StyleSheet.create({
         shadowRadius: 2.22,
 
         elevation: 3,
+    },
+    selectedItem: {
+        borderColor: 'rgb(127, 15, 239)',
+        borderWidth: 2,
+        backgroundColor: 'white',
+        margin: 5,
+        padding: 4,
     },
 });

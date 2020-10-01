@@ -3,6 +3,7 @@ import { View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Text, Button, Icon } from '@ui-kitten/components';
 import { Calendar } from './Calendar';
 import { calendarCardDimensions } from '../../shared/constants/';
+import { OutsidePressDetection } from '../OutsidePressDetection';
 
 const Picker = ({
     incrementMonth,
@@ -62,14 +63,18 @@ export const DatePicker = ({ onTilePress, selectedDates, initialTasks, onBlur })
             : 'Date';
 
     return (
-        <View>
+        <OutsidePressDetection>
             <TouchableOpacity
                 activeOpacity={0.5}
                 onPress={() => {
                     setIsPickerVisible((d) => !d);
                     onBlur();
                 }}
-                style={styles.dropDown}
+                style={
+                    isPickerVisible
+                        ? { ...styles.dropDown, borderColor: 'rgb(55, 103, 235)' }
+                        : styles.dropDown
+                }
             >
                 <Text category="s1">{displayedText}</Text>
                 <Icon
@@ -89,7 +94,7 @@ export const DatePicker = ({ onTilePress, selectedDates, initialTasks, onBlur })
                     initialTasks={initialTasks}
                 />
             )}
-        </View>
+        </OutsidePressDetection>
     );
 };
 
@@ -103,8 +108,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderColor: 'rgb(191, 191, 191)',
         flexDirection: 'row',
-        margin: 5,
-        backgroundColor: 'rgb(242, 240, 249)',
+        backgroundColor: 'rgb(245, 245, 250)',
     },
     pickerContainer: {
         padding: 5,
@@ -141,7 +145,7 @@ const styles = StyleSheet.create({
     },
     button: {
         margin: 2,
-        padding: 3,
+        // padding: 3,
         justifyContent: 'center',
         alignItems: 'center',
     },

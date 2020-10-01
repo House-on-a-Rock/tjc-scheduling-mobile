@@ -65,10 +65,6 @@ export const SwapSummary = (props) => {
                 />
             )}
             <View opacity={loadState === LoadStateActionTypes.LOADING ? 0.5 : 1}>
-                <ModalHeader
-                    goBack={props.navigation.goBack}
-                    closeModal={props.route.params.closeModal}
-                />
                 <Text>
                     You want to trade {myTaskRole} on {myTaskDate} with {targetName} on{' '}
                     {targetDate}
