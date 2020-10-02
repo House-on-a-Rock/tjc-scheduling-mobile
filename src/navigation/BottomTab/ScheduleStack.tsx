@@ -20,7 +20,13 @@ export const ScheduleStack = () => {
             <Stack.Screen name="SelectSwapOption" component={SelectSwapOption} />
             <Stack.Screen name="SwapScreen" component={SwapScreen} />
             <Stack.Screen name="SwapSummary" component={SwapSummary} />
-            <Stack.Screen name="SwapConfirmation" component={SwapConfirmation} />
+            <Stack.Screen
+                name="SwapConfirmation"
+                component={SwapConfirmation}
+                options={{
+                    headerShown: false,
+                }}
+            />
         </Stack.Navigator>
     );
 };

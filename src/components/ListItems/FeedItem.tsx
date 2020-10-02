@@ -30,9 +30,10 @@ export const FeedItem = ({ item }: FeedItemProps) => {
                     justifyContent: 'center',
                 }}
             >
-                <Text category="p1">{item.task.role.name}</Text>
+                {/* <Text category="p1">{item.task.role.name}</Text>
                 <Text category="p2">{item.task.date.toString()}</Text>
-                <Text category="p2">{item.message}</Text>
+                <Text category="p2">{item.message}</Text> */}
+                <Text>Theres a notification here ok?</Text>
             </View>
         </TouchableOpacity>
     );

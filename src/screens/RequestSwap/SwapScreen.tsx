@@ -49,6 +49,7 @@ export const SwapScreen = (props) => {
     }, [swapCandidates]);
 
     const [filteredTasks, setFilteredTasks] = useState(tasks);
+    const selectedTasks = filteredTasks.filter((task) => task.isSelected);
 
     //callbacks
     const onItemSelect = (item, index) => {
@@ -130,7 +131,9 @@ export const SwapScreen = (props) => {
     };
 
     const onNextHandler = () => {
-        props.navigation.navigate('SwapSummary');
+        props.navigation.navigate('SwapSummary', {
+            selectedTasks: selectedTasks,
+        });
     };
 
     return (
@@ -181,7 +184,11 @@ export const SwapScreen = (props) => {
                     keyExtractor={(item) => `${item.date} ${item.id} ${item.taskId}`}
                     showsVerticalScrollIndicator={false}
                 />
-                <Button style={{ margin: 10, width: 130 }} onPress={onNextHandler}>
+                <Button
+                    style={{ margin: 10, width: 130 }}
+                    onPress={onNextHandler}
+                    disabled={selectedTasks.length > 0 ? false : true}
+                >
                     Next
                 </Button>
             </View>

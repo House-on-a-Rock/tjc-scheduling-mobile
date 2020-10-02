@@ -63,7 +63,7 @@ export const DatePicker = ({ onTilePress, selectedDates, initialTasks, onBlur })
             : 'Date';
 
     return (
-        <OutsidePressDetection>
+        <View>
             <TouchableOpacity
                 activeOpacity={0.5}
                 onPress={() => {
@@ -94,7 +94,7 @@ export const DatePicker = ({ onTilePress, selectedDates, initialTasks, onBlur })
                     initialTasks={initialTasks}
                 />
             )}
-        </OutsidePressDetection>
+        </View>
     );
 };
 
