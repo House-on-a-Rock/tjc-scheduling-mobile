@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Layout, Text, Icon, Button, Radio, RadioGroup } from '@ui-kitten/components';
+import { View, StyleSheet } from 'react-native';
+import { Layout, Text, Icon, Button } from '@ui-kitten/components';
 import { useDispatch } from 'react-redux';
 import { setSwapConfig } from '../../store/actions/swapActions';
 import { SelectCard } from '../../components/SelectCard';
@@ -11,6 +11,7 @@ interface SelectSwapOptionProps {
 }
 
 export const SelectSwapOption = (props: SelectSwapOptionProps) => {
+    //TODO hook up these choices to do their intended purpose
     const [selectedIndex1, setSelectedIndex1] = useState(0);
     const [selectedIndex2, setSelectedIndex2] = useState(0);
 
@@ -30,7 +31,7 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
         props.navigation.navigate('SwapScreen');
     };
 
-    const bottomRow1 = () => (
+    const iconSet1 = () => (
         <View style={{ flexDirection: 'row' }}>
             <Icon name="person" {...iconSettings} />
             <Icon name="swap" {...iconSettings} />
@@ -38,7 +39,7 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
         </View>
     );
 
-    const bottomRow2 = () => (
+    const iconSet2 = () => (
         <View style={{ flexDirection: 'row' }}>
             <Icon name="person" {...iconSettings} />
             <Icon name="arrow-forward" {...iconSettings} />
@@ -70,14 +71,14 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
                 <Text>Would you like to</Text>
                 <SelectCard
                     displayedText={'Switch duty with someone'}
-                    bottomRow={bottomRow1}
+                    bottomRow={iconSet1}
                     onPressHandler={onCardPress1}
                     cardIndex={0}
                     selectedIndex={selectedIndex1}
                 />
                 <SelectCard
                     displayedText="Have your duty replaced"
-                    bottomRow={bottomRow2}
+                    bottomRow={iconSet2}
                     onPressHandler={onCardPress1}
                     cardIndex={1}
                     selectedIndex={selectedIndex1}

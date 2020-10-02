@@ -1,11 +1,13 @@
-import React, { ReactNode } from 'react';
-import { TouchableOpacity, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import React from 'react';
+import { TouchableOpacity, StyleSheet } from 'react-native';
 import { Text } from '@ui-kitten/components';
 
 interface SelectCardProps {
-    displayedText: string;
+    displayedText;
     bottomRow;
-    onPressHandler?: () => void;
+    cardIndex;
+    onPressHandler;
+    selectedIndex;
 }
 
 export const SelectCard = ({
@@ -14,8 +16,7 @@ export const SelectCard = ({
     cardIndex,
     onPressHandler,
     selectedIndex,
-}) => {
-    // const borderColor = selectedIndex === cardIndex ? 'red' : 'white';
+}: SelectCardProps) => {
     const style =
         selectedIndex === cardIndex
             ? { ...selectStyle.selectCard, ...selectStyle.selected }

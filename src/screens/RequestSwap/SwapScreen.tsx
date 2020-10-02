@@ -33,7 +33,7 @@ export const SwapScreen = (props) => {
         (task) => !task.isSelected,
     ];
 
-    //these operations only need to be run once on render. useEffect runs after everything is loaded so stuff got angry at me
+    //these operations only need to be run once on render. useEffect runs after everything is loaded so things that relied on tasks got angry at me
     const tasks = React.useMemo(
         () =>
             swapCandidates
@@ -139,6 +139,11 @@ export const SwapScreen = (props) => {
             <View style={styles.textContainer}>
                 <Text>Select one or more workers to request</Text>
                 <Text>an exchange of duty times</Text>
+                <View style={{ flexDirection: 'row' }}>
+                    <Icon name="person" {...iconProps} />
+                    <Icon name="swap" {...iconProps} />
+                    <Icon name="person" {...iconProps} />
+                </View>
             </View>
             <View style={styles.filterContainer}>
                 <DatePicker
