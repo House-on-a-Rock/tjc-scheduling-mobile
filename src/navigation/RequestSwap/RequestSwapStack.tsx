@@ -10,7 +10,7 @@ interface RequestSwapStackProps {
 
 const ReqStack = createStackNavigator();
 
-//unused now, remove later
+//unused now, will remove later if confirmed unneeded
 export const RequestSwapStack = (props: RequestSwapStackProps) => {
     //animation for every screen in this stack
     const MyTransition = {
@@ -54,9 +54,10 @@ export const RequestSwapStack = (props: RequestSwapStackProps) => {
         <ReqStack.Navigator
             mode="card"
             headerMode={'none'}
-            screenOptions={{
-                ...MyTransition,
-            }}
+            //comments make the red go away
+            // screenOptions={{
+            //     ...MyTransition,
+            // }}
         >
             <ReqStack.Screen
                 name="SelectSwapOption"
