@@ -7,31 +7,15 @@ import { sendSwapRequest } from '../../store/actions/swapActions';
 import { LoadingPage } from '../../components/LoadingPage';
 import { LoadStateActionTypes } from '../../store/actions';
 
-import { windowHeight } from '../../shared/constants/';
-
 export const SwapSummary = ({ route, navigation }) => {
+    //TODO: display loading screen after button press
+    //TODO: hook up send swap request to api
     const dispatch = useDispatch();
     const loadState = useSelector((state) => state.loadStateReducer.loadStatus.SWAP);
     const errorState = useSelector(
         (state) => state.loadStateReducer.loadErrorStatus.SWAP,
     );
     const { selectedTasks } = route.params;
-
-    // {loadState === LoadStateActionTypes.LOADING && (
-    //     <LoadingPage
-    //         style={{
-    //             height: '100%',
-    //             width: '100%',
-    //             position: 'absolute',
-    //             right: 0,
-    //             left: 0,
-    //             top: windowHeight / 2 - 30,
-    //             paddingTop: 0,
-    //         }}
-    //         styleSafeArea={{ paddingTop: 0 }}
-    //     />
-    // )}
-    // dispatch(sendSwapRequest(myTask.taskId, targetTask?.taskId, message));
 
     const iconProps = {
         height: 30,

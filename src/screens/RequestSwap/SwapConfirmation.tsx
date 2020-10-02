@@ -5,14 +5,15 @@ import { useSelector } from 'react-redux';
 import { LoadStateActionTypes } from '../../store/actions';
 import { Card } from '../../components/Card';
 
-export const SwapConfirmation = (props) => {
+export const SwapConfirmation = ({ route, navigation }) => {
     // const requestState = useSelector((state) => state.loadStateReducer.loadStatus.SWAP);
     //TODO: configure error message if request was unsuccessful
     //TODO: missing dove asset
 
     const onButtonPress = () => {
-        props.navigation.navigate('Schedule');
+        navigation.navigate('Schedule');
     };
+
     return (
         <View
             style={{
@@ -23,11 +24,6 @@ export const SwapConfirmation = (props) => {
                 paddingTop: 40,
             }}
         >
-            {/* {requestState === LoadStateActionTypes.LOADED && <Text>Request Sent!</Text>}
-            {requestState === LoadStateActionTypes.ERROR && (
-                <Text>There was an error sending the request, please try again</Text>
-            )} */}
-            {/* <Button onPress={props.route.params.closeModal}>Close</Button> */}
             <Icon name="alert-circle-outline" height={250} width={250} fill="#000" />
             <Card style={{ height: 350, width: '75%' }}>
                 <Text>Success!</Text>

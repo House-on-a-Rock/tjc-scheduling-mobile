@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
-import { Text, Button, Icon } from '@ui-kitten/components';
+import { Text, Icon } from '@ui-kitten/components';
 import { Calendar } from './Calendar';
 import { calendarCardDimensions } from '../../shared/constants/';
-import { OutsidePressDetection } from '../OutsidePressDetection';
 
+//do we want this to be swipeable too?
 const Picker = ({
     incrementMonth,
     decrementMonth,
@@ -42,6 +42,7 @@ const Picker = ({
 );
 
 export const DatePicker = ({ onTilePress, selectedDates, initialTasks, onBlur }) => {
+    //TODO: detect if press occured outside calendar, and close datepicker on outside press
     const [isPickerVisible, setIsPickerVisible] = useState(false);
     const [displayedMonth, setDisplayedMonth] = useState(new Date());
 
@@ -145,7 +146,6 @@ const styles = StyleSheet.create({
     },
     button: {
         margin: 2,
-        // padding: 3,
         justifyContent: 'center',
         alignItems: 'center',
     },

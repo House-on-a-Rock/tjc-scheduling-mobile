@@ -14,8 +14,11 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
     const [selectedIndex1, setSelectedIndex1] = useState(0);
     const [selectedIndex2, setSelectedIndex2] = useState(0);
 
-    const iconDimensions = 25;
-    const iconColor = '#000000';
+    const iconSettings = {
+        height: 25,
+        width: 25,
+        fill: '#000000',
+    };
     const dispatch = useDispatch();
 
     const onNextHandler = () => {
@@ -29,47 +32,27 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
 
     const bottomRow1 = () => (
         <View style={{ flexDirection: 'row' }}>
-            <Icon
-                name="person"
-                height={iconDimensions}
-                width={iconDimensions}
-                fill={iconColor}
-            />
-            <Icon
-                name="swap"
-                height={iconDimensions}
-                width={iconDimensions}
-                fill={iconColor}
-            />
-            <Icon
-                name="person"
-                height={iconDimensions}
-                width={iconDimensions}
-                fill={iconColor}
-            />
+            <Icon name="person" {...iconSettings} />
+            <Icon name="swap" {...iconSettings} />
+            <Icon name="person" {...iconSettings} />
         </View>
     );
 
     const bottomRow2 = () => (
         <View style={{ flexDirection: 'row' }}>
-            <Icon
-                name="person"
-                height={iconDimensions}
-                width={iconDimensions}
-                fill={iconColor}
-            />
-            <Icon
-                name="arrow-forward"
-                height={iconDimensions}
-                width={iconDimensions}
-                fill={iconColor}
-            />
-            <Icon
-                name="person"
-                height={iconDimensions}
-                width={iconDimensions}
-                fill={iconColor}
-            />
+            <Icon name="person" {...iconSettings} />
+            <Icon name="arrow-forward" {...iconSettings} />
+            <Icon name="person" {...iconSettings} />
+        </View>
+    );
+
+    const iconSet3 = () => <Icon name="person" {...iconSettings} />;
+
+    const iconSet4 = () => (
+        <View style={{ flexDirection: 'row' }}>
+            <Icon name="person" {...iconSettings} />
+            <Icon name="person" {...iconSettings} />
+            <Icon name="person" {...iconSettings} />
         </View>
     );
 
@@ -83,9 +66,8 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
 
     return (
         <Layout style={styles.layout}>
-            <Text>Choose an option</Text>
-
             <View style={styles.cardContainer}>
+                <Text>Would you like to</Text>
                 <SelectCard
                     displayedText={'Switch duty with someone'}
                     bottomRow={bottomRow1}
@@ -101,25 +83,25 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
                     selectedIndex={selectedIndex1}
                 />
             </View>
-            <Text>Is this request for</Text>
 
             <View style={styles.cardContainer}>
+                <Text>Is this request for</Text>
                 <SelectCard
                     displayedText="Specific time or person"
-                    bottomRow={bottomRow1}
+                    bottomRow={iconSet3}
                     onPressHandler={onCardPress2}
                     cardIndex={0}
                     selectedIndex={selectedIndex2}
                 />
                 <SelectCard
                     displayedText="Anyone, as long as my duty is replaced"
-                    bottomRow={bottomRow2}
+                    bottomRow={iconSet4}
                     onPressHandler={onCardPress2}
                     cardIndex={1}
                     selectedIndex={selectedIndex2}
                 />
             </View>
-            <Button style={{}} onPress={onNextHandler}>
+            <Button style={{ width: 130, margin: 5 }} onPress={onNextHandler}>
                 Next
             </Button>
         </Layout>
@@ -132,9 +114,12 @@ const styles = StyleSheet.create({
         width: '100%',
         padding: 20,
         paddingVertical: 35,
+        alignItems: 'center',
+        justifyContent: 'space-around',
     },
     cardContainer: {
-        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
         width: '90%',
         height: '30%',
         paddingVertical: 10,

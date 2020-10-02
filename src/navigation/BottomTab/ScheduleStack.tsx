@@ -25,6 +25,7 @@ export const ScheduleStack = () => {
                 component={SwapConfirmation}
                 options={{
                     headerShown: false,
+                    gestureEnabled: false,
                 }}
             />
         </Stack.Navigator>

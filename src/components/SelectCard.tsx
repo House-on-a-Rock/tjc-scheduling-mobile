@@ -15,11 +15,15 @@ export const SelectCard = ({
     onPressHandler,
     selectedIndex,
 }) => {
-    const borderColor = selectedIndex === cardIndex ? 'red' : 'white';
+    // const borderColor = selectedIndex === cardIndex ? 'red' : 'white';
+    const style =
+        selectedIndex === cardIndex
+            ? { ...selectStyle.selectCard, ...selectStyle.selected }
+            : selectStyle.selectCard;
     return (
         <TouchableOpacity
             activeOpacity={1}
-            style={{ ...selectStyle.selectCard, borderColor: borderColor }}
+            style={style}
             onPress={() => onPressHandler(cardIndex)}
         >
             <Text category="s1" style={{ paddingVertical: 5 }}>
@@ -31,12 +35,12 @@ export const SelectCard = ({
 };
 const selectStyle = StyleSheet.create({
     selectCard: {
-        width: '50%',
-        height: '100%',
-        margin: 5,
-        borderWidth: 1,
+        width: '100%',
+        height: 80,
+        marginVertical: 5,
+        borderRadius: 30,
         backgroundColor: 'white',
-        paddingHorizontal: 5,
+        padding: 5,
         alignItems: 'center',
 
         shadowColor: '#000',
@@ -48,5 +52,10 @@ const selectStyle = StyleSheet.create({
         shadowRadius: 3.84,
 
         elevation: 5,
+    },
+    selected: {
+        borderColor: 'rgb(40, 224, 224)',
+        borderWidth: 2,
+        padding: 3,
     },
 });

@@ -27,6 +27,7 @@ function useOutsideAlerter(ref) {
  * Component that alerts if you click outside of it
  */
 export const OutsidePressDetection = (props) => {
+    //TODO: figure this one out for the datepicker
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
 
