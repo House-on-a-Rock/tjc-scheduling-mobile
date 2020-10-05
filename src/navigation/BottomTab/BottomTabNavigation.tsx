@@ -29,9 +29,9 @@ const BottomTabBar = ({ navigation, state }) => {
             selectedIndex={state.index}
             onSelect={(index) => navigation.navigate(state.routeNames[index])}
         >
-            <BottomNavigationTab title="Feed" icon={icons.feed} />
             <BottomNavigationTab title="Dashboard" icon={icons.dashboard} />
             <BottomNavigationTab title="Schedule" icon={icons.schedule} />
+            <BottomNavigationTab title="Notifications" icon={icons.feed} />
             <BottomNavigationTab title="Settings" icon={icons.settings} />
         </BottomNavigation>
     );
@@ -52,15 +52,6 @@ export const BottomTabs = () => {
                 initialRouteName="Feed"
                 tabBar={(props) => <BottomTabBar {...props} />}
             >
-                <Tab.Screen
-                    name="Feed"
-                    component={ActivityFeedStack}
-                    // to add badges to the icon:
-                    // options={{
-                    //     tabBarIcon: icons.feedIcon,
-                    //     tabBarBadge: '1',
-                    // }}
-                />
                 <Tab.Screen name="Dashboard" component={DashboardStack} />
                 <Tab.Screen
                     name="Schedule"
@@ -70,6 +61,16 @@ export const BottomTabs = () => {
                         // tabBarVisible: false,
                     })}
                 />
+                <Tab.Screen
+                    name="Feed"
+                    component={ActivityFeedStack}
+                    // to add badges to the icon:
+                    // options={{
+                    //     tabBarIcon: icons.feedIcon,
+                    //     tabBarBadge: '1',
+                    // }}
+                />
+
                 <Tab.Screen name="Settings" component={SettingsStack} />
             </Tab.Navigator>
         </NavigationContainer>

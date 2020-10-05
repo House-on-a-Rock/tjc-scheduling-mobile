@@ -17,11 +17,12 @@ import {
 import { TaskPaneItem } from './TaskPaneItem';
 import { LinearGradient } from 'expo-linear-gradient';
 import { selectDate, hidePreviewPane } from '../../store/actions';
+import { Card } from '../Card';
 
 const calendarHeight: number = calendarCardDimensions.totalHeight;
-const windowHeight: number = Dimensions.get('window').height;
+const windowHeight: number = Dimensions.get('screen').height;
 const taskPreviewHeight: number =
-    windowHeight - (calendarHeight + headerBarHeight + statusBarHeight);
+    windowHeight - calendarHeight + headerBarHeight + statusBarHeight;
 
 export const TaskPreviewPane = () => {
     const defaultSelected = { date: null, tasks: null };
@@ -31,12 +32,11 @@ export const TaskPreviewPane = () => {
             ? state.calendarReducer.selectedDate
             : defaultSelected,
     );
-    const transformY = useRef(new Animated.Value(windowHeight)).current;
+    const transformY = useRef(new Animated.Value(1000)).current;
 
     useEffect(() => {
-        //open animation
         Animated.timing(transformY, {
-            toValue: taskPreviewHeight + 110, //100 seems to work, works on a smaller android phone too
+            toValue: taskPreviewHeight, //taskPreviewHeight + 110, //100 seems to work, works on a smaller android phone too
             duration: 200,
             useNativeDriver: true,
         }).start();
@@ -51,7 +51,8 @@ export const TaskPreviewPane = () => {
 
         //close animation
         Animated.timing(transformY, {
-            toValue: windowHeight,
+            // toValue: windowHeight,
+            toValue: 1000,
             duration: 300,
             useNativeDriver: true,
         }).start(() => dispatch(hidePreviewPane()));
@@ -61,13 +62,18 @@ export const TaskPreviewPane = () => {
         <Animated.View
             style={{ ...styles.container, transform: [{ translateY: transformY }] }}
         >
-            <LinearGradient colors={['#EDEEF3', '#FFFFFF']} style={{ flex: 1 }}>
-                <Layout style={styles.layout}>
-                    <Text style={{ textAlign: 'center' }}>Tasks</Text>
-                    <View style={styles.hideText}>
-                        <Button onPress={onHidePressHandler}>Hide</Button>
-                    </View>
-                </Layout>
+            <LinearGradient
+                colors={['rgb(100, 220, 220)', 'rgb(222, 246, 246)']}
+                style={{ flex: 1, borderRadius: 20, padding: 10 }}
+            >
+                {/* <View style={styles.layout}>
+                    <Button
+                        style={{ width: 100, height: 10 }}
+                        onPress={onHidePressHandler}
+                    >
+                        Hide
+                    </Button>
+                </View> */}
                 {tasks?.length > 0 ? (
                     <FlatList
                         keyExtractor={(item, index) => index.toString()}
@@ -100,5 +106,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         width: '100%',
         height: 30,
+        alignItems: 'flex-end',
     },
 });
