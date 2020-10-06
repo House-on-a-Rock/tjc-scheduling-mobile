@@ -4,7 +4,6 @@ import { FlatList, StyleSheet, LayoutAnimation, Platform, UIManager } from 'reac
 import { useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 import SwipeableItem from '../../components/SwipeableItem';
-import { NewAssignmentItem } from '../../components/NewAssignments/NewAssignmentItem';
 import { FeedItem } from '../../components/ListItems/FeedItem';
 import { windowWidth } from '../../shared/constants';
 

@@ -1,23 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-    View,
-    Dimensions,
-    TouchableOpacity,
-    FlatList,
-    StyleSheet,
-    Animated,
-} from 'react-native';
-import { Layout, Text, Button } from '@ui-kitten/components';
+import { Dimensions, FlatList, StyleSheet, Animated } from 'react-native';
+import { Text } from '@ui-kitten/components';
 import {
     calendarCardDimensions,
     headerBarHeight,
     statusBarHeight,
-} from '../../shared/constants';
-import { TaskPaneItem } from './TaskPaneItem';
+} from '../shared/constants';
 import { LinearGradient } from 'expo-linear-gradient';
-import { selectDate, hidePreviewPane } from '../../store/actions';
-import { Card } from '../Card';
+import { TaskItem } from './ListItems/TaskItem';
 
 const calendarHeight: number = calendarCardDimensions.totalHeight;
 const windowHeight: number = Dimensions.get('screen').height;
@@ -26,7 +17,6 @@ const taskPreviewHeight: number =
 
 export const TaskPreviewPane = () => {
     const defaultSelected = { date: null, tasks: null };
-    const dispatch = useDispatch();
     let selectedDate = useSelector((state) =>
         !!state.calendarReducer.selectedDate
             ? state.calendarReducer.selectedDate
@@ -42,21 +32,19 @@ export const TaskPreviewPane = () => {
         }).start();
     }, [transformY]);
 
-    let { date, tasks } = selectedDate;
+    let { tasks } = selectedDate;
 
-    const renderItem = ({ item }) => <TaskPaneItem item={item} />;
+    const renderItem = ({ item }) => <TaskItem item={item} />;
 
-    const onHidePressHandler = () => {
-        dispatch(selectDate(null, null));
-
-        //close animation
-        Animated.timing(transformY, {
-            // toValue: windowHeight,
-            toValue: 1000,
-            duration: 300,
-            useNativeDriver: true,
-        }).start(() => dispatch(hidePreviewPane()));
-    };
+    // const onHidePressHandler = () => {
+    //     dispatch(selectDate(null, null));
+    //     //close animation
+    //     Animated.timing(transformY, {
+    //         toValue: 1000,
+    //         duration: 300,
+    //         useNativeDriver: true,
+    //     }).start(() => dispatch(hidePreviewPane()));
+    // };
 
     return (
         <Animated.View

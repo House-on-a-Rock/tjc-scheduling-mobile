@@ -10,7 +10,7 @@ type ScreenProps = {
     accessoryRight?: () => JSX.Element;
     style?;
 };
-
+//unused
 export const Screen = (props: ScreenProps) => {
     return (
         <SafeAreaView style={{ ...styles.screen, ...props.style }}>

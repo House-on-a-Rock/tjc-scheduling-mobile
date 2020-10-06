@@ -11,9 +11,6 @@ import { ActivityFeedStack } from './ActivityFeedStack';
 const Tab = createBottomTabNavigator();
 
 const icons = {
-    // feedIcon: (props) => (
-    //     <Icon name="bar-chart-outline" height={30} width={30} fill="#000000" />
-    // ),
     feed: (props) => <Icon name="bar-chart-outline" {...props} />,
     dashboard: (props) => <Icon name="clipboard-outline" {...props} />,
     schedule: (props) => <Icon name="calendar-outline" {...props} />,
@@ -49,7 +46,7 @@ export const BottomTabs = () => {
         <NavigationContainer>
             <Tab.Navigator
                 lazy={false}
-                initialRouteName="Feed"
+                initialRouteName="Dashboard"
                 tabBar={(props) => <BottomTabBar {...props} />}
             >
                 <Tab.Screen name="Dashboard" component={DashboardStack} />
@@ -58,7 +55,6 @@ export const BottomTabs = () => {
                     component={ScheduleStack}
                     options={({ route }) => ({
                         tabBarVisible: getTabBarVisibility(route),
-                        // tabBarVisible: false,
                     })}
                 />
                 <Tab.Screen
