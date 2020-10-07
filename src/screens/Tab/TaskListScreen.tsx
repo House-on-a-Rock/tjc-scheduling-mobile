@@ -1,15 +1,13 @@
 import React from 'react';
-import { StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, FlatList, View } from 'react-native';
 import { TaskListScreenProps } from '../../shared/models';
-import { Screen } from '../../components/Screen';
-import { Text, Layout } from '@ui-kitten/components';
-import { openDrawerAction } from '../../shared/components';
-import { useSelector } from 'react-redux';
-import { LinearGradient } from 'expo-linear-gradient';
-import { TaskListItem } from '../../components/ListItems/TaskListItem';
+import { Text, Layout, Divider } from '@ui-kitten/components';
+import { TaskItem } from '../../components/ListItems/TaskItem';
+import { TitledCard } from '../../components/TitledCard';
 
 import { compareDates } from '../../services/Calendar/helper_functions';
 
+//remove dummy data
 const tasks = [
     {
         church: {
@@ -85,6 +83,8 @@ const tasks = [
     },
 ];
 
+//TODO ensure real tasks work instead of my dummy tasks
+//use michelle's colors once she sends it over
 export const TaskListScreen = (props: TaskListScreenProps) => {
     // const tasks = useSelector((state) => state.taskReducer.tasks);
 
@@ -98,18 +98,30 @@ export const TaskListScreen = (props: TaskListScreenProps) => {
         } else return [...acc, [task]];
     }, []);
 
-    // const leftAccessory = () => openDrawerAction(props.navigation.toggleDrawer);
-    // const rightAccessory = () => (
-    //     <TouchableOpacity
-    //         onPress={() => props.navigation.goBack()}
-    //         style={{ flexWrap: 'wrap', paddingRight: 10 }}
-    //     >
-    //         <Text category={'s1'}> View as</Text>
-    //         <Text category={'s1'}>Calendar</Text>
-    //     </TouchableOpacity>
-    // );
+    const renderItem = (props) => {
+        const date = props.item[0].date;
+        const title = new Date(date).toLocaleDateString('en-US', {
+            month: 'long',
+            day: 'numeric',
+            weekday: 'long',
+        });
 
-    const renderItem = ({ item }) => <TaskListItem tasks={item} />;
+        const taskDisplay: [] = props.item.map((item, index) => {
+            return (
+                <View key={index} style={{ alignItems: 'center' }}>
+                    <TaskItem
+                        item={item}
+                        style={styles.taskItemStyle}
+                        activeOpacity={0.6}
+                    />
+                    <Divider
+                        style={{ backgroundColor: 'rgb(186, 186, 186)', width: '90%' }}
+                    />
+                </View>
+            );
+        });
+        return <TitledCard title={title}>{taskDisplay}</TitledCard>;
+    };
 
     return (
         <Layout style={styles.container}>
@@ -131,5 +143,15 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         alignItems: 'center',
+    },
+    taskItemStyle: {
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 0,
+        },
+        shadowOpacity: 0,
+        shadowRadius: 0,
+        elevation: 0,
     },
 });

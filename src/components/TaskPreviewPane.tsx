@@ -15,6 +15,7 @@ const windowHeight: number = Dimensions.get('screen').height;
 const taskPreviewHeight: number =
     windowHeight - calendarHeight + headerBarHeight + statusBarHeight;
 
+//TODO look into adding swipe down to close pane
 export const TaskPreviewPane = () => {
     const defaultSelected = { date: null, tasks: null };
     let selectedDate = useSelector((state) =>
@@ -22,15 +23,15 @@ export const TaskPreviewPane = () => {
             ? state.calendarReducer.selectedDate
             : defaultSelected,
     );
-    const transformY = useRef(new Animated.Value(1000)).current;
+    const translateY = useRef(new Animated.Value(1000)).current;
 
     useEffect(() => {
-        Animated.timing(transformY, {
+        Animated.timing(translateY, {
             toValue: taskPreviewHeight, //taskPreviewHeight + 110, //100 seems to work, works on a smaller android phone too
             duration: 200,
             useNativeDriver: true,
         }).start();
-    }, [transformY]);
+    }, [translateY]);
 
     let { tasks } = selectedDate;
 
@@ -39,7 +40,7 @@ export const TaskPreviewPane = () => {
     // const onHidePressHandler = () => {
     //     dispatch(selectDate(null, null));
     //     //close animation
-    //     Animated.timing(transformY, {
+    //     Animated.timing(translateY, {
     //         toValue: 1000,
     //         duration: 300,
     //         useNativeDriver: true,
@@ -48,7 +49,7 @@ export const TaskPreviewPane = () => {
 
     return (
         <Animated.View
-            style={{ ...styles.container, transform: [{ translateY: transformY }] }}
+            style={{ ...styles.container, transform: [{ translateY: translateY }] }}
         >
             <LinearGradient
                 colors={['rgb(100, 220, 220)', 'rgb(222, 246, 246)']}

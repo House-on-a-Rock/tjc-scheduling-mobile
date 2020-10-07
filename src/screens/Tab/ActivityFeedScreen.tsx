@@ -13,12 +13,9 @@ interface ActivityFeedProps {
     onSwipe;
 }
 
-if (Platform.OS === 'android') {
-    UIManager.setLayoutAnimationEnabledExperimental &&
-        UIManager.setLayoutAnimationEnabledExperimental(true);
-}
+Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental?.(true);
 
-export const ActivityFeedScreen = (props: ActivityFeedProps) => {
+export const ActivityFeedScreen = ({ navigation }: ActivityFeedProps) => {
     const notifications = useSelector(
         (state) => state.notificationsReducer.notifications,
     );
@@ -44,7 +41,7 @@ export const ActivityFeedScreen = (props: ActivityFeedProps) => {
             itemId={item.notificationId}
             leftIcon={leftIcon}
         >
-            <FeedItem item={item} />
+            <FeedItem item={item} navigation={navigation} />
         </SwipeableItem>
     );
 

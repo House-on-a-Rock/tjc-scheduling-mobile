@@ -49,7 +49,11 @@ export const BottomTabs = () => {
                 initialRouteName="Dashboard"
                 tabBar={(props) => <BottomTabBar {...props} />}
             >
-                <Tab.Screen name="Dashboard" component={DashboardStack} />
+                <Tab.Screen
+                    name="Dashboard"
+                    component={DashboardStack}
+                    options={() => ({ title: 'hi' })}
+                />
                 <Tab.Screen
                     name="Schedule"
                     component={ScheduleStack}

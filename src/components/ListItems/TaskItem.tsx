@@ -42,9 +42,9 @@ export const TaskItem = (props: TaskItemProps) => {
             >
                 <Text>{role?.name} - Morning</Text>
 
-                <Text category="p2" style={{ justifyContent: 'flex-start' }}>
-                    <Entypo name="dot-single" size={20} color="green" /> Currently
-                    Scheduled
+                <Text category="p2">
+                    <Entypo name="dot-single" size={20} color="green" />
+                    Currently Scheduled
                 </Text>
             </View>
             <View
