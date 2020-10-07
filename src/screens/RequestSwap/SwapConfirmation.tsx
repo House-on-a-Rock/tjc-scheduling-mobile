@@ -11,7 +11,8 @@ export const SwapConfirmation = ({ route, navigation }) => {
     //TODO: missing dove asset
 
     const onButtonPress = () => {
-        navigation.navigate('Schedule');
+        // navigation.navigate('Schedule');
+        navigation.popToTop();
     };
 
     return (

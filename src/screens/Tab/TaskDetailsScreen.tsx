@@ -1,12 +1,8 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Card } from '../../components/Card';
 import { Layout, Text, Button, Icon, Divider, Input } from '@ui-kitten/components';
-
 import { Entypo } from '@expo/vector-icons';
-
-import { resetSwapConfig } from '../../store/actions/swapActions';
-import { SwapStateActions } from '../../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 import { retrieveSwapCandidates, setMyTask } from '../../store/actions/swapActions';
