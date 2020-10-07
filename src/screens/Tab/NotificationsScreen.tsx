@@ -4,10 +4,10 @@ import { FlatList, StyleSheet, LayoutAnimation, Platform, UIManager } from 'reac
 import { useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 import SwipeableItem from '../../components/SwipeableItem';
-import { FeedItem } from '../../components/ListItems/FeedItem';
+import { NotificationItem } from '../../components/ListItems/NotificationItem';
 import { windowWidth } from '../../shared/constants';
 
-interface ActivityFeedProps {
+interface NotificationsProps {
     route;
     navigation;
     onSwipe;
@@ -15,7 +15,7 @@ interface ActivityFeedProps {
 
 Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental?.(true);
 
-export const ActivityFeedScreen = ({ navigation }: ActivityFeedProps) => {
+export const NotificationsScreen = ({ navigation }: NotificationsProps) => {
     const notifications = useSelector(
         (state) => state.notificationsReducer.notifications,
     );
@@ -41,7 +41,7 @@ export const ActivityFeedScreen = ({ navigation }: ActivityFeedProps) => {
             itemId={item.notificationId}
             leftIcon={leftIcon}
         >
-            <FeedItem item={item} navigation={navigation} />
+            <NotificationItem item={item} navigation={navigation} />
         </SwipeableItem>
     );
 
@@ -60,7 +60,7 @@ export const ActivityFeedScreen = ({ navigation }: ActivityFeedProps) => {
                         data={data}
                         renderItem={renderItem}
                         keyExtractor={(item, index) =>
-                            `ActivityFeed ${item.notificationId}${index}`
+                            `Notification ${item.notificationId}${index}`
                         }
                         decelerationRate={0.1}
                     />

@@ -1,23 +1,23 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { ActivityFeedScreen, TaskDetailsScreen } from '../../screens';
+import { NotificationsScreen, TaskDetailsScreen } from '../../screens';
 
 import {
     SwapScreen,
     SwapSummary,
     SwapConfirmation,
     SelectSwapOption,
-} from '../../screens/RequestSwap/';
+} from '../../screens/RequestSwap';
 
 const Stack = createStackNavigator();
 
-export const ActivityFeedStack = (props) => {
+export const NotificationStack = (props) => {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{ title: '' }}>
             <Stack.Screen
-                name="ActivityFeed"
-                component={ActivityFeedScreen}
-                options={{ title: 'Feed' }}
+                name="Notifications"
+                component={NotificationsScreen}
+                options={{ headerShown: false }}
             />
             <Stack.Screen name="TaskDetails" component={TaskDetailsScreen} />
 

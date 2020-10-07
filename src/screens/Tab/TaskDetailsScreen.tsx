@@ -7,15 +7,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 import { retrieveSwapCandidates, setMyTask } from '../../store/actions/swapActions';
 
+//TODO caching of swap candidates based on task
 export const TaskDetailsScreen = (props) => {
     const { task } = props.route.params;
-    const { myTask } = useSelector((state) => state.swapReducer);
+    // const { myTask } = useSelector((state) => state.swapReducer);
     const dispatch = useDispatch();
     const dotColor = 'green';
 
     const onButtonPressHandler = () => {
         dispatch(retrieveSwapCandidates(task.church.churchId, task.roleId, task.userId));
-        if (myTask === null || myTask.taskId !== task.taskId) dispatch(setMyTask(task));
+        // if (myTask === null || myTask.taskId !== task.taskId) dispatch(setMyTask(task)); //redo this caching
         props.navigation.navigate('SelectSwapOption');
     };
 
@@ -43,7 +44,7 @@ export const TaskDetailsScreen = (props) => {
                         justifyContent: 'space-between',
                     }}
                 >
-                    <View style={styles.top}>
+                    <View>
                         <View style={styles.row}>
                             <Icon name="book-outline" {...iconProps} />
                             <Text category="h2">{task.role.name}</Text>
@@ -88,5 +89,4 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
-    top: {},
 });

@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from '@ui-kitten/components';
-import { PropsService } from '@ui-kitten/components/devsupport';
 
 interface TitledCardProps {
     children;
@@ -9,18 +8,16 @@ interface TitledCardProps {
     style?;
 }
 
-export const TitledCard = ({ children, title, style }: TitledCardProps) => {
-    return (
-        <View style={{ ...styles.shadow, ...style }}>
-            <View style={styles.container}>
-                <View style={styles.titleBar}>
-                    <Text style={{ color: 'white' }}>{title}</Text>
-                </View>
-                {children}
+export const TitledCard = ({ children, title, style }: TitledCardProps) => (
+    <View style={{ ...styles.shadow, ...style }}>
+        <View style={styles.container}>
+            <View style={styles.titleBar}>
+                <Text style={{ color: 'white' }}>{title}</Text>
             </View>
+            {children}
         </View>
-    );
-};
+    </View>
+);
 
 const styles = StyleSheet.create({
     container: {
@@ -43,7 +40,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     titleBar: {
-        height: 30,
+        height: 33,
+        padding: 3,
         width: '100%',
         backgroundColor: 'green',
         justifyContent: 'center',

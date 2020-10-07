@@ -19,6 +19,7 @@ import { Screen } from '../../components/Screen';
 import { openDrawerAction } from '../../shared/components';
 import { Text, Layout } from '@ui-kitten/components';
 
+//unused
 export const ProfileScreen = (props: ProfileScreenProps) => {
     const { email, firstName, lastName, church } = useSelector(
         ({ profileReducer }) => profileReducer.profile,

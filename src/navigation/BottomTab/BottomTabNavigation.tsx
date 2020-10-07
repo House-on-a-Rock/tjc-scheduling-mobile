@@ -6,12 +6,12 @@ import { ScheduleStack } from './ScheduleStack';
 import { SettingsStack } from './SettingsStack';
 import { Icon, BottomNavigation, BottomNavigationTab } from '@ui-kitten/components';
 
-import { ActivityFeedStack } from './ActivityFeedStack';
+import { NotificationStack } from './NotificationStack';
 
 const Tab = createBottomTabNavigator();
 
 const icons = {
-    feed: (props) => <Icon name="bar-chart-outline" {...props} />,
+    notifications: (props) => <Icon name="bar-chart-outline" {...props} />,
     dashboard: (props) => <Icon name="clipboard-outline" {...props} />,
     schedule: (props) => <Icon name="calendar-outline" {...props} />,
     settings: (props) => <Icon name="settings-outline" {...props} />,
@@ -28,7 +28,7 @@ const BottomTabBar = ({ navigation, state }) => {
         >
             <BottomNavigationTab title="Dashboard" icon={icons.dashboard} />
             <BottomNavigationTab title="Schedule" icon={icons.schedule} />
-            <BottomNavigationTab title="Notifications" icon={icons.feed} />
+            <BottomNavigationTab title="Notifications" icon={icons.notifications} />
             <BottomNavigationTab title="Settings" icon={icons.settings} />
         </BottomNavigation>
     );
@@ -58,8 +58,8 @@ export const BottomTabs = () => {
                     })}
                 />
                 <Tab.Screen
-                    name="Feed"
-                    component={ActivityFeedStack}
+                    name="Notifications"
+                    component={NotificationStack}
                     // to add badges to the icon:
                     // options={{
                     //     tabBarIcon: icons.feedIcon,

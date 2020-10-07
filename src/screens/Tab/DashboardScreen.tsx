@@ -7,23 +7,18 @@ import {
     FlatList,
     ScrollView,
     TouchableOpacity,
-    ImageBackground,
 } from 'react-native';
-import { Icon, Text, Divider } from '@ui-kitten/components';
-import { Layout } from '@ui-kitten/components';
+import { Icon, Text } from '@ui-kitten/components';
 import { TitledCard } from '../../components/TitledCard';
 import * as ImagePicker from 'expo-image-picker';
 
 const profilePic = require('../../assets/images/JleeProfilePic.jpg');
 
-interface DashboardProps {
-    navigation;
-}
-
+//TODO
 //profile data needed
 //church photo, profile photo
 //how are tasks organized? if only upcoming tasks are grabbed, then upcoming assignment is easy
-export const DashboardScreen = (props: DashboardProps) => {
+export const DashboardScreen = () => {
     const [image, setImage] = useState(null);
     const { tasks } = useSelector((state) => state.taskReducer);
     const requests = [
@@ -125,18 +120,18 @@ export const DashboardScreen = (props: DashboardProps) => {
 
     const onCameraPressHandler = async () => {
         const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
-        if (status !== 'granted') {
+        status !== 'granted' &&
             alert('Sorry, we need camera roll permissions to make this work!');
-        }
+
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
-            aspect: [4, 3],
+            aspect: [4, 3], //android only
             quality: 1,
         });
 
         if (!result.cancelled) {
-            setImage(result.uri);
+            setImage(result.uri); //why is ts angry at me :(
             //TODO save image to db
         }
     };
@@ -229,7 +224,6 @@ const styles = StyleSheet.create({
         borderColor: 'grey',
         height: 150,
         width: 150,
-        // overflow: 'hidden',
     },
     profileText: { color: 'white' },
     center: {

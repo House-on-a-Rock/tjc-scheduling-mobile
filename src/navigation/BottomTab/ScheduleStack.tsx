@@ -10,7 +10,6 @@ import {
 } from '../../screens/RequestSwap/';
 import { TouchableOpacity } from 'react-native';
 import { Icon } from '@ui-kitten/components';
-import { useNavigation } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 

@@ -7,7 +7,7 @@ import { TitledCard } from '../../components/TitledCard';
 
 import { compareDates } from '../../services/Calendar/helper_functions';
 
-//remove dummy data
+//TODO remove dummy data
 const tasks = [
     {
         church: {

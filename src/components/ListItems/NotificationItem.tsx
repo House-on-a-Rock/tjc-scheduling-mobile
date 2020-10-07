@@ -6,7 +6,7 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { selectDate } from '../../store/actions';
 import { useDispatch } from 'react-redux';
 
-interface FeedItemProps {
+interface NotificationItemProps {
     item;
     navigation;
 }
@@ -35,14 +35,12 @@ const fakeTask = {
     userId: 1,
 };
 
-export const FeedItem = ({ item, navigation }: FeedItemProps) => {
+export const NotificationItem = ({ item, navigation }: NotificationItemProps) => {
     const dispatch = useDispatch();
-    // const navigation = useNavigation();
 
     const onPressHandler = () => {
         //navigate to screen depending on what the notification is linked to
-        //task --> task details
-        //
+        //task --> task details done
         //request --> request details
         //? anything else
         navigation.navigate('TaskDetails', { task: fakeTask });
