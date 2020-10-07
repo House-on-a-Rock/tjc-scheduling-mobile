@@ -44,9 +44,30 @@ export const DashboardScreen = (props: DashboardProps) => {
         {
             message: 'This guy requested something!',
             requesterFirstName: 'Roger',
-            requesterLastName: 'Boawej',
+            requesterLastName: 'Dodger',
             requestId: 21,
             targetTask: 62,
+        },
+        {
+            message: 'This guy requested something!',
+            requesterFirstName: 'Bobob',
+            requesterLastName: 'Hamburger',
+            requestId: 32,
+            targetTask: 151,
+        },
+        {
+            message: 'This guy requested something!',
+            requesterFirstName: 'Thomas',
+            requesterLastName: 'Choo',
+            requestId: 75,
+            targetTask: 8797,
+        },
+        {
+            message: 'This guy requested something!',
+            requesterFirstName: 'Becky',
+            requesterLastName: 'Cosmo',
+            requestId: 4784,
+            targetTask: 15050,
         },
     ];
 
@@ -122,7 +143,7 @@ export const DashboardScreen = (props: DashboardProps) => {
 
     const renderRequestCarousel = ({ item }) => (
         <TitledCard title="Received" style={{ marginHorizontal: 20 }}>
-            <View style={{ height: 200, width: 130 }}>
+            <View style={{ height: 200, width: 160 }}>
                 <Text>{item.message}</Text>
                 <Text>
                     {item.requesterFirstName} {item.requesterLastName}
@@ -132,7 +153,7 @@ export const DashboardScreen = (props: DashboardProps) => {
     );
 
     return (
-        <ScrollView style={{ ...styles.container }}>
+        <ScrollView style={{ ...styles.container }} bounces={false}>
             <Image source={profilePic} style={styles.backgroundImage} />
             <View style={styles.profileCard}>
                 <Image
@@ -174,8 +195,9 @@ export const DashboardScreen = (props: DashboardProps) => {
                     {upcomingAssignment}
                 </TitledCard>
                 <View style={styles.flatListContainer}>
+                    <Text>Recent Requests</Text>
                     <FlatList
-                        contentContainerStyle={styles.contentContainerStyle}
+                        // pagingEnabled={true}
                         data={requests}
                         renderItem={renderRequestCarousel}
                         horizontal={true}
@@ -235,10 +257,9 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
     },
     flatListContainer: {
-        height: 250,
+        height: 275,
         backgroundColor: 'white',
-    },
-    contentContainerStyle: {
-        // paddingHorizontal: 20,
+        alignItems: 'center',
+        marginVertical: 15,
     },
 });
