@@ -1,7 +1,7 @@
 import React from 'react';
 import { Platform, SafeAreaView } from 'react-native';
 import { Layout, Spinner } from '@ui-kitten/components';
-import { statusBarHeight } from '../shared/constants';
+import { statusBarHeight } from '../../shared/constants';
 
 interface LoadingPageProps {
     style?;
@@ -9,6 +9,7 @@ interface LoadingPageProps {
     opacity?;
 }
 //unused
+//jk its being imported somewhere but this needs to be overhauled
 export const LoadingPage = (props: LoadingPageProps) => {
     return (
         <SafeAreaView

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Dimensions, FlatList, StyleSheet, Animated } from 'react-native';
 import { Text } from '@ui-kitten/components';
@@ -9,14 +9,17 @@ import {
 } from '../shared/constants';
 import { LinearGradient } from 'expo-linear-gradient';
 import { TaskItem } from './ListItems/TaskItem';
+import { PanGestureHandler } from 'react-native-gesture-handler';
+import { hidePreviewPane } from '../store/actions';
 
 const calendarHeight: number = calendarCardDimensions.totalHeight;
 const windowHeight: number = Dimensions.get('screen').height;
 const taskPreviewHeight: number =
     windowHeight - calendarHeight + headerBarHeight + statusBarHeight;
 
-//TODO look into adding swipe down to close pane
+//TODO need stuff to display for when there are no tasks? or just blank. also make ts not angry at me
 export const TaskPreviewPane = () => {
+    const dispatch = useDispatch();
     const defaultSelected = { date: null, tasks: null };
     let selectedDate = useSelector((state) =>
         !!state.calendarReducer.selectedDate
@@ -37,43 +40,39 @@ export const TaskPreviewPane = () => {
 
     const renderItem = ({ item }) => <TaskItem item={item} />;
 
-    // const onHidePressHandler = () => {
-    //     dispatch(selectDate(null, null));
-    //     //close animation
-    //     Animated.timing(translateY, {
-    //         toValue: 1000,
-    //         duration: 300,
-    //         useNativeDriver: true,
-    //     }).start(() => dispatch(hidePreviewPane()));
-    // };
+    //added swipe to close functionality
+    const gestureHandler = ({ nativeEvent }) => {
+        //TODO needing to add these constants is really bad, need to handle diff screen sizes
+
+        const paneHeight = windowHeight - taskPreviewHeight + 75;
+        let yPos = nativeEvent.absoluteY - 90; //doesnt track finger well without this offset
+        if (yPos < paneHeight) yPos = paneHeight;
+
+        translateY.setValue(yPos);
+        if (yPos > windowHeight - 130) dispatch(hidePreviewPane());
+    };
 
     return (
-        <Animated.View
-            style={{ ...styles.container, transform: [{ translateY: translateY }] }}
-        >
-            <LinearGradient
-                colors={['rgb(100, 220, 220)', 'rgb(222, 246, 246)']}
-                style={{ flex: 1, borderRadius: 20, padding: 10 }}
+        <PanGestureHandler onGestureEvent={gestureHandler}>
+            <Animated.View
+                style={{ ...styles.container, transform: [{ translateY: translateY }] }}
             >
-                {/* <View style={styles.layout}>
-                    <Button
-                        style={{ width: 100, height: 10 }}
-                        onPress={onHidePressHandler}
-                    >
-                        Hide
-                    </Button>
-                </View> */}
-                {tasks?.length > 0 ? (
-                    <FlatList
-                        keyExtractor={(item, index) => index.toString()}
-                        data={tasks}
-                        renderItem={renderItem}
-                    />
-                ) : (
-                    <Text style={{ textAlign: 'center' }}>You've got no tasks!</Text>
-                )}
-            </LinearGradient>
-        </Animated.View>
+                <LinearGradient
+                    colors={['rgb(100, 220, 220)', 'rgb(222, 246, 246)']}
+                    style={{ flex: 1, borderRadius: 20, padding: 10 }}
+                >
+                    {tasks?.length > 0 ? (
+                        <FlatList
+                            keyExtractor={(item, index) => index.toString()}
+                            data={tasks}
+                            renderItem={renderItem}
+                        />
+                    ) : (
+                        <Text style={{ textAlign: 'center' }}>You've got no tasks!</Text>
+                    )}
+                </LinearGradient>
+            </Animated.View>
+        </PanGestureHandler>
     );
 };
 

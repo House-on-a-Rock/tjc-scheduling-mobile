@@ -149,7 +149,7 @@ export const DashboardScreen = () => {
 
     return (
         <ScrollView style={{ ...styles.container }} bounces={false}>
-            <Image source={profilePic} style={styles.backgroundImage} />
+            {/* <Image source={profilePic} style={styles.backgroundImage} /> */}
             <View style={styles.profileCard}>
                 <Image
                     source={image ? { uri: image } : profilePic}

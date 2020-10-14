@@ -4,7 +4,7 @@ import { Layout, Text, Button, Input, Icon } from '@ui-kitten/components';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { sendSwapRequest } from '../../store/actions/swapActions';
-import { LoadingPage } from '../../components/LoadingPage';
+import { LoadingPage } from '../../components/Unused/LoadingPage';
 import { LoadStateActionTypes } from '../../store/actions';
 
 export const SwapSummary = ({ route, navigation }) => {

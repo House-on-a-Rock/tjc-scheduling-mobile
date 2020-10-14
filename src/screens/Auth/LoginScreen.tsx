@@ -12,7 +12,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { LoginScreenProps } from '../../shared/models';
 import { checkCredentials, LoadStateActionTypes, login } from '../../store/actions';
 import { determineLoadState } from '../../store/helper';
-import { LoadingPage } from '../../components/LoadingPage';
+import { LoadingPage } from '../../components/Unused/LoadingPage';
 import { Button, Text, Icon, Layout, Input } from '@ui-kitten/components';
 import { EmailInput, PasswordInput } from '../../components/Forms';
 import { isValidEmail } from '../../shared/components/';

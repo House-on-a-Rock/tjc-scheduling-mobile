@@ -15,7 +15,7 @@ export const TaskDetailsScreen = (props) => {
     const dotColor = 'green';
 
     const onButtonPressHandler = () => {
-        dispatch(retrieveSwapCandidates(task.church.churchId, task.roleId, task.userId));
+        // dispatch(retrieveSwapCandidates(task.church.churchId, task.roleId, task.userId));
         // if (myTask === null || myTask.taskId !== task.taskId) dispatch(setMyTask(task)); //redo this caching
         props.navigation.navigate('SelectSwapOption');
     };
@@ -47,7 +47,7 @@ export const TaskDetailsScreen = (props) => {
                     <View>
                         <View style={styles.row}>
                             <Icon name="book-outline" {...iconProps} />
-                            <Text category="h2">{task.role.name}</Text>
+                            <Text category="h2">Name of the task</Text>
                         </View>
                         <View style={styles.row}>
                             <Entypo name="dot-single" size={40} color={dotColor} />

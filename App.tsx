@@ -53,6 +53,9 @@ const fetchFonts = () => {
         'OpenSans-Regular': require('./src/assets/Fonts/OpenSans-Regular.ttf'),
         'OpenSans-Bold': require('./src/assets/Fonts/OpenSans-Bold.ttf'),
         'OpenSans-SemiBold': require('./src/assets/Fonts/OpenSans-SemiBold.ttf'),
+        'SourceSansPro-Regular': require('./src/assets/Fonts/SourceSansPro-Regular.ttf'),
+        'SourceSansPro-Bold': require('./src/assets/Fonts/SourceSansPro-Bold.ttf'),
+        'SourceSansPro-Italic': require('./src/assets/Fonts/SourceSansPro-Italic.ttf'),
     });
 };
 
