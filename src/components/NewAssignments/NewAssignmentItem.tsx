@@ -19,7 +19,7 @@ export const NewAssignmentItem = ({ item }: NewAssignmentItemProps) => {
 
     const onPressHandler = () => {
         dispatch(selectDate(date, item));
-        navigation.navigate('Task Details', { task: item });
+        navigation.navigate('TaskDetails', { task: item });
     };
 
     return (
@@ -49,10 +49,12 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         width: windowWidth * 0.9,
-        height: 60,
+        height: 100,
         backgroundColor: 'white',
         borderRadius: 10,
-        margin: 10,
+        borderWidth: 1,
+        borderColor: '#BCBCBC',
+        margin: 5,
         alignItems: 'center',
     },
     leftAction: {

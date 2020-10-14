@@ -2,7 +2,7 @@ import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import {
-    LogoutStackParamList,
+    // LogoutStackParamList,
     DrawerStackParamList,
     ProfileStackParamList,
     SettingsStackParamList,
@@ -16,17 +16,17 @@ import {
 
 // LogoutScreen
 
-export type LogoutRouteProp = RouteProp<LogoutStackParamList, 'Logout'>;
+// export type LogoutRouteProp = RouteProp<LogoutStackParamList, 'Logout'>;
 
-export type LogoutStackNavigationProp = CompositeNavigationProp<
-    StackNavigationProp<LogoutStackParamList, 'Logout'>,
-    StackNavigationProp<DrawerStackParamList>
->;
+// export type LogoutStackNavigationProp = CompositeNavigationProp<
+//     StackNavigationProp<LogoutStackParamList, 'Logout'>,
+//     StackNavigationProp<DrawerStackParamList>
+// >;
 
-export type LogoutScreenProps = {
-    route: LogoutRouteProp;
-    navigation: LogoutStackNavigationProp;
-};
+// export type LogoutScreenProps = {
+//     route: LogoutRouteProp;
+//     navigation: LogoutStackNavigationProp;
+// };
 
 // ProfileScreen
 

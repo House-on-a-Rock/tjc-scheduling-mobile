@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { Screen } from '../../components/';
+import { Screen } from '../../components';
 import { Layout, Text, Button } from '@ui-kitten/components';
 import { backAction } from '../../shared/components/UI_Actions';
 import { Entypo } from '@expo/vector-icons';
@@ -39,25 +39,25 @@ export const TaskDetailsScreen = (props) => {
     };
 
     return (
-        <Screen accessoryLeft={leftAccessory} accessoryRight={rightAccessory}>
-            <Layout style={{ flex: 1, width: '100%', padding: 30 }}>
-                <Text category="h1">{task.role.name}</Text>
-                <Text>{task.date}</Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Entypo name="dot-single" size={40} color={dotColor} />
-                    <Text>Currently scheduled</Text>
-                </View>
-                <Text>if change is requested, show here</Text>
-                <Button onPress={onButtonPressHandler}>Request Change</Button>
-                {modalVisible && (
-                    <CustomAnimatedModal
-                        isVisible={modalVisible}
-                        closeModal={closeModalHandler}
-                    >
-                        <RequestSwapStack closeModal={closeModalHandler} />
-                    </CustomAnimatedModal>
-                )}
-            </Layout>
-        </Screen>
+        // <Screen accessoryLeft={leftAccessory} accessoryRight={rightAccessory}>
+        <Layout style={{ flex: 1, width: '100%', padding: 30 }}>
+            <Text category="h1">{task.role.name}</Text>
+            <Text>{task.date}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Entypo name="dot-single" size={40} color={dotColor} />
+                <Text>Currently scheduled</Text>
+            </View>
+            <Text>if change is requested, show here</Text>
+            <Button onPress={onButtonPressHandler}>Request Change</Button>
+            {modalVisible && (
+                <CustomAnimatedModal
+                    isVisible={modalVisible}
+                    closeModal={closeModalHandler}
+                >
+                    <RequestSwapStack closeModal={closeModalHandler} />
+                </CustomAnimatedModal>
+            )}
+        </Layout>
+        // </Screen>
     );
 };

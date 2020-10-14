@@ -4,16 +4,16 @@ import { ProfileScreen } from '../../screens';
 import { stackOptions } from '../../shared/components';
 import { ProfileStackParamList } from '../../shared/models';
 
-const ProfStack = createStackNavigator<ProfileStackParamList>();
+const Stack = createStackNavigator();
 
 export const ProfileStack = (props) => {
     return (
-        <ProfStack.Navigator headerMode="none">
-            <ProfStack.Screen
+        <Stack.Navigator headerMode="none">
+            <Stack.Screen
                 name="Profile"
                 component={ProfileScreen}
                 options={stackOptions}
             />
-        </ProfStack.Navigator>
+        </Stack.Navigator>
     );
 };

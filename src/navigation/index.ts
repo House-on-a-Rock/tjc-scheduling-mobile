@@ -1,10 +1,10 @@
 export * from './Auth/AuthenticationStack';
-export * from './Drawer/CalendarStack';
 
-export * from './Drawer/ScheduleStack';
-export * from './Drawer/DrawerNavigation';
-export * from './Drawer/ProfileStack';
-export * from './Drawer/SettingsStack';
-export * from './Drawer/LogoutStack';
+export * from './BottomTab/ScheduleStack';
+export * from './BottomTab/BottomTabNavigation';
+export * from './BottomTab/ProfileStack';
+export * from './BottomTab/SettingsStack';
 
 export * from './RequestSwap/RequestSwapStack';
+
+export * from './BottomTab/BottomTabNavigation';

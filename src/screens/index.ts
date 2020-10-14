@@ -2,14 +2,16 @@ export * from './Auth/LoginScreen';
 export * from './Auth/RecoverLoginScreen';
 export * from './Auth/SignUpScreen';
 
-export * from './Drawer/ProfileScreen';
-export * from './Drawer/SettingsScreen';
-export * from './Drawer/LogoutScreen';
+export * from './Tab/ProfileScreen';
 
-export * from './Drawer/Calendar/CalendarScreen';
-export * from './Drawer/Calendar/TaskListScreen';
+export * from './Tab/ScheduleScreen';
+export * from './Tab/TaskListScreen';
 
-export * from './Drawer/NewAssignmentsScreen';
-export * from './Drawer/TaskDetailsScreen';
+export * from './Tab/ActivityFeedScreen';
+export * from './Tab/TaskDetailsScreen';
 
 export * from './RequestSwap/SelectSwapOption';
+
+export * from './Tab/SettingsScreens/SettingsScreen';
+export * from './Tab/SettingsScreens/GeneralSettingsScreen';
+export * from './Tab/SettingsScreens/LogoutScreen';

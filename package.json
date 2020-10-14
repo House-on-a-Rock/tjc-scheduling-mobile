@@ -29,7 +29,7 @@
         "@expo/vector-icons": "^10.0.0",
         "@react-native-community/async-storage": "~1.11.0",
         "@react-native-community/masked-view": "0.1.10",
-        "@react-navigation/bottom-tabs": "^5.2.5",
+        "@react-navigation/bottom-tabs": "^5.8.0",
         "@react-navigation/drawer": "^5.4.0",
         "@react-navigation/native": "^5.1.7",
         "@react-navigation/stack": "^5.2.9",
@@ -41,6 +41,7 @@
         "expo-font": "~8.2.1",
         "expo-linear-gradient": "~8.2.1",
         "expo-notifications": "~0.3.3",
+        "expo-permissions": "~9.0.1",
         "jwt-decode": "^2.2.0",
         "moment": "^2.26.0",
         "react": "16.11.0",
@@ -57,8 +58,7 @@
         "react-navigation": "^4.3.9",
         "react-redux": "^7.2.0",
         "redux": "^4.0.5",
-        "redux-thunk": "^2.3.0",
-        "expo-permissions": "~9.0.1"
+        "redux-thunk": "^2.3.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.8.4",
