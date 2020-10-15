@@ -4,6 +4,7 @@ import { Layout, Text, Icon, Button } from '@ui-kitten/components';
 import { useDispatch } from 'react-redux';
 import { setSwapConfig } from '../../store/actions/swapActions';
 import { SelectCard } from '../../components/SelectCard';
+import { CustomButton, buttonTypes } from '../../components/CustomButton';
 
 interface SelectSwapOptionProps {
     navigation;
@@ -102,9 +103,12 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
                     selectedIndex={selectedIndex2}
                 />
             </View>
-            <Button style={{ width: 130, margin: 5 }} onPress={onNextHandler}>
-                Next
-            </Button>
+            <CustomButton
+                type={buttonTypes.CONFIRM}
+                styling={{ height: 57, width: 306 }}
+                text="Next"
+                onPress={onNextHandler}
+            />
         </Layout>
     );
 };

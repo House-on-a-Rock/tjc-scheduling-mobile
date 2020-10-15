@@ -6,6 +6,7 @@ import { Entypo } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 import { retrieveSwapCandidates, setMyTask } from '../../store/actions/swapActions';
+import { CustomButton, buttonTypes } from '../../components/CustomButton';
 
 //TODO caching of swap candidates based on task
 export const TaskDetailsScreen = (props) => {
@@ -71,12 +72,12 @@ export const TaskDetailsScreen = (props) => {
                             alignItems: 'center',
                         }}
                     >
-                        <Button
-                            style={{ margin: 10, width: 200 }}
+                        <CustomButton
+                            styling={{ height: 42, width: 244 }}
+                            type={buttonTypes.CONFIRM}
                             onPress={onButtonPressHandler}
-                        >
-                            Request Change
-                        </Button>
+                            text="Request Change"
+                        />
                     </View>
                 </Card>
             </LinearGradient>

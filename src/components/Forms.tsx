@@ -58,7 +58,7 @@ export const PasswordInput = ({
     onChangeText,
 }: PasswordInputProps) => {
     return (
-        <View style={{ width: '100%', paddingVertical: 10 }}>
+        <View style={{ width: '100%', paddingTop: 10 }}>
             <Input
                 label={label}
                 value={value}

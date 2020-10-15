@@ -1,38 +1,101 @@
 import React from 'react';
+
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Text } from '@ui-kitten/components';
+import {
+    primaryButtonColor,
+    shadowColor,
+    interactiveColorRed,
+    neutralButtonColor,
+    greyedOutButtonColor,
+} from '../ui/colors';
+
+export const buttonTypes = {
+    CONFIRM: 'confirm',
+    CANCEL: 'cancel',
+    NEUTRAL: 'neutral',
+    DISABLED: 'disabled',
+};
+
 interface CustomButtonProps {
     text: string;
-    styling;
-    // styling: { height; width; backgroundColor };
     onPress: () => void;
+    styling: { height: number; width: number };
+    type: string;
 }
 
-export const CustomButton = ({ text, styling, onPress }: CustomButtonProps) => {
+export const CustomButton = ({ text, onPress, styling, type }: CustomButtonProps) => {
+    const buttonTypeStyle = styles[type];
+    const textColor = styles[type + 'Text'];
     return (
-        <TouchableOpacity style={{ ...styles.main, ...styling }} onPress={onPress}>
-            <Text style={{ color: 'white' }}>{text}</Text>
+        <TouchableOpacity
+            disabled={type === buttonTypes.DISABLED ? true : false}
+            style={{ ...styles.main, ...styling, ...buttonTypeStyle }}
+            onPress={onPress}
+        >
+            <Text category="h2" style={textColor}>
+                {text}
+            </Text>
         </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
     main: {
-        width: '100%',
-        height: 50,
+        width: 180,
+        height: 42,
         borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: primaryButtonColor,
+        margin: 10,
+        padding: 1,
 
-        shadowColor: '#2F3E83',
+        shadowColor: shadowColor,
         shadowOffset: {
             width: 0,
-            height: 2,
+            height: 1,
         },
         shadowOpacity: 1,
         shadowRadius: 5 / 2,
 
         elevation: 5,
+    },
+    confirm: {
+        backgroundColor: primaryButtonColor,
+    },
+    cancel: {
+        borderWidth: 2,
+        padding: 0,
+        borderColor: interactiveColorRed,
+        backgroundColor: 'white',
+    },
+    neutral: {
+        backgroundColor: 'white',
+        borderColor: neutralButtonColor,
+        borderWidth: 2,
+        padding: 0,
+    },
+    disabled: {
+        backgroundColor: greyedOutButtonColor,
+        shadowOffset: {
+            width: 0,
+            height: 0,
+        },
+        shadowOpacity: 0,
+        elevation: 0,
+    },
+    confirmText: {
+        color: 'white',
+    },
+    cancelText: {
+        color: interactiveColorRed,
+    },
+    neutralText: {
+        color: neutralButtonColor,
+    },
+    disabledText: {
+        color: 'white',
     },
 });

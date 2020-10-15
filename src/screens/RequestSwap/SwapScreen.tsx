@@ -6,6 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { compareDates } from '../../services/Calendar/helper_functions';
 import { DatePicker } from '../../components/New Calendar/DatePicker';
 import { populateCandidates, populateTimes } from './swapHelper';
+import { CustomButton, buttonTypes } from '../../components/CustomButton';
 
 export const SwapScreen = (props) => {
     //TODO: sort candidates alphabetically before here, maybe server side?
@@ -187,13 +188,26 @@ export const SwapScreen = (props) => {
                     keyExtractor={(item) => `${item.date} ${item.id} ${item.taskId}`}
                     showsVerticalScrollIndicator={false}
                 />
-                <Button
-                    style={{ margin: 10, width: 130 }}
+                {/* <CustomButton
+                    text="Next"
+                    styling={{ height: 42, width: 180 }}
                     onPress={onNextHandler}
-                    disabled={selectedTasks.length > 0 ? false : true}
-                >
-                    Next
-                </Button>
+                    type={
+                        selectedTasks.length > 0
+                            ? buttonTypes.CONFIRM
+                            : buttonTypes.DISABLED
+                    }
+                /> */}
+                <CustomButton
+                    text="Next"
+                    styling={{ height: 42, width: 180 }}
+                    onPress={onNextHandler}
+                    type={
+                        // selectedTasks.length > 0
+                        buttonTypes.CONFIRM
+                        // : buttonTypes.DISABLED
+                    }
+                />
             </View>
         </Layout>
     );

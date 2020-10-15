@@ -4,6 +4,7 @@ import { Layout, Text, Button, Icon } from '@ui-kitten/components';
 import { useSelector } from 'react-redux';
 import { LoadStateActionTypes } from '../../store/actions';
 import { Card } from '../../components/Card';
+import { CustomButton, buttonTypes } from '../../components/CustomButton';
 
 //TODO: configure error message if request was unsuccessful
 //TODO: missing dove asset
@@ -30,9 +31,12 @@ export const SwapConfirmation = ({ route, navigation }) => {
                     <Text>Once your request has been</Text>
                     <Text>accepted, you will be notified.</Text>
                 </View>
-                <Button onPress={onButtonPress} style={{ margin: 10, width: 200 }}>
-                    Return
-                </Button>
+                <CustomButton
+                    text="Return"
+                    type={buttonTypes.CONFIRM}
+                    onPress={onButtonPress}
+                    styling={{ height: 42, width: 180 }}
+                />
             </Card>
         </View>
     );

@@ -13,14 +13,15 @@ import { LoginScreenProps } from '../../shared/models';
 import { checkCredentials, LoadStateActionTypes, login } from '../../store/actions';
 import { determineLoadState } from '../../store/helper';
 import { LoadingPage } from '../../components/Unused/LoadingPage';
-import { Button, Text, Icon, Layout, Input } from '@ui-kitten/components';
+import { Text, Icon, Layout, Input } from '@ui-kitten/components';
 import { EmailInput, PasswordInput } from '../../components/Forms';
 import { isValidEmail } from '../../shared/components/';
 import { statusBarHeight } from '../../shared/constants';
-import { CustomButton } from '../../components/CustomButton';
+import { CustomButton, buttonTypes } from '../../components/CustomButton';
 
 //temp imports
 import * as Notifications from 'expo-notifications';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export interface PasswordState {
     value: string;
@@ -154,7 +155,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
             }}
         >
             <Layout>
-                <KeyboardAwareScrollView contentContainerStyle={styles.loginScreen}>
+                <View contentContainerStyle={styles.loginScreen}>
                     <ScrollView
                         keyboardShouldPersistTaps="handled"
                         contentContainerStyle={styles.feedbackContainer}
@@ -186,29 +187,27 @@ export const LoginScreen = (props: LoginScreenProps) => {
                                     setPassword({ ...password, value: input })
                                 }
                             />
+                            <TouchableOpacity
+                                style={{
+                                    alignItems: 'flex-end',
+                                    width: 300,
+                                }}
+                                onPress={() => props.navigation.navigate('RecoverLogin')}
+                            >
+                                <Text style={{ color: 'blue' }}>Forgot Password?</Text>
+                            </TouchableOpacity>
                         </View>
 
                         <View style={styles.buttonContainer}>
-                            <View style={styles.buttonStyle}>
-                                <CustomButton
-                                    text="Login"
-                                    onPress={verifyLogin}
-                                    styling={styles.loginButton}
-                                    // type="login"
-                                />
-                            </View>
-                            <View style={styles.buttonStyle}>
-                                <Button
-                                    onPress={() =>
-                                        props.navigation.navigate('RecoverLogin')
-                                    }
-                                >
-                                    Recover Account
-                                </Button>
-                            </View>
+                            <CustomButton
+                                text="Login"
+                                onPress={verifyLogin}
+                                styling={{ height: 42, width: 180 }}
+                                type={buttonTypes.CONFIRM}
+                            />
                         </View>
                     </ScrollView>
-                </KeyboardAwareScrollView>
+                </View>
             </Layout>
         </SafeAreaView>
     );
@@ -265,12 +264,5 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: '100%',
-    },
-    buttonStyle: {
-        width: '40%',
-        margin: 2,
-    },
-    loginButton: {
-        backgroundColor: '#024B8D',
     },
 });

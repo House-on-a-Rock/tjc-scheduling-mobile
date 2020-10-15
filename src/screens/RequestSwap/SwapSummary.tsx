@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { sendSwapRequest } from '../../store/actions/swapActions';
 import { LoadingPage } from '../../components/Unused/LoadingPage';
 import { LoadStateActionTypes } from '../../store/actions';
+import { CustomButton, buttonTypes } from '../../components/CustomButton';
 
 export const SwapSummary = ({ route, navigation }) => {
     //TODO: display loading screen after button press
@@ -56,9 +57,12 @@ export const SwapSummary = ({ route, navigation }) => {
                     }
                     showsVerticalScrollIndicator={false}
                 />
-                <Button style={styles.button} onPress={onPressHandler}>
-                    Submit
-                </Button>
+                <CustomButton
+                    text="Submit"
+                    styling={{ height: 42, width: 180 }}
+                    onPress={onPressHandler}
+                    type={buttonTypes.CONFIRM}
+                />
             </View>
         </Layout>
     );
