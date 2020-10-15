@@ -60,15 +60,15 @@ const fetchFonts = () => {
 };
 
 //this needs work
-const prefetchImages = () => Image.prefetch('../../assets/images/JleeProfilePic.jpg');
+// const prefetchImages = () => Image.prefetch('../../assets/images/JleeProfilePic.jpg');
 
-const preloadAssets = () => {
-    return Promise.all([fetchFonts, prefetchImages]).then((stuff) =>
-        console.log('stuff', stuff),
-    );
-};
+// const preloadAssets = () => {
+//     return Promise.all([fetchFonts, prefetchImages]).then((stuff) =>
+//         console.log('stuff', stuff),
+//     );
+// };
 
-preloadAssets();
+// preloadAssets();
 
 const App: React.FC = () => {
     const [dataLoaded, setDataLoaded] = useState(false);

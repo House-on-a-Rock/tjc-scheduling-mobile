@@ -17,6 +17,7 @@ import { Button, Text, Icon, Layout, Input } from '@ui-kitten/components';
 import { EmailInput, PasswordInput } from '../../components/Forms';
 import { isValidEmail } from '../../shared/components/';
 import { statusBarHeight } from '../../shared/constants';
+import { CustomButton } from '../../components/CustomButton';
 
 //temp imports
 import * as Notifications from 'expo-notifications';
@@ -189,9 +190,12 @@ export const LoginScreen = (props: LoginScreenProps) => {
 
                         <View style={styles.buttonContainer}>
                             <View style={styles.buttonStyle}>
-                                <Button status={'success'} onPress={verifyLogin}>
-                                    Login!
-                                </Button>
+                                <CustomButton
+                                    text="Login"
+                                    onPress={verifyLogin}
+                                    styling={styles.loginButton}
+                                    // type="login"
+                                />
                             </View>
                             <View style={styles.buttonStyle}>
                                 <Button
@@ -265,5 +269,8 @@ const styles = StyleSheet.create({
     buttonStyle: {
         width: '40%',
         margin: 2,
+    },
+    loginButton: {
+        backgroundColor: '#024B8D',
     },
 });
