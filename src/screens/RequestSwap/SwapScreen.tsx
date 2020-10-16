@@ -7,7 +7,13 @@ import { compareDates } from '../../services/Calendar/helper_functions';
 import { DatePicker } from '../../components/New Calendar/DatePicker';
 import { populateCandidates, populateTimes } from './swapHelper';
 import { CustomButton, buttonTypes } from '../../components/CustomButton';
-import { coloredBackgroundGradient1, coloredBackgroundGradient2 } from '../../ui/colors';
+import {
+    coloredBackgroundGradient1,
+    coloredBackgroundGradient2,
+    nameCardShadowColorHighlighted,
+    nameCardShadowColorNeutral,
+    optionCardBorderColor,
+} from '../../ui/colors';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const dummyCandidates = [
@@ -101,8 +107,8 @@ const dummyCandidates = [
 
 export const SwapScreen = (props) => {
     // TODO: sort candidates alphabetically before here, maybe server side?
-    const swapCandidates = useSelector((state) => state.swapReducer.candidates || []);
-    // const swapCandidates = dummyCandidates;
+    // const swapCandidates = useSelector((state) => state.swapReducer.candidates || []);
+    const swapCandidates = dummyCandidates;
     const [selectedPeopleIndices, setSelectedPeopleIndices] = useState<IndexPath[]>([]);
     const [selectedTimeIndices, setSelectedTimeIndices] = useState<IndexPath[]>([]);
     const [selectedDates, setSelectedDates] = useState([]);
@@ -273,7 +279,7 @@ export const SwapScreen = (props) => {
                     {times}
                 </Select>
             </View>
-            {/* <View style={styles.listContainer}> */}
+
             <LinearGradient
                 colors={[coloredBackgroundGradient1, coloredBackgroundGradient2]}
                 style={styles.listContainer}
@@ -296,7 +302,6 @@ export const SwapScreen = (props) => {
                     }
                 />
             </LinearGradient>
-            {/* </View> */}
         </Layout>
     );
 };
@@ -341,22 +346,27 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         alignItems: 'center',
 
-        //TODO i need a better shadow system
-        shadowColor: '#000',
+        shadowColor: nameCardShadowColorNeutral,
         shadowOffset: {
             width: 0,
-            height: 1,
+            height: 2,
         },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
+        shadowOpacity: 0.5,
+        shadowRadius: 4 / 2,
 
         elevation: 3,
     },
     selectedItem: {
-        borderColor: 'rgb(127, 15, 239)',
+        borderColor: optionCardBorderColor,
         borderWidth: 2,
         backgroundColor: 'white',
         margin: 5,
         padding: 4,
+        shadowColor: nameCardShadowColorHighlighted,
+        shadowRadius: 10 / 2,
+        shadowOffset: {
+            width: 0,
+            height: 0,
+        },
     },
 });

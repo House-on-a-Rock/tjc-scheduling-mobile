@@ -105,7 +105,7 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
             </View>
             <CustomButton
                 type={buttonTypes.CONFIRM}
-                styling={{ height: 57, width: 306 }}
+                styling={{ height: 57, width: 300 }}
                 text="Next"
                 onPress={onNextHandler}
             />

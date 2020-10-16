@@ -4,6 +4,7 @@ import { Entypo } from '@expo/vector-icons';
 import { Layout, Text } from '@ui-kitten/components';
 import { dateTileDimensions } from '../../shared/constants';
 import { compareDates } from '../../services/Calendar/helper_functions/calendar_services';
+import { calendarHighlight } from '../../ui/colors';
 
 interface DateTileProps {
     isToday: boolean;
@@ -32,10 +33,18 @@ export const DateTile = React.memo((props: DateTileProps) => {
         return <Layout style={styles.tile}></Layout>;
     }
 
+    const textColor = isToday
+        ? isSelected
+            ? '#E78282'
+            : 'red'
+        : isSelected
+        ? 'white'
+        : 'black';
+
     return (
         <Layout style={styles.tile}>
             <TouchableOpacity
-                style={isSelected ? styles.selected : styles.touchable}
+                style={isSelected ? styles.selected : styles.main}
                 onPress={() => handlePress(day, data, cardIndex)}
             >
                 <View
@@ -49,7 +58,16 @@ export const DateTile = React.memo((props: DateTileProps) => {
                     <Text
                         category="p1"
                         status="success"
-                        style={{ color: isToday ? 'red' : '#5999E2' }}
+                        // style={{ color: isToday ? 'red' : '#5999E2' }}
+                        style={{
+                            color: isToday
+                                ? isSelected
+                                    ? '#FF7070'
+                                    : 'red'
+                                : isSelected
+                                ? 'white'
+                                : 'black',
+                        }}
                     >
                         {date}
                     </Text>
@@ -79,15 +97,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    touchable: {
+    main: {
         flex: 1,
         width: '100%',
     },
     selected: {
         flex: 1,
         width: '100%',
-        backgroundColor: 'rgba(246, 84, 84, 0.36)',
-        borderRadius: 15,
+        backgroundColor: calendarHighlight,
+        borderRadius: 100,
         overflow: 'hidden',
     },
     text: {

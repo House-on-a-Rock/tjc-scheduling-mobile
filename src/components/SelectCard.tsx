@@ -1,6 +1,11 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import { Text } from '@ui-kitten/components';
+import {
+    optionCardBorderColor,
+    optionCardShadowColorHighlighted,
+    optionCardShadowColorNeutral,
+} from '../ui/colors';
 
 interface SelectCardProps {
     displayedText;
@@ -36,27 +41,29 @@ export const SelectCard = ({
 };
 const selectStyle = StyleSheet.create({
     selectCard: {
-        width: '100%',
-        height: 80,
+        width: 300,
+        height: 73,
         marginVertical: 5,
         borderRadius: 30,
         backgroundColor: 'white',
         padding: 5,
         alignItems: 'center',
 
-        shadowColor: '#000',
+        shadowColor: optionCardShadowColorNeutral,
         shadowOffset: {
             width: 0,
             height: 2,
         },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
+        shadowOpacity: 0.5,
+        shadowRadius: 18 / 2,
 
         elevation: 5,
     },
     selected: {
-        borderColor: 'rgb(40, 224, 224)',
-        borderWidth: 2,
-        padding: 3,
+        borderColor: optionCardBorderColor,
+        borderWidth: 3,
+        padding: 2,
+        shadowColor: optionCardShadowColorHighlighted,
+        shadowRadius: 23 / 2,
     },
 });

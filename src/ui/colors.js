@@ -28,4 +28,8 @@ export const optionCardShadowColorHighlighted = '#E7EEF8';
 export const optionCardShadowColorNeutral = '#A2A2A2';
 
 //name card colors
-// export const nameCardShadowColor
+export const nameCardShadowColorHighlighted = '#5EACC3';
+export const nameCardShadowColorNeutral = '#9EB5D8';
+
+//calendar colors
+export const calendarHighlight = '#4B7B7C';
