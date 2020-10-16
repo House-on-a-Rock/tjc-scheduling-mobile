@@ -194,7 +194,9 @@ export const LoginScreen = (props: LoginScreenProps) => {
                                 }}
                                 onPress={() => props.navigation.navigate('RecoverLogin')}
                             >
-                                <Text style={{ color: 'blue' }}>Forgot Password?</Text>
+                                <Text category="p1" style={{ color: 'blue' }}>
+                                    Forgot Password?
+                                </Text>
                             </TouchableOpacity>
                         </View>
 

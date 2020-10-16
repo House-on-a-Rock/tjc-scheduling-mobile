@@ -3,8 +3,12 @@ import { Text } from '@ui-kitten/components';
 import { windowWidth } from '../../shared/constants';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { selectDate } from '../../store/actions';
 import { useDispatch } from 'react-redux';
+import { CustomButton, buttonTypes } from '../../components/CustomButton';
+import User1 from '../../assets/Svgs/user1.svg';
+// import User2 from '../../assets/Svgs/User2.svg';
 
 interface NotificationItemProps {
     item;
@@ -38,7 +42,7 @@ const fakeTask = {
 export const NotificationItem = ({ item, navigation }: NotificationItemProps) => {
     const dispatch = useDispatch();
 
-    const onPressHandler = () => {
+    const onNotificationPress = () => {
         //navigate to screen depending on what the notification is linked to
         //task --> task details done
         //request --> request details
@@ -46,32 +50,66 @@ export const NotificationItem = ({ item, navigation }: NotificationItemProps) =>
         navigation.navigate('TaskDetails', { task: fakeTask });
     };
 
+    const onCancelPress = () => {
+        console.log('cancel pressed');
+    };
+
+    const onConfirmPress = () => {
+        console.log('confirm pressed');
+    };
+
+    const ButtonRow = () => (
+        <View style={styles.buttonContainer}>
+            <CustomButton
+                text="Sorry, can't"
+                type={buttonTypes.CANCEL}
+                onPress={onCancelPress}
+                styling={{ height: 29, width: 118, zIndex: 10 }}
+            />
+            <CustomButton
+                text="Ok, change"
+                type={buttonTypes.CONFIRM}
+                onPress={onConfirmPress}
+                styling={{ height: 29, width: 118, zIndex: 10 }}
+            />
+        </View>
+    );
+
     return (
-        <TouchableOpacity style={styles.container} onPress={onPressHandler}>
+        <TouchableWithoutFeedback style={styles.container} onPress={onNotificationPress}>
             <View
                 style={{
-                    paddingLeft: 30,
-                    justifyContent: 'center',
+                    paddingVertical: 10,
+                    justifyContent: 'flex-start',
+                    width: '100%',
+                    flexDirection: 'row',
                 }}
             >
-                <Text>{item.message}</Text>
-                <Text>Theres a notification here ok?</Text>
+                <User1 height={24} width={24} />
+                {/* <Text>{item.message}</Text> */}
+                <Text category="h3" style={{ paddingLeft: 15 }}>
+                    Theres a notification here ok?
+                </Text>
             </View>
-        </TouchableOpacity>
+            <ButtonRow />
+        </TouchableWithoutFeedback>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
         width: '100%',
         height: 100,
         backgroundColor: 'white',
 
         marginVertical: 3,
         alignItems: 'center',
+        paddingLeft: 30,
     },
     leftAction: {
         height: 50,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
     },
 });

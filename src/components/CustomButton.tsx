@@ -21,7 +21,7 @@ export const buttonTypes = {
 interface CustomButtonProps {
     text: string;
     onPress: () => void;
-    styling: { height: number; width: number };
+    styling: { height: number; width: number; zIndex?: number };
     type: string;
 }
 
@@ -34,7 +34,7 @@ export const CustomButton = ({ text, onPress, styling, type }: CustomButtonProps
             style={{ ...styles.main, ...styling, ...buttonTypeStyle }}
             onPress={onPress}
         >
-            <Text category="h2" style={textColor}>
+            <Text category="p1" style={textColor}>
                 {text}
             </Text>
         </TouchableOpacity>
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         backgroundColor: primaryButtonColor,
     },
     cancel: {
-        borderWidth: 2,
+        borderWidth: 1,
         padding: 0,
         borderColor: interactiveColorRed,
         backgroundColor: 'white',
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     neutral: {
         backgroundColor: 'white',
         borderColor: neutralButtonColor,
-        borderWidth: 2,
+        borderWidth: 1,
         padding: 0,
     },
     disabled: {
