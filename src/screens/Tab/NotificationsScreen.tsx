@@ -1,13 +1,6 @@
 import React, { useState, ReactNode } from 'react';
 import { Layout, Text, Icon } from '@ui-kitten/components';
-import {
-    FlatList,
-    StyleSheet,
-    LayoutAnimation,
-    Platform,
-    UIManager,
-    Dimensions,
-} from 'react-native';
+import { FlatList, StyleSheet, LayoutAnimation, Platform, UIManager } from 'react-native';
 import { useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 import SwipeableItem from '../../components/SwipeableItem';
@@ -21,7 +14,6 @@ interface NotificationsProps {
 }
 
 Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental?.(true);
-const screenWidth = Dimensions.get('window').width;
 
 export const NotificationsScreen = ({ navigation }: NotificationsProps) => {
     const notifications = useSelector(
@@ -59,7 +51,7 @@ export const NotificationsScreen = ({ navigation }: NotificationsProps) => {
                 colors={['#EDEEF3', '#FFFFFF']}
                 style={{
                     flex: 1,
-                    width: screenWidth,
+                    width: '100%',
                     alignItems: 'center',
                 }}
             >
@@ -84,6 +76,6 @@ const styles = StyleSheet.create({
     layout: {
         flex: 1,
         paddingTop: 20,
-        width: screenWidth,
+        width: '100%',
     },
 });

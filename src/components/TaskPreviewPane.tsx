@@ -11,6 +11,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { TaskItem } from './ListItems/TaskItem';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import { hidePreviewPane } from '../store/actions';
+import { coloredBackgroundGradient1, coloredBackgroundGradient2 } from '../ui/colors';
 
 const calendarHeight: number = calendarCardDimensions.totalHeight;
 const windowHeight: number = Dimensions.get('screen').height;
@@ -58,7 +59,7 @@ export const TaskPreviewPane = () => {
                 style={{ ...styles.container, transform: [{ translateY: translateY }] }}
             >
                 <LinearGradient
-                    colors={['rgb(100, 220, 220)', 'rgb(222, 246, 246)']}
+                    colors={[coloredBackgroundGradient1, coloredBackgroundGradient2]}
                     style={{ flex: 1, borderRadius: 20, padding: 10 }}
                 >
                     {tasks?.length > 0 ? (

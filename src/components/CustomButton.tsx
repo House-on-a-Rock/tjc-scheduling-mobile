@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
         padding: 0,
         borderColor: interactiveColorRed,
         backgroundColor: 'white',
+        shadowColor: '#AC7070',
     },
     neutral: {
         backgroundColor: 'white',

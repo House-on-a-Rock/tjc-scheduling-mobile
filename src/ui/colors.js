@@ -7,7 +7,7 @@ export const greyedOutButtonColor = '#C8C8C8';
 
 //background color
 export const coloredBackgroundGradient1 = '#B4DCE5';
-export const coloredBackgroundGradient2 = '#FE9F2FF';
+export const coloredBackgroundGradient2 = '#E9F2FF';
 export const greyedBackground = '#2F2F2F';
 
 //text color
@@ -17,6 +17,15 @@ export const smallTextColor = '#3D4552';
 
 //shadow colors
 export const shadowColor = '#2F3E83';
+export const titledCardShadowColor = '#3A5852';
 
 //other colors
 export const neutralButtonColor = '#919191';
+
+//option card colors
+export const optionCardBorderColor = '#0684AB';
+export const optionCardShadowColorHighlighted = '#E7EEF8';
+export const optionCardShadowColorNeutral = '#A2A2A2';
+
+//name card colors
+// export const nameCardShadowColor

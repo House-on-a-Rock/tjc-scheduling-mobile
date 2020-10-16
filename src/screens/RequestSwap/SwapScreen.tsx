@@ -7,10 +7,102 @@ import { compareDates } from '../../services/Calendar/helper_functions';
 import { DatePicker } from '../../components/New Calendar/DatePicker';
 import { populateCandidates, populateTimes } from './swapHelper';
 import { CustomButton, buttonTypes } from '../../components/CustomButton';
+import { coloredBackgroundGradient1, coloredBackgroundGradient2 } from '../../ui/colors';
+import { LinearGradient } from 'expo-linear-gradient';
+
+const dummyCandidates = [
+    {
+        firstName: 'Ted',
+        lastName: 'Chen',
+        id: 5,
+        tasks: [
+            {
+                church: {
+                    churchId: 3,
+                    name: 'Elizabeth',
+                },
+                createdAt: '2020-10-04T01:07:23.900Z',
+                date: '2020-08-21T14:30:00.000Z',
+                role: {
+                    name: 'RE',
+                },
+                roleId: 4,
+                taskId: 5,
+                user: {
+                    firstName: 'Shaun',
+                    lastName: 'Tung',
+                },
+                userId: 1,
+            },
+            {
+                church: {
+                    churchId: 1,
+                    name: 'Hillsborough',
+                },
+                createdAt: '2020-10-04T01:07:23.900Z',
+                date: '2020-08-21T14:30:00.000Z',
+                role: {
+                    name: 'AV',
+                },
+                roleId: 1,
+                taskId: 2,
+                user: {
+                    firstName: 'Shaun',
+                    lastName: 'Tung',
+                },
+                userId: 1,
+            },
+        ],
+    },
+    {
+        firstName: 'Mike',
+        lastName: 'Chen',
+        id: 5,
+        tasks: [
+            {
+                church: {
+                    churchId: 3,
+                    name: 'Elizabeth',
+                },
+                createdAt: '2020-10-04T01:07:23.900Z',
+                date: '2020-08-21T14:30:00.000Z',
+                role: {
+                    name: 'RE',
+                },
+                roleId: 4,
+                taskId: 5,
+                user: {
+                    firstName: 'Shaun',
+                    lastName: 'Tung',
+                },
+                userId: 1,
+            },
+            {
+                church: {
+                    churchId: 1,
+                    name: 'Hillsborough',
+                },
+                createdAt: '2020-10-04T01:07:23.900Z',
+                date: '2020-08-21T14:30:00.000Z',
+                role: {
+                    name: 'AV',
+                },
+                roleId: 1,
+                taskId: 2,
+                user: {
+                    firstName: 'Shaun',
+                    lastName: 'Tung',
+                },
+                userId: 1,
+            },
+        ],
+    },
+];
 
 export const SwapScreen = (props) => {
-    //TODO: sort candidates alphabetically before here, maybe server side?
+    // TODO: sort candidates alphabetically before here, maybe server side?
     const swapCandidates = useSelector((state) => state.swapReducer.candidates || []);
+    // const swapCandidates = dummyCandidates;
     const [selectedPeopleIndices, setSelectedPeopleIndices] = useState<IndexPath[]>([]);
     const [selectedTimeIndices, setSelectedTimeIndices] = useState<IndexPath[]>([]);
     const [selectedDates, setSelectedDates] = useState([]);
@@ -181,23 +273,18 @@ export const SwapScreen = (props) => {
                     {times}
                 </Select>
             </View>
-            <View style={styles.listContainer}>
+            {/* <View style={styles.listContainer}> */}
+            <LinearGradient
+                colors={[coloredBackgroundGradient1, coloredBackgroundGradient2]}
+                style={styles.listContainer}
+            >
                 <FlatList
                     data={filteredTasks}
                     renderItem={renderTaskList}
                     keyExtractor={(item) => `${item.date} ${item.id} ${item.taskId}`}
                     showsVerticalScrollIndicator={false}
                 />
-                {/* <CustomButton
-                    text="Next"
-                    styling={{ height: 42, width: 180 }}
-                    onPress={onNextHandler}
-                    type={
-                        selectedTasks.length > 0
-                            ? buttonTypes.CONFIRM
-                            : buttonTypes.DISABLED
-                    }
-                /> */}
+
                 <CustomButton
                     text="Next"
                     styling={{ height: 42, width: 180 }}
@@ -208,7 +295,8 @@ export const SwapScreen = (props) => {
                         // : buttonTypes.DISABLED
                     }
                 />
-            </View>
+            </LinearGradient>
+            {/* </View> */}
         </Layout>
     );
 };
@@ -228,11 +316,11 @@ const styles = StyleSheet.create({
     },
     listContainer: {
         flex: 1,
+
         width: '100%',
         zIndex: -1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgb(108, 207, 212)',
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         padding: 30,

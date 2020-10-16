@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, FlatList, View } from 'react-native';
+import { StyleSheet, FlatList, View, Dimensions } from 'react-native';
 import { TaskListScreenProps } from '../../shared/models';
 import { Text, Layout, Divider } from '@ui-kitten/components';
 import { TaskItem } from '../../components/ListItems/TaskItem';
@@ -83,11 +83,14 @@ const tasks = [
     },
 ];
 
+const screenWidth = Dimensions.get('window').width;
+
 //TODO ensure real tasks work instead of my dummy tasks
 //use michelle's colors once she sends it over
 export const TaskListScreen = (props: TaskListScreenProps) => {
     // const tasks = useSelector((state) => state.taskReducer.tasks);
 
+    //regroups tasks by date
     const rearrangedTasks = tasks.reduce((acc, task, index) => {
         if (index === 0) return [[task]];
         const prevDate = acc[acc.length - 1][0].date;
@@ -120,7 +123,18 @@ export const TaskListScreen = (props: TaskListScreenProps) => {
                 </View>
             );
         });
-        return <TitledCard title={title}>{taskDisplay}</TitledCard>;
+        return (
+            <TitledCard
+                style={{
+                    width: screenWidth,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+                title={title}
+            >
+                {taskDisplay}
+            </TitledCard>
+        );
     };
 
     return (
@@ -130,6 +144,10 @@ export const TaskListScreen = (props: TaskListScreenProps) => {
                     data={rearrangedTasks}
                     renderItem={renderItem}
                     keyExtractor={(item, index) => index.toString()}
+                    directionalLockEnabled={true}
+                    // contentContainerStyle={{
+                    //     width: screenWidth,
+                    // }}
                 />
             ) : (
                 <Text>You have no assignments!</Text>
@@ -141,8 +159,9 @@ export const TaskListScreen = (props: TaskListScreenProps) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: '100%',
+        width: screenWidth,
         alignItems: 'center',
+        justifyContent: 'center',
     },
     taskItemStyle: {
         shadowColor: '#000',

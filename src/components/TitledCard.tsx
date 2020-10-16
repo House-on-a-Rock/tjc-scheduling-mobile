@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from '@ui-kitten/components';
+import { secondaryColor, titledCardShadowColor } from '../ui/colors.js';
 
 interface TitledCardProps {
     children;
@@ -23,27 +24,28 @@ const styles = StyleSheet.create({
     container: {
         width: '90%',
         backgroundColor: 'white',
+        borderColor: secondaryColor,
         borderRadius: 30,
         margin: 10,
         overflow: 'hidden',
     },
     shadow: {
-        shadowColor: '#000000',
+        shadowColor: titledCardShadowColor,
         shadowOffset: {
-            width: 1,
-            height: 3,
+            width: 0,
+            height: 0,
         },
         shadowOpacity: 0.5,
-        shadowRadius: 2.22,
+        shadowRadius: 23 / 2,
 
         elevation: 3,
         alignItems: 'center',
     },
     titleBar: {
-        height: 33,
+        height: 40,
         padding: 3,
         width: '100%',
-        backgroundColor: 'green',
+        backgroundColor: secondaryColor,
         justifyContent: 'center',
         alignItems: 'center',
     },

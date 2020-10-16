@@ -7,6 +7,8 @@ import { sendSwapRequest } from '../../store/actions/swapActions';
 import { LoadingPage } from '../../components/Unused/LoadingPage';
 import { LoadStateActionTypes } from '../../store/actions';
 import { CustomButton, buttonTypes } from '../../components/CustomButton';
+import { coloredBackgroundGradient1, coloredBackgroundGradient2 } from '../../ui/colors';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export const SwapSummary = ({ route, navigation }) => {
     //TODO: display loading screen after button press
@@ -48,7 +50,10 @@ export const SwapSummary = ({ route, navigation }) => {
             <View style={styles.textContainer}>
                 <Text>Submit a request to the following?</Text>
             </View>
-            <View style={styles.listContainer}>
+            <LinearGradient
+                colors={[coloredBackgroundGradient1, coloredBackgroundGradient2]}
+                style={styles.listContainer}
+            >
                 <FlatList
                     renderItem={renderItem}
                     data={selectedTasks}
@@ -63,7 +68,7 @@ export const SwapSummary = ({ route, navigation }) => {
                     onPress={onPressHandler}
                     type={buttonTypes.CONFIRM}
                 />
-            </View>
+            </LinearGradient>
         </Layout>
     );
 };

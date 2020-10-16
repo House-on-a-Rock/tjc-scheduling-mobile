@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text } from '@ui-kitten/components';
 import { windowWidth } from '../../shared/constants';
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Dimensions } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { selectDate } from '../../store/actions';
 import { useDispatch } from 'react-redux';
@@ -14,6 +14,8 @@ interface NotificationItemProps {
     item;
     navigation;
 }
+
+const screenWidth = Dimensions.get('window').width;
 
 //TODO load picture of user that created notification
 //display correct buttons to handle requests
@@ -85,7 +87,7 @@ export const NotificationItem = ({ item, navigation }: NotificationItemProps) =>
                     flexDirection: 'row',
                 }}
             >
-                <User1 height={24} width={24} />
+                <User1 height={28} width={28} />
                 {/* <Text>{item.message}</Text> */}
                 <Text category="h3" style={{ paddingLeft: 15 }}>
                     Theres a notification here ok?
@@ -98,7 +100,7 @@ export const NotificationItem = ({ item, navigation }: NotificationItemProps) =>
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
+        width: screenWidth,
         height: 100,
         backgroundColor: 'white',
 

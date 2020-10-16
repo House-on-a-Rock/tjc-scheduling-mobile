@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 import { retrieveSwapCandidates, setMyTask } from '../../store/actions/swapActions';
 import { CustomButton, buttonTypes } from '../../components/CustomButton';
+import { coloredBackgroundGradient1, coloredBackgroundGradient2 } from '../../ui/colors';
 
 //TODO caching of swap candidates based on task
 export const TaskDetailsScreen = (props) => {
@@ -30,7 +31,7 @@ export const TaskDetailsScreen = (props) => {
     return (
         <Layout style={{ flex: 1, width: '100%' }}>
             <LinearGradient
-                colors={['rgb(100, 220, 220)', 'rgb(86, 194, 194)']}
+                colors={[coloredBackgroundGradient1, coloredBackgroundGradient2]}
                 style={{
                     flex: 1,
                     justifyContent: 'center',
