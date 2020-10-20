@@ -25,6 +25,7 @@ const BottomTabBar = ({ navigation, state }) => {
         <BottomNavigation
             selectedIndex={state.index}
             onSelect={(index) => navigation.navigate(state.routeNames[index])}
+            onLayout={(e) => console.log('e', e)}
         >
             <BottomNavigationTab title="Dashboard" icon={icons.dashboard} />
             <BottomNavigationTab title="Schedule" icon={icons.schedule} />

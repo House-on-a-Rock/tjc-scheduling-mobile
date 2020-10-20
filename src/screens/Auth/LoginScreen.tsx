@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    View,
-    StyleSheet,
-    Image,
-    ScrollView,
-    SafeAreaView,
-    Platform,
-} from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { View, StyleSheet, Image, ScrollView, Platform } from 'react-native';
+// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { LoginScreenProps } from '../../shared/models';
 import { checkCredentials, LoadStateActionTypes, login } from '../../store/actions';
 import { determineLoadState } from '../../store/helper';
@@ -147,7 +140,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
     if (loadState === LoadStateActionTypes.LOADING) return <LoadingPage opacity={0.8} />;
 
     return (
-        <SafeAreaView
+        <View
             style={{
                 flex: 1,
                 backgroundColor: 'black',
@@ -211,7 +204,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
                     </ScrollView>
                 </View>
             </Layout>
-        </SafeAreaView>
+        </View>
     );
 
     //helper functions

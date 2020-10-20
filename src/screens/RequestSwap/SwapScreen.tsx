@@ -364,9 +364,5 @@ const styles = StyleSheet.create({
         padding: 4,
         shadowColor: nameCardShadowColorHighlighted,
         shadowRadius: 10 / 2,
-        shadowOffset: {
-            width: 0,
-            height: 0,
-        },
     },
 });

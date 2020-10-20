@@ -7,7 +7,12 @@ import { sendSwapRequest } from '../../store/actions/swapActions';
 import { LoadingPage } from '../../components/Unused/LoadingPage';
 import { LoadStateActionTypes } from '../../store/actions';
 import { CustomButton, buttonTypes } from '../../components/CustomButton';
-import { coloredBackgroundGradient1, coloredBackgroundGradient2 } from '../../ui/colors';
+import {
+    coloredBackgroundGradient1,
+    coloredBackgroundGradient2,
+    nameCardShadowColorHighlighted,
+    optionCardBorderColor,
+} from '../../ui/colors';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export const SwapSummary = ({ route, navigation }) => {
@@ -105,17 +110,17 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         alignItems: 'center',
 
-        shadowColor: '#000',
+        shadowColor: nameCardShadowColorHighlighted,
         shadowOffset: {
             width: 0,
-            height: 1,
+            height: 0,
         },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
+        shadowOpacity: 0.5,
+        shadowRadius: 10 / 2,
 
         elevation: 3,
 
-        borderColor: 'rgb(127, 15, 239)',
+        borderColor: optionCardBorderColor,
         borderWidth: 2,
 
         margin: 5,

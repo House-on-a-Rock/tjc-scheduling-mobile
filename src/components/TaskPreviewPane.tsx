@@ -9,7 +9,7 @@ import {
 } from '../shared/constants';
 import { LinearGradient } from 'expo-linear-gradient';
 import { TaskItem } from './ListItems/TaskItem';
-import { PanGestureHandler } from 'react-native-gesture-handler';
+import { PanGestureHandler, State as GestureState } from 'react-native-gesture-handler';
 import { hidePreviewPane } from '../store/actions';
 import { coloredBackgroundGradient1, coloredBackgroundGradient2 } from '../ui/colors';
 
@@ -47,14 +47,35 @@ export const TaskPreviewPane = () => {
 
         const paneHeight = windowHeight - taskPreviewHeight + 75;
         let yPos = nativeEvent.absoluteY - 90; //doesnt track finger well without this offset
+        console.log('yPos', yPos);
         if (yPos < paneHeight) yPos = paneHeight;
 
         translateY.setValue(yPos);
         if (yPos > windowHeight - 130) dispatch(hidePreviewPane());
     };
+    console.log('windowHeight', windowHeight);
+
+    const stateChangeHandler = (evt) => {
+        // console.log('evt', evt);
+        const closingHeight = new Animated.Value(windowHeight * 0.4);
+
+        if (evt.nativeEvent.state === GestureState.END && translateY >= closingHeight) {
+            Animated.timing(translateY, {
+                toValue: new Animated.Value(windowHeight * 0.8),
+                duration: 100,
+                useNativeDriver: true,
+            }).start(() => {
+                console.log('closing preview pane');
+                return dispatch(hidePreviewPane());
+            });
+        }
+    };
 
     return (
-        <PanGestureHandler onGestureEvent={gestureHandler}>
+        <PanGestureHandler
+            onGestureEvent={gestureHandler}
+            onHandlerStateChange={stateChangeHandler}
+        >
             <Animated.View
                 style={{ ...styles.container, transform: [{ translateY: translateY }] }}
             >
@@ -67,6 +88,7 @@ export const TaskPreviewPane = () => {
                             keyExtractor={(item, index) => index.toString()}
                             data={tasks}
                             renderItem={renderItem}
+                            scrollEnabled={tasks.length > 2 ? true : false}
                         />
                     ) : (
                         <Text style={{ textAlign: 'center' }}>You've got no tasks!</Text>

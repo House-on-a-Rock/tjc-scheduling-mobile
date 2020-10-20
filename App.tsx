@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, SafeAreaView } from 'react-native';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
@@ -96,7 +96,7 @@ const App: React.FC = () => {
                     theme={ui[theme]}
                     customMapping={mapping} //fonts
                 >
-                    <View style={styles.app}>
+                    <View style={{ flex: 1 }}>
                         <AppNavigation />
                     </View>
                 </ApplicationProvider>

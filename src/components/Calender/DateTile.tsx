@@ -4,7 +4,7 @@ import { Entypo } from '@expo/vector-icons';
 import { Layout, Text } from '@ui-kitten/components';
 import { dateTileDimensions } from '../../shared/constants';
 import { compareDates } from '../../services/Calendar/helper_functions/calendar_services';
-import { calendarHighlight } from '../../ui/colors';
+import { calendarHighlight, calendarHighlightShadow } from '../../ui/colors';
 
 interface DateTileProps {
     isToday: boolean;
@@ -15,6 +15,7 @@ interface DateTileProps {
     handlePress: (day, data, cardIndex) => void;
     cardIndex: number;
 }
+//TODO display differently colored dots based on task.
 
 export const DateTile = React.memo((props: DateTileProps) => {
     const {
@@ -33,14 +34,6 @@ export const DateTile = React.memo((props: DateTileProps) => {
         return <Layout style={styles.tile}></Layout>;
     }
 
-    const textColor = isToday
-        ? isSelected
-            ? '#E78282'
-            : 'red'
-        : isSelected
-        ? 'white'
-        : 'black';
-
     return (
         <Layout style={styles.tile}>
             <TouchableOpacity
@@ -58,7 +51,6 @@ export const DateTile = React.memo((props: DateTileProps) => {
                     <Text
                         category="p1"
                         status="success"
-                        // style={{ color: isToday ? 'red' : '#5999E2' }}
                         style={{
                             color: isToday
                                 ? isSelected
@@ -96,6 +88,8 @@ const styles = StyleSheet.create({
         height: dateTileDimensions.height,
         justifyContent: 'center',
         alignItems: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: '#C9C9C9',
     },
     main: {
         flex: 1,
@@ -106,10 +100,23 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: calendarHighlight,
         borderRadius: 100,
-        overflow: 'hidden',
+        // overflow: 'hidden',
+        shadowColor: calendarHighlightShadow,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 5 / 2,
     },
     text: {
         fontSize: 20,
         fontFamily: 'Roboto-Regular',
+    },
+    tileEmpty: {
+        width: dateTileDimensions.width,
+        height: dateTileDimensions.height,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });

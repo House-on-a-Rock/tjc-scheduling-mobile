@@ -148,60 +148,62 @@ export const DashboardScreen = () => {
     );
 
     return (
-        <ScrollView style={{ ...styles.container }} bounces={false}>
-            {/* <Image source={profilePic} style={styles.backgroundImage} /> */}
-            <View style={styles.profileCard}>
-                <Image
-                    source={image ? { uri: image } : profilePic}
-                    style={styles.profilePictureContainer}
-                />
-
-                <TouchableOpacity
-                    style={{ position: 'absolute', left: 130, top: 15 }}
-                    onPress={onCameraPressHandler}
-                >
-                    <Icon name="camera-outline" {...largeIconProps} />
-                </TouchableOpacity>
-                <View
-                    style={{
-                        ...styles.center,
-                        flexDirection: 'column',
-                        height: '100%',
-                        width: '60%',
-                        justifyContent: 'space-around',
-                    }}
-                >
-                    <Text category="h5" style={styles.profileText}>
-                        Michelle Lin
-                    </Text>
-                    <Text category="h6" style={styles.profileText}>
-                        Philadelphia
-                    </Text>
-                    <Text category="p1" style={styles.profileText}>
-                        Stuff that I do down here
-                    </Text>
-                </View>
-            </View>
-            <View style={{ ...styles.mainCard, alignItems: 'center' }}>
-                <TitledCard title="General Info" style={{ width: '80%' }}>
-                    {infoCard}
-                </TitledCard>
-                <TitledCard title="Upcoming Assignment" style={{ width: '80%' }}>
-                    {upcomingAssignment}
-                </TitledCard>
-                <View style={styles.flatListContainer}>
-                    <Text>Recent Requests</Text>
-                    <FlatList
-                        // pagingEnabled={true}
-                        data={requests}
-                        renderItem={renderRequestCarousel}
-                        horizontal={true}
-                        keyExtractor={(item, index) => index.toString()}
-                        showsHorizontalScrollIndicator={false}
+        <View style={styles.container}>
+            <ScrollView style={{ ...styles.container }} bounces={false}>
+                {/* <Image source={profilePic} style={styles.backgroundImage} /> */}
+                <View style={styles.profileCard}>
+                    <Image
+                        source={image ? { uri: image } : profilePic}
+                        style={styles.profilePictureContainer}
                     />
+
+                    <TouchableOpacity
+                        style={{ position: 'absolute', left: 130, top: 15 }}
+                        onPress={onCameraPressHandler}
+                    >
+                        <Icon name="camera-outline" {...largeIconProps} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            ...styles.center,
+                            flexDirection: 'column',
+                            height: '100%',
+                            width: '60%',
+                            justifyContent: 'space-around',
+                        }}
+                    >
+                        <Text category="h5" style={styles.profileText}>
+                            Michelle Lin
+                        </Text>
+                        <Text category="h6" style={styles.profileText}>
+                            Philadelphia
+                        </Text>
+                        <Text category="p1" style={styles.profileText}>
+                            Stuff that I do down here
+                        </Text>
+                    </View>
                 </View>
-            </View>
-        </ScrollView>
+                <View style={{ ...styles.mainCard, alignItems: 'center' }}>
+                    <TitledCard title="General Info" style={{ width: '80%' }}>
+                        {infoCard}
+                    </TitledCard>
+                    <TitledCard title="Upcoming Assignment" style={{ width: '80%' }}>
+                        {upcomingAssignment}
+                    </TitledCard>
+                    <View style={styles.flatListContainer}>
+                        <Text>Recent Requests</Text>
+                        <FlatList
+                            // pagingEnabled={true}
+                            data={requests}
+                            renderItem={renderRequestCarousel}
+                            horizontal={true}
+                            keyExtractor={(item, index) => index.toString()}
+                            showsHorizontalScrollIndicator={false}
+                        />
+                    </View>
+                </View>
+            </ScrollView>
+        </View>
     );
 };
 
@@ -210,6 +212,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         backgroundColor: 'rgba(35, 117, 117, 0.62)',
+        paddingTop: 20,
     },
     profileCard: {
         flex: 1,

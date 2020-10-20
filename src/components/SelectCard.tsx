@@ -63,7 +63,12 @@ const selectStyle = StyleSheet.create({
         borderColor: optionCardBorderColor,
         borderWidth: 3,
         padding: 2,
-        shadowColor: optionCardShadowColorHighlighted,
+        shadowColor: optionCardShadowColorHighlighted, //hard to see this shadow on ios
         shadowRadius: 23 / 2,
+        shadowOpacity: 0.5,
+        shadowOffset: {
+            height: 0,
+            width: 2,
+        },
     },
 });

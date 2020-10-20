@@ -33,3 +33,4 @@ export const nameCardShadowColorNeutral = '#9EB5D8';
 
 //calendar colors
 export const calendarHighlight = '#4B7B7C';
+export const calendarHighlightShadow = '#29554E';
