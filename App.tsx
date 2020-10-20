@@ -15,7 +15,7 @@ import {
     swapReducer,
     notificationsReducer,
 } from './src/store/reducers';
-
+import { StatusBar } from 'expo-status-bar';
 import * as Notifications from 'expo-notifications';
 Notifications.setNotificationHandler({
     //lets os know what to do with notification before its displayed to user
@@ -97,6 +97,7 @@ const App: React.FC = () => {
                     customMapping={mapping} //fonts
                 >
                     <View style={{ flex: 1 }}>
+                        <StatusBar />
                         <AppNavigation />
                     </View>
                 </ApplicationProvider>
