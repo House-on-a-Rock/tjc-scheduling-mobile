@@ -6,20 +6,44 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { selectDate } from '../../store/actions';
 import { useDispatch } from 'react-redux';
 
-interface FeedItemProps {
+interface NotificationItemProps {
     item;
+    navigation;
 }
 
-export const FeedItem = ({ item }: FeedItemProps) => {
+//TODO load picture of user that created notification
+//display correct buttons to handle requests
+//determine how long ago notification was created
+//on tap of notification, take them to appropriate page
+
+const fakeTask = {
+    church: {
+        churchId: 3,
+        name: 'Elizabeth',
+    },
+    createdAt: '2020-10-04T01:07:23.900Z',
+    date: '2020-08-21T14:30:00.000Z',
+    role: {
+        name: 'RE',
+    },
+    roleId: 4,
+    taskId: 5,
+    user: {
+        firstName: 'Shaun',
+        lastName: 'Tung',
+    },
+    userId: 1,
+};
+
+export const NotificationItem = ({ item, navigation }: NotificationItemProps) => {
     const dispatch = useDispatch();
-    const navigation = useNavigation();
 
     const onPressHandler = () => {
         //navigate to screen depending on what the notification is linked to
-        //task --> task details
-        //
+        //task --> task details done
         //request --> request details
         //? anything else
+        navigation.navigate('TaskDetails', { task: fakeTask });
     };
 
     return (
@@ -30,9 +54,7 @@ export const FeedItem = ({ item }: FeedItemProps) => {
                     justifyContent: 'center',
                 }}
             >
-                {/* <Text category="p1">{item.task.role.name}</Text>
-                <Text category="p2">{item.task.date.toString()}</Text>
-                <Text category="p2">{item.message}</Text> */}
+                <Text>{item.message}</Text>
                 <Text>Theres a notification here ok?</Text>
             </View>
         </TouchableOpacity>
@@ -42,13 +64,11 @@ export const FeedItem = ({ item }: FeedItemProps) => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        width: windowWidth * 0.9,
+        width: '100%',
         height: 100,
         backgroundColor: 'white',
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: '#BCBCBC',
-        margin: 5,
+
+        marginVertical: 3,
         alignItems: 'center',
     },
     leftAction: {

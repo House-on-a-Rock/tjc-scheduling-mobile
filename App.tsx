@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
@@ -50,14 +50,22 @@ export const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 const fetchFonts = () => {
     return Font.loadAsync({
-        'Roboto-Bold': require('./src/assets/Fonts/Roboto-Bold.ttf'),
-        'Roboto-Italic': require('./src/assets/Fonts/Roboto-Italic.ttf'),
-        'Roboto-Regular': require('./src/assets/Fonts/Roboto-Regular.ttf'),
         'OpenSans-Regular': require('./src/assets/Fonts/OpenSans-Regular.ttf'),
         'OpenSans-Bold': require('./src/assets/Fonts/OpenSans-Bold.ttf'),
         'OpenSans-SemiBold': require('./src/assets/Fonts/OpenSans-SemiBold.ttf'),
     });
 };
+
+//this needs work
+const prefetchImages = () => Image.prefetch('../../assets/images/JleeProfilePic.jpg');
+
+const preloadAssets = () => {
+    return Promise.all([fetchFonts, prefetchImages]).then((stuff) =>
+        console.log('stuff', stuff),
+    );
+};
+
+preloadAssets();
 
 const App: React.FC = () => {
     const [dataLoaded, setDataLoaded] = useState(false);

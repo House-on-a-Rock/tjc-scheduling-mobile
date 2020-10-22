@@ -5,14 +5,12 @@ import { useSelector } from 'react-redux';
 import { LoadStateActionTypes } from '../../store/actions';
 import { Card } from '../../components/Card';
 
+//TODO: configure error message if request was unsuccessful
+//TODO: missing dove asset
 export const SwapConfirmation = ({ route, navigation }) => {
     // const requestState = useSelector((state) => state.loadStateReducer.loadStatus.SWAP);
-    //TODO: configure error message if request was unsuccessful
-    //TODO: missing dove asset
 
-    const onButtonPress = () => {
-        navigation.navigate('Schedule');
-    };
+    const onButtonPress = () => navigation.popToTop();
 
     return (
         <View
@@ -31,10 +29,9 @@ export const SwapConfirmation = ({ route, navigation }) => {
                     <Text>Your request has been sent!</Text>
                     <Text>Once your request has been</Text>
                     <Text>accepted, you will be notified.</Text>
-                    <Text>Return to Schedule</Text>
                 </View>
                 <Button onPress={onButtonPress} style={{ margin: 10, width: 200 }}>
-                    Return to Schedule
+                    Return
                 </Button>
             </Card>
         </View>

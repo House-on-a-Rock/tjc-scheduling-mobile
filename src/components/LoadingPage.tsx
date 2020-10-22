@@ -8,7 +8,7 @@ interface LoadingPageProps {
     styleSafeArea?;
     opacity?;
 }
-
+//unused
 export const LoadingPage = (props: LoadingPageProps) => {
     return (
         <SafeAreaView

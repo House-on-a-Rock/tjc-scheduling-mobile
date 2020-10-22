@@ -10,7 +10,7 @@ interface CustomAnimatedModalProps {
     layoutHeight: number;
     children?;
 }
-
+//unused
 export const CustomAnimatedModal = (props: CustomAnimatedModalProps) => {
     const fadeAnim = useRef(new Animated.Value(0)).current;
 

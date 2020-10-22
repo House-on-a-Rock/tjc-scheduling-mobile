@@ -25,6 +25,7 @@ const clearInputIcon = (callback) => (
             height={20}
             name="close-circle-outline"
             style={{ opacity: 0.4 }}
+            fill="#000000"
         />
     </TouchableWithoutFeedback>
 );
