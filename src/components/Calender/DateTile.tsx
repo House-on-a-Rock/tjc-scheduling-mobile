@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: calendarHighlight,
         borderRadius: 100,
-        // overflow: 'hidden',
         shadowColor: calendarHighlightShadow,
         shadowOffset: {
             width: 0,

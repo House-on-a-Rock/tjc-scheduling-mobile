@@ -5,6 +5,9 @@ import { useDispatch } from 'react-redux';
 import { setSwapConfig } from '../../store/actions/swapActions';
 import { SelectCard } from '../../components/SelectCard';
 import { CustomButton, buttonTypes } from '../../components/CustomButton';
+import User1 from '../../assets/Svgs/User1.svg';
+import User4 from '../../assets/Svgs/User4.svg';
+import ThreeUsers from '../../assets/Svgs/ThreeUsers.svg';
 
 interface SelectSwapOptionProps {
     navigation;
@@ -14,6 +17,7 @@ interface SelectSwapOptionProps {
 export const SelectSwapOption = (props: SelectSwapOptionProps) => {
     //TODO hook up these choices to do their intended purpose
     //maybbe rephrase some of these
+    //try to line up icons?
     const [selectedIndex1, setSelectedIndex1] = useState(0);
     const [selectedIndex2, setSelectedIndex2] = useState(0);
 
@@ -35,27 +39,26 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
 
     const iconSet1 = () => (
         <View style={{ flexDirection: 'row' }}>
-            <Icon name="person" {...iconSettings} />
+            {/* <Icon name="person" {...iconSettings} /> */}
+            <User1 {...iconSettings} />
             <Icon name="swap" {...iconSettings} />
-            <Icon name="person" {...iconSettings} />
+            <User4 {...iconSettings} />
         </View>
     );
 
     const iconSet2 = () => (
         <View style={{ flexDirection: 'row' }}>
-            <Icon name="person" {...iconSettings} />
+            <User1 {...iconSettings} />
             <Icon name="arrow-forward" {...iconSettings} />
-            <Icon name="person" {...iconSettings} />
+            <User4 {...iconSettings} />
         </View>
     );
 
-    const iconSet3 = () => <Icon name="person" {...iconSettings} />;
+    const iconSet3 = () => <User4 {...iconSettings} />;
 
     const iconSet4 = () => (
-        <View style={{ flexDirection: 'row' }}>
-            <Icon name="person" {...iconSettings} />
-            <Icon name="person" {...iconSettings} />
-            <Icon name="person" {...iconSettings} />
+        <View style={{ paddingLeft: 20 }}>
+            <ThreeUsers height={50} width={50} />
         </View>
     );
 
@@ -75,14 +78,14 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
                 </Text>
                 <SelectCard
                     displayedText={'Switch duty with someone'}
-                    bottomRow={iconSet1}
+                    icons={iconSet1}
                     onPressHandler={onCardPress1}
                     cardIndex={0}
                     selectedIndex={selectedIndex1}
                 />
                 <SelectCard
                     displayedText="Have your duty replaced"
-                    bottomRow={iconSet2}
+                    icons={iconSet2}
                     onPressHandler={onCardPress1}
                     cardIndex={1}
                     selectedIndex={selectedIndex1}
@@ -95,14 +98,14 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
                 </Text>
                 <SelectCard
                     displayedText="Specific time or person"
-                    bottomRow={iconSet3}
+                    icons={iconSet3}
                     onPressHandler={onCardPress2}
                     cardIndex={0}
                     selectedIndex={selectedIndex2}
                 />
                 <SelectCard
-                    displayedText="Anyone, as long as my duty is replaced"
-                    bottomRow={iconSet4}
+                    displayedText="Anyone, as long as \nmy duty is replaced"
+                    icons={iconSet4}
                     onPressHandler={onCardPress2}
                     cardIndex={1}
                     selectedIndex={selectedIndex2}

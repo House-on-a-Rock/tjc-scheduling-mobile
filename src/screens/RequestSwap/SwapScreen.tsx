@@ -15,6 +15,8 @@ import {
     optionCardBorderColor,
 } from '../../ui/colors';
 import { LinearGradient } from 'expo-linear-gradient';
+import User1 from '../../assets/Svgs/User1.svg';
+import User4 from '../../assets/Svgs/User4.svg';
 
 const dummyCandidates = [
     {
@@ -241,10 +243,17 @@ export const SwapScreen = (props) => {
             <View style={styles.textContainer}>
                 <Text category="h3">Select one or more workers to request</Text>
                 <Text category="h3">an exchange of duty times</Text>
-                <View style={{ flexDirection: 'row' }}>
-                    <Icon name="person" {...iconProps} />
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-evenly',
+                        width: '35%',
+                        marginTop: 5,
+                    }}
+                >
+                    <User1 {...iconProps} />
                     <Icon name="swap" {...iconProps} />
-                    <Icon name="person" {...iconProps} />
+                    <User4 {...iconProps} />
                 </View>
             </View>
             <View style={styles.filterContainer}>
@@ -313,23 +322,23 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         alignItems: 'center',
+        backgroundColor: 'white',
     },
     filterContainer: {
-        height: '25%',
+        flex: 1,
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 10,
+        padding: 5,
     },
     listContainer: {
-        flex: 1,
-
+        flex: 6,
         width: '100%',
         zIndex: -1,
         justifyContent: 'center',
         alignItems: 'center',
-        borderTopLeftRadius: 20,
+        borderTopLeftRadius: 20, //TODO figure out why these dont work
         borderTopRightRadius: 20,
         padding: 30,
     },
@@ -337,6 +346,7 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+        marginTop: 10,
     },
     listItem: {
         width: 330,

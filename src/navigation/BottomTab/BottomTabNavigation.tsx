@@ -25,7 +25,6 @@ const BottomTabBar = ({ navigation, state }) => {
         <BottomNavigation
             selectedIndex={state.index}
             onSelect={(index) => navigation.navigate(state.routeNames[index])}
-            // onLayout={(e) => console.log('e', e)}
             style={{ height: bottomTabHeight }}
         >
             <BottomNavigationTab title="Dashboard" icon={icons.dashboard} />

@@ -6,6 +6,7 @@ import {
     calendarCardDimensions,
     headerBarHeight,
     bottomTabHeight,
+    windowHeight,
 } from '../shared/constants';
 import { LinearGradient } from 'expo-linear-gradient';
 import { TaskItem } from './ListItems/TaskItem';
@@ -14,7 +15,7 @@ import { hidePreviewPane } from '../store/actions';
 import { coloredBackgroundGradient1, coloredBackgroundGradient2 } from '../ui/colors';
 
 const calendarHeight: number = calendarCardDimensions.totalHeight;
-const windowHeight = Dimensions.get('window').height;
+// const windowHeight = Dimensions.get('window').height;
 const taskPreviewHeight = windowHeight - calendarHeight + headerBarHeight;
 const closingHeight = windowHeight - bottomTabHeight - 60; //not sure why i need this 60 but it doesnt work well on my phone without it, maybe windowheight doesnt include the header bar height??
 
@@ -32,7 +33,7 @@ export const TaskPreviewPane = () => {
     useEffect(() => {
         Animated.timing(translateY, {
             toValue: taskPreviewHeight,
-            duration: 200,
+            duration: 250,
             useNativeDriver: true,
         }).start();
     }, [translateY]);
@@ -59,6 +60,10 @@ export const TaskPreviewPane = () => {
             }).start();
         }
     };
+
+    //sometimes the dimensions api returns incorrect window height... not sure if its because of expo, hopefully this error wont get to live
+    // console.log('taskPreviewHeight', taskPreviewHeight);
+    // console.log('windowHeight', windowHeight);
 
     return (
         <PanGestureHandler

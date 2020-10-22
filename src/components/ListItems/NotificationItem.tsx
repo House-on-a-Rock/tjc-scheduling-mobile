@@ -7,7 +7,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { selectDate } from '../../store/actions';
 import { useDispatch } from 'react-redux';
 import { CustomButton, buttonTypes } from '../../components/CustomButton';
-import User1 from '../../assets/Svgs/user1.svg';
+import User1 from '../../assets/Svgs/User1.svg';
 // import User2 from '../../assets/Svgs/User2.svg';
 
 interface NotificationItemProps {
