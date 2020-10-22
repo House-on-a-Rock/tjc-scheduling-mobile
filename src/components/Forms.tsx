@@ -1,17 +1,17 @@
 import React from 'react';
-import { View, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { View, TouchableWithoutFeedback } from 'react-native';
 import { Input, Icon } from '@ui-kitten/components';
 import { errorCaption } from '../shared/components/';
 
 interface EmailInputProps {
-    label: string;
+    label: () => JSX.Element | string;
     value: string;
     caption?: string;
     onChangeText: React.Dispatch<React.SetStateAction<string>>;
     clearInputHandler: (inputField) => void;
 }
 interface PasswordInputProps {
-    label: string;
+    label: () => JSX.Element | string;
     value: string;
     caption?: string;
     onChangeText: React.Dispatch<React.SetStateAction<string>>;

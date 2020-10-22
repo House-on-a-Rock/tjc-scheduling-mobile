@@ -10,6 +10,7 @@ import {
 } from '../../screens/RequestSwap/';
 import { TouchableOpacity } from 'react-native';
 import { Icon } from '@ui-kitten/components';
+import { headerBarHeight } from '../../shared/constants/componentDimensions';
 
 const Stack = createStackNavigator();
 
@@ -36,7 +37,9 @@ const rightHeaderIcon = (navigation) => (
 
 export const ScheduleStack = () => {
     return (
-        <Stack.Navigator screenOptions={{ title: '', headerStyle: { height: 60 } }}>
+        <Stack.Navigator
+            screenOptions={{ title: '', headerStyle: { height: headerBarHeight } }}
+        >
             <Stack.Screen
                 name="Schedule"
                 component={ScheduleScreen}

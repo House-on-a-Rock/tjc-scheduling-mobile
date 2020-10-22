@@ -107,6 +107,7 @@ const dummyCandidates = [
 
 export const SwapScreen = (props) => {
     // TODO: sort candidates alphabetically before here, maybe server side?
+    // Display message "nothing meets search criteria"
     // const swapCandidates = useSelector((state) => state.swapReducer.candidates || []);
     const swapCandidates = dummyCandidates;
     const [selectedPeopleIndices, setSelectedPeopleIndices] = useState<IndexPath[]>([]);
@@ -203,12 +204,14 @@ export const SwapScreen = (props) => {
                 activeOpacity={1}
             >
                 <Icon name="person-outline" {...iconProps} />
-                <Text>
+                <Text category="h3">
                     {item.user.firstName} {item.user.lastName}
                 </Text>
                 <View style={{ flexDirection: 'column' }}>
-                    <Text>{item.role.name}</Text>
-                    <Text>{new Date(item.date).toLocaleDateString('en-US')}</Text>
+                    <Text category="h3">{item.role.name}</Text>
+                    <Text category="h3">
+                        {new Date(item.date).toLocaleDateString('en-US')}
+                    </Text>
                 </View>
             </TouchableOpacity>
         );
@@ -236,8 +239,8 @@ export const SwapScreen = (props) => {
     return (
         <Layout style={styles.layout}>
             <View style={styles.textContainer}>
-                <Text>Select one or more workers to request</Text>
-                <Text>an exchange of duty times</Text>
+                <Text category="h3">Select one or more workers to request</Text>
+                <Text category="h3">an exchange of duty times</Text>
                 <View style={{ flexDirection: 'row' }}>
                     <Icon name="person" {...iconProps} />
                     <Icon name="swap" {...iconProps} />

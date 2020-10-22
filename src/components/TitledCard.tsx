@@ -13,7 +13,9 @@ export const TitledCard = ({ children, title, style }: TitledCardProps) => (
     <View style={{ ...styles.shadow, ...style }}>
         <View style={styles.container}>
             <View style={styles.titleBar}>
-                <Text style={{ color: 'white' }}>{title}</Text>
+                <Text category="h3" style={{ color: 'white' }}>
+                    {title}
+                </Text>
             </View>
             {children}
         </View>

@@ -4,7 +4,11 @@ import { Entypo } from '@expo/vector-icons';
 import { Layout, Text } from '@ui-kitten/components';
 import { dateTileDimensions } from '../../shared/constants';
 import { compareDates } from '../../services/Calendar/helper_functions/calendar_services';
-import { calendarHighlight, calendarHighlightShadow } from '../../ui/colors';
+import {
+    calendarHighlight,
+    calendarHighlightShadow,
+    mainTextColor,
+} from '../../ui/colors';
 
 interface DateTileProps {
     isToday: boolean;
@@ -49,7 +53,7 @@ export const DateTile = React.memo((props: DateTileProps) => {
                     }}
                 >
                     <Text
-                        category="p1"
+                        category="h3"
                         status="success"
                         style={{
                             color: isToday
@@ -58,7 +62,7 @@ export const DateTile = React.memo((props: DateTileProps) => {
                                     : 'red'
                                 : isSelected
                                 ? 'white'
-                                : 'black',
+                                : mainTextColor,
                         }}
                     >
                         {date}
@@ -88,8 +92,8 @@ const styles = StyleSheet.create({
         height: dateTileDimensions.height,
         justifyContent: 'center',
         alignItems: 'center',
-        borderBottomWidth: 1,
-        borderBottomColor: '#C9C9C9',
+        borderTopWidth: 1,
+        borderTopColor: '#C9C9C9',
     },
     main: {
         flex: 1,

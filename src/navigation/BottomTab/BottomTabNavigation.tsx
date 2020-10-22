@@ -5,7 +5,7 @@ import { DashboardStack } from './DashboardStack';
 import { ScheduleStack } from './ScheduleStack';
 import { SettingsStack } from './SettingsStack';
 import { Icon, BottomNavigation, BottomNavigationTab } from '@ui-kitten/components';
-
+import { bottomTabHeight } from '../../shared/constants/componentDimensions';
 import { NotificationStack } from './NotificationStack';
 
 const Tab = createBottomTabNavigator();
@@ -25,7 +25,8 @@ const BottomTabBar = ({ navigation, state }) => {
         <BottomNavigation
             selectedIndex={state.index}
             onSelect={(index) => navigation.navigate(state.routeNames[index])}
-            onLayout={(e) => console.log('e', e)}
+            // onLayout={(e) => console.log('e', e)}
+            style={{ height: bottomTabHeight }}
         >
             <BottomNavigationTab title="Dashboard" icon={icons.dashboard} />
             <BottomNavigationTab title="Schedule" icon={icons.schedule} />

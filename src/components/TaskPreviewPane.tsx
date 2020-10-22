@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Dimensions, FlatList, StyleSheet, Animated } from 'react-native';
+import { FlatList, StyleSheet, Animated, Dimensions, PanResponder } from 'react-native';
 import { Text } from '@ui-kitten/components';
 import {
     calendarCardDimensions,
     headerBarHeight,
     statusBarHeight,
+    bottomTabHeight,
 } from '../shared/constants';
 import { LinearGradient } from 'expo-linear-gradient';
 import { TaskItem } from './ListItems/TaskItem';
@@ -14,9 +15,9 @@ import { hidePreviewPane } from '../store/actions';
 import { coloredBackgroundGradient1, coloredBackgroundGradient2 } from '../ui/colors';
 
 const calendarHeight: number = calendarCardDimensions.totalHeight;
-const windowHeight: number = Dimensions.get('screen').height;
-const taskPreviewHeight: number =
-    windowHeight - calendarHeight + headerBarHeight + statusBarHeight;
+const windowHeight = Dimensions.get('window').height;
+const taskPreviewHeight = windowHeight - calendarHeight + headerBarHeight;
+const closingHeight = windowHeight - bottomTabHeight - 60; //not sure why i need this 60 but it doesnt work well on my phone without it
 
 //TODO need stuff to display for when there are no tasks? or just blank. also make ts not angry at me
 export const TaskPreviewPane = () => {
@@ -28,10 +29,11 @@ export const TaskPreviewPane = () => {
             : defaultSelected,
     );
     const translateY = useRef(new Animated.Value(1000)).current;
+    const yVal = useRef(0);
 
     useEffect(() => {
         Animated.timing(translateY, {
-            toValue: taskPreviewHeight, //need to tweak
+            toValue: taskPreviewHeight,
             duration: 200,
             useNativeDriver: true,
         }).start();
@@ -41,33 +43,20 @@ export const TaskPreviewPane = () => {
 
     const renderItem = ({ item }) => <TaskItem item={item} />;
 
-    //added swipe to close functionality
     const gestureHandler = ({ nativeEvent }) => {
-        //TODO needing to add these constants is really bad, need to handle diff screen sizes
+        const newPos = nativeEvent.translationY + taskPreviewHeight;
 
-        const paneHeight = windowHeight - taskPreviewHeight + 75;
-        let yPos = nativeEvent.absoluteY - 90; //doesnt track finger well without this offset
-        console.log('yPos', yPos);
-        if (yPos < paneHeight) yPos = paneHeight;
-
-        translateY.setValue(yPos);
-        if (yPos > windowHeight - 130) dispatch(hidePreviewPane());
+        translateY.setValue(newPos);
+        if (newPos > closingHeight) dispatch(hidePreviewPane());
     };
-    console.log('windowHeight', windowHeight);
 
-    const stateChangeHandler = (evt) => {
-        // console.log('evt', evt);
-        const closingHeight = new Animated.Value(windowHeight * 0.4);
-
-        if (evt.nativeEvent.state === GestureState.END && translateY >= closingHeight) {
+    const stateChangeHandler = ({ nativeEvent }) => {
+        if (nativeEvent.state === GestureState.END) {
             Animated.timing(translateY, {
-                toValue: new Animated.Value(windowHeight * 0.8),
-                duration: 100,
+                toValue: taskPreviewHeight,
+                duration: 200,
                 useNativeDriver: true,
-            }).start(() => {
-                console.log('closing preview pane');
-                return dispatch(hidePreviewPane());
-            });
+            }).start();
         }
     };
 
@@ -91,7 +80,9 @@ export const TaskPreviewPane = () => {
                             scrollEnabled={tasks.length > 2 ? true : false}
                         />
                     ) : (
-                        <Text style={{ textAlign: 'center' }}>You've got no tasks!</Text>
+                        <Text category="h2" style={{ textAlign: 'center' }}>
+                            You've got no tasks!
+                        </Text>
                     )}
                 </LinearGradient>
             </Animated.View>

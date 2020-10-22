@@ -13,6 +13,7 @@ interface SelectSwapOptionProps {
 
 export const SelectSwapOption = (props: SelectSwapOptionProps) => {
     //TODO hook up these choices to do their intended purpose
+    //maybbe rephrase some of these
     const [selectedIndex1, setSelectedIndex1] = useState(0);
     const [selectedIndex2, setSelectedIndex2] = useState(0);
 
@@ -69,7 +70,9 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
     return (
         <Layout style={styles.layout}>
             <View style={styles.cardContainer}>
-                <Text>Would you like to</Text>
+                <Text category="h1" style={{ paddingBottom: 10 }}>
+                    Would you like to
+                </Text>
                 <SelectCard
                     displayedText={'Switch duty with someone'}
                     bottomRow={iconSet1}
@@ -87,7 +90,9 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
             </View>
 
             <View style={styles.cardContainer}>
-                <Text>Is this request for</Text>
+                <Text category="h1" style={{ paddingBottom: 10 }}>
+                    Is this request for
+                </Text>
                 <SelectCard
                     displayedText="Specific time or person"
                     bottomRow={iconSet3}

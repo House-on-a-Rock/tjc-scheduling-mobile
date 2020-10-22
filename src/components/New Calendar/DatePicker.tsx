@@ -77,7 +77,7 @@ export const DatePicker = ({ onTilePress, selectedDates, initialTasks, onBlur })
                         : styles.dropDown
                 }
             >
-                <Text category="s1">{displayedText}</Text>
+                <Text category="h3">{displayedText}</Text>
                 <Icon
                     name="arrow-ios-downward-outline"
                     width={20}

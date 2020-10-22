@@ -11,6 +11,7 @@ import { EmailInput, PasswordInput } from '../../components/Forms';
 import { isValidEmail } from '../../shared/components/';
 import { statusBarHeight } from '../../shared/constants';
 import { CustomButton, buttonTypes } from '../../components/CustomButton';
+import { interactiveColorBlue, mainTextColor } from '../../ui/colors';
 
 //temp imports
 import * as Notifications from 'expo-notifications';
@@ -28,6 +29,8 @@ export interface EmailState {
     valid: boolean;
     message: string;
 }
+
+//TODO error message styling and QA
 
 export const LoginScreen = (props: LoginScreenProps) => {
     const dispatch = useDispatch();
@@ -137,6 +140,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
     //     };
     // }, []);
 
+    //TODO overlay loading page instead of going to a different component?
     if (loadState === LoadStateActionTypes.LOADING) return <LoadingPage opacity={0.8} />;
 
     return (
@@ -148,7 +152,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
             }}
         >
             <Layout>
-                <View contentContainerStyle={styles.loginScreen}>
+                <View style={styles.loginScreen}>
                     <ScrollView
                         keyboardShouldPersistTaps="handled"
                         contentContainerStyle={styles.feedbackContainer}
@@ -164,7 +168,11 @@ export const LoginScreen = (props: LoginScreenProps) => {
                         <View style={styles.loginCardContainer}>
                             {errorMessage}
                             <EmailInput
-                                label="Email"
+                                label={() => (
+                                    <Text category="h3" style={{ color: mainTextColor }}>
+                                        Email
+                                    </Text>
+                                )}
                                 value={email.value}
                                 caption={email.valid ? '' : email.message}
                                 onChangeText={(input) =>
@@ -173,7 +181,11 @@ export const LoginScreen = (props: LoginScreenProps) => {
                                 clearInputHandler={clearInputHandler}
                             />
                             <PasswordInput
-                                label="Password"
+                                label={() => (
+                                    <Text category="h3" style={{ color: mainTextColor }}>
+                                        Password
+                                    </Text>
+                                )}
                                 value={password.value}
                                 caption={password.valid ? '' : password.message}
                                 onChangeText={(input) =>
@@ -187,7 +199,10 @@ export const LoginScreen = (props: LoginScreenProps) => {
                                 }}
                                 onPress={() => props.navigation.navigate('RecoverLogin')}
                             >
-                                <Text category="p1" style={{ color: 'blue' }}>
+                                <Text
+                                    category="h3"
+                                    style={{ color: interactiveColorBlue }}
+                                >
                                     Forgot Password?
                                 </Text>
                             </TouchableOpacity>
@@ -211,7 +226,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
 
     function createErrorMessage(msg): React.ReactNode {
         return (
-            <Text category={'h6'} status={'danger'}>
+            <Text category="h3" status={'danger'}>
                 {msg}
             </Text>
         );

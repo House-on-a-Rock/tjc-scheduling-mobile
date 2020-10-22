@@ -40,7 +40,7 @@ export const TaskItem = (props: TaskItemProps) => {
                     alignItems: 'flex-start',
                 }}
             >
-                <Text>{role?.name} - Morning</Text>
+                <Text category="h3">{role?.name} - Morning</Text>
 
                 <Text category="p2">
                     <Entypo name="dot-single" size={20} color="green" />

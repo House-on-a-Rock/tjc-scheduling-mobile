@@ -34,7 +34,7 @@ export const CustomButton = ({ text, onPress, styling, type }: CustomButtonProps
             style={{ ...styles.main, ...styling, ...buttonTypeStyle }}
             onPress={onPress}
         >
-            <Text category="p1" style={textColor}>
+            <Text category="h2" style={textColor}>
                 {text}
             </Text>
         </TouchableOpacity>

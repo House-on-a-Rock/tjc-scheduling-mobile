@@ -212,7 +212,6 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         backgroundColor: 'rgba(35, 117, 117, 0.62)',
-        paddingTop: 20,
     },
     profileCard: {
         flex: 1,
@@ -220,6 +219,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         overflow: 'hidden',
+        paddingTop: 20,
     },
     profilePictureContainer: {
         borderRadius: 100,

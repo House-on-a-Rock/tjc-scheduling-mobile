@@ -15,6 +15,7 @@ interface SelectCardProps {
     selectedIndex;
 }
 
+//TODO setup icon
 export const SelectCard = ({
     displayedText,
     bottomRow,
@@ -32,7 +33,7 @@ export const SelectCard = ({
             style={style}
             onPress={() => onPressHandler(cardIndex)}
         >
-            <Text category="s1" style={{ paddingVertical: 5 }}>
+            <Text category="h2" style={{ paddingVertical: 5 }}>
                 {displayedText}
             </Text>
             {bottomRow()}
