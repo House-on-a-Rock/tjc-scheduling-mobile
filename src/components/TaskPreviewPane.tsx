@@ -1,11 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { FlatList, StyleSheet, Animated, Dimensions, PanResponder } from 'react-native';
+import { FlatList, StyleSheet, Animated, Dimensions } from 'react-native';
 import { Text } from '@ui-kitten/components';
 import {
     calendarCardDimensions,
     headerBarHeight,
-    statusBarHeight,
     bottomTabHeight,
 } from '../shared/constants';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -17,7 +16,7 @@ import { coloredBackgroundGradient1, coloredBackgroundGradient2 } from '../ui/co
 const calendarHeight: number = calendarCardDimensions.totalHeight;
 const windowHeight = Dimensions.get('window').height;
 const taskPreviewHeight = windowHeight - calendarHeight + headerBarHeight;
-const closingHeight = windowHeight - bottomTabHeight - 60; //not sure why i need this 60 but it doesnt work well on my phone without it
+const closingHeight = windowHeight - bottomTabHeight - 60; //not sure why i need this 60 but it doesnt work well on my phone without it, maybe windowheight doesnt include the header bar height??
 
 //TODO need stuff to display for when there are no tasks? or just blank. also make ts not angry at me
 export const TaskPreviewPane = () => {
@@ -29,7 +28,6 @@ export const TaskPreviewPane = () => {
             : defaultSelected,
     );
     const translateY = useRef(new Animated.Value(1000)).current;
-    const yVal = useRef(0);
 
     useEffect(() => {
         Animated.timing(translateY, {
@@ -44,8 +42,10 @@ export const TaskPreviewPane = () => {
     const renderItem = ({ item }) => <TaskItem item={item} />;
 
     const gestureHandler = ({ nativeEvent }) => {
-        const newPos = nativeEvent.translationY + taskPreviewHeight;
-
+        const newPos = Math.max(
+            nativeEvent.translationY + taskPreviewHeight,
+            taskPreviewHeight,
+        );
         translateY.setValue(newPos);
         if (newPos > closingHeight) dispatch(hidePreviewPane());
     };
