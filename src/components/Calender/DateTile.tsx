@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { Layout, Text } from '@ui-kitten/components';
 import { dateTileDimensions } from '../../shared/constants';
-import { compareDates } from '../../services/Calendar/helper_functions/calendar_services';
+import { isSameDate } from '../../services/Calendar/helper_functions/calendar_services';
 
 interface DateTileProps {
     isToday: boolean;
@@ -68,7 +68,7 @@ function areEqual(prevProps, nextProps): boolean {
     //true will not rerender
     return (
         prevProps.isSelected === nextProps.isSelected &&
-        compareDates(prevProps.day, nextProps.day)
+        isSameDate(prevProps.day, nextProps.day)
     );
 }
 

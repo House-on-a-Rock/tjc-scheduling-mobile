@@ -1,16 +1,5 @@
 import { CarousalDirection } from '../models';
 
-export const setFirstDay = (displayedDate: Date): number => {
-    //determines the month's first day of week (eg. if 5/1/2020 is wed or sat)
-    // const tempDisplayedDay = displayedDate.getDay();
-    // const tempDisplayedDate = displayedDate.getDate();
-    // const a = tempDisplayedDay + 1 - (tempDisplayedDate % 7);
-    // const x = a >= 0 ? a : a + 7;
-    // console.log('x', x);
-    // console.log('tempDisplayedDay', tempDisplayedDay);
-    return displayedDate.getDay();
-};
-
 export const getUpdatedMonth = (carousalDirection, displayedDate) => {
     let year = displayedDate.getFullYear();
     let nextMonth = displayedDate.getMonth();
@@ -70,7 +59,7 @@ export const extendDateArray = ({ direction, range }, { dateArray }) => {
 export const createDateArray = (start, end) => {
     const dateArray = [];
     dateArray.push(start);
-    while (!compareDates(dateArray[dateArray.length - 1], end)) {
+    while (!isSameDate(dateArray[dateArray.length - 1], end)) {
         const nextMonth = getUpdatedMonth(
             CarousalDirection.DOWN,
             dateArray[dateArray.length - 1],
@@ -81,7 +70,7 @@ export const createDateArray = (start, end) => {
     return dateArray;
 };
 
-export const compareDates = (date1, date2) => {
+export const isSameDate = (date1, date2) => {
     if (!date1 || !date2) return false;
     return (
         date1.getMonth() === date2.getMonth() &&

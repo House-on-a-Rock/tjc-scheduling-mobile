@@ -1,7 +1,6 @@
 import React from 'react';
 import { DateDisplay } from './DateDisplay';
 import { DayNameRow } from './DayNameRow';
-import { setFirstDay } from '../../services/Calendar/helper_functions';
 import { months } from '../../services/Calendar/models';
 import { calendarCardDimensions } from '../../shared/constants';
 import { Text, Layout, Card } from '@ui-kitten/components';
@@ -37,7 +36,7 @@ export const CalendarCard = React.memo((props: Props) => {
             <Layout>
                 <DayNameRow />
                 <DateDisplay
-                    firstDay={setFirstDay(displayedDate)}
+                    firstDay={displayedDate.getDay()}
                     displayedDate={displayedDate}
                     tasks={tasks}
                     onPressScroll={props.onPressScroll}

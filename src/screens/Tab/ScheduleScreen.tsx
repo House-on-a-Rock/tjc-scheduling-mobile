@@ -5,7 +5,7 @@ import { TaskPreviewPane } from '../../components/TaskPreviewPane/TaskPreviewPan
 import { Layout } from '@ui-kitten/components';
 import { useSelector } from 'react-redux';
 import { useCheckPermissions } from '../../services/Hooks/useCheckPermissions';
-import { compareDates } from '../../services/Calendar/helper_functions';
+import { isSameDate } from '../../services/Calendar/helper_functions';
 
 interface ScheduleScreenProps {
     route;

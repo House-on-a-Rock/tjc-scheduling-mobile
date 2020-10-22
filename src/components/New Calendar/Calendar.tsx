@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { DayNameRow } from './DayNameRow';
 import { DateTile } from './DateTile';
 import { Text, Layout } from '@ui-kitten/components';
-import { compareDates } from '../../services/Calendar/helper_functions';
+import { isSameDate } from '../../services/Calendar/helper_functions';
 import { dateTileDimensions } from '../../shared/constants';
 
 interface CalendarProps {
@@ -40,16 +40,16 @@ export const Calendar = ({
         }
     }
 
-    const determineDate: () => Date = determineRenderDate(initialDate);
+    const getNextDate: () => Date = determineRenderDate(initialDate);
 
     for (let j = 0; j < dateArray.length; j++) {
         dateArray[j] = new Array(7);
         for (let k = 0; k < dateArray[j].length; k++) {
-            const day: Date = determineDate();
+            const day: Date = getNextDate();
             const isCurrentMonth = day.getMonth() === month;
-            const isSelected = selectedDates.some((date) => compareDates(day, date));
+            const isSelected = selectedDates.some((date) => isSameDate(day, date));
             const hasTask = initialTasks.some((item) =>
-                compareDates(new Date(item.date), day),
+                isSameDate(new Date(item.date), day),
             );
 
             dateArray[j][k] = (
@@ -59,7 +59,7 @@ export const Calendar = ({
                     onTilePress={onTilePress}
                     isCurrentMonth={isCurrentMonth}
                     isSelected={isSelected}
-                    textStyling={compareDates(day, today) && styles.todayText}
+                    textStyling={isSameDate(day, today) && styles.todayText}
                     hasTask={hasTask}
                 />
             );
