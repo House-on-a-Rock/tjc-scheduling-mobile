@@ -10,6 +10,7 @@ interface RequestSwapStackProps {
 
 const ReqStack = createStackNavigator();
 
+//unused now, will remove later if confirmed unneeded
 export const RequestSwapStack = (props: RequestSwapStackProps) => {
     //animation for every screen in this stack
     const MyTransition = {
@@ -49,35 +50,36 @@ export const RequestSwapStack = (props: RequestSwapStackProps) => {
     };
 
     return (
-        <NavigationContainer>
-            <ReqStack.Navigator
-                mode="card"
-                headerMode={'none'}
-                screenOptions={{
-                    ...MyTransition,
-                }}
-            >
-                <ReqStack.Screen
-                    name="SelectSwapOption"
-                    component={SelectSwapOption}
-                    initialParams={initialParams}
-                />
-                <ReqStack.Screen
-                    name="SwapScreen"
-                    component={SwapScreen}
-                    initialParams={initialParams}
-                />
-                <ReqStack.Screen
-                    name="SwapSummary"
-                    component={SwapSummary}
-                    initialParams={initialParams}
-                />
-                <ReqStack.Screen
-                    name="SwapConfirmation"
-                    component={SwapConfirmation}
-                    initialParams={initialParams}
-                />
-            </ReqStack.Navigator>
-        </NavigationContainer>
+        // <NavigationContainer>
+        <ReqStack.Navigator
+            mode="card"
+            headerMode={'none'}
+            //comments make the red go away
+            // screenOptions={{
+            //     ...MyTransition,
+            // }}
+        >
+            <ReqStack.Screen
+                name="SelectSwapOption"
+                component={SelectSwapOption}
+                initialParams={initialParams}
+            />
+            <ReqStack.Screen
+                name="SwapScreen"
+                component={SwapScreen}
+                initialParams={initialParams}
+            />
+            <ReqStack.Screen
+                name="SwapSummary"
+                component={SwapSummary}
+                initialParams={initialParams}
+            />
+            <ReqStack.Screen
+                name="SwapConfirmation"
+                component={SwapConfirmation}
+                initialParams={initialParams}
+            />
+        </ReqStack.Navigator>
+        // </NavigationContainer>
     );
 };

@@ -85,6 +85,11 @@ class SwipeableItem extends React.Component<SwipeableItemProps> {
         this.iconMaxScaling,
     );
 
+    iconOpacity = interpolate(this.animState.position, {
+        inputRange: [0, 100],
+        outputRange: [0, 1],
+    });
+
     iconRed = () => this.setState({ iconColor: '#DB0300' });
 
     iconBlack = () => this.setState({ iconColor: '#000000' });
@@ -191,6 +196,7 @@ class SwipeableItem extends React.Component<SwipeableItemProps> {
                                 { scale: this.iconScale },
                                 { translateX: this.iconPos },
                             ],
+                            opacity: this.iconOpacity,
                         }}
                     >
                         <Animated.Code>{this.renderColorAnim}</Animated.Code>

@@ -34,6 +34,7 @@ export const DateDisplay = ({
             : useSelector((state) => state.swapReducer.date);
 
     function determineRenderDate(initial): () => Date {
+        //sets start of week to correct day
         let renderDate: Date = new Date(initial.setDate(initial.getDate() - firstDay));
 
         return updateDate;
@@ -69,7 +70,7 @@ export const DateDisplay = ({
                 <DateTile
                     data={data}
                     day={day}
-                    key={`${day.toDateString}${j}-${k}`}
+                    key={`${day.toDateString()}${j}-${k}`}
                     isToday={isToday}
                     isCurrentMonth={isCurrentMonth}
                     isSelected={isSelected}

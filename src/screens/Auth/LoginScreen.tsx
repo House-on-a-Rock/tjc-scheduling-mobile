@@ -37,7 +37,7 @@ export interface EmailState {
 export const LoginScreen = (props: LoginScreenProps) => {
     const dispatch = useDispatch();
     const [email, setEmail] = useState<EmailState>({
-        value: 'jonathan.lee@gmail.com',
+        value: 'shaun.tung@gmail.com',
         valid: true,
         message: null,
     });
@@ -77,20 +77,27 @@ export const LoginScreen = (props: LoginScreenProps) => {
     }
 
     //selects the loadstates that need to be listened to
-    const { AUTH: AuthState, PROFILE: ProfileState, TASKS: TasksState } = useSelector(
-        (state) => state.loadStateReducer.loadStatus,
-    );
+    const {
+        AUTH: AuthState,
+        PROFILE: ProfileState,
+        TASKS: TasksState,
+        NOTIFICATIONS: NotificationsState,
+    } = useSelector((state) => state.loadStateReducer.loadStatus);
 
     //selects the error states that need to be listened to
-    const { AUTH: AuthError, PROFILE: ProfileError, TASKS: TasksError } = useSelector(
-        (state) => state.loadStateReducer.loadErrorStatus,
-    );
+    const {
+        AUTH: AuthError,
+        PROFILE: ProfileError,
+        TASKS: TasksError,
+        NOTIFICATIONS: NotificationsError,
+    } = useSelector((state) => state.loadStateReducer.loadErrorStatus);
 
     //using the loadstates, determines if loading page should be shown
     const loadState: LoadStateActionTypes = determineLoadState({
         AuthState,
         ProfileState,
         TasksState,
+        NotificationsState,
     });
     //if everything is loaded, change state to login
     if (loadState === LoadStateActionTypes.LOADED) dispatch(login());
@@ -102,6 +109,8 @@ export const LoginScreen = (props: LoginScreenProps) => {
         if (AuthError) errorMessage = createErrorMessage(AuthError.message);
         else if (ProfileError) errorMessage = createErrorMessage(ProfileError.message);
         else if (TasksError) errorMessage = createErrorMessage(TasksError.message);
+        else if (NotificationsError)
+            errorMessage = createErrorMessage(NotificationsError.message);
         else errorMessage = null;
     }
 

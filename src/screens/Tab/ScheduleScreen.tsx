@@ -1,14 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Carousel } from '../../components/Calender';
 import { TaskPreviewPane } from '../../components/TaskPreviewPane/TaskPreviewPane';
-import { Screen } from '../../components/Screen';
-import { openDrawerAction } from '../../shared/components';
-import { Text } from '@ui-kitten/components';
 import { Layout } from '@ui-kitten/components';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
 import { useCheckPermissions } from '../../services/Hooks/useCheckPermissions';
+import { compareDates } from '../../services/Calendar/helper_functions';
 
 interface ScheduleScreenProps {
     route;
@@ -16,13 +13,6 @@ interface ScheduleScreenProps {
 }
 
 export const ScheduleScreen = (props: ScheduleScreenProps) => {
-    // const leftAccessory = () => openDrawerAction(props.navigation.toggleDrawer);
-    // const rightAccessory = () => (
-    //     <TouchableOpacity onPress={() => props.navigation.navigate('TaskList')}>
-    //         <Text>View as List</Text>
-    //     </TouchableOpacity>
-    // );
-
     const isPreviewPaneOpen = useSelector(
         (state) => state.calendarReducer.previewPaneVisible,
     );
@@ -32,21 +22,13 @@ export const ScheduleScreen = (props: ScheduleScreenProps) => {
         useCheckPermissions();
     }, []);
 
+    const [selectedDates, setSelectedDates] = useState([]);
+
     return (
-        // <Screen
-        //     title={() => (
-        //         <Text category="h3" status="basic">
-        //             My Duties
-        //         </Text>
-        //     )}
-        //     accessoryLeft={leftAccessory}
-        //     accessoryRight={rightAccessory}
-        // >
         <Layout style={styles.scrollContainer}>
             <Carousel />
             {isPreviewPaneOpen && <TaskPreviewPane />}
         </Layout>
-        // </Screen>
     );
 };
 

@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 import SwipeableItem from '../../components/SwipeableItem';
 import { NewAssignmentItem } from '../../components/NewAssignments/NewAssignmentItem';
+import { FeedItem } from '../../components/ListItems/FeedItem';
 import { windowWidth } from '../../shared/constants';
 
 interface ActivityFeedProps {
@@ -19,18 +20,20 @@ if (Platform.OS === 'android') {
 }
 
 export const ActivityFeedScreen = (props: ActivityFeedProps) => {
-    //TODO grab activities from notifications instead of tasks
-    const newAssignments = useSelector((state) => state.taskReducer.tasks);
-    const [data, setData] = useState(newAssignments);
+    const notifications = useSelector(
+        (state) => state.notificationsReducer.notifications,
+    );
+
+    const [data, setData] = useState(notifications);
     const deleteThreshold: number = windowWidth * 0.4;
 
     const leftIcon: (string) => ReactNode = (color) => (
         <Icon height={20} width={20} name="trash-2-outline" fill={color} />
     );
 
-    const deleteItem: (number) => void = (taskId) => {
-        const updatedData = data.filter((d) => d.taskId !== taskId);
-        // Animate list to close gap when item is deleted
+    const deleteItem: (number) => void = (itemId) => {
+        const updatedData = data.filter((d) => d.notificationId !== itemId);
+        // Animates list to close gap when item is deleted
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         setData(updatedData);
     };
@@ -39,10 +42,10 @@ export const ActivityFeedScreen = (props: ActivityFeedProps) => {
         <SwipeableItem
             swipeThreshold={deleteThreshold}
             onSwipe={deleteItem}
-            itemId={item.taskId}
+            itemId={item.notificationId}
             leftIcon={leftIcon}
         >
-            <NewAssignmentItem item={item} />
+            <FeedItem item={item} />
         </SwipeableItem>
     );
 
@@ -60,7 +63,9 @@ export const ActivityFeedScreen = (props: ActivityFeedProps) => {
                     <FlatList
                         data={data}
                         renderItem={renderItem}
-                        keyExtractor={(item, index) => item.taskId.toString()}
+                        keyExtractor={(item, index) =>
+                            `ActivityFeed ${item.notificationId}${index}`
+                        }
                         decelerationRate={0.1}
                     />
                 ) : (
