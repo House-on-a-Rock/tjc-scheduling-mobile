@@ -37,7 +37,7 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
         props.navigation.navigate('SwapScreen');
     };
 
-    const iconSet1 = () => (
+    const iconSetSwap = () => (
         <View style={{ flexDirection: 'row' }}>
             {/* <Icon name="person" {...iconSettings} /> */}
             <User1 {...iconSettings} />
@@ -46,7 +46,7 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
         </View>
     );
 
-    const iconSet2 = () => (
+    const iconSetReplace = () => (
         <View style={{ flexDirection: 'row' }}>
             <User1 {...iconSettings} />
             <Icon name="arrow-forward" {...iconSettings} />
@@ -54,9 +54,9 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
         </View>
     );
 
-    const iconSet3 = () => <User4 {...iconSettings} />;
+    const iconSetPerson = () => <User4 {...iconSettings} />;
 
-    const iconSet4 = () => (
+    const iconSetAnyone = () => (
         <View style={{ paddingLeft: 20 }}>
             <ThreeUsers height={50} width={50} />
         </View>
@@ -78,14 +78,14 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
                 </Text>
                 <SelectCard
                     displayedText={'Switch duty with someone'}
-                    icons={iconSet1}
+                    icons={iconSetSwap}
                     onPressHandler={onCardPress1}
                     cardIndex={0}
                     selectedIndex={selectedIndex1}
                 />
                 <SelectCard
                     displayedText="Have your duty replaced"
-                    icons={iconSet2}
+                    icons={iconSetReplace}
                     onPressHandler={onCardPress1}
                     cardIndex={1}
                     selectedIndex={selectedIndex1}
@@ -98,14 +98,14 @@ export const SelectSwapOption = (props: SelectSwapOptionProps) => {
                 </Text>
                 <SelectCard
                     displayedText="Specific time or person"
-                    icons={iconSet3}
+                    icons={iconSetPerson}
                     onPressHandler={onCardPress2}
                     cardIndex={0}
                     selectedIndex={selectedIndex2}
                 />
                 <SelectCard
                     displayedText="Anyone, as long as \nmy duty is replaced"
-                    icons={iconSet4}
+                    icons={iconSetAnyone}
                     onPressHandler={onCardPress2}
                     cardIndex={1}
                     selectedIndex={selectedIndex2}
