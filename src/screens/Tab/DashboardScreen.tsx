@@ -18,6 +18,7 @@ const profilePic = require('../../assets/images/JleeProfilePic.jpg');
 //profile data needed
 //church photo, profile photo
 //how are tasks organized? if only upcoming tasks are grabbed, then upcoming assignment is easy
+//https://medium.com/@rossbulat/react-native-working-with-notification-badges-5e60138b83e8 handle notifications
 export const DashboardScreen = () => {
     const [image, setImage] = useState(null);
     const { tasks } = useSelector((state) => state.taskReducer);
