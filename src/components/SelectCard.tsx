@@ -15,7 +15,7 @@ interface SelectCardProps {
     selectedIndex;
 }
 
-//TODO setup icon
+//TODO finalize icon alignment
 export const SelectCard = ({
     displayedText,
     icons,
@@ -29,7 +29,8 @@ export const SelectCard = ({
             : selectStyle.selectCard;
 
     //need this to get the line breaks to work from a string... so dumb lol
-    const ret = displayedText.replace(/\\n/g, '\n');
+    //https://stackoverflow.com/questions/54796368/line-break-inside-string-react-native
+    const text = displayedText.replace(/\\n/g, '\n');
     return (
         <TouchableOpacity
             activeOpacity={1}
@@ -37,7 +38,7 @@ export const SelectCard = ({
             onPress={() => onPressHandler(cardIndex)}
         >
             <Text category="h3" style={{ paddingVertical: 5, marginRight: 15 }}>
-                {ret}
+                {text}
             </Text>
             {icons()}
         </TouchableOpacity>

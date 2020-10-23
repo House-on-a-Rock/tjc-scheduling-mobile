@@ -21,8 +21,6 @@ export const ScheduleScreen = (props: ScheduleScreenProps) => {
         useCheckPermissions();
     }, []);
 
-    const [selectedDates, setSelectedDates] = useState([]);
-
     return (
         <Layout style={styles.scrollContainer}>
             <Carousel />
