@@ -1,7 +1,6 @@
 import React from 'react';
 import { DateDisplay } from './DateDisplay';
 import { DayNameRow } from './DayNameRow';
-import { setFirstDay } from '../../services/Calendar/helper_functions';
 
 import { Layout } from '@ui-kitten/components';
 import { TaskData } from '../../shared/models';
@@ -25,7 +24,7 @@ export const Calendar = ({
         <Layout>
             <DayNameRow />
             <DateDisplay
-                firstDay={setFirstDay(displayedDate)}
+                firstDay={displayedDate.getDay()}
                 displayedDate={displayedDate}
                 tasks={tasks}
                 handleTilePress={handleTilePress}

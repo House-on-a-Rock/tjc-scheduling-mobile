@@ -31,7 +31,7 @@ export const SwapSummary = ({ route, navigation }) => {
                     {item.user.firstName} {item.user.lastName}
                 </Text>
                 <View style={{ flexDirection: 'column' }}>
-                    <Text>{item.role.name}</Text>
+                    {/* <Text>{item.role.name}</Text> */}
                     <Text>{new Date(item.date).toLocaleDateString('en-US')}</Text>
                 </View>
             </View>

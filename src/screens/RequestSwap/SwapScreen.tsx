@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { View, StyleSheet, FlatList } from 'react-native';
 import { Layout, Text, Select, IndexPath, Icon, Button } from '@ui-kitten/components';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { compareDates } from '../../services/Calendar/helper_functions';
+import { isSameDate } from '../../services/Calendar/helper_functions';
 import { DatePicker } from '../../components/New Calendar/DatePicker';
 import { populateCandidates, populateTimes } from './swapHelper';
 
@@ -27,7 +27,7 @@ export const SwapScreen = (props) => {
         (task) =>
             selectedDates.length > 0
                 ? selectedDates.some((date) =>
-                      compareDates(new Date(date), new Date(task.date)),
+                      isSameDate(new Date(date), new Date(task.date)),
                   )
                 : true,
         (task) => !task.isSelected,
@@ -55,7 +55,7 @@ export const SwapScreen = (props) => {
         });
     };
     const onTilePress = (date) => {
-        const dates = selectedDates.filter((item) => !compareDates(item, date));
+        const dates = selectedDates.filter((item) => !isSameDate(item, date));
         dates.length === selectedDates.length
             ? setSelectedDates([...selectedDates, date])
             : setSelectedDates(dates);
@@ -108,7 +108,7 @@ export const SwapScreen = (props) => {
                     {item.user.firstName} {item.user.lastName}
                 </Text>
                 <View style={{ flexDirection: 'column' }}>
-                    <Text>{item.role.name}</Text>
+                    {/* <Text>{item.role.name}</Text> */}
                     <Text>{new Date(item.date).toLocaleDateString('en-US')}</Text>
                 </View>
             </TouchableOpacity>

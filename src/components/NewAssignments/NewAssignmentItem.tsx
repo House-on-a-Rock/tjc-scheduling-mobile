@@ -39,7 +39,7 @@ export const NewAssignmentItem = ({ item }: NewAssignmentItemProps) => {
                 <Text category="s1">{dayString[0]}</Text>
             </View>
             <View style={{ flexDirection: 'column', padding: 10, flex: 3 }}>
-                <Text>{item.role.name}</Text>
+                {/* <Text>{item.role.name}</Text> */}
             </View>
         </TouchableOpacity>
     );

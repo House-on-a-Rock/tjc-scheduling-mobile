@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
-import { compareDates } from '../../services/Calendar/helper_functions';
+import { isSameDate } from '../../services/Calendar/helper_functions';
 import { DateTile } from './DateTile';
 import { TaskData } from '../../shared/models';
 
@@ -46,12 +46,12 @@ export const DateDisplay = ({
         }
     }
 
-    const determineDate: () => Date = determineRenderDate(initialDate);
+    const getNextDate: () => Date = determineRenderDate(initialDate);
 
     const populateTasks = (date: Date): TaskData[] => {
         const filteredTasks = tasks.filter((task: TaskData) => {
             const tasksDate: Date = new Date(task.date);
-            return compareDates(tasksDate, date);
+            return isSameDate(tasksDate, date);
         });
 
         return filteredTasks;
@@ -60,11 +60,11 @@ export const DateDisplay = ({
     for (let j = 0; j < dateArray.length; j++) {
         dateArray[j] = new Array(7);
         for (let k = 0; k < dateArray[j].length; k++) {
-            const day: Date = determineDate();
+            const day: Date = getNextDate();
             const data: TaskData[] = populateTasks(day);
-            const isToday: boolean = compareDates(day, currentDate);
+            const isToday: boolean = isSameDate(day, currentDate);
             const isCurrentMonth: boolean = day.getMonth() === month;
-            const isSelected = compareDates(day, selectedDate);
+            const isSelected = isSameDate(day, selectedDate);
 
             dateArray[j][k] = (
                 <DateTile

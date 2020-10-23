@@ -30,8 +30,8 @@ export const DashboardScreen = (props: DashboardProps) => {
         return (
             <View style={styles.displayCard}>
                 <Text>{`${day}-${month}-${year}`}</Text>
-                <Text>{item.role.name}</Text>
-                <Text>{item.church.name}</Text>
+                {/* <Text>{item.role.name}</Text> */}
+                {/* <Text>{item.church.name}</Text> */}
             </View>
         );
     };
