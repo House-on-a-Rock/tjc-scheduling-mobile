@@ -14,3 +14,4 @@ src/assets
 # secrets
 secrets/
 *.env
+env
